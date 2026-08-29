@@ -12,10 +12,6 @@
 
 <style>
 
-/* ==================================================
-   RESET
-================================================== */
-
 * {
     box-sizing: border-box;
 }
@@ -38,7 +34,7 @@ body {
 
 
 /* ==================================================
-   SCHERMO VERTICALE
+   SCHERMO
 ================================================== */
 
 #phone {
@@ -82,10 +78,6 @@ body {
 }
 
 
-/* ==================================================
-   COPERTINA
-================================================== */
-
 #cover {
 
     position: absolute;
@@ -100,10 +92,6 @@ body {
     z-index: 10;
 }
 
-
-/* ==================================================
-   PULSANTE PLAY
-================================================== */
 
 #playButton {
 
@@ -197,7 +185,6 @@ body {
     object-fit: contain;
 
     pointer-events: none;
-
 }
 
 
@@ -220,18 +207,6 @@ body {
 #kitchenDestroyed {
 
     z-index: 17;
-
-    display: none;
-
-}
-
-
-/* ==================================================
-   BARRA ENERGIA INVISIBILE
-================================================== */
-
-#energyContainer,
-#energyText {
 
     display: none;
 
@@ -284,10 +259,9 @@ body {
 
     animation:
         walkDown
-        30s
+        40s
         linear
         forwards;
-
 }
 
 
@@ -298,20 +272,12 @@ body {
 }
 
 
-/* ==================================================
-   CLIENTE 1
-================================================== */
-
 #customer1 {
 
     left: 35%;
 
 }
 
-
-/* ==================================================
-   CLIENTE 2
-================================================== */
 
 #customer2 {
 
@@ -341,7 +307,6 @@ body {
     object-position: center;
 
     display: none;
-
 }
 
 
@@ -398,7 +363,6 @@ body {
     transform: translateX(-50%);
 
     z-index: 20;
-
 }
 
 
@@ -423,7 +387,6 @@ body {
     object-position: center;
 
     display: none;
-
 }
 
 
@@ -640,8 +603,7 @@ body {
                 alt="">
 
 
-            <!-- FRAME 4
-                 LANCI0 -->
+            <!-- FRAME 4 = LANCIO -->
 
             <img
                 src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
@@ -654,9 +616,7 @@ body {
                 src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
                 alt="">
 
-
         </div>
-
 
     </div>
 
@@ -763,7 +723,7 @@ document
             .style.display = "block";
 
 
-        /* CUCINA */
+        /* RESET CUCINA */
 
         document
             .getElementById("kitchen")
@@ -783,6 +743,7 @@ document
         updateKitchenEnergy();
 
 
+
         /* ==================================================
            CLIENTE 1
         ================================================== */
@@ -796,7 +757,7 @@ document
         void customer1.offsetWidth;
 
         customer1.style.animation =
-            "walkDown 30s linear forwards";
+            "walkDown 40s linear forwards";
 
 
 
@@ -813,7 +774,7 @@ document
         void customer2.offsetWidth;
 
         customer2.style.animation =
-            "walkDown 30s linear forwards";
+            "walkDown 40s linear forwards";
 
 
 
@@ -963,15 +924,15 @@ function startKitchenEnergySystem() {
 
 
 /* ==================================================
-   ARRIVO CLIENTI ALLA CUCINA
+   ARRIVO CLIENTI
 ================================================== */
 
 function startCustomerKitchenDetection() {
 
 
     /*
-       I clienti raggiungono la cucina
-       dopo circa il 65% dei 30 secondi.
+       Il cliente arriva alla cucina
+       dopo il 65% dei 40 secondi.
     */
 
     setTimeout(function() {
@@ -982,7 +943,7 @@ function startCustomerKitchenDetection() {
 
         }
 
-    }, 19500);
+    }, 26000);
 
 
 
@@ -994,7 +955,7 @@ function startCustomerKitchenDetection() {
 
         }
 
-    }, 19500);
+    }, 26000);
 
 }
 
@@ -1198,7 +1159,7 @@ function startCustomerAnimation() {
 
 
 /* ==================================================
-   CAMBIO FRAME CUOCO
+   FRAME CUOCO
 ================================================== */
 
 function setCookFrame(frameNumber) {
@@ -1244,12 +1205,8 @@ function playCookAttack() {
     }
 
 
-    /* FRAME 1 */
-
     setCookFrame(0);
 
-
-    /* FRAME 2 */
 
     setTimeout(function() {
 
@@ -1258,8 +1215,6 @@ function playCookAttack() {
     }, 120);
 
 
-    /* FRAME 3 */
-
     setTimeout(function() {
 
         setCookFrame(2);
@@ -1267,7 +1222,7 @@ function playCookAttack() {
     }, 240);
 
 
-    /* FRAME 4 + PASTA */
+    /* FRAME 4 = LANCIO */
 
     setTimeout(function() {
 
@@ -1278,16 +1233,12 @@ function playCookAttack() {
     }, 360);
 
 
-    /* FRAME 5 */
-
     setTimeout(function() {
 
         setCookFrame(4);
 
     }, 480);
 
-
-    /* RITORNO FRAME 1 */
 
     setTimeout(function() {
 
@@ -1504,7 +1455,7 @@ function throwPasta(target) {
 
 
     /* ==================================================
-       CENTRO DEL CORPO DEL CLIENTE
+       BERSAGLIO: VISO
     ================================================== */
 
     const endX =
@@ -1514,12 +1465,17 @@ function throwPasta(target) {
 
     const endY =
         targetRect.top +
-        targetRect.height * 0.55;
+        targetRect.height * 0.22;
 
 
 
     game.appendChild(pasta);
 
+
+
+    /* ==================================================
+       POSIZIONE INIZIALE
+    ================================================== */
 
     pasta.style.left =
         (
