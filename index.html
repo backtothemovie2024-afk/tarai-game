@@ -6,11 +6,15 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+      content="width=device-width, initial-scale=1.0">
 
 <title>Tarai Rush</title>
 
 <style>
+
+/* ==================================================
+   RESET
+================================================== */
 
 * {
     box-sizing: border-box;
@@ -34,7 +38,7 @@ body {
 
 
 /* ==================================================
-   SCHERMO SMARTPHONE
+   SCHERMO VERTICALE
 ================================================== */
 
 #phone {
@@ -55,7 +59,7 @@ body {
 
 
 /* ==================================================
-   HOME
+   MENU
 ================================================== */
 
 #menu {
@@ -74,7 +78,7 @@ body {
 
     overflow: hidden;
 
-    z-index: 50;
+    z-index: 100;
 }
 
 
@@ -93,29 +97,12 @@ body {
 
     object-position: center;
 
-    opacity: 0;
-
     z-index: 10;
-
-    animation: coverAppear 0s linear 1s forwards;
-}
-
-
-@keyframes coverAppear {
-
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-
 }
 
 
 /* ==================================================
-   PLAY
+   PULSANTE PLAY
 ================================================== */
 
 #playButton {
@@ -144,32 +131,7 @@ body {
 
     cursor: pointer;
 
-    opacity: 0;
-
     z-index: 30;
-
-    animation: playAppear 0.6s ease-out 1.5s forwards;
-}
-
-
-@keyframes playAppear {
-
-    from {
-
-        opacity: 0;
-
-        transform: translateY(30px);
-
-    }
-
-    to {
-
-        opacity: 1;
-
-        transform: translateY(0);
-
-    }
-
 }
 
 
@@ -187,7 +149,7 @@ body {
 
     overflow: hidden;
 
-    background: white;
+    background: black;
 }
 
 
@@ -209,6 +171,33 @@ body {
     object-position: center;
 
     z-index: 0;
+
+}
+
+
+/* ==================================================
+   CUCINA 2.5D
+================================================== */
+
+#kitchen {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 42%;
+
+    width: 100%;
+
+    height: auto;
+
+    transform: translate(-50%, -50%);
+
+    object-fit: contain;
+
+    z-index: 5;
+
+    pointer-events: none;
 }
 
 
@@ -223,6 +212,7 @@ body {
     top: 15px;
 
     left: 20px;
+
     right: 20px;
 
     display: flex;
@@ -233,7 +223,9 @@ body {
 
     font-weight: bold;
 
-    z-index: 20;
+    color: white;
+
+    z-index: 30;
 }
 
 
@@ -246,18 +238,23 @@ body {
     position: absolute;
 
     width: 100px;
+
     height: 135px;
 
     top: -130px;
 
     z-index: 10;
 
-    animation: walkDown 5s linear forwards;
+    animation:
+        walkDown
+        5s
+        linear
+        forwards;
 }
 
 
 /* ==================================================
-   POSIZIONE CLIENTE 1
+   CLIENTE 1
 ================================================== */
 
 #customer1 {
@@ -268,7 +265,7 @@ body {
 
 
 /* ==================================================
-   POSIZIONE CLIENTE 2
+   CLIENTE 2
 ================================================== */
 
 #customer2 {
@@ -279,7 +276,7 @@ body {
 
 
 /* ==================================================
-   SPRITE CLIENTI
+   FRAME CLIENTI
 ================================================== */
 
 .customer .frame {
@@ -287,9 +284,11 @@ body {
     position: absolute;
 
     top: 0;
+
     left: 0;
 
     width: 100%;
+
     height: 100%;
 
     object-fit: contain;
@@ -336,25 +335,22 @@ body {
 
     position: absolute;
 
-    /* SECONDO CERCHIO DA SINISTRA */
-
     left: 43%;
-
-    /* LEGGERMENTE PIÙ IN ALTO */
 
     bottom: 7%;
 
     width: 100px;
+
     height: 135px;
 
     transform: translateX(-50%);
 
-    z-index: 15;
+    z-index: 20;
 }
 
 
 /* ==================================================
-   SPRITE CUOCO
+   FRAME CUOCO
 ================================================== */
 
 #cook img {
@@ -362,9 +358,11 @@ body {
     position: absolute;
 
     top: 0;
+
     left: 0;
 
     width: 100%;
+
     height: 100%;
 
     object-fit: contain;
@@ -389,80 +387,31 @@ body {
 <body>
 
 
+<!-- ==================================================
+     SCHERMO
+================================================== -->
+
 <div id="phone">
 
 
-<!-- ==================================================
-     HOME
-================================================== -->
-
-<div id="menu">
-
-
-    <img
-        id="cover"
-        src="https://i.ibb.co/qMC7T0bk/1787735382053.png"
-        alt="Tarai Rush">
-
-
-    <button id="playButton">
-
-        PLAY
-
-    </button>
-
-
-</div>
-
-
-
-<!-- ==================================================
-     GIOCO
-================================================== -->
-
-<div id="game">
-
-
-    <!-- NUOVO BACKGROUND -->
-
-    <img
-        id="background"
-        src="https://i.ibb.co/Kcnb7yVM/IMG-20260829-WA0009.jpg"
-        alt="Background">
-
-
-
-    <!-- HUD -->
-
-    <div id="hud">
-
-        <span>❤️ 3</span>
-
-        <span>⭐ 0</span>
-
-    </div>
-
-
-
     <!-- ==================================================
-         CLIENTE 1
+         MENU
     ================================================== -->
 
-    <div
-        id="customer1"
-        class="customer">
+    <div id="menu">
 
 
         <img
-            class="frame active"
-            src="https://i.ibb.co/xqSsVvcc/Screenshot-20260829-161529-Grok-2-removebg-preview.png"
-            alt="Cliente 1">
+            id="cover"
+            src="https://i.ibb.co/qMC7T0bk/1787735382053.png"
+            alt="Tarai Rush">
 
 
-        <img
-            class="frame"
-            src="https://i.ibb.co/4nvV4nPq/Screenshot-20260829-161529-Grok-3-removebg-preview.png"
-            alt="Cliente 1">
+        <button id="playButton">
+
+            PLAY
+
+        </button>
 
 
     </div>
@@ -470,77 +419,145 @@ body {
 
 
     <!-- ==================================================
-         CLIENTE 2
+         GIOCO
     ================================================== -->
 
-    <div
-        id="customer2"
-        class="customer">
+    <div id="game">
 
 
-        <img
-            class="frame active"
-            src="https://i.ibb.co/jP6QSPFd/1000040572-removebg-preview.png"
-            alt="Cliente 2">
-
+        <!-- ==================================================
+             BACKGROUND
+        ================================================== -->
 
         <img
-            class="frame"
-            src="https://i.ibb.co/vxJCRK81/1000040573-removebg-preview.png"
-            alt="Cliente 2">
+            id="background"
+            src="https://i.ibb.co/pj7trt5y/IMG-20260829-WA0012.jpg"
+            alt="Background">
+
+
+
+        <!-- ==================================================
+             CUCINA 2.5D
+        ================================================== -->
+
+        <img
+            id="kitchen"
+            src="https://i.ibb.co/PvnMFS5H/IMG-20260829-WA0010-removebg-preview.png"
+            alt="Cucina 2.5D">
+
+
+
+        <!-- ==================================================
+             HUD
+        ================================================== -->
+
+        <div id="hud">
+
+            <span>❤️ 3</span>
+
+            <span>⭐ 0</span>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             CLIENTE 1
+        ================================================== -->
+
+        <div
+            id="customer1"
+            class="customer">
+
+
+            <img
+                class="frame active"
+                src="https://i.ibb.co/xqSsVvcc/Screenshot-20260829-161529-Grok-2-removebg-preview.png"
+                alt="Cliente 1">
+
+
+            <img
+                class="frame"
+                src="https://i.ibb.co/4nvV4nPq/Screenshot-20260829-161529-Grok-3-removebg-preview.png"
+                alt="Cliente 1">
+
+
+        </div>
+
+
+
+        <!-- ==================================================
+             CLIENTE 2
+        ================================================== -->
+
+        <div
+            id="customer2"
+            class="customer">
+
+
+            <img
+                class="frame active"
+                src="https://i.ibb.co/jP6QSPFd/1000040572-removebg-preview.png"
+                alt="Cliente 2">
+
+
+            <img
+                class="frame"
+                src="https://i.ibb.co/vxJCRK81/1000040573-removebg-preview.png"
+                alt="Cliente 2">
+
+
+        </div>
+
+
+
+        <!-- ==================================================
+             CUOCO
+        ================================================== -->
+
+        <div id="cook">
+
+
+            <!-- FRAME 1 -->
+
+            <img
+                class="active"
+                src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
+                alt="Cuoco frame 1">
+
+
+            <!-- FRAME 2 -->
+
+            <img
+                src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
+                alt="Cuoco frame 2">
+
+
+            <!-- FRAME 3 -->
+
+            <img
+                src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
+                alt="Cuoco frame 3">
+
+
+            <!-- FRAME 4 -->
+
+            <img
+                src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
+                alt="Cuoco frame 4">
+
+
+            <!-- FRAME 5 -->
+
+            <img
+                src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
+                alt="Cuoco frame 5">
+
+
+        </div>
 
 
     </div>
-
-
-
-    <!-- ==================================================
-         CUOCO
-    ================================================== -->
-
-    <div id="cook">
-
-
-        <!-- FRAME 1 -->
-
-        <img
-            class="active"
-            src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-            alt="Cuoco frame 1">
-
-
-        <!-- FRAME 2 -->
-
-        <img
-            src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
-            alt="Cuoco frame 2">
-
-
-        <!-- FRAME 3 -->
-
-        <img
-            src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
-            alt="Cuoco frame 3">
-
-
-        <!-- FRAME 4 -->
-
-        <img
-            src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
-            alt="Cuoco frame 4">
-
-
-        <!-- FRAME 5 -->
-
-        <img
-            src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-            alt="Cuoco frame 5">
-
-
-    </div>
-
-
-</div>
 
 
 </div>
@@ -573,23 +590,23 @@ document
     .addEventListener("click", function() {
 
 
-        /* NASCONDE HOME */
+        /* NASCONDE IL MENU */
 
         document
             .getElementById("menu")
             .style.display = "none";
 
 
-        /* MOSTRA GIOCO */
+        /* MOSTRA IL GIOCO */
 
         document
             .getElementById("game")
             .style.display = "block";
 
 
-        /* =====================
+        /* ==========================================
            CLIENTE 1
-        ===================== */
+        ========================================== */
 
         const customer1 =
             document.getElementById("customer1");
@@ -597,15 +614,18 @@ document
 
         customer1.style.animation = "none";
 
+
         void customer1.offsetWidth;
+
 
         customer1.style.animation =
             "walkDown 5s linear forwards";
 
 
-        /* =====================
+
+        /* ==========================================
            CLIENTE 2
-        ===================== */
+        ========================================== */
 
         const customer2 =
             document.getElementById("customer2");
@@ -613,13 +633,18 @@ document
 
         customer2.style.animation = "none";
 
+
         void customer2.offsetWidth;
+
 
         customer2.style.animation =
             "walkDown 5s linear forwards";
 
 
-        /* AVVIA ANIMAZIONI */
+
+        /* ==========================================
+           AVVIA ANIMAZIONI
+        ========================================== */
 
         startCustomerAnimation();
 
@@ -651,9 +676,9 @@ function startCustomerAnimation() {
     customerTimer = setInterval(function() {
 
 
-        /* =====================
+        /* ==========================================
            CLIENTE 1
-        ===================== */
+        ========================================== */
 
         const c1 =
             document
@@ -683,9 +708,9 @@ function startCustomerAnimation() {
 
 
 
-        /* =====================
+        /* ==========================================
            CLIENTE 2
-        ===================== */
+        ========================================== */
 
         const c2 =
             document
@@ -776,4 +801,4 @@ function startCookAnimation() {
 
 </body>
 
-   </html>
+                </html>
