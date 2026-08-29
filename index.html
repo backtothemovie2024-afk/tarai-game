@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
 
 <meta charset="UTF-8">
@@ -9,39 +10,55 @@
 
 <title>Tarai Rush</title>
 
+
 <style>
+
+/* =========================
+   BASE
+========================= */
 
 * {
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
+
     margin: 0;
     padding: 0;
+
     width: 100%;
     height: 100%;
+
     overflow: hidden;
+
     font-family: Arial, sans-serif;
 }
 
 
-/* =====================
+/* =========================
    HOME
-===================== */
+========================= */
 
 #menu {
+
     width: 100vw;
     height: 100vh;
 
     background: #1b1b2f;
 
     display: flex;
+
     flex-direction: column;
+
     justify-content: center;
+
     align-items: center;
 }
 
+
 #menu h1 {
+
     margin: 0 0 40px;
 
     color: #ffd447;
@@ -51,11 +68,14 @@ html, body {
     font-weight: 900;
 }
 
+
 #playButton {
+
     width: 240px;
     height: 70px;
 
     border: none;
+
     border-radius: 18px;
 
     background: #ef6428;
@@ -63,15 +83,19 @@ html, body {
     color: white;
 
     font-size: 28px;
+
     font-weight: bold;
+
+    cursor: pointer;
 }
 
 
-/* =====================
+/* =========================
    GIOCO
-===================== */
+========================= */
 
 #game {
+
     display: none;
 
     position: relative;
@@ -85,32 +109,37 @@ html, body {
 }
 
 
-/* =====================
+/* =========================
    HUD
-===================== */
+========================= */
 
 #hud {
+
     position: absolute;
 
     top: 15px;
+
     left: 20px;
     right: 20px;
 
     display: flex;
+
     justify-content: space-between;
 
     font-size: 22px;
+
     font-weight: bold;
 
-    z-index: 10;
+    z-index: 20;
 }
 
 
-/* =====================
+/* =========================
    CLIENTE
-===================== */
+========================= */
 
 #customer {
+
     position: absolute;
 
     width: 150px;
@@ -122,36 +151,56 @@ html, body {
 
     transform: translateX(-50%);
 
-    z-index: 5;
+    z-index: 10;
 
     animation: walkDown 5s linear forwards;
 }
 
 
-/* IMMAGINE */
+/* =========================
+   I 4 FRAME
+========================= */
 
-#customerSprite {
+.frame {
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
     width: 150px;
     height: 200px;
 
     object-fit: contain;
 
+    display: none;
+}
+
+
+/* PRIMO FRAME VISIBILE */
+
+.frame1 {
+
     display: block;
 }
 
 
-/* =====================
-   MOVIMENTO VERSO IL BASSO
-===================== */
+/* =========================
+   MOVIMENTO CLIENTE
+========================= */
 
 @keyframes walkDown {
 
     from {
+
         top: -220px;
+
     }
 
     to {
+
         top: 55vh;
+
     }
 
 }
@@ -164,143 +213,211 @@ html, body {
 <body>
 
 
-<!-- =====================
+<!-- =========================
      HOME
-===================== -->
+========================= -->
 
 <div id="menu">
 
-    <h1>TARAI RUSH</h1>
+    <h1>
+        TARAI RUSH
+    </h1>
+
 
     <button id="playButton">
+
         PLAY
+
     </button>
 
 </div>
 
 
-<!-- =====================
+
+<!-- =========================
      LIVELLO 1
-===================== -->
+========================= -->
 
 <div id="game">
 
+
     <div id="hud">
 
-        <span>❤️ 3</span>
+        <span>
+            ❤️ 3
+        </span>
 
-        <span>⭐ 0</span>
+
+        <span>
+            ⭐ 0
+        </span>
 
     </div>
 
+
+
+    <!-- CLIENTE -->
 
     <div id="customer">
 
+
+        <!-- FRAME 1 -->
+
         <img
-            id="customerSprite"
+            class="frame frame1"
             src="https://i.ibb.co/WWQSVh2c/Screenshot-20260829-161529-Grok-2.jpg"
-            alt="Cliente">
+            alt="Cliente frame 1">
+
+
+        <!-- FRAME 2 -->
+
+        <img
+            class="frame frame2"
+            src="https://i.ibb.co/zV65ZTPs/Screenshot-20260829-161529-Grok-4.jpg"
+            alt="Cliente frame 2">
+
+
+        <!-- FRAME 3 -->
+
+        <img
+            class="frame frame3"
+            src="https://i.ibb.co/YxRzGxP/Screenshot-20260829-161529-Grok-3.jpg"
+            alt="Cliente frame 3">
+
+
+        <!-- FRAME 4 -->
+
+        <img
+            class="frame frame4"
+            src="https://i.ibb.co/zV65ZTPs/Screenshot-20260829-161529-Grok-4.jpg"
+            alt="Cliente frame 4">
+
 
     </div>
+
 
 </div>
 
 
+
 <script>
 
-/* =====================
-   I 4 FRAME
-===================== */
-
-const frames = [
-
-    "https://i.ibb.co/WWQSVh2c/Screenshot-20260829-161529-Grok-2.jpg",
-
-    "https://i.ibb.co/zV65ZTPs/Screenshot-20260829-161529-Grok-4.jpg",
-
-    "https://i.ibb.co/YxRzGxP/Screenshot-20260829-161529-Grok-3.jpg",
-
-    "https://i.ibb.co/zV65ZTPs/Screenshot-20260829-161529-Grok-4.jpg"
-
-];
-
-
-/* =====================
-   PRECARICA LE IMMAGINI
-===================== */
-
-const loadedFrames = [];
-
-for (let i = 0; i < frames.length; i++) {
-
-    const image = new Image();
-
-    image.src = frames[i];
-
-    loadedFrames.push(image);
-
-}
-
-
-/* =====================
+/* =========================
    VARIABILI
-===================== */
+========================= */
 
-let currentFrame = 0;
+let currentFrame = 1;
 
-let frameTimer = null;
+let walkAnimation;
 
 
-/* =====================
+/* =========================
    PLAY
-===================== */
+========================= */
 
-document.getElementById("playButton").onclick = function() {
-
-    document.getElementById("menu").style.display = "none";
-
-    document.getElementById("game").style.display = "block";
+document
+    .getElementById("playButton")
+    .addEventListener("click", function() {
 
 
-    const customer =
-        document.getElementById("customer");
+        /* NASCONDE HOME */
 
-    customer.style.animation =
-        "walkDown 5s linear forwards";
-
-
-    currentFrame = 0;
+        document
+            .getElementById("menu")
+            .style.display = "none";
 
 
-    const sprite =
-        document.getElementById("customerSprite");
+        /* MOSTRA GIOCO */
+
+        document
+            .getElementById("game")
+            .style.display = "block";
 
 
-    sprite.src =
-        loadedFrames[0].src;
+        /* CLIENTE */
+
+        const customer =
+            document.getElementById("customer");
 
 
-    if (frameTimer) {
-        clearInterval(frameTimer);
+        /* RIAVVIA MOVIMENTO */
+
+        customer.style.animation = "none";
+
+
+        void customer.offsetWidth;
+
+
+        customer.style.animation =
+            "walkDown 5s linear forwards";
+
+
+        /* AVVIA CAMMINATA */
+
+        startWalking();
+
+
+    });
+
+
+/* =========================
+   ANIMAZIONE 4 FRAME
+========================= */
+
+function startWalking() {
+
+
+    /* FERMA EVENTUALE ANIMAZIONE PRECEDENTE */
+
+    if (walkAnimation) {
+
+        clearInterval(walkAnimation);
+
     }
 
 
-    frameTimer = setInterval(function() {
+    currentFrame = 1;
+
+
+    walkAnimation = setInterval(function() {
+
+
+        /* NASCONDE TUTTI I FRAME */
+
+        document
+            .querySelectorAll(".frame")
+            .forEach(function(frame) {
+
+                frame.style.display = "none";
+
+            });
+
+
+        /* PASSA AL FRAME SUCCESSIVO */
 
         currentFrame++;
 
-        if (currentFrame >= loadedFrames.length) {
-            currentFrame = 0;
+
+        if (currentFrame > 4) {
+
+            currentFrame = 1;
+
         }
 
-        sprite.src =
-            loadedFrames[currentFrame].src;
 
-    }, 400);
+        /* MOSTRA IL FRAME CORRETTO */
 
-};
+        document
+            .querySelector(".frame" + currentFrame)
+            .style.display = "block";
+
+
+    }, 250);
+
+}
 
 </script>
+
 
 </body>
 
