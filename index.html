@@ -154,7 +154,7 @@ body {
 
 
 /* ==================================================
-   NUOVO BACKGROUND
+   BACKGROUND
 ================================================== */
 
 #background {
@@ -176,10 +176,11 @@ body {
 
 
 /* ==================================================
-   CUCINA 2.5D
+   CUCINA
 ================================================== */
 
-#kitchen {
+#kitchen,
+#kitchenDamaged {
 
     position: absolute;
 
@@ -195,9 +196,28 @@ body {
 
     object-fit: contain;
 
+    pointer-events: none;
+
+}
+
+
+/* CUCINA INTEGRA */
+
+#kitchen {
+
     z-index: 15;
 
-    pointer-events: none;
+}
+
+
+/* CUCINA DANNEGGIATA */
+
+#kitchenDamaged {
+
+    z-index: 16;
+
+    display: none;
+
 }
 
 
@@ -313,15 +333,21 @@ body {
 @keyframes walkDown {
 
     0% {
+
         top: -130px;
+
     }
 
     65% {
+
         top: 69%;
+
     }
 
     100% {
+
         top: 69%;
+
     }
 
 }
@@ -455,13 +481,24 @@ body {
 
 
         <!-- ==================================================
-             CUCINA 2.5D
+             CUCINA INTEGRA
         ================================================== -->
 
         <img
             id="kitchen"
             src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png"
-            alt="Cucina 2.5D">
+            alt="Cucina">
+
+
+
+        <!-- ==================================================
+             CUCINA DANNEGGIATA
+        ================================================== -->
+
+        <img
+            id="kitchenDamaged"
+            src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"
+            alt="Cucina danneggiata">
 
 
 
@@ -536,36 +573,26 @@ body {
         <div id="cook">
 
 
-            <!-- FRAME 1 -->
-
             <img
                 class="active"
                 src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
                 alt="Cuoco frame 1">
 
 
-            <!-- FRAME 2 -->
-
             <img
                 src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
                 alt="Cuoco frame 2">
 
-
-            <!-- FRAME 3 -->
 
             <img
                 src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
                 alt="Cuoco frame 3">
 
 
-            <!-- FRAME 4 -->
-
             <img
                 src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
                 alt="Cuoco frame 4">
 
-
-            <!-- FRAME 5 -->
 
             <img
                 src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
@@ -600,6 +627,30 @@ let cookTimer = null;
 
 
 /* ==================================================
+   ENERGIA CUCINA
+================================================== */
+
+let kitchenEnergy = 100;
+
+let kitchenDamageTimer = null;
+
+let customersAtKitchen = 0;
+
+
+/* ==================================================
+   CLIENTI ARRIVATI
+================================================== */
+
+let customer1AtKitchen = false;
+
+let customer2AtKitchen = false;
+
+let customer1DamageStarted = false;
+
+let customer2DamageStarted = false;
+
+
+/* ==================================================
    PLAY
 ================================================== */
 
@@ -620,6 +671,33 @@ document
         document
             .getElementById("game")
             .style.display = "block";
+
+
+        /* RESET ENERGIA */
+
+        kitchenEnergy = 100;
+
+        customersAtKitchen = 0;
+
+        customer1AtKitchen = false;
+
+        customer2AtKitchen = false;
+
+        customer1DamageStarted = false;
+
+        customer2DamageStarted = false;
+
+
+        /* MOSTRA CUCINA INTEGRA */
+
+        document
+            .getElementById("kitchen")
+            .style.display = "block";
+
+
+        document
+            .getElementById("kitchenDamaged")
+            .style.display = "none";
 
 
         /* ==========================================
@@ -668,7 +746,184 @@ document
 
         startCookAnimation();
 
+        startKitchenEnergySystem();
+
+
+        /* ==========================================
+           CONTROLLA ARRIVO CLIENTI
+        ========================================== */
+
+        startCustomerKitchenDetection();
+
     });
+
+
+
+/* ==================================================
+   SISTEMA ENERGIA CUCINA
+================================================== */
+
+function startKitchenEnergySystem() {
+
+
+    if (kitchenDamageTimer !== null) {
+
+        clearInterval(kitchenDamageTimer);
+
+    }
+
+
+    kitchenDamageTimer = setInterval(function() {
+
+
+        /* SE CI SONO CLIENTI ALLA CUCINA */
+
+        if (customersAtKitchen > 0) {
+
+
+            /* OGNI CLIENTE TOGLIE 1 PUNTO */
+
+            kitchenEnergy -= customersAtKitchen;
+
+
+            if (kitchenEnergy < 0) {
+
+                kitchenEnergy = 0;
+
+            }
+
+
+            console.log(
+                "Energia cucina:",
+                kitchenEnergy,
+                "Clienti:",
+                customersAtKitchen
+            );
+
+
+            /* ======================================
+               CUCINA DANNEGGIATA AL 50%
+            ====================================== */
+
+            if (kitchenEnergy <= 50) {
+
+                document
+                    .getElementById("kitchen")
+                    .style.display = "none";
+
+
+                document
+                    .getElementById("kitchenDamaged")
+                    .style.display = "block";
+
+            }
+
+        }
+
+
+    }, 5000);
+
+}
+
+
+
+/* ==================================================
+   RILEVAMENTO ARRIVO CLIENTI
+================================================== */
+
+function startCustomerKitchenDetection() {
+
+
+    const checkTimer = setInterval(function() {
+
+
+        const customer1 =
+            document.getElementById("customer1");
+
+
+        const customer2 =
+            document.getElementById("customer2");
+
+
+        const game =
+            document.getElementById("game");
+
+
+        const gameHeight =
+            game.clientHeight;
+
+
+        const customer1Top =
+            customer1.offsetTop;
+
+
+        const customer2Top =
+            customer2.offsetTop;
+
+
+
+        /* ==========================================
+           CLIENTE 1
+        ========================================== */
+
+        if (
+            !customer1AtKitchen &&
+            customer1Top >= gameHeight * 0.69
+        ) {
+
+            customer1AtKitchen = true;
+
+
+            setTimeout(function() {
+
+
+                if (customer1AtKitchen) {
+
+                    customer1DamageStarted = true;
+
+                    customersAtKitchen++;
+
+                }
+
+
+            }, 2000);
+
+        }
+
+
+
+        /* ==========================================
+           CLIENTE 2
+        ========================================== */
+
+        if (
+            !customer2AtKitchen &&
+            customer2Top >= gameHeight * 0.69
+        ) {
+
+            customer2AtKitchen = true;
+
+
+            setTimeout(function() {
+
+
+                if (customer2AtKitchen) {
+
+                    customer2DamageStarted = true;
+
+                    customersAtKitchen++;
+
+                }
+
+
+            }, 2000);
+
+        }
+
+
+    }, 100);
+
+}
 
 
 
