@@ -10,7 +10,6 @@
 
 <title>Tarai Rush</title>
 
-
 <style>
 
 /* =====================
@@ -39,7 +38,7 @@ body {
 
 
 /* =====================
-   AREA SMARTPHONE 9:16
+   AREA SMARTPHONE
 ===================== */
 
 #phone {
@@ -111,10 +110,6 @@ body {
         forwards;
 }
 
-
-/* =====================
-   APPARIZIONE
-===================== */
 
 @keyframes suddenAppear {
 
@@ -259,11 +254,16 @@ body {
 }
 
 
+/* ==================================================
+   CLIENTI
+================================================== */
+
+
 /* =====================
-   CLIENTE
+   CLIENTE GENERALE
 ===================== */
 
-#customer {
+.customer {
 
     position: absolute;
 
@@ -271,11 +271,7 @@ body {
 
     height: 112.5px;
 
-    left: 50%;
-
-    top: -170px;
-
-    transform: translateX(-50%);
+    top: -130px;
 
     z-index: 10;
 
@@ -288,7 +284,29 @@ body {
 
 
 /* =====================
-   SPRITE
+   CLIENTE 1
+===================== */
+
+#customer1 {
+
+    left: 35%;
+
+}
+
+
+/* =====================
+   CLIENTE 2
+===================== */
+
+#customer2 {
+
+    left: 65%;
+
+}
+
+
+/* =====================
+   FRAME
 ===================== */
 
 .frame {
@@ -299,9 +317,9 @@ body {
 
     left: 0;
 
-    width: 112.5px;
+    width: 84.4px;
 
-    height: 150px;
+    height: 112.5px;
 
     object-fit: contain;
 
@@ -309,23 +327,37 @@ body {
 }
 
 
-/* PRIMO FRAME */
+/* =====================
+   FRAME VISIBILE
+===================== */
 
-.frame1 {
+.frame.active {
 
     display: block;
+
 }
 
 
 /* =====================
-   MOVIMENTO CLIENTE
+   FRAME SPECCHIATO
+===================== */
+
+.mirrored {
+
+    transform: scaleX(-1);
+
+}
+
+
+/* =====================
+   MOVIMENTO
 ===================== */
 
 @keyframes walkDown {
 
     from {
 
-        top: -170px;
+        top: -130px;
 
     }
 
@@ -348,9 +380,9 @@ body {
 <div id="phone">
 
 
-<!-- =====================
+<!-- ==================================================
      HOME
-===================== -->
+================================================== -->
 
 <div id="menu">
 
@@ -372,9 +404,9 @@ body {
 
 
 
-<!-- =====================
+<!-- ==================================================
      GIOCO
-===================== -->
+================================================== -->
 
 <div id="game">
 
@@ -403,25 +435,58 @@ body {
 
 
 
-    <!-- CLIENTE -->
+    <!-- ==================================================
+         CLIENTE 1
+    ================================================== -->
 
-    <div id="customer">
+    <div
+        id="customer1"
+        class="customer">
 
 
         <!-- GAMBA SINISTRA -->
 
         <img
-            class="frame frame1"
+            class="frame active"
             src="https://i.ibb.co/xqSsVvcc/Screenshot-20260829-161529-Grok-2-removebg-preview.png"
-            alt="Gamba sinistra">
+            alt="Cliente 1 sinistra">
 
 
         <!-- GAMBA DESTRA -->
 
         <img
-            class="frame frame2"
+            class="frame"
             src="https://i.ibb.co/4nvV4nPq/Screenshot-20260829-161529-Grok-3-removebg-preview.png"
-            alt="Gamba destra">
+            alt="Cliente 1 destra">
+
+
+    </div>
+
+
+
+    <!-- ==================================================
+         CLIENTE 2
+    ================================================== -->
+
+    <div
+        id="customer2"
+        class="customer">
+
+
+        <!-- GAMBA SINISTRA -->
+
+        <img
+            class="frame active"
+            src="https://i.ibb.co/23VxFJw7/Screenshot-20260829-175521-Grok-removebg-preview.png"
+            alt="Cliente 2 sinistra">
+
+
+        <!-- GAMBA DESTRA SPECCHIATA -->
+
+        <img
+            class="frame mirrored"
+            src="https://i.ibb.co/23VxFJw7/Screenshot-20260829-175521-Grok-removebg-preview.png"
+            alt="Cliente 2 destra">
 
 
     </div>
@@ -436,44 +501,72 @@ body {
 
 <script>
 
+/* ==================================================
+   ANIMAZIONE
+================================================== */
+
+
 /* =====================
-   CAMMINATA
+   CLIENTE 1
 ===================== */
 
-let currentFrame = 1;
-
-let walkAnimation;
+let frame1 = 0;
 
 
 /* =====================
+   CLIENTE 2
+===================== */
+
+let frame2 = 0;
+
+
+/* =====================
+   TIMER
+===================== */
+
+let animationTimer;
+
+
+
+/* ==================================================
    PLAY
-===================== */
+================================================== */
 
 document
     .getElementById("playButton")
     .addEventListener("click", function() {
 
 
+        /* NASCONDE HOME */
+
         document
             .getElementById("menu")
             .style.display = "none";
 
+
+        /* MOSTRA GIOCO */
 
         document
             .getElementById("game")
             .style.display = "block";
 
 
-        const customer =
-            document.getElementById("customer");
+        /* RIAVVIA CLIENTI */
+
+        const customers =
+            document.querySelectorAll(".customer");
 
 
-        customer.style.animation = "none";
+        customers.forEach(function(customer) {
 
-        void customer.offsetWidth;
+            customer.style.animation = "none";
 
-        customer.style.animation =
-            "walkDown 5s linear forwards";
+            void customer.offsetWidth;
+
+            customer.style.animation =
+                "walkDown 5s linear forwards";
+
+        });
 
 
         startWalking();
@@ -482,49 +575,87 @@ document
 
 
 
-/* =====================
-   ANIMAZIONE GAMBE
-===================== */
+/* ==================================================
+   CAMMINATA
+================================================== */
 
 function startWalking() {
 
 
-    if (walkAnimation) {
+    if (animationTimer) {
 
-        clearInterval(walkAnimation);
+        clearInterval(animationTimer);
 
     }
 
 
-    currentFrame = 1;
+    frame1 = 0;
+
+    frame2 = 0;
 
 
-    walkAnimation = setInterval(function() {
+    animationTimer = setInterval(function() {
 
 
-        document
-            .querySelectorAll(".frame")
-            .forEach(function(frame) {
+        /* =====================
+           CLIENTE 1
+        ===================== */
 
-                frame.style.display = "none";
+        const customer1Frames =
+            document
+                .getElementById("customer1")
+                .querySelectorAll(".frame");
 
-            });
+
+        customer1Frames.forEach(function(frame) {
+
+            frame.classList.remove("active");
+
+        });
 
 
-        if (currentFrame === 1) {
+        customer1Frames[frame1]
+            .classList.add("active");
 
-            currentFrame = 2;
 
-        } else {
+        frame1++;
 
-            currentFrame = 1;
+        if (frame1 >= 2) {
+
+            frame1 = 0;
 
         }
 
 
-        document
-            .querySelector(".frame" + currentFrame)
-            .style.display = "block";
+
+        /* =====================
+           CLIENTE 2
+        ===================== */
+
+        const customer2Frames =
+            document
+                .getElementById("customer2")
+                .querySelectorAll(".frame");
+
+
+        customer2Frames.forEach(function(frame) {
+
+            frame.classList.remove("active");
+
+        });
+
+
+        customer2Frames[frame2]
+            .classList.add("active");
+
+
+        frame2++;
+
+        if (frame2 >= 2) {
+
+            frame2 = 0;
+
+        }
 
 
     }, 300);
