@@ -6,11 +6,15 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>Tarai Rush</title>
 
 <style>
+
+/* =========================
+   BASE
+========================= */
 
 * {
     box-sizing: border-box;
@@ -68,7 +72,7 @@ body {
 
 .menu-button {
 
-    width: 240px;
+    width: min(70vw, 280px);
 
     height: 70px;
 
@@ -83,11 +87,14 @@ body {
     font-size: 28px;
 
     font-weight: 900;
+
+    box-shadow:
+        0 7px 0 #8d2e0e;
 }
 
 
 /* =========================
-   LIVELLO
+   LIVELLO 1
 ========================= */
 
 #game {
@@ -97,7 +104,6 @@ body {
     position: relative;
 
     width: 100vw;
-
     height: 100vh;
 
     overflow: hidden;
@@ -115,20 +121,18 @@ body {
     position: absolute;
 
     top: 15px;
-
     left: 20px;
-
     right: 20px;
 
     display: flex;
 
     justify-content: space-between;
 
+    color: black;
+
     font-size: 22px;
 
     font-weight: bold;
-
-    color: black;
 
     z-index: 20;
 }
@@ -144,160 +148,12 @@ body {
 
     left: 50%;
 
-    top: -180px;
+    top: -330px;
 
     transform: translateX(-50%);
 
-    width: 150px;
+    width: min(28vw, 160px);
 
-    height: 180px;
+    aspect-ratio: 160 / 426;
 
-    overflow: hidden;
-
-    z-index: 10;
-}
-
-
-/* =========================
-   SPRITE
-========================= */
-
-#customerSprite {
-
-    width: 600px;
-
-    height: 180px;
-
-    max-width: none;
-
-    background-image:
-        url("https://i.ibb.co/39yMsFWJ/1787786320198-3.jpg");
-
-    background-size: 600px 180px;
-
-    background-repeat: no-repeat;
-
-    animation:
-
-        walk 0.8s steps(4) infinite;
-}
-
-
-/* =========================
-   4 FRAME
-========================= */
-
-@keyframes walk {
-
-    from {
-
-        background-position-x: 0;
-
-    }
-
-    to {
-
-        background-position-x: -450px;
-
-    }
-
-}
-
-
-/* =========================
-   MOVIMENTO
-========================= */
-
-@keyframes moveDown {
-
-    from {
-
-        top: -180px;
-
-    }
-
-    to {
-
-        top: 55vh;
-
-    }
-
-}
-
-</style>
-
-</head>
-
-
-<body>
-
-
-<!-- HOME -->
-
-<div id="menu">
-
-    <h1>
-        TARAI RUSH
-    </h1>
-
-    <button
-        class="menu-button"
-        onclick="startGame()">
-
-        PLAY
-
-    </button>
-
-</div>
-
-
-
-<!-- GIOCO -->
-
-<div id="game">
-
-
-    <div id="hud">
-
-        <span>❤️ 3</span>
-
-        <span>⭐ 0</span>
-
-    </div>
-
-
-    <div id="customer">
-
-        <div id="customerSprite"></div>
-
-    </div>
-
-
-</div>
-
-
-
-<script>
-
-function startGame() {
-
-    document.getElementById("menu").style.display = "none";
-
-    document.getElementById("game").style.display = "block";
-
-
-    const customer =
-        document.getElementById("customer");
-
-
-    customer.style.animation =
-        "moveDown 5s linear forwards";
-
-}
-
-</script>
-
-
-</body>
-
-</html>
+    overflow:
