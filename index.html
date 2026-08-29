@@ -10,11 +10,8 @@
 
 <title>Tarai Rush</title>
 
-<style>
 
-/* =====================
-   BASE
-===================== */
+<style>
 
 * {
     box-sizing: border-box;
@@ -258,11 +255,6 @@ body {
    CLIENTI
 ================================================== */
 
-
-/* =====================
-   CLIENTE GENERALE
-===================== */
-
 .customer {
 
     position: absolute;
@@ -327,24 +319,9 @@ body {
 }
 
 
-/* =====================
-   FRAME VISIBILE
-===================== */
-
 .frame.active {
 
     display: block;
-
-}
-
-
-/* =====================
-   FRAME SPECCHIATO
-===================== */
-
-.mirrored {
-
-    transform: scaleX(-1);
 
 }
 
@@ -380,9 +357,9 @@ body {
 <div id="phone">
 
 
-<!-- ==================================================
+<!-- =====================
      HOME
-================================================== -->
+===================== -->
 
 <div id="menu">
 
@@ -404,14 +381,12 @@ body {
 
 
 
-<!-- ==================================================
+<!-- =====================
      GIOCO
-================================================== -->
+===================== -->
 
 <div id="game">
 
-
-    <!-- BACKGROUND -->
 
     <img
         id="background"
@@ -419,74 +394,64 @@ body {
         alt="Background">
 
 
-    <!-- HUD -->
-
     <div id="hud">
 
-        <span>
-            ❤️ 3
-        </span>
+        <span>❤️ 3</span>
 
-        <span>
-            ⭐ 0
-        </span>
+        <span>⭐ 0</span>
 
     </div>
 
 
 
-    <!-- ==================================================
+    <!-- =====================
          CLIENTE 1
-    ================================================== -->
+    ===================== -->
 
     <div
         id="customer1"
         class="customer">
 
 
-        <!-- GAMBA SINISTRA -->
-
         <img
+            id="customer1Frame1"
             class="frame active"
             src="https://i.ibb.co/xqSsVvcc/Screenshot-20260829-161529-Grok-2-removebg-preview.png"
-            alt="Cliente 1 sinistra">
+            alt="Cliente 1">
 
-
-        <!-- GAMBA DESTRA -->
 
         <img
+            id="customer1Frame2"
             class="frame"
             src="https://i.ibb.co/4nvV4nPq/Screenshot-20260829-161529-Grok-3-removebg-preview.png"
-            alt="Cliente 1 destra">
+            alt="Cliente 1">
 
 
     </div>
 
 
 
-    <!-- ==================================================
+    <!-- =====================
          CLIENTE 2
-    ================================================== -->
+    ===================== -->
 
     <div
         id="customer2"
         class="customer">
 
 
-        <!-- GAMBA SINISTRA -->
-
         <img
+            id="customer2Frame1"
             class="frame active"
             src="https://i.ibb.co/23VxFJw7/Screenshot-20260829-175521-Grok-removebg-preview.png"
-            alt="Cliente 2 sinistra">
+            alt="Cliente 2">
 
-
-        <!-- GAMBA DESTRA SPECCHIATA -->
 
         <img
-            class="frame mirrored"
-            src="https://i.ibb.co/23VxFJw7/Screenshot-20260829-175521-Grok-removebg-preview.png"
-            alt="Cliente 2 destra">
+            id="customer2Frame2"
+            class="frame"
+            src="https://i.ibb.co/Kz8H26Yf/Screenshot-20260829-181131-Grok-removebg-preview.png"
+            alt="Cliente 2">
 
 
     </div>
@@ -501,72 +466,62 @@ body {
 
 <script>
 
-/* ==================================================
-   ANIMAZIONE
-================================================== */
-
-
 /* =====================
-   CLIENTE 1
+   VARIABILI
 ===================== */
 
 let frame1 = 0;
 
-
-/* =====================
-   CLIENTE 2
-===================== */
-
 let frame2 = 0;
-
-
-/* =====================
-   TIMER
-===================== */
 
 let animationTimer;
 
 
-
-/* ==================================================
+/* =====================
    PLAY
-================================================== */
+===================== */
 
 document
     .getElementById("playButton")
     .addEventListener("click", function() {
 
 
-        /* NASCONDE HOME */
-
         document
             .getElementById("menu")
             .style.display = "none";
 
-
-        /* MOSTRA GIOCO */
 
         document
             .getElementById("game")
             .style.display = "block";
 
 
-        /* RIAVVIA CLIENTI */
-
-        const customers =
-            document.querySelectorAll(".customer");
+        const customer1 =
+            document.getElementById("customer1");
 
 
-        customers.forEach(function(customer) {
+        const customer2 =
+            document.getElementById("customer2");
 
-            customer.style.animation = "none";
 
-            void customer.offsetWidth;
+        /* RIAVVIA CLIENTE 1 */
 
-            customer.style.animation =
-                "walkDown 5s linear forwards";
+        customer1.style.animation = "none";
 
-        });
+        void customer1.offsetWidth;
+
+        customer1.style.animation =
+            "walkDown 5s linear forwards";
+
+
+        /* RIAVVIA CLIENTE 2 */
+
+        customer2.style.animation = "none";
+
+        void customer2.offsetWidth;
+
+        customer2.style.animation =
+            "walkDown 5s linear forwards";
 
 
         startWalking();
@@ -575,9 +530,9 @@ document
 
 
 
-/* ==================================================
+/* =====================
    CAMMINATA
-================================================== */
+===================== */
 
 function startWalking() {
 
@@ -601,24 +556,24 @@ function startWalking() {
            CLIENTE 1
         ===================== */
 
-        const customer1Frames =
+        const c1 =
             document
                 .getElementById("customer1")
                 .querySelectorAll(".frame");
 
 
-        customer1Frames.forEach(function(frame) {
+        c1.forEach(function(frame) {
 
             frame.classList.remove("active");
 
         });
 
 
-        customer1Frames[frame1]
-            .classList.add("active");
+        c1[frame1].classList.add("active");
 
 
         frame1++;
+
 
         if (frame1 >= 2) {
 
@@ -632,24 +587,24 @@ function startWalking() {
            CLIENTE 2
         ===================== */
 
-        const customer2Frames =
+        const c2 =
             document
                 .getElementById("customer2")
                 .querySelectorAll(".frame");
 
 
-        customer2Frames.forEach(function(frame) {
+        c2.forEach(function(frame) {
 
             frame.classList.remove("active");
 
         });
 
 
-        customer2Frames[frame2]
-            .classList.add("active");
+        c2[frame2].classList.add("active");
 
 
         frame2++;
+
 
         if (frame2 >= 2) {
 
