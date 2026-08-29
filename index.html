@@ -260,19 +260,9 @@ body {
 }
 
 
-#customer1 {
-
-    left: 35%;
-
-}
-
-
-#customer2 {
-
-    left: 65%;
-
-}
-
+/* ==================================================
+   SPRITE NORMALI
+================================================== */
 
 .customer .frame {
 
@@ -296,6 +286,111 @@ body {
 .customer .frame.active {
 
     display: block;
+
+}
+
+
+/* ==================================================
+   SPRITE FELICE
+================================================== */
+
+.customer .happy-frame {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    display: none;
+
+    z-index: 2;
+
+}
+
+
+/* ==================================================
+   CUORICINO
+================================================== */
+
+.heart {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: -18px;
+
+    transform:
+        translateX(-50%);
+
+    font-size: 24px;
+
+    line-height: 1;
+
+    z-index: 5;
+
+    display: none;
+
+    animation:
+        heartFloat
+        0.8s
+        ease-in-out
+        infinite alternate;
+
+}
+
+
+.customer.satisfied .heart {
+
+    display: block;
+
+}
+
+
+@keyframes heartFloat {
+
+    0% {
+
+        transform:
+            translateX(-50%)
+            translateY(0)
+            scale(1);
+
+    }
+
+    100% {
+
+        transform:
+            translateX(-50%)
+            translateY(-7px)
+            scale(1.12);
+
+    }
+
+}
+
+
+/* ==================================================
+   CLIENTI
+================================================== */
+
+#customer1 {
+
+    left: 35%;
+
+}
+
+
+#customer2 {
+
+    left: 65%;
 
 }
 
@@ -400,6 +495,7 @@ body {
 
 /* ==================================================
    PUNTO ROSSO
+   INVISIBILE MA FUNZIONANTE
 ================================================== */
 
 .hit-marker {
@@ -430,8 +526,14 @@ body {
 
     pointer-events: none;
 
+    opacity: 0;
+
 }
 
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
 
 @media (max-width: 500px) {
 
@@ -489,7 +591,7 @@ body {
 
 
 <!-- ==================================================
-     GIOCO
+   GIOCO
 ================================================== -->
 
 <div id="game">
@@ -539,12 +641,16 @@ body {
 
 
 
-    <!-- CLIENTE 1 -->
+    <!-- ==================================================
+         CLIENTE 1
+    ================================================== -->
 
     <div
         id="customer1"
         class="customer"
     >
+
+        <!-- FRAME NORMALE 1 -->
 
         <img
             class="frame active"
@@ -552,22 +658,42 @@ body {
             alt=""
         >
 
+        <!-- FRAME NORMALE 2 -->
+
         <img
             class="frame"
             src="https://i.ibb.co/4nvV4nPq/Screenshot-20260829-161529-Grok-3-removebg-preview.png"
             alt=""
         >
 
+        <!-- SPRITE FELICE CLIENTE 1 -->
+
+        <img
+            class="happy-frame"
+            src="https://i.ibb.co/mV43yWMM/grok-1788037208959-removebg-preview.png"
+            alt=""
+        >
+
+        <!-- CUORE -->
+
+        <div class="heart">
+            ❤️
+        </div>
+
     </div>
 
 
 
-    <!-- CLIENTE 2 -->
+    <!-- ==================================================
+         CLIENTE 2
+    ================================================== -->
 
     <div
         id="customer2"
         class="customer"
     >
+
+        <!-- FRAME NORMALE 1 -->
 
         <img
             class="frame active"
@@ -575,17 +701,35 @@ body {
             alt=""
         >
 
+        <!-- FRAME NORMALE 2 -->
+
         <img
             class="frame"
             src="https://i.ibb.co/vxJCRK81/1000040573-removebg-preview.png"
             alt=""
         >
 
+        <!-- SPRITE FELICE CLIENTE 2 -->
+
+        <img
+            class="happy-frame"
+            src="https://i.ibb.co/m5xmJrBq/Screenshot-20260830-060945-Grok-removebg-preview.png"
+            alt=""
+        >
+
+        <!-- CUORE -->
+
+        <div class="heart">
+            ❤️
+        </div>
+
     </div>
 
 
 
-    <!-- CUOCO -->
+    <!-- ==================================================
+         CUOCO
+    ================================================== -->
 
     <div id="cook">
 
@@ -793,6 +937,85 @@ document
         );
 
 
+        /*
+           Nascondiamo nuovamente
+           gli sprite felici quando
+           si ricomincia la partita.
+        */
+
+        customer1
+        .querySelector(
+            ".happy-frame"
+        )
+        .style.display =
+            "none";
+
+
+        customer2
+        .querySelector(
+            ".happy-frame"
+        )
+        .style.display =
+            "none";
+
+
+        /*
+           Riattiviamo il primo
+           frame normale.
+        */
+
+        const normalFrames1 =
+            customer1
+            .querySelectorAll(
+                ".frame"
+            );
+
+
+        const normalFrames2 =
+            customer2
+            .querySelectorAll(
+                ".frame"
+            );
+
+
+        normalFrames1.forEach(
+            function(frame) {
+
+                frame.classList
+                .remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        normalFrames2.forEach(
+            function(frame) {
+
+                frame.classList
+                .remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        normalFrames1[0]
+        .classList
+        .add(
+            "active"
+        );
+
+
+        normalFrames2[0]
+        .classList
+        .add(
+            "active"
+        );
+
+
         customer1.style.animation =
             "none";
 
@@ -864,7 +1087,9 @@ document
 function updateKitchenEnergy() {
 
 
-    if (kitchenEnergy > 50) {
+    if (
+        kitchenEnergy > 50
+    ) {
 
 
         document
@@ -893,7 +1118,9 @@ function updateKitchenEnergy() {
 
     }
 
-    else if (kitchenEnergy > 20) {
+    else if (
+        kitchenEnergy > 20
+    ) {
 
 
         document
@@ -1000,7 +1227,9 @@ function startKitchenEnergySystem() {
             }
 
 
-            if (damage > 0) {
+            if (
+                damage > 0
+            ) {
 
 
                 kitchenEnergy -=
@@ -1790,7 +2019,7 @@ function throwPasta(
 
     /* ==================================================
        VELOCITÀ
-    ================================================== */
+================================================== */
 
     const speed = 350;
 
@@ -1802,7 +2031,7 @@ function throwPasta(
 
     /* ==================================================
        MOVIMENTO PASTA
-    ================================================== */
+================================================== */
 
     function movePasta(
         currentTime
@@ -1833,7 +2062,7 @@ function throwPasta(
 
 
         /* ==================================================
-           IL PUNTO ROSSO SEGUE IL CLIENTE
+           IL PUNTO DI IMPATTO SEGUE IL CLIENTE
         ================================================== */
 
         hitMarker.style.left =
@@ -1871,7 +2100,7 @@ function throwPasta(
 
 
         /* ==================================================
-           DIREZIONE VERSO IL PUNTO ROSSO
+           DIREZIONE
         ================================================== */
 
         const dx =
@@ -1994,11 +2223,6 @@ function throwPasta(
                 pasta
             );
 
-
-            /*
-               Eliminiamo il punto rosso
-               della pasta appena arrivata.
-            */
 
             if (
                 hitMarker.parentNode
@@ -2144,11 +2368,58 @@ function satisfyCustomer1() {
     );
 
 
+    /*
+       Nascondiamo i frame normali.
+    */
+
+    const normalFrames =
+        customer
+        .querySelectorAll(
+            ".frame"
+        );
+
+
+    normalFrames.forEach(
+        function(frame) {
+
+            frame.classList
+            .remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    /*
+       Mostriamo lo sprite felice.
+    */
+
+    const happyFrame =
+        customer
+        .querySelector(
+            ".happy-frame"
+        );
+
+
+    happyFrame.style.display =
+        "block";
+
+
+    /*
+       Dopo 1 secondo
+       il cliente scompare.
+    */
+
     setTimeout(
         function() {
 
 
             customer.style.display =
+                "none";
+
+
+            happyFrame.style.display =
                 "none";
 
 
@@ -2187,11 +2458,58 @@ function satisfyCustomer2() {
     );
 
 
+    /*
+       Nascondiamo i frame normali.
+    */
+
+    const normalFrames =
+        customer
+        .querySelectorAll(
+            ".frame"
+        );
+
+
+    normalFrames.forEach(
+        function(frame) {
+
+            frame.classList
+            .remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    /*
+       Mostriamo lo sprite felice.
+    */
+
+    const happyFrame =
+        customer
+        .querySelector(
+            ".happy-frame"
+        );
+
+
+    happyFrame.style.display =
+        "block";
+
+
+    /*
+       Dopo 1 secondo
+       il cliente scompare.
+    */
+
     setTimeout(
         function() {
 
 
             customer.style.display =
+                "none";
+
+
+            happyFrame.style.display =
                 "none";
 
 
