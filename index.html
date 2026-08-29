@@ -174,11 +174,12 @@ body {
 
 
 /* ==================================================
-   CUCINA
+   CUCINE
 ================================================== */
 
 #kitchen,
-#kitchenDamaged {
+#kitchenDamaged,
+#kitchenDestroyed {
 
     position: absolute;
 
@@ -195,7 +196,6 @@ body {
     object-fit: contain;
 
     pointer-events: none;
-
 }
 
 
@@ -224,74 +224,27 @@ body {
 
 
 /* ==================================================
-   BARRA ENERGIA
+   CUCINA GRAVEMENTE DANNEGGIATA
 ================================================== */
 
-#energyContainer {
+#kitchenDestroyed {
 
-    position: absolute;
+    z-index: 17;
 
-    top: 45%;
-
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    width: 65%;
-
-    height: 22px;
-
-    background: rgba(0, 0, 0, 0.65);
-
-    border: 2px solid white;
-
-    border-radius: 12px;
-
-    overflow: hidden;
-
-    z-index: 40;
+    display: none;
 
 }
 
 
-#energyBar {
+/* ==================================================
+   BARRA ENERGIA
+   INVISIBILE
+================================================== */
 
-    width: 100%;
-
-    height: 100%;
-
-    background: #2ecc40;
-
-    transition:
-        width 0.3s linear,
-        background 0.3s linear;
-
-}
-
-
+#energyContainer,
 #energyText {
 
-    position: absolute;
-
-    top: 45%;
-
-    left: 50%;
-
-    transform: translate(-50%, -50%);
-
-    color: white;
-
-    font-size: 15px;
-
-    font-weight: bold;
-
-    z-index: 41;
-
-    text-shadow:
-        1px 1px 2px black,
-        -1px -1px 2px black;
-
-    pointer-events: none;
+    display: none;
 
 }
 
@@ -345,7 +298,6 @@ body {
         20s
         linear
         forwards;
-
 }
 
 
@@ -392,7 +344,6 @@ body {
     object-position: center;
 
     display: none;
-
 }
 
 
@@ -473,7 +424,6 @@ body {
     object-position: center;
 
     display: none;
-
 }
 
 
@@ -549,7 +499,9 @@ body {
 
 
 
-        <!-- CUCINA INTEGRA -->
+        <!-- ==================================================
+             CUCINA INTEGRA
+        ================================================== -->
 
         <img
             id="kitchen"
@@ -558,7 +510,9 @@ body {
 
 
 
-        <!-- CUCINA DANNEGGIATA -->
+        <!-- ==================================================
+             CUCINA DANNEGGIATA 50%
+        ================================================== -->
 
         <img
             id="kitchenDamaged"
@@ -568,7 +522,18 @@ body {
 
 
         <!-- ==================================================
-             BARRA ENERGIA
+             CUCINA GRAVEMENTE DANNEGGIATA 20%
+        ================================================== -->
+
+        <img
+            id="kitchenDestroyed"
+            src="https://i.ibb.co/wFYhhdKg/IMG-20260829-WA0015.jpg"
+            alt="Cucina gravemente danneggiata">
+
+
+
+        <!-- ==================================================
+             BARRA ENERGIA INVISIBILE
         ================================================== -->
 
         <div id="energyContainer">
@@ -719,14 +684,14 @@ document
     .addEventListener("click", function() {
 
 
-        /* NASCONDE IL MENU */
+        /* NASCONDE MENU */
 
         document
             .getElementById("menu")
             .style.display = "none";
 
 
-        /* MOSTRA IL GIOCO */
+        /* MOSTRA GIOCO */
 
         document
             .getElementById("game")
@@ -756,7 +721,14 @@ document
             .style.display = "none";
 
 
-        /* AGGIORNA BARRA */
+        /* CUCINA DISTRUTTA NASCOSTA */
+
+        document
+            .getElementById("kitchenDestroyed")
+            .style.display = "none";
+
+
+        /* AGGIORNA STATO */
 
         updateKitchenEnergy();
 
@@ -813,57 +785,50 @@ document
 
 
 /* ==================================================
-   AGGIORNA ENERGIA
+   AGGIORNA STATO CUCINA
 ================================================== */
 
 function updateKitchenEnergy() {
 
 
-    const bar =
-        document.getElementById("energyBar");
+    /*
+       La barra è invisibile,
+       ma il valore continua ad essere
+       utilizzato dal gioco.
+    */
 
 
-    const text =
-        document.getElementById("energyText");
-
-
-    bar.style.width =
-        kitchenEnergy + "%";
-
-
-    text.textContent =
-        kitchenEnergy + "%";
-
-
-
-    /* COLORE BARRA */
+    /* ==============================================
+       CUCINA INTEGRA
+       100 - 51%
+    ============================================== */
 
     if (kitchenEnergy > 50) {
 
-        bar.style.background =
-            "#2ecc40";
+        document
+            .getElementById("kitchen")
+            .style.display = "block";
+
+
+        document
+            .getElementById("kitchenDamaged")
+            .style.display = "none";
+
+
+        document
+            .getElementById("kitchenDestroyed")
+            .style.display = "none";
 
     }
 
-    else if (kitchenEnergy > 25) {
-
-        bar.style.background =
-            "#f1c40f";
-
-    }
-
-    else {
-
-        bar.style.background =
-            "#e74c3c";
-
-    }
 
 
+    /* ==============================================
+       CUCINA DANNEGGIATA
+       50 - 21%
+    ============================================== */
 
-    /* CAMBIO CUCINA AL 50% */
-
-    if (kitchenEnergy <= 50) {
+    else if (kitchenEnergy > 20) {
 
         document
             .getElementById("kitchen")
@@ -872,6 +837,36 @@ function updateKitchenEnergy() {
 
         document
             .getElementById("kitchenDamaged")
+            .style.display = "block";
+
+
+        document
+            .getElementById("kitchenDestroyed")
+            .style.display = "none";
+
+    }
+
+
+
+    /* ==============================================
+       CUCINA GRAVEMENTE DANNEGGIATA
+       20 - 0%
+    ============================================== */
+
+    else {
+
+        document
+            .getElementById("kitchen")
+            .style.display = "none";
+
+
+        document
+            .getElementById("kitchenDamaged")
+            .style.display = "none";
+
+
+        document
+            .getElementById("kitchenDestroyed")
             .style.display = "block";
 
     }
@@ -953,33 +948,25 @@ function startKitchenEnergySystem() {
 
 
 /* ==================================================
-   RILEVAMENTO CLIENTI
+   RILEVAMENTO ARRIVO CLIENTI
 ================================================== */
 
 function startCustomerKitchenDetection() {
 
 
     /*
-       Il cliente arriva alla cucina
-       dopo circa 13 secondi.
-
-       La camminata dura 20 secondi
-       e raggiunge il 69% al 65%.
-
-       20 × 0.65 = 13 secondi
+       I clienti arrivano alla cucina
+       dopo circa 13,2 secondi.
     */
 
 
     setTimeout(function() {
 
-
         customer1AtKitchen = true;
-
 
         console.log(
             "Cliente 1 arrivato alla cucina"
         );
-
 
     }, 13200);
 
@@ -987,14 +974,11 @@ function startCustomerKitchenDetection() {
 
     setTimeout(function() {
 
-
         customer2AtKitchen = true;
-
 
         console.log(
             "Cliente 2 arrivato alla cucina"
         );
-
 
     }, 13200);
 
@@ -1025,9 +1009,7 @@ function startCustomerAnimation() {
         setInterval(function() {
 
 
-            /* ======================================
-               CLIENTE 1
-            ====================================== */
+            /* CLIENTE 1 */
 
             const c1 =
                 document
@@ -1057,9 +1039,7 @@ function startCustomerAnimation() {
 
 
 
-            /* ======================================
-               CLIENTE 2
-            ====================================== */
+            /* CLIENTE 2 */
 
             const c2 =
                 document
