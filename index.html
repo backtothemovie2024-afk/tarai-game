@@ -12,25 +12,34 @@ content="width=device-width, initial-scale=1.0">
 
 <style>
 
+/* ==================================================
+   GENERALE
+================================================== */
+
 * {
     box-sizing: border-box;
 }
 
 html,
 body {
+
     margin: 0;
     padding: 0;
+
     width: 100%;
     height: 100%;
+
     overflow: hidden;
+
     background: #111;
+
     font-family: Arial, sans-serif;
 }
 
 
-/* =====================
+/* ==================================================
    SCHERMO SMARTPHONE
-===================== */
+================================================== */
 
 #phone {
 
@@ -49,9 +58,9 @@ body {
 }
 
 
-/* =====================
+/* ==================================================
    HOME
-===================== */
+================================================== */
 
 #menu {
 
@@ -73,9 +82,9 @@ body {
 }
 
 
-/* =====================
+/* ==================================================
    COPERTINA
-===================== */
+================================================== */
 
 #cover {
 
@@ -109,9 +118,9 @@ body {
 }
 
 
-/* =====================
+/* ==================================================
    PLAY
-===================== */
+================================================== */
 
 #playButton {
 
@@ -150,21 +159,27 @@ body {
 @keyframes playAppear {
 
     from {
+
         opacity: 0;
+
         transform: translateY(30px);
+
     }
 
     to {
+
         opacity: 1;
+
         transform: translateY(0);
+
     }
 
 }
 
 
-/* =====================
+/* ==================================================
    GIOCO
-===================== */
+================================================== */
 
 #game {
 
@@ -180,9 +195,9 @@ body {
 }
 
 
-/* =====================
+/* ==================================================
    BACKGROUND
-===================== */
+================================================== */
 
 #background {
 
@@ -201,9 +216,9 @@ body {
 }
 
 
-/* =====================
+/* ==================================================
    HUD
-===================== */
+================================================== */
 
 #hud {
 
@@ -234,6 +249,8 @@ body {
 
     position: absolute;
 
+    /* STESSA DIMENSIONE DEL CUOCO */
+
     width: 100px;
     height: 135px;
 
@@ -245,22 +262,31 @@ body {
 }
 
 
-/* =====================
-   POSIZIONI CLIENTI
-===================== */
+/* ==================================================
+   POSIZIONE CLIENTE 1
+================================================== */
 
 #customer1 {
+
     left: 35%;
+
 }
+
+
+/* ==================================================
+   POSIZIONE CLIENTE 2
+================================================== */
 
 #customer2 {
+
     left: 65%;
+
 }
 
 
-/* =====================
+/* ==================================================
    SPRITE CLIENTI
-===================== */
+================================================== */
 
 .customer .frame {
 
@@ -269,32 +295,40 @@ body {
     top: 0;
     left: 0;
 
-    width: 100%px;
-    height: 100%px;
+    width: 100%;
+    height: 100%;
 
     object-fit: contain;
+
+    object-position: center;
 
     display: none;
 }
 
 
 .customer .frame.active {
+
     display: block;
+
 }
 
 
-/* =====================
+/* ==================================================
    MOVIMENTO CLIENTI
-===================== */
+================================================== */
 
 @keyframes walkDown {
 
     from {
+
         top: -130px;
+
     }
 
     to {
+
         top: 55%;
+
     }
 
 }
@@ -308,14 +342,13 @@ body {
 
     position: absolute;
 
-    /*
-       Posizione del secondo cerchio
-       da sinistra.
-    */
+    /* SECONDO CERCHIO DA SINISTRA */
 
-    left: 36%;
+    left: 43%;
 
-    bottom: 8%;
+    /* LEGGERMENTE PIÙ IN ALTO */
+
+    bottom: 7%;
 
     width: 100px;
     height: 135px;
@@ -326,9 +359,9 @@ body {
 }
 
 
-/* =====================
+/* ==================================================
    SPRITE CUOCO
-===================== */
+================================================== */
 
 #cook img {
 
@@ -342,12 +375,16 @@ body {
 
     object-fit: contain;
 
+    object-position: center;
+
     display: none;
 }
 
 
 #cook img.active {
+
     display: block;
+
 }
 
 </style>
@@ -367,6 +404,7 @@ body {
 
 <div id="menu">
 
+
     <img
         id="cover"
         src="https://i.ibb.co/qMC7T0bk/1787735382053.png"
@@ -374,8 +412,11 @@ body {
 
 
     <button id="playButton">
+
         PLAY
+
     </button>
+
 
 </div>
 
@@ -394,6 +435,7 @@ body {
         id="background"
         src="https://i.ibb.co/fzKdg9TY/1787950008908.png"
         alt="Background">
+
 
 
     <!-- HUD -->
@@ -470,35 +512,35 @@ body {
         <img
             class="active"
             src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-            alt="Cuoco 1">
+            alt="Cuoco frame 1">
 
 
         <!-- FRAME 2 -->
 
         <img
             src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
-            alt="Cuoco 2">
+            alt="Cuoco frame 2">
 
 
         <!-- FRAME 3 -->
 
         <img
             src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
-            alt="Cuoco 3">
+            alt="Cuoco frame 3">
 
 
         <!-- FRAME 4 -->
 
         <img
             src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
-            alt="Cuoco 4">
+            alt="Cuoco frame 4">
 
 
         <!-- FRAME 5 -->
 
         <img
             src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-            alt="Cuoco 5">
+            alt="Cuoco frame 5">
 
 
     </div>
@@ -537,10 +579,14 @@ document
     .addEventListener("click", function() {
 
 
+        /* NASCONDE HOME */
+
         document
             .getElementById("menu")
             .style.display = "none";
 
+
+        /* MOSTRA GIOCO */
 
         document
             .getElementById("game")
@@ -579,7 +625,7 @@ document
             "walkDown 5s linear forwards";
 
 
-        /* AVVIA */
+        /* AVVIA ANIMAZIONI */
 
         startCustomerAnimation();
 
@@ -590,7 +636,7 @@ document
 
 
 /* ==================================================
-   ANIMAZIONE CLIENTE 1 E 2
+   ANIMAZIONE CLIENTI
 ================================================== */
 
 function startCustomerAnimation() {
@@ -720,6 +766,8 @@ function startCookAnimation() {
         cookFrame++;
 
 
+        /* TORNA AL FRAME 1 */
+
         if (cookFrame >= 5) {
 
             cookFrame = 0;
@@ -736,4 +784,4 @@ function startCookAnimation() {
 
 </body>
 
-    </html>
+</html>
