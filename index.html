@@ -109,6 +109,7 @@ body {
     font-weight: bold;
 
     z-index: 30;
+
 }
 
 
@@ -170,7 +171,9 @@ body {
 
 
 #kitchen {
+
     z-index: 15;
+
 }
 
 
@@ -179,6 +182,7 @@ body {
     z-index: 16;
 
     display: none;
+
 }
 
 
@@ -187,6 +191,7 @@ body {
     z-index: 17;
 
     display: none;
+
 }
 
 
@@ -215,6 +220,7 @@ body {
     font-weight: bold;
 
     z-index: 30;
+
 }
 
 
@@ -235,26 +241,36 @@ body {
     z-index: 10;
 
     animation:
+
         walkDown
+
         40s
+
         linear
+
         forwards;
+
 }
 
 
 .customer.satisfied {
 
     animation: none;
+
 }
 
 
 #customer1 {
+
     left: 35%;
+
 }
 
 
 #customer2 {
+
     left: 65%;
+
 }
 
 
@@ -273,11 +289,14 @@ body {
     object-fit: contain;
 
     display: none;
+
 }
 
 
 .customer .frame.active {
+
     display: block;
+
 }
 
 
@@ -288,15 +307,21 @@ body {
 @keyframes walkDown {
 
     0% {
+
         top: -130px;
+
     }
 
     65% {
+
         top: 69%;
+
     }
 
     100% {
+
         top: 69%;
+
     }
 
 }
@@ -321,6 +346,7 @@ body {
     transform: translateX(-50%);
 
     z-index: 20;
+
 }
 
 
@@ -339,11 +365,14 @@ body {
     object-fit: contain;
 
     display: none;
+
 }
 
 
 #cook img.active {
+
     display: block;
+
 }
 
 
@@ -364,11 +393,12 @@ body {
     z-index: 25;
 
     pointer-events: none;
+
 }
 
 
 /* ==================================================
-   PUNTO HITBOX
+   PUNTO ROSSO
 ================================================== */
 
 .hit-marker {
@@ -386,15 +416,19 @@ body {
     border: 3px solid white;
 
     box-shadow:
+
         0 0 8px red,
+
         0 0 15px rgba(255,0,0,0.8);
 
     transform:
+
         translate(-50%, -50%);
 
     z-index: 90;
 
     pointer-events: none;
+
 }
 
 
@@ -444,7 +478,9 @@ body {
     >
 
     <button id="playButton">
+
         PLAY
+
     </button>
 
 </div>
@@ -616,39 +652,41 @@ body {
 
 
 /* ==================================================
-   REGOLAZIONE HITBOX
+   REGOLAZIONE PUNTO DI IMPATTO
 ================================================== */
 
+
 /*
-   QUESTI SONO I DUE VALORI
-   CHE POTRAI MODIFICARE IN FUTURO.
+   HIT_X
 
-   HIT_X:
-   - negativo = sinistra
-   - positivo = destra
-
-   HIT_Y:
-   - negativo = più in alto
-   - positivo = più in basso
+   Negativo = sinistra
+   Positivo = destra
 */
-
 
 const HIT_X = 0;
 
 
-/* 🔴 CAMBIA QUESTO PER ALZARE/ABBASSARE */
+
+/*
+   HIT_Y
+
+   Negativo = più in alto
+   Positivo = più in basso
+*/
 
 const HIT_Y = 0;
 
 
 
 /*
-   Punto di partenza verticale
-   all'interno dello sprite.
+   Posizione verticale
+   relativa allo sprite.
 
-   0.45 = circa 45% dello sprite.
+   0.45 = 45%
+
+   0.50 = centro
+   0.55 = più basso
 */
-
 
 const HIT_POSITION_Y = 0.45;
 
@@ -728,58 +766,73 @@ document
 
 
     const customer1 =
-        document.getElementById("customer1");
+        document.getElementById(
+            "customer1"
+        );
 
 
     const customer2 =
-        document.getElementById("customer2");
+        document.getElementById(
+            "customer2"
+        );
 
 
-    customer1.style.display = "block";
-
-    customer2.style.display = "block";
-
-
-    customer1.classList.remove("satisfied");
-
-    customer2.classList.remove("satisfied");
+    customer1.style.display =
+        "block";
 
 
-    /* RESET CLIENTE 1 */
+    customer2.style.display =
+        "block";
 
-    customer1.style.animation = "none";
+
+    customer1.classList.remove(
+        "satisfied"
+    );
+
+
+    customer2.classList.remove(
+        "satisfied"
+    );
+
+
+    customer1.style.animation =
+        "none";
+
 
     void customer1.offsetWidth;
+
 
     customer1.style.animation =
         "walkDown 40s linear forwards";
 
 
-    /* RESET CLIENTE 2 */
+    customer2.style.animation =
+        "none";
 
-    customer2.style.animation = "none";
 
     void customer2.offsetWidth;
+
 
     customer2.style.animation =
         "walkDown 40s linear forwards";
 
 
-    /* RESET CUCINA */
-
     document
     .getElementById("kitchen")
-    .style.display = "block";
+    .style.display =
+        "block";
 
 
     document
     .getElementById("kitchenDamaged")
-    .style.display = "none";
+    .style.display =
+        "none";
 
 
     document
     .getElementById("kitchenDestroyed")
-    .style.display = "none";
+    .style.display =
+        "none";
 
 
     updateKitchenEnergy();
@@ -811,17 +864,20 @@ function updateKitchenEnergy() {
 
         document
         .getElementById("kitchen")
-        .style.display = "block";
+        .style.display =
+            "block";
 
 
         document
         .getElementById("kitchenDamaged")
-        .style.display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("kitchenDestroyed")
-        .style.display = "none";
+        .style.display =
+            "none";
 
 
     }
@@ -831,17 +887,20 @@ function updateKitchenEnergy() {
 
         document
         .getElementById("kitchen")
-        .style.display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("kitchenDamaged")
-        .style.display = "block";
+        .style.display =
+            "block";
 
 
         document
         .getElementById("kitchenDestroyed")
-        .style.display = "none";
+        .style.display =
+            "none";
 
 
     }
@@ -851,17 +910,20 @@ function updateKitchenEnergy() {
 
         document
         .getElementById("kitchen")
-        .style.display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("kitchenDamaged")
-        .style.display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("kitchenDestroyed")
-        .style.display = "block";
+        .style.display =
+            "block";
 
     }
 
@@ -870,15 +932,19 @@ function updateKitchenEnergy() {
 
 
 /* ==================================================
-   ENERGIA
+   ENERGIA CUCINA
 ================================================== */
 
 function startKitchenEnergySystem() {
 
 
-    if (kitchenDamageTimer !== null) {
+    if (
+        kitchenDamageTimer !== null
+    ) {
 
-        clearInterval(kitchenDamageTimer);
+        clearInterval(
+            kitchenDamageTimer
+        );
 
     }
 
@@ -916,7 +982,9 @@ function startKitchenEnergySystem() {
             kitchenEnergy -= damage;
 
 
-            if (kitchenEnergy < 0) {
+            if (
+                kitchenEnergy < 0
+            ) {
 
                 kitchenEnergy = 0;
 
@@ -935,7 +1003,7 @@ function startKitchenEnergySystem() {
 
 
 /* ==================================================
-   ARRIVO CLIENTI
+   ARRIVO ALLA CUCINA
 ================================================== */
 
 function startCustomerKitchenDetection() {
@@ -974,7 +1042,9 @@ function startCustomerKitchenDetection() {
    CLIENTE VISIBILE
 ================================================== */
 
-function customerIsVisible(customer) {
+function customerIsVisible(
+    customer
+) {
 
 
     if (
@@ -992,7 +1062,9 @@ function customerIsVisible(customer) {
 
 
     const game =
-        document.getElementById("game");
+        document.getElementById(
+            "game"
+        );
 
 
     const gameRect =
@@ -1001,9 +1073,11 @@ function customerIsVisible(customer) {
 
     return (
 
-        rect.bottom > gameRect.top &&
+        rect.bottom >
+            gameRect.top &&
 
-        rect.top < gameRect.bottom
+        rect.top <
+            gameRect.bottom
 
     );
 
@@ -1018,9 +1092,13 @@ function customerIsVisible(customer) {
 function startFirstAttackDetection() {
 
 
-    if (firstAttackTimer !== null) {
+    if (
+        firstAttackTimer !== null
+    ) {
 
-        clearInterval(firstAttackTimer);
+        clearInterval(
+            firstAttackTimer
+        );
 
     }
 
@@ -1030,11 +1108,15 @@ function startFirstAttackDetection() {
 
 
         const c1 =
-            document.getElementById("customer1");
+            document.getElementById(
+                "customer1"
+            );
 
 
         const c2 =
-            document.getElementById("customer2");
+            document.getElementById(
+                "customer2"
+            );
 
 
         if (
@@ -1046,7 +1128,9 @@ function startFirstAttackDetection() {
             playCookAttack();
 
 
-            clearInterval(firstAttackTimer);
+            clearInterval(
+                firstAttackTimer
+            );
 
 
             return;
@@ -1063,7 +1147,9 @@ function startFirstAttackDetection() {
             playCookAttack();
 
 
-            clearInterval(firstAttackTimer);
+            clearInterval(
+                firstAttackTimer
+            );
 
 
             return;
@@ -1084,9 +1170,13 @@ function startFirstAttackDetection() {
 function startCustomerAnimation() {
 
 
-    if (customerTimer !== null) {
+    if (
+        customerTimer !== null
+    ) {
 
-        clearInterval(customerTimer);
+        clearInterval(
+            customerTimer
+        );
 
     }
 
@@ -1105,19 +1195,29 @@ function startCustomerAnimation() {
 
             const frames =
                 document
-                .getElementById("customer1")
-                .querySelectorAll(".frame");
+                .getElementById(
+                    "customer1"
+                )
+                .querySelectorAll(
+                    ".frame"
+                );
 
 
-            frames.forEach(function(frame) {
+            frames.forEach(
+                function(frame) {
 
-                frame.classList.remove("active");
+                    frame.classList
+                    .remove("active");
 
-            });
+                }
+            );
 
 
-            frames[customerFrame1]
-            .classList.add("active");
+            frames[
+                customerFrame1
+            ].classList.add(
+                "active"
+            );
 
 
             customerFrame1++;
@@ -1141,19 +1241,29 @@ function startCustomerAnimation() {
 
             const frames =
                 document
-                .getElementById("customer2")
-                .querySelectorAll(".frame");
+                .getElementById(
+                    "customer2"
+                )
+                .querySelectorAll(
+                    ".frame"
+                );
 
 
-            frames.forEach(function(frame) {
+            frames.forEach(
+                function(frame) {
 
-                frame.classList.remove("active");
+                    frame.classList
+                    .remove("active");
 
-            });
+                }
+            );
 
 
-            frames[customerFrame2]
-            .classList.add("active");
+            frames[
+                customerFrame2
+            ].classList.add(
+                "active"
+            );
 
 
             customerFrame2++;
@@ -1181,7 +1291,9 @@ function startCustomerAnimation() {
    FRAME CUOCO
 ================================================== */
 
-function setCookFrame(frameNumber) {
+function setCookFrame(
+    frameNumber
+) {
 
 
     const frames =
@@ -1190,22 +1302,28 @@ function setCookFrame(frameNumber) {
         .querySelectorAll("img");
 
 
-    frames.forEach(function(frame) {
+    frames.forEach(
+        function(frame) {
 
-        frame.classList.remove("active");
+            frame.classList
+            .remove("active");
 
-    });
+        }
+    );
 
 
-    frames[frameNumber]
-    .classList.add("active");
+    frames[
+        frameNumber
+    ].classList.add(
+        "active"
+    );
 
 }
 
 
 
 /* ==================================================
-   ATTACCO
+   ATTACCO CUOCO
 ================================================== */
 
 function playCookAttack() {
@@ -1282,9 +1400,13 @@ function playCookAttack() {
 function startCookAnimation() {
 
 
-    if (cookTimer !== null) {
+    if (
+        cookTimer !== null
+    ) {
 
-        clearInterval(cookTimer);
+        clearInterval(
+            cookTimer
+        );
 
     }
 
@@ -1316,11 +1438,15 @@ function getNearestVisibleCustomer() {
 
 
     const c1 =
-        document.getElementById("customer1");
+        document.getElementById(
+            "customer1"
+        );
 
 
     const c2 =
-        document.getElementById("customer2");
+        document.getElementById(
+            "customer2"
+        );
 
 
     if (
@@ -1343,7 +1469,9 @@ function getNearestVisibleCustomer() {
     }
 
 
-    if (customers.length === 0) {
+    if (
+        customers.length === 0
+    ) {
 
         return null;
 
@@ -1351,7 +1479,9 @@ function getNearestVisibleCustomer() {
 
 
     const cook =
-        document.getElementById("cook");
+        document.getElementById(
+            "cook"
+        );
 
 
     const cookRect =
@@ -1365,44 +1495,48 @@ function getNearestVisibleCustomer() {
 
     let nearest = null;
 
-    let nearestDistance = Infinity;
+    let nearestDistance =
+        Infinity;
 
 
-    customers.forEach(function(customer) {
+    customers.forEach(
+        function(customer) {
 
 
-        const rect =
-            customer.getBoundingClientRect();
+            const rect =
+                customer
+                .getBoundingClientRect();
 
 
-        const customerX =
-            rect.left +
-            rect.width / 2;
+            const customerX =
+                rect.left +
+                rect.width / 2;
 
 
-        const distance =
-            Math.abs(
-                customerX -
-                cookX
-            );
+            const distance =
+                Math.abs(
+                    customerX -
+                    cookX
+                );
 
 
-        if (
-            distance <
-            nearestDistance
-        ) {
+            if (
+                distance <
+                nearestDistance
+            ) {
 
 
-            nearestDistance =
-                distance;
+                nearestDistance =
+                    distance;
 
 
-            nearest =
-                customer;
+                nearest =
+                    customer;
+
+            }
 
         }
-
-    });
+    );
 
 
     return nearest;
@@ -1446,38 +1580,28 @@ function throwPasta(target) {
 
 
     const cook =
-        document.getElementById("cook");
-
-
-    const cookRect =
-        cook.getBoundingClientRect();
-
-
-    /*
-       IMPORTANTE:
-
-       LEGGIAMO LA POSIZIONE DEL CLIENTE
-       SOLO UNA VOLTA.
-
-       IL CLIENTE PUÒ CONTINUARE A MUOVERSI,
-       MA IL BERSAGLIO RESTA FISSO.
-    */
-
-    const targetRect =
-        target.getBoundingClientRect();
+        document.getElementById(
+            "cook"
+        );
 
 
     const game =
-        document.getElementById("game");
+        document.getElementById(
+            "game"
+        );
 
 
     const gameRect =
         game.getBoundingClientRect();
 
 
+    const cookRect =
+        cook.getBoundingClientRect();
+
+
 
     /* ==================================================
-       PARTENZA
+       PARTENZA DALLA MANO
     ================================================== */
 
     const startX =
@@ -1492,58 +1616,33 @@ function throwPasta(target) {
 
 
     /* ==================================================
-       BERSAGLIO
-    ================================================== */
-
-    const endX =
-        targetRect.left +
-        targetRect.width / 2 +
-        HIT_X;
-
-
-    const endY =
-        targetRect.top +
-        targetRect.height * HIT_POSITION_Y +
-        HIT_Y;
-
-
-
-    /* ==================================================
-       PUNTO ROSSO
+       CREA PUNTO ROSSO
     ================================================== */
 
     const hitMarker =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     hitMarker.className =
         "hit-marker";
 
 
-    hitMarker.style.left =
-        (
-            endX -
-            gameRect.left
-        ) + "px";
-
-
-    hitMarker.style.top =
-        (
-            endY -
-            gameRect.top
-        ) + "px";
-
-
-    game.appendChild(hitMarker);
+    game.appendChild(
+        hitMarker
+    );
 
 
 
     /* ==================================================
-       PASTA
+       CREA PASTA
     ================================================== */
 
     const pasta =
-        document.createElement("img");
+        document.createElement(
+            "img"
+        );
 
 
     pasta.className =
@@ -1554,9 +1653,15 @@ function throwPasta(target) {
         "https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png";
 
 
-    game.appendChild(pasta);
+    game.appendChild(
+        pasta
+    );
 
 
+
+    /* ==================================================
+       POSIZIONE INIZIALE
+    ================================================== */
 
     pasta.style.left =
         (
@@ -1579,74 +1684,167 @@ function throwPasta(target) {
        VELOCITÀ
     ================================================== */
 
-    const distanceX =
-        endX -
-        startX;
-
-
-    const distanceY =
-        endY -
-        startY;
-
-
-    const distance =
-        Math.sqrt(
-            distanceX * distanceX +
-            distanceY * distanceY
-        );
-
-
     const speed = 350;
-
-
-    const duration =
-        (distance / speed) * 1000;
 
 
     const startTime =
         performance.now();
 
 
+    let lastX =
+        startX;
+
+
+    let lastY =
+        startY;
+
+
 
     /* ==================================================
-       MOVIMENTO PASTA
+       MOVIMENTO
     ================================================== */
 
-    function movePasta(currentTime) {
+    function movePasta(
+        currentTime
+    ) {
 
 
-        const elapsed =
-            currentTime -
-            startTime;
+        /*
+           LEGGIAMO LA POSIZIONE ATTUALE
+           DEL CLIENTE.
+
+           Questo è il punto fondamentale:
+           il bersaglio si muove insieme
+           al cliente.
+        */
+
+        const targetRect =
+            target.getBoundingClientRect();
 
 
-        let progress =
-            elapsed /
-            duration;
+        const endX =
+            targetRect.left +
+            targetRect.width / 2 +
+            HIT_X;
 
 
-        if (progress > 1) {
+        const endY =
+            targetRect.top +
+            targetRect.height *
+            HIT_POSITION_Y +
+            HIT_Y;
 
-            progress = 1;
+
+
+        /* ==================================================
+           AGGIORNA IL PUNTO ROSSO
+        ================================================== */
+
+        hitMarker.style.left =
+            (
+                endX -
+                gameRect.left
+            ) + "px";
+
+
+        hitMarker.style.top =
+            (
+                endY -
+                gameRect.top
+            ) + "px";
+
+
+
+        /* ==================================================
+           DISTANZA
+        ================================================== */
+
+        const dx =
+            endX -
+            lastX;
+
+
+        const dy =
+            endY -
+            lastY;
+
+
+        const distance =
+            Math.sqrt(
+                dx * dx +
+                dy * dy
+            );
+
+
+        /*
+           Calcoliamo quanto tempo serve
+           per raggiungere il nuovo punto.
+        */
+
+        const frameTime =
+            16 / 1000;
+
+
+        const maxMovement =
+            speed *
+            frameTime;
+
+
+        let nextX =
+            lastX;
+
+
+        let nextY =
+            lastY;
+
+
+        if (
+            distance <=
+            maxMovement
+        ) {
+
+
+            nextX =
+                endX;
+
+
+            nextY =
+                endY;
+
+
+        }
+
+        else {
+
+
+            nextX =
+                lastX +
+                (
+                    dx /
+                    distance
+                ) *
+                maxMovement;
+
+
+            nextY =
+                lastY +
+                (
+                    dy /
+                    distance
+                ) *
+                maxMovement;
 
         }
 
 
-        const currentX =
-            startX +
-            distanceX *
-            progress;
 
-
-        const currentY =
-            startY +
-            distanceY *
-            progress;
-
+        /* ==================================================
+           AGGIORNA POSIZIONE PASTA
+        ================================================== */
 
         pasta.style.left =
             (
-                currentX -
+                nextX -
                 gameRect.left -
                 42
             ) + "px";
@@ -1654,13 +1852,65 @@ function throwPasta(target) {
 
         pasta.style.top =
             (
-                currentY -
+                nextY -
                 gameRect.top -
                 42
             ) + "px";
 
 
-        if (progress >= 1) {
+        lastX =
+            nextX;
+
+
+        lastY =
+            nextY;
+
+
+
+        /* ==================================================
+           CONTROLLO IMPATTO
+        ================================================== */
+
+        const remainingX =
+            endX -
+            nextX;
+
+
+        const remainingY =
+            endY -
+            nextY;
+
+
+        const remainingDistance =
+            Math.sqrt(
+                remainingX *
+                remainingX +
+
+                remainingY *
+                remainingY
+            );
+
+
+        if (
+            remainingDistance <=
+            maxMovement
+        ) {
+
+
+            pasta.style.left =
+                (
+                    endX -
+                    gameRect.left -
+                    42
+                ) + "px";
+
+
+            pasta.style.top =
+                (
+                    endY -
+                    gameRect.top -
+                    42
+                ) + "px";
 
 
             hitCustomer(
@@ -1704,7 +1954,6 @@ function hitCustomer(
         pasta.parentNode
     ) {
 
-
         pasta.parentNode
         .removeChild(pasta);
 
@@ -1717,7 +1966,9 @@ function hitCustomer(
     ) {
 
 
-        if (customer1Satisfied) {
+        if (
+            customer1Satisfied
+        ) {
 
             return;
 
@@ -1744,7 +1995,9 @@ function hitCustomer(
     ) {
 
 
-        if (customer2Satisfied) {
+        if (
+            customer2Satisfied
+        ) {
 
             return;
 
@@ -1775,9 +2028,12 @@ function hitCustomer(
 function satisfyCustomer1() {
 
 
-    customer1Satisfied = true;
+    customer1Satisfied =
+        true;
 
-    customer1AtKitchen = false;
+
+    customer1AtKitchen =
+        false;
 
 
     const customer =
@@ -1811,9 +2067,12 @@ function satisfyCustomer1() {
 function satisfyCustomer2() {
 
 
-    customer2Satisfied = true;
+    customer2Satisfied =
+        true;
 
-    customer2AtKitchen = false;
+
+    customer2AtKitchen =
+        false;
 
 
     const customer =
@@ -1841,4 +2100,5 @@ function satisfyCustomer2() {
 </script>
 
 </body>
+
 </html>
