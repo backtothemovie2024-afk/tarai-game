@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <title>Tarai Rush</title>
 
 <style>
@@ -22,81 +27,127 @@ body {
     font-family: Arial, sans-serif;
 }
 
+
+/* ==================================================
+   TELEFONO
+================================================== */
+
 #phone {
+
     position: relative;
+
     width: min(100vw, 56.25vh);
     height: min(100vh, 177.7778vw);
+
     aspect-ratio: 9 / 16;
+
     margin: auto;
+
     overflow: hidden;
+
     background: black;
 }
 
-/* =========================
+
+/* ==================================================
    MENU
-========================= */
+================================================== */
 
 #menu {
+
     position: absolute;
+
     inset: 0;
+
     background: black;
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
+
     z-index: 100;
 }
 
+
 #cover {
+
     position: absolute;
+
     width: 100%;
     height: 100%;
+
     object-fit: cover;
+
     z-index: 10;
 }
 
+
 #playButton {
+
     position: absolute;
+
     bottom: 12%;
+
     width: 60%;
+
     max-width: 240px;
+
     height: 70px;
+
     border: none;
+
     border-radius: 18px;
+
     background: #ef6428;
+
     color: white;
+
     font-size: 28px;
+
     font-weight: bold;
+
     z-index: 30;
 }
 
-/* =========================
+
+/* ==================================================
    GIOCO
-========================= */
+================================================== */
 
 #game {
+
     display: none;
+
     position: absolute;
+
     inset: 0;
+
     overflow: hidden;
+
     background: black;
 }
 
-/* =========================
-   SFONDO
-========================= */
 
 #background {
+
     position: absolute;
+
     inset: 0;
+
     width: 100%;
     height: 100%;
+
     object-fit: cover;
+
     z-index: 0;
 }
 
-/* =========================
+
+/* ==================================================
    CUCINA
-========================= */
+================================================== */
 
 #kitchen,
 #kitchenDamaged,
@@ -105,9 +156,11 @@ body {
     position: absolute;
 
     left: 50%;
+
     top: 83%;
 
     width: 115%;
+
     height: auto;
 
     transform: translate(-50%, -50%);
@@ -115,49 +168,66 @@ body {
     pointer-events: none;
 }
 
+
 #kitchen {
     z-index: 15;
 }
 
+
 #kitchenDamaged {
+
     z-index: 16;
+
     display: none;
 }
+
 
 #kitchenDestroyed {
+
     z-index: 17;
+
     display: none;
 }
 
-/* =========================
+
+/* ==================================================
    HUD
-========================= */
+================================================== */
 
 #hud {
+
     position: absolute;
+
     top: 15px;
+
     left: 20px;
+
     right: 20px;
 
     display: flex;
+
     justify-content: space-between;
 
     color: white;
+
     font-size: 22px;
+
     font-weight: bold;
 
     z-index: 30;
 }
 
-/* =========================
+
+/* ==================================================
    CLIENTI
-========================= */
+================================================== */
 
 .customer {
 
     position: absolute;
 
     width: 100px;
+
     height: 135px;
 
     top: -130px;
@@ -171,26 +241,33 @@ body {
         forwards;
 }
 
+
 .customer.satisfied {
+
     animation: none;
 }
+
 
 #customer1 {
     left: 35%;
 }
 
+
 #customer2 {
     left: 65%;
 }
+
 
 .customer .frame {
 
     position: absolute;
 
     top: 0;
+
     left: 0;
 
     width: 100%;
+
     height: 100%;
 
     object-fit: contain;
@@ -198,13 +275,15 @@ body {
     display: none;
 }
 
+
 .customer .frame.active {
     display: block;
 }
 
-/* =========================
+
+/* ==================================================
    MOVIMENTO CLIENTI
-========================= */
+================================================== */
 
 @keyframes walkDown {
 
@@ -219,20 +298,24 @@ body {
     100% {
         top: 69%;
     }
+
 }
 
-/* =========================
+
+/* ==================================================
    CUOCO
-========================= */
+================================================== */
 
 #cook {
 
     position: absolute;
 
     left: 43%;
+
     bottom: 7%;
 
     width: 100px;
+
     height: 135px;
 
     transform: translateX(-50%);
@@ -240,14 +323,17 @@ body {
     z-index: 20;
 }
 
+
 #cook img {
 
     position: absolute;
 
     top: 0;
+
     left: 0;
 
     width: 100%;
+
     height: 100%;
 
     object-fit: contain;
@@ -255,19 +341,22 @@ body {
     display: none;
 }
 
+
 #cook img.active {
     display: block;
 }
 
-/* =========================
+
+/* ==================================================
    PASTA
-========================= */
+================================================== */
 
 .pasta {
 
     position: absolute;
 
     width: 84px;
+
     height: 84px;
 
     object-fit: contain;
@@ -277,222 +366,328 @@ body {
     pointer-events: none;
 }
 
+
+/* ==================================================
+   PUNTO HITBOX
+================================================== */
+
+.hit-marker {
+
+    position: absolute;
+
+    width: 22px;
+
+    height: 22px;
+
+    border-radius: 50%;
+
+    background: red;
+
+    border: 3px solid white;
+
+    box-shadow:
+        0 0 8px red,
+        0 0 15px rgba(255,0,0,0.8);
+
+    transform:
+        translate(-50%, -50%);
+
+    z-index: 90;
+
+    pointer-events: none;
+}
+
+
 @media (max-width: 500px) {
 
     .customer,
     #cook {
 
         width: 65px;
+
         height: 88px;
+
     }
+
 
     .pasta {
 
         width: 60px;
+
         height: 60px;
+
     }
+
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
 <div id="phone">
 
-    <!-- =========================
-         MENU
-    ========================= -->
 
-    <div id="menu">
+<!-- ==================================================
+     MENU
+================================================== -->
 
-        <img
-            id="cover"
-            src="https://i.ibb.co/qMC7T0bk/1787735382053.png"
-            alt=""
-        >
+<div id="menu">
 
-        <button id="playButton">
-            PLAY
-        </button>
+    <img
+        id="cover"
+        src="https://i.ibb.co/qMC7T0bk/1787735382053.png"
+        alt=""
+    >
 
-    </div>
-
-
-    <!-- =========================
-         GIOCO
-    ========================= -->
-
-    <div id="game">
-
-        <!-- SFONDO -->
-
-        <img
-            id="background"
-            src="https://i.ibb.co/pj7trt5y/IMG-20260829-WA0012.jpg"
-            alt=""
-        >
-
-
-        <!-- CUCINA INTEGRA -->
-
-        <img
-            id="kitchen"
-            src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png"
-            alt=""
-        >
-
-
-        <!-- CUCINA DANNEGGIATA -->
-
-        <img
-            id="kitchenDamaged"
-            src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"
-            alt=""
-        >
-
-
-        <!-- CUCINA DISTRUTTA -->
-
-        <img
-            id="kitchenDestroyed"
-            src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"
-            alt=""
-        >
-
-
-        <!-- HUD -->
-
-        <div id="hud">
-
-            <span>❤️ 3</span>
-
-            <span>⭐ 0</span>
-
-        </div>
-
-
-        <!-- =========================
-             CLIENTE 1
-        ========================= -->
-
-        <div
-            id="customer1"
-            class="customer"
-        >
-
-            <img
-                class="frame active"
-                src="https://i.ibb.co/xqSsVvcc/Screenshot-20260829-161529-Grok-2-removebg-preview.png"
-                alt=""
-            >
-
-            <img
-                class="frame"
-                src="https://i.ibb.co/4nvV4nPq/Screenshot-20260829-161529-Grok-3-removebg-preview.png"
-                alt=""
-            >
-
-        </div>
-
-
-        <!-- =========================
-             CLIENTE 2
-        ========================= -->
-
-        <div
-            id="customer2"
-            class="customer"
-        >
-
-            <img
-                class="frame active"
-                src="https://i.ibb.co/jP6QSPFd/1000040572-removebg-preview.png"
-                alt=""
-            >
-
-            <img
-                class="frame"
-                src="https://i.ibb.co/vxJCRK81/1000040573-removebg-preview.png"
-                alt=""
-            >
-
-        </div>
-
-
-        <!-- =========================
-             CUOCO
-        ========================= -->
-
-        <div id="cook">
-
-            <!-- FRAME 1 -->
-
-            <img
-                class="active"
-                src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-                alt=""
-            >
-
-            <!-- FRAME 2 -->
-
-            <img
-                src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
-                alt=""
-            >
-
-            <!-- FRAME 3 -->
-
-            <img
-                src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
-                alt=""
-            >
-
-            <!-- FRAME 4 = LANCIO -->
-
-            <img
-                src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
-                alt=""
-            >
-
-            <!-- FRAME 5 -->
-
-            <img
-                src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-                alt=""
-            >
-
-        </div>
-
-    </div>
+    <button id="playButton">
+        PLAY
+    </button>
 
 </div>
 
 
+
+<!-- ==================================================
+     GIOCO
+================================================== -->
+
+<div id="game">
+
+
+    <!-- SFONDO -->
+
+    <img
+        id="background"
+        src="https://i.ibb.co/pj7trt5y/IMG-20260829-WA0012.jpg"
+        alt=""
+    >
+
+
+    <!-- CUCINA INTEGRA -->
+
+    <img
+        id="kitchen"
+        src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png"
+        alt=""
+    >
+
+
+    <!-- CUCINA DANNEGGIATA -->
+
+    <img
+        id="kitchenDamaged"
+        src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"
+        alt=""
+    >
+
+
+    <!-- CUCINA DISTRUTTA -->
+
+    <img
+        id="kitchenDestroyed"
+        src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"
+        alt=""
+    >
+
+
+    <!-- HUD -->
+
+    <div id="hud">
+
+        <span>❤️ 3</span>
+
+        <span>⭐ 0</span>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         CLIENTE 1
+    ================================================== -->
+
+    <div
+        id="customer1"
+        class="customer"
+    >
+
+        <img
+            class="frame active"
+            src="https://i.ibb.co/xqSsVvcc/Screenshot-20260829-161529-Grok-2-removebg-preview.png"
+            alt=""
+        >
+
+        <img
+            class="frame"
+            src="https://i.ibb.co/4nvV4nPq/Screenshot-20260829-161529-Grok-3-removebg-preview.png"
+            alt=""
+        >
+
+    </div>
+
+
+
+    <!-- ==================================================
+         CLIENTE 2
+    ================================================== -->
+
+    <div
+        id="customer2"
+        class="customer"
+    >
+
+        <img
+            class="frame active"
+            src="https://i.ibb.co/jP6QSPFd/1000040572-removebg-preview.png"
+            alt=""
+        >
+
+        <img
+            class="frame"
+            src="https://i.ibb.co/vxJCRK81/1000040573-removebg-preview.png"
+            alt=""
+        >
+
+    </div>
+
+
+
+    <!-- ==================================================
+         CUOCO
+    ================================================== -->
+
+    <div id="cook">
+
+
+        <!-- FRAME 1 -->
+
+        <img
+            class="active"
+            src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
+            alt=""
+        >
+
+
+        <!-- FRAME 2 -->
+
+        <img
+            src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
+            alt=""
+        >
+
+
+        <!-- FRAME 3 -->
+
+        <img
+            src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
+            alt=""
+        >
+
+
+        <!-- FRAME 4 = LANCIO -->
+
+        <img
+            src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
+            alt=""
+        >
+
+
+        <!-- FRAME 5 -->
+
+        <img
+            src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
+            alt=""
+        >
+
+    </div>
+
+
+</div>
+
+</div>
+
+
+
 <script>
+
+
+/* ==================================================
+   REGOLAZIONE HITBOX
+================================================== */
+
+/*
+   QUESTI SONO I DUE VALORI
+   CHE POTRAI MODIFICARE IN FUTURO.
+
+   HIT_X:
+   - negativo = sinistra
+   - positivo = destra
+
+   HIT_Y:
+   - negativo = più in alto
+   - positivo = più in basso
+*/
+
+
+const HIT_X = 0;
+
+
+/* 🔴 CAMBIA QUESTO PER ALZARE/ABBASSARE */
+
+const HIT_Y = 0;
+
+
+
+/*
+   Punto di partenza verticale
+   all'interno dello sprite.
+
+   0.45 = circa 45% dello sprite.
+*/
+
+
+const HIT_POSITION_Y = 0.45;
+
+
 
 /* ==================================================
    VARIABILI
 ================================================== */
 
 let customerFrame1 = 0;
+
 let customerFrame2 = 0;
 
 let customerTimer = null;
+
 let cookTimer = null;
+
 let firstAttackTimer = null;
+
 let kitchenDamageTimer = null;
+
 
 let kitchenEnergy = 100;
 
+
 let customer1AtKitchen = false;
+
 let customer2AtKitchen = false;
 
+
 let customer1HP = 50;
+
 let customer2HP = 50;
 
+
 let customer1Satisfied = false;
+
 let customer2Satisfied = false;
+
 
 
 /* ==================================================
@@ -503,9 +698,11 @@ document
 .getElementById("playButton")
 .addEventListener("click", function() {
 
+
     document
     .getElementById("menu")
     .style.display = "none";
+
 
     document
     .getElementById("game")
@@ -514,28 +711,37 @@ document
 
     kitchenEnergy = 100;
 
+
     customer1AtKitchen = false;
+
     customer2AtKitchen = false;
 
+
     customer1HP = 50;
+
     customer2HP = 50;
 
+
     customer1Satisfied = false;
+
     customer2Satisfied = false;
 
 
     const customer1 =
         document.getElementById("customer1");
 
+
     const customer2 =
         document.getElementById("customer2");
 
 
     customer1.style.display = "block";
+
     customer2.style.display = "block";
 
 
     customer1.classList.remove("satisfied");
+
     customer2.classList.remove("satisfied");
 
 
@@ -565,9 +771,11 @@ document
     .getElementById("kitchen")
     .style.display = "block";
 
+
     document
     .getElementById("kitchenDamaged")
     .style.display = "none";
+
 
     document
     .getElementById("kitchenDestroyed")
@@ -590,53 +798,66 @@ document
 });
 
 
+
 /* ==================================================
    CUCINA
 ================================================== */
 
 function updateKitchenEnergy() {
 
+
     if (kitchenEnergy > 50) {
+
 
         document
         .getElementById("kitchen")
         .style.display = "block";
 
+
         document
         .getElementById("kitchenDamaged")
         .style.display = "none";
 
+
         document
         .getElementById("kitchenDestroyed")
         .style.display = "none";
+
 
     }
 
     else if (kitchenEnergy > 20) {
 
+
         document
         .getElementById("kitchen")
         .style.display = "none";
+
 
         document
         .getElementById("kitchenDamaged")
         .style.display = "block";
 
+
         document
         .getElementById("kitchenDestroyed")
         .style.display = "none";
+
 
     }
 
     else {
 
+
         document
         .getElementById("kitchen")
         .style.display = "none";
 
+
         document
         .getElementById("kitchenDamaged")
         .style.display = "none";
+
 
         document
         .getElementById("kitchenDestroyed")
@@ -647,11 +868,13 @@ function updateKitchenEnergy() {
 }
 
 
+
 /* ==================================================
-   ENERGIA CUCINA
+   ENERGIA
 ================================================== */
 
 function startKitchenEnergySystem() {
+
 
     if (kitchenDamageTimer !== null) {
 
@@ -662,6 +885,7 @@ function startKitchenEnergySystem() {
 
     kitchenDamageTimer =
     setInterval(function() {
+
 
         let damage = 0;
 
@@ -688,6 +912,7 @@ function startKitchenEnergySystem() {
 
         if (damage > 0) {
 
+
             kitchenEnergy -= damage;
 
 
@@ -702,18 +927,22 @@ function startKitchenEnergySystem() {
 
         }
 
+
     }, 5000);
 
 }
 
 
+
 /* ==================================================
-   ARRIVO ALLA CUCINA
+   ARRIVO CLIENTI
 ================================================== */
 
 function startCustomerKitchenDetection() {
 
+
     setTimeout(function() {
+
 
         if (!customer1Satisfied) {
 
@@ -721,10 +950,12 @@ function startCustomerKitchenDetection() {
 
         }
 
+
     }, 26000);
 
 
     setTimeout(function() {
+
 
         if (!customer2Satisfied) {
 
@@ -732,9 +963,11 @@ function startCustomerKitchenDetection() {
 
         }
 
+
     }, 26000);
 
 }
+
 
 
 /* ==================================================
@@ -742,6 +975,7 @@ function startCustomerKitchenDetection() {
 ================================================== */
 
 function customerIsVisible(customer) {
+
 
     if (
         !customer ||
@@ -768,6 +1002,7 @@ function customerIsVisible(customer) {
     return (
 
         rect.bottom > gameRect.top &&
+
         rect.top < gameRect.bottom
 
     );
@@ -775,11 +1010,13 @@ function customerIsVisible(customer) {
 }
 
 
+
 /* ==================================================
    PRIMO ATTACCO
 ================================================== */
 
 function startFirstAttackDetection() {
+
 
     if (firstAttackTimer !== null) {
 
@@ -790,6 +1027,7 @@ function startFirstAttackDetection() {
 
     firstAttackTimer =
     setInterval(function() {
+
 
         const c1 =
             document.getElementById("customer1");
@@ -804,9 +1042,12 @@ function startFirstAttackDetection() {
             !customer1Satisfied
         ) {
 
+
             playCookAttack();
 
+
             clearInterval(firstAttackTimer);
+
 
             return;
 
@@ -818,17 +1059,22 @@ function startFirstAttackDetection() {
             !customer2Satisfied
         ) {
 
+
             playCookAttack();
 
+
             clearInterval(firstAttackTimer);
+
 
             return;
 
         }
 
+
     }, 100);
 
 }
+
 
 
 /* ==================================================
@@ -836,6 +1082,7 @@ function startFirstAttackDetection() {
 ================================================== */
 
 function startCustomerAnimation() {
+
 
     if (customerTimer !== null) {
 
@@ -845,6 +1092,7 @@ function startCustomerAnimation() {
 
 
     customerFrame1 = 0;
+
     customerFrame2 = 0;
 
 
@@ -852,9 +1100,8 @@ function startCustomerAnimation() {
     setInterval(function() {
 
 
-        /* CLIENTE 1 */
-
         if (!customer1Satisfied) {
+
 
             const frames =
                 document
@@ -876,7 +1123,10 @@ function startCustomerAnimation() {
             customerFrame1++;
 
 
-            if (customerFrame1 >= frames.length) {
+            if (
+                customerFrame1 >=
+                frames.length
+            ) {
 
                 customerFrame1 = 0;
 
@@ -885,9 +1135,9 @@ function startCustomerAnimation() {
         }
 
 
-        /* CLIENTE 2 */
 
         if (!customer2Satisfied) {
+
 
             const frames =
                 document
@@ -909,7 +1159,10 @@ function startCustomerAnimation() {
             customerFrame2++;
 
 
-            if (customerFrame2 >= frames.length) {
+            if (
+                customerFrame2 >=
+                frames.length
+            ) {
 
                 customerFrame2 = 0;
 
@@ -917,9 +1170,11 @@ function startCustomerAnimation() {
 
         }
 
+
     }, 300);
 
 }
+
 
 
 /* ==================================================
@@ -927,6 +1182,7 @@ function startCustomerAnimation() {
 ================================================== */
 
 function setCookFrame(frameNumber) {
+
 
     const frames =
         document
@@ -947,11 +1203,13 @@ function setCookFrame(frameNumber) {
 }
 
 
+
 /* ==================================================
-   ATTACCO CUOCO
+   ATTACCO
 ================================================== */
 
 function playCookAttack() {
+
 
     const target =
         getNearestVisibleCustomer();
@@ -983,13 +1241,19 @@ function playCookAttack() {
     }, 240);
 
 
-    /* FRAME 4 = LANCIO */
+    /*
+       FRAME 4
+       = LANCIO
+    */
 
     setTimeout(function() {
 
+
         setCookFrame(3);
 
+
         throwPasta(target);
+
 
     }, 360);
 
@@ -1010,11 +1274,13 @@ function playCookAttack() {
 }
 
 
+
 /* ==================================================
    ATTACCO OGNI 3 SECONDI
 ================================================== */
 
 function startCookAnimation() {
+
 
     if (cookTimer !== null) {
 
@@ -1029,11 +1295,14 @@ function startCookAnimation() {
     cookTimer =
     setInterval(function() {
 
+
         playCookAttack();
+
 
     }, 3000);
 
 }
+
 
 
 /* ==================================================
@@ -1041,6 +1310,7 @@ function startCookAnimation() {
 ================================================== */
 
 function getNearestVisibleCustomer() {
+
 
     const customers = [];
 
@@ -1100,6 +1370,7 @@ function getNearestVisibleCustomer() {
 
     customers.forEach(function(customer) {
 
+
         const rect =
             customer.getBoundingClientRect();
 
@@ -1110,14 +1381,24 @@ function getNearestVisibleCustomer() {
 
 
         const distance =
-            Math.abs(customerX - cookX);
+            Math.abs(
+                customerX -
+                cookX
+            );
 
 
-        if (distance < nearestDistance) {
+        if (
+            distance <
+            nearestDistance
+        ) {
 
-            nearestDistance = distance;
 
-            nearest = customer;
+            nearestDistance =
+                distance;
+
+
+            nearest =
+                customer;
 
         }
 
@@ -1129,11 +1410,13 @@ function getNearestVisibleCustomer() {
 }
 
 
+
 /* ==================================================
    LANCIO PASTA
 ================================================== */
 
 function throwPasta(target) {
+
 
     if (!target) {
 
@@ -1173,11 +1456,11 @@ function throwPasta(target) {
     /*
        IMPORTANTE:
 
-       Leggiamo la posizione del cliente
-       ESATTAMENTE quando parte la pasta.
+       LEGGIAMO LA POSIZIONE DEL CLIENTE
+       SOLO UNA VOLTA.
 
-       Da questo momento il bersaglio
-       rimane fisso.
+       IL CLIENTE PUÒ CONTINUARE A MUOVERSI,
+       MA IL BERSAGLIO RESTA FISSO.
     */
 
     const targetRect =
@@ -1192,20 +1475,10 @@ function throwPasta(target) {
         game.getBoundingClientRect();
 
 
-    const pasta =
-        document.createElement("img");
 
-
-    pasta.className = "pasta";
-
-
-    pasta.src =
-        "https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png";
-
-
-    /* =========================
-       PARTENZA DALLA MANO
-    ========================= */
+    /* ==================================================
+       PARTENZA
+    ================================================== */
 
     const startX =
         cookRect.left +
@@ -1217,39 +1490,73 @@ function throwPasta(target) {
         cookRect.height * 0.32;
 
 
-    /* =========================
-       BERSAGLIO FISSATO
-       
-       🔴 QUESTO È IL PUNTO
-       DELLO SPRITE DEL CLIENTE
-    ========================= */
+
+    /* ==================================================
+       BERSAGLIO
+    ================================================== */
 
     const endX =
         targetRect.left +
-        targetRect.width / 2;
+        targetRect.width / 2 +
+        HIT_X;
 
 
     const endY =
         targetRect.top +
-        targetRect.height * 0.50;
+        targetRect.height * HIT_POSITION_Y +
+        HIT_Y;
 
 
-    /*
-       🔴 NON viene più ricalcolato
-       mentre il cliente cammina.
 
-       Quindi il punto d'impatto
-       rimane quello scelto al momento
-       del lancio.
-    */
+    /* ==================================================
+       PUNTO ROSSO
+    ================================================== */
+
+    const hitMarker =
+        document.createElement("div");
+
+
+    hitMarker.className =
+        "hit-marker";
+
+
+    hitMarker.style.left =
+        (
+            endX -
+            gameRect.left
+        ) + "px";
+
+
+    hitMarker.style.top =
+        (
+            endY -
+            gameRect.top
+        ) + "px";
+
+
+    game.appendChild(hitMarker);
+
+
+
+    /* ==================================================
+       PASTA
+    ================================================== */
+
+    const pasta =
+        document.createElement("img");
+
+
+    pasta.className =
+        "pasta";
+
+
+    pasta.src =
+        "https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png";
 
 
     game.appendChild(pasta);
 
 
-    /* =========================
-       POSIZIONE INIZIALE
-    ========================= */
 
     pasta.style.left =
         (
@@ -1267,16 +1574,19 @@ function throwPasta(target) {
         ) + "px";
 
 
-    /* =========================
+
+    /* ==================================================
        VELOCITÀ
-    ========================= */
+    ================================================== */
 
     const distanceX =
-        endX - startX;
+        endX -
+        startX;
 
 
     const distanceY =
-        endY - startY;
+        endY -
+        startY;
 
 
     const distance =
@@ -1297,14 +1607,22 @@ function throwPasta(target) {
         performance.now();
 
 
+
+    /* ==================================================
+       MOVIMENTO PASTA
+    ================================================== */
+
     function movePasta(currentTime) {
 
+
         const elapsed =
-            currentTime - startTime;
+            currentTime -
+            startTime;
 
 
         let progress =
-            elapsed / duration;
+            elapsed /
+            duration;
 
 
         if (progress > 1) {
@@ -1314,23 +1632,16 @@ function throwPasta(target) {
         }
 
 
-        /*
-           IMPORTANTE:
-
-           endX ed endY NON cambiano.
-
-           La pasta quindi arriva esattamente
-           al punto scelto quando è stata lanciata.
-        */
-
         const currentX =
             startX +
-            distanceX * progress;
+            distanceX *
+            progress;
 
 
         const currentY =
             startY +
-            distanceY * progress;
+            distanceY *
+            progress;
 
 
         pasta.style.left =
@@ -1351,10 +1662,12 @@ function throwPasta(target) {
 
         if (progress >= 1) {
 
+
             hitCustomer(
                 target,
                 pasta
             );
+
 
             return;
 
@@ -1375,16 +1688,22 @@ function throwPasta(target) {
 }
 
 
+
 /* ==================================================
    COLPITO
 ================================================== */
 
-function hitCustomer(customer, pasta) {
+function hitCustomer(
+    customer,
+    pasta
+) {
+
 
     if (
         pasta &&
         pasta.parentNode
     ) {
+
 
         pasta.parentNode
         .removeChild(pasta);
@@ -1393,8 +1712,10 @@ function hitCustomer(customer, pasta) {
 
 
     if (
-        customer.id === "customer1"
+        customer.id ===
+        "customer1"
     ) {
+
 
         if (customer1Satisfied) {
 
@@ -1406,7 +1727,9 @@ function hitCustomer(customer, pasta) {
         customer1HP -= 5;
 
 
-        if (customer1HP <= 0) {
+        if (
+            customer1HP <= 0
+        ) {
 
             satisfyCustomer1();
 
@@ -1416,8 +1739,10 @@ function hitCustomer(customer, pasta) {
 
 
     if (
-        customer.id === "customer2"
+        customer.id ===
+        "customer2"
     ) {
+
 
         if (customer2Satisfied) {
 
@@ -1429,7 +1754,9 @@ function hitCustomer(customer, pasta) {
         customer2HP -= 5;
 
 
-        if (customer2HP <= 0) {
+        if (
+            customer2HP <= 0
+        ) {
 
             satisfyCustomer2();
 
@@ -1440,11 +1767,13 @@ function hitCustomer(customer, pasta) {
 }
 
 
+
 /* ==================================================
    CLIENTE 1 SODDISFATTO
 ================================================== */
 
 function satisfyCustomer1() {
+
 
     customer1Satisfied = true;
 
@@ -1452,19 +1781,27 @@ function satisfyCustomer1() {
 
 
     const customer =
-        document.getElementById("customer1");
+        document.getElementById(
+            "customer1"
+        );
 
 
-    customer.classList.add("satisfied");
+    customer.classList.add(
+        "satisfied"
+    );
 
 
     setTimeout(function() {
 
-        customer.style.display = "none";
+
+        customer.style.display =
+            "none";
+
 
     }, 1000);
 
 }
+
 
 
 /* ==================================================
@@ -1473,21 +1810,29 @@ function satisfyCustomer1() {
 
 function satisfyCustomer2() {
 
+
     customer2Satisfied = true;
 
     customer2AtKitchen = false;
 
 
     const customer =
-        document.getElementById("customer2");
+        document.getElementById(
+            "customer2"
+        );
 
 
-    customer.classList.add("satisfied");
+    customer.classList.add(
+        "satisfied"
+    );
 
 
     setTimeout(function() {
 
-        customer.style.display = "none";
+
+        customer.style.display =
+            "none";
+
 
     }, 1000);
 
