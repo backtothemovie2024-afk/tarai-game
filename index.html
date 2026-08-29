@@ -291,6 +291,31 @@ body {
 
 
 /* ==================================================
+   CLIENTE 3 - SPECCHIO CAMMINATA
+================================================== */
+
+#customer3 .walking-frame {
+
+    transform:
+        scaleX(1);
+
+}
+
+
+/*
+   Quando viene aggiunta questa classe,
+   lo sprite viene specchiato.
+*/
+
+#customer3 .walking-frame.flipped {
+
+    transform:
+        scaleX(-1);
+
+}
+
+
+/* ==================================================
    SPRITE FELICE
 ================================================== */
 
@@ -378,19 +403,29 @@ body {
 
 
 /* ==================================================
-   CLIENTI
+   POSIZIONI CLIENTI
 ================================================== */
 
 #customer1 {
 
-    left: 35%;
+    left: 25%;
 
 }
 
 
 #customer2 {
 
-    left: 65%;
+    left: 75%;
+
+}
+
+
+#customer3 {
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
 
 }
 
@@ -728,6 +763,41 @@ body {
 
 
     <!-- ==================================================
+         CLIENTE 3
+    ================================================== -->
+
+    <div
+        id="customer3"
+        class="customer"
+    >
+
+        <!-- SPRITE CAMMINATA -->
+
+        <img
+            class="frame walking-frame active"
+            src="https://i.ibb.co/cS3HRnCY/grok-1788046169803-removebg-preview.png"
+            alt=""
+        >
+
+        <!-- SPRITE FELICE -->
+
+        <img
+            class="happy-frame"
+            src="https://i.ibb.co/jmGQ910/grok-1788046178397-removebg-preview.png"
+            alt=""
+        >
+
+        <!-- CUORE -->
+
+        <div class="heart">
+            ❤️
+        </div>
+
+    </div>
+
+
+
+    <!-- ==================================================
          CUOCO
     ================================================== -->
 
@@ -790,33 +860,9 @@ body {
    REGOLAZIONE HITBOX
 ================================================== */
 
-
-/*
-   HIT_X
-
-   Negativo = sinistra
-   Positivo = destra
-*/
-
 const HIT_X = 5;
 
-
-/*
-   HIT_Y
-
-   Negativo = alto
-   Positivo = basso
-*/
-
 const HIT_Y = 0;
-
-
-/*
-   Percentuale dell'altezza
-   dello sprite del cliente.
-
-   0.45 = 45%
-*/
 
 const HIT_POSITION_Y = 0.45;
 
@@ -829,6 +875,8 @@ const HIT_POSITION_Y = 0.45;
 let customerFrame1 = 0;
 
 let customerFrame2 = 0;
+
+let customerFrame3 = 0;
 
 let customerTimer = null;
 
@@ -846,15 +894,21 @@ let customer1AtKitchen = false;
 
 let customer2AtKitchen = false;
 
+let customer3AtKitchen = false;
+
 
 let customer1HP = 50;
 
 let customer2HP = 50;
 
+let customer3HP = 50;
+
 
 let customer1Satisfied = false;
 
 let customer2Satisfied = false;
+
+let customer3Satisfied = false;
 
 
 
@@ -890,16 +944,24 @@ document
         customer2AtKitchen =
             false;
 
+        customer3AtKitchen =
+            false;
+
 
         customer1HP = 50;
 
         customer2HP = 50;
+
+        customer3HP = 50;
 
 
         customer1Satisfied =
             false;
 
         customer2Satisfied =
+            false;
+
+        customer3Satisfied =
             false;
 
 
@@ -917,11 +979,22 @@ document
             );
 
 
+        const customer3 =
+            document
+            .getElementById(
+                "customer3"
+            );
+
+
         customer1.style.display =
             "block";
 
 
         customer2.style.display =
+            "block";
+
+
+        customer3.style.display =
             "block";
 
 
@@ -937,10 +1010,14 @@ document
         );
 
 
+        customer3.classList
+        .remove(
+            "satisfied"
+        );
+
+
         /*
-           Nascondiamo nuovamente
-           gli sprite felici quando
-           si ricomincia la partita.
+           Reset sprite felici.
         */
 
         customer1
@@ -959,6 +1036,31 @@ document
             "none";
 
 
+        customer3
+        .querySelector(
+            ".happy-frame"
+        )
+        .style.display =
+            "none";
+
+
+        /*
+           Reset specchio Cliente 3.
+        */
+
+        const walkingFrame3 =
+            customer3
+            .querySelector(
+                ".walking-frame"
+            );
+
+
+        walkingFrame3.classList
+        .remove(
+            "flipped"
+        );
+
+
         /*
            Riattiviamo il primo
            frame normale.
@@ -973,6 +1075,13 @@ document
 
         const normalFrames2 =
             customer2
+            .querySelectorAll(
+                ".frame"
+            );
+
+
+        const normalFrames3 =
+            customer3
             .querySelectorAll(
                 ".frame"
             );
@@ -1002,6 +1111,18 @@ document
         );
 
 
+        normalFrames3.forEach(
+            function(frame) {
+
+                frame.classList
+                .remove(
+                    "active"
+                );
+
+            }
+        );
+
+
         normalFrames1[0]
         .classList
         .add(
@@ -1010,6 +1131,13 @@ document
 
 
         normalFrames2[0]
+        .classList
+        .add(
+            "active"
+        );
+
+
+        normalFrames3[0]
         .classList
         .add(
             "active"
@@ -1035,6 +1163,17 @@ document
 
 
         customer2.style.animation =
+            "walkDown 40s linear forwards";
+
+
+        customer3.style.animation =
+            "none";
+
+
+        void customer3.offsetWidth;
+
+
+        customer3.style.animation =
             "walkDown 40s linear forwards";
 
 
@@ -1228,6 +1367,16 @@ function startKitchenEnergySystem() {
 
 
             if (
+                customer3AtKitchen &&
+                !customer3Satisfied
+            ) {
+
+                damage++;
+
+            }
+
+
+            if (
                 damage > 0
             ) {
 
@@ -1293,6 +1442,25 @@ function startCustomerKitchenDetection() {
             ) {
 
                 customer2AtKitchen =
+                    true;
+
+            }
+
+
+        },
+        26000
+    );
+
+
+    setTimeout(
+        function() {
+
+
+            if (
+                !customer3Satisfied
+            ) {
+
+                customer3AtKitchen =
                     true;
 
             }
@@ -1394,6 +1562,13 @@ function startFirstAttackDetection() {
                 );
 
 
+            const c3 =
+                document
+                .getElementById(
+                    "customer3"
+                );
+
+
             if (
                 customerIsVisible(c1) &&
                 !customer1Satisfied
@@ -1416,6 +1591,25 @@ function startFirstAttackDetection() {
             if (
                 customerIsVisible(c2) &&
                 !customer2Satisfied
+            ) {
+
+
+                playCookAttack();
+
+
+                clearInterval(
+                    firstAttackTimer
+                );
+
+
+                return;
+
+            }
+
+
+            if (
+                customerIsVisible(c3) &&
+                !customer3Satisfied
             ) {
 
 
@@ -1462,11 +1656,17 @@ function startCustomerAnimation() {
 
     customerFrame2 = 0;
 
+    customerFrame3 = 0;
+
 
     customerTimer =
     setInterval(
         function() {
 
+
+            /*
+               CLIENTE 1
+            */
 
             if (
                 !customer1Satisfied
@@ -1520,6 +1720,10 @@ function startCustomerAnimation() {
 
 
 
+            /*
+               CLIENTE 2
+            */
+
             if (
                 !customer2Satisfied
             ) {
@@ -1565,6 +1769,59 @@ function startCustomerAnimation() {
                 ) {
 
                     customerFrame2 = 0;
+
+                }
+
+            }
+
+
+
+            /*
+               CLIENTE 3
+
+               Alterna:
+               originale -> specchio
+               -> originale -> specchio
+            */
+
+            if (
+                !customer3Satisfied
+            ) {
+
+
+                const walkingFrame =
+                    document
+                    .getElementById(
+                        "customer3"
+                    )
+                    .querySelector(
+                        ".walking-frame"
+                    );
+
+
+                if (
+                    walkingFrame
+                    .classList
+                    .contains(
+                        "flipped"
+                    )
+                ) {
+
+                    walkingFrame
+                    .classList
+                    .remove(
+                        "flipped"
+                    );
+
+                }
+
+                else {
+
+                    walkingFrame
+                    .classList
+                    .add(
+                        "flipped"
+                    );
 
                 }
 
@@ -1771,6 +2028,13 @@ function getNearestVisibleCustomer() {
         );
 
 
+    const c3 =
+        document
+        .getElementById(
+            "customer3"
+        );
+
+
     if (
         customerIsVisible(c1) &&
         !customer1Satisfied
@@ -1787,6 +2051,16 @@ function getNearestVisibleCustomer() {
     ) {
 
         customers.push(c2);
+
+    }
+
+
+    if (
+        customerIsVisible(c3) &&
+        !customer3Satisfied
+    ) {
+
+        customers.push(c3);
 
     }
 
@@ -1899,6 +2173,17 @@ function throwPasta(
         target.id ===
             "customer2" &&
         customer2Satisfied
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        target.id ===
+            "customer3" &&
+        customer3Satisfied
     ) {
 
         return;
@@ -2019,7 +2304,7 @@ function throwPasta(
 
     /* ==================================================
        VELOCITÀ
-================================================== */
+    ================================================== */
 
     const speed = 350;
 
@@ -2031,7 +2316,7 @@ function throwPasta(
 
     /* ==================================================
        MOVIMENTO PASTA
-================================================== */
+    ================================================== */
 
     function movePasta(
         currentTime
@@ -2337,6 +2622,35 @@ function hitCustomer(
 
     }
 
+
+    if (
+        customer.id ===
+        "customer3"
+    ) {
+
+
+        if (
+            customer3Satisfied
+        ) {
+
+            return;
+
+        }
+
+
+        customer3HP -= 5;
+
+
+        if (
+            customer3HP <= 0
+        ) {
+
+            satisfyCustomer3();
+
+        }
+
+    }
+
 }
 
 
@@ -2483,6 +2797,98 @@ function satisfyCustomer2() {
 
     /*
        Mostriamo lo sprite felice.
+    */
+
+    const happyFrame =
+        customer
+        .querySelector(
+            ".happy-frame"
+        );
+
+
+    happyFrame.style.display =
+        "block";
+
+
+    /*
+       Dopo 1 secondo
+       il cliente scompare.
+    */
+
+    setTimeout(
+        function() {
+
+
+            customer.style.display =
+                "none";
+
+
+            happyFrame.style.display =
+                "none";
+
+
+        },
+        1000
+    );
+
+}
+
+
+
+/* ==================================================
+   CLIENTE 3 SODDISFATTO
+================================================== */
+
+function satisfyCustomer3() {
+
+
+    customer3Satisfied =
+        true;
+
+
+    customer3AtKitchen =
+        false;
+
+
+    const customer =
+        document
+        .getElementById(
+            "customer3"
+        );
+
+
+    customer.classList.add(
+        "satisfied"
+    );
+
+
+    /*
+       Nascondiamo il frame
+       di camminata.
+    */
+
+    const normalFrames =
+        customer
+        .querySelectorAll(
+            ".frame"
+        );
+
+
+    normalFrames.forEach(
+        function(frame) {
+
+            frame.classList
+            .remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    /*
+       Mostriamo la posa felice.
+       NON viene specchiata.
     */
 
     const happyFrame =
