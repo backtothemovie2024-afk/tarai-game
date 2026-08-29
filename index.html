@@ -12,10 +12,6 @@
 
 <style>
 
-/* =====================
-   PAGINA
-===================== */
-
 * {
     box-sizing: border-box;
 }
@@ -55,7 +51,7 @@ body {
 
     overflow: hidden;
 
-    background: white;
+    background: black;
 }
 
 
@@ -80,22 +76,165 @@ body {
     align-items: center;
 
     z-index: 50;
+
+    overflow: hidden;
 }
 
 
-#menu h1 {
+/* =====================
+   FLASH
+===================== */
 
-    margin: 0 0 40px;
+#flash {
 
-    color: #ffd447;
+    position: absolute;
 
-    font-size: clamp(35px, 8vw, 55px);
+    inset: 0;
 
-    font-weight: 900;
+    background: white;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 20;
+
+    animation: flashEffect 1.2s ease-out forwards;
 }
 
+
+@keyframes flashEffect {
+
+    0% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 0.9;
+    }
+
+    45% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+
+}
+
+
+/* =====================
+   COPERTINA
+===================== */
+
+#cover {
+
+    position: relative;
+
+    width: 88%;
+
+    height: auto;
+
+    object-fit: contain;
+
+    opacity: 0;
+
+    z-index: 10;
+
+    animation:
+        logoIntro 1.2s
+        cubic-bezier(0.16, 1, 0.3, 1)
+        0.3s
+        forwards;
+}
+
+
+@keyframes logoIntro {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            scale(2.5)
+            rotate(-8deg);
+
+        filter:
+            brightness(3)
+            drop-shadow(0 0 30px #ff8c00);
+
+    }
+
+
+    35% {
+
+        opacity: 1;
+
+        transform:
+            scale(1.15)
+            rotate(3deg);
+
+        filter:
+            brightness(1.8)
+            drop-shadow(0 0 25px #ff8c00);
+
+    }
+
+
+    55% {
+
+        transform:
+            scale(0.94)
+            rotate(-2deg);
+
+    }
+
+
+    72% {
+
+        transform:
+            scale(1.06)
+            rotate(1deg);
+
+    }
+
+
+    86% {
+
+        transform:
+            scale(0.98)
+            rotate(-0.5deg);
+
+    }
+
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            scale(1)
+            rotate(0deg);
+
+        filter:
+            brightness(1)
+            drop-shadow(0 0 0 transparent);
+
+    }
+
+}
+
+
+/* =====================
+   PLAY
+===================== */
 
 #playButton {
+
+    position: absolute;
+
+    bottom: 12%;
 
     width: 60%;
 
@@ -114,6 +253,42 @@ body {
     font-size: 28px;
 
     font-weight: bold;
+
+    cursor: pointer;
+
+    opacity: 0;
+
+    transform: translateY(30px);
+
+    animation:
+        playIntro
+        0.6s
+        ease-out
+        1.5s
+        forwards;
+
+    z-index: 30;
+}
+
+
+@keyframes playIntro {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(30px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
 }
 
 
@@ -203,7 +378,11 @@ body {
 
     z-index: 10;
 
-    animation: walkDown 5s linear forwards;
+    animation:
+        walkDown
+        5s
+        linear
+        forwards;
 }
 
 
@@ -236,7 +415,7 @@ body {
 
 
 /* =====================
-   MOVIMENTO
+   MOVIMENTO CLIENTE
 ===================== */
 
 @keyframes walkDown {
@@ -263,90 +442,76 @@ body {
 <body>
 
 
-<!-- =====================
-     AREA SMARTPHONE
-===================== -->
-
 <div id="phone">
 
 
-    <!-- =====================
-         HOME
-    ===================== -->
+<!-- =====================
+     HOME
+===================== -->
 
-    <div id="menu">
-
-        <h1>
-            TARAI RUSH
-        </h1>
+<div id="menu">
 
 
-        <button id="playButton">
+    <div id="flash"></div>
 
-            PLAY
 
-        </button>
+    <img
+        id="cover"
+        src="https://i.ibb.co/qMC7T0bk/1787735382053.png"
+        alt="Tarai Rush">
+
+
+    <button id="playButton">
+        PLAY
+    </button>
+
+
+</div>
+
+
+
+<!-- =====================
+     GIOCO
+===================== -->
+
+<div id="game">
+
+
+    <img
+        id="background"
+        src="https://i.ibb.co/fzKdg9TY/1787950008908.png"
+        alt="Background">
+
+
+    <div id="hud">
+
+        <span>❤️ 3</span>
+
+        <span>⭐ 0</span>
 
     </div>
 
 
+    <div id="customer">
 
-    <!-- =====================
-         GIOCO
-    ===================== -->
-
-    <div id="game">
-
-
-        <!-- BACKGROUND -->
 
         <img
-            id="background"
-            src="https://i.ibb.co/fzKdg9TY/1787950008908.png"
-            alt="Background">
+            class="frame frame1"
+            src="https://i.ibb.co/WWQSVh2c/Screenshot-20260829-161529-Grok-2.jpg"
+            alt="Gamba sinistra">
 
 
-        <!-- HUD -->
-
-        <div id="hud">
-
-            <span>
-                ❤️ 3
-            </span>
-
-            <span>
-                ⭐ 0
-            </span>
-
-        </div>
-
-
-
-        <!-- CLIENTE -->
-
-        <div id="customer">
-
-
-            <!-- GAMBA SINISTRA -->
-
-            <img
-                class="frame frame1"
-                src="https://i.ibb.co/WWQSVh2c/Screenshot-20260829-161529-Grok-2.jpg"
-                alt="Gamba sinistra">
-
-
-            <!-- GAMBA DESTRA -->
-
-            <img
-                class="frame frame2"
-                src="https://i.ibb.co/YxRzGxP/Screenshot-20260829-161529-Grok-3.jpg"
-                alt="Gamba destra">
-
-
-        </div>
+        <img
+            class="frame frame2"
+            src="https://i.ibb.co/YxRzGxP/Screenshot-20260829-161529-Grok-3.jpg"
+            alt="Gamba destra">
 
 
     </div>
+
+
+</div>
+
 
 </div>
 
@@ -354,8 +519,9 @@ body {
 
 <script>
 
+
 /* =====================
-   ANIMAZIONE
+   ANIMAZIONE CAMMINATA
 ===================== */
 
 let currentFrame = 1;
