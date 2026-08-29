@@ -18,17 +18,12 @@ content="width=device-width, initial-scale=1.0">
 
 html,
 body {
-
     margin: 0;
     padding: 0;
-
     width: 100%;
     height: 100%;
-
     overflow: hidden;
-
     background: #111;
-
     font-family: Arial, sans-serif;
 }
 
@@ -155,19 +150,13 @@ body {
 @keyframes playAppear {
 
     from {
-
         opacity: 0;
-
         transform: translateY(30px);
-
     }
 
     to {
-
         opacity: 1;
-
         transform: translateY(0);
-
     }
 
 }
@@ -256,33 +245,21 @@ body {
 }
 
 
-/* =====================
-   POSIZIONE CLIENTE 1
-===================== */
-
 #customer1 {
-
     left: 35%;
-
 }
 
-
-/* =====================
-   POSIZIONE CLIENTE 2
-===================== */
 
 #customer2 {
-
     left: 65%;
-
 }
 
 
 /* =====================
-   SPRITE
+   SPRITE CLIENTI
 ===================== */
 
-.frame {
+.customer .frame {
 
     position: absolute;
 
@@ -294,7 +271,73 @@ body {
 
     object-fit: contain;
 
-    object-position: center;
+    display: none;
+}
+
+
+.customer .frame.active {
+    display: block;
+}
+
+
+/* =====================
+   MOVIMENTO CLIENTI
+===================== */
+
+@keyframes walkDown {
+
+    from {
+        top: -130px;
+    }
+
+    to {
+        top: 55%;
+    }
+
+}
+
+
+/* ==================================================
+   CUOCO
+================================================== */
+
+#cook {
+
+    position: absolute;
+
+    /*
+       Secondo cerchio da sinistra.
+       Valore regolabile in seguito.
+    */
+
+    left: 50%;
+
+    bottom: 4%;
+
+    width: 100px;
+    height: 135px;
+
+    transform: translateX(-50%);
+
+    z-index: 15;
+}
+
+
+/* =====================
+   SPRITE CUOCO
+===================== */
+
+#cook img {
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
 
     display: none;
 }
@@ -302,31 +345,8 @@ body {
 
 /* FRAME ATTIVO */
 
-.frame.active {
-
+#cook img.active {
     display: block;
-
-}
-
-
-/* =====================
-   MOVIMENTO
-===================== */
-
-@keyframes walkDown {
-
-    from {
-
-        top: -130px;
-
-    }
-
-    to {
-
-        top: 55%;
-
-    }
-
 }
 
 </style>
@@ -346,7 +366,6 @@ body {
 
 <div id="menu">
 
-
     <img
         id="cover"
         src="https://i.ibb.co/qMC7T0bk/1787735382053.png"
@@ -354,11 +373,8 @@ body {
 
 
     <button id="playButton">
-
         PLAY
-
     </button>
-
 
 </div>
 
@@ -400,15 +416,11 @@ body {
         class="customer">
 
 
-        <!-- FRAME 1 -->
-
         <img
             class="frame active"
             src="https://i.ibb.co/xqSsVvcc/Screenshot-20260829-161529-Grok-2-removebg-preview.png"
             alt="Cliente 1">
 
-
-        <!-- FRAME 2 -->
 
         <img
             class="frame"
@@ -429,20 +441,63 @@ body {
         class="customer">
 
 
-        <!-- FRAME 1 - GAMBA SINISTRA -->
-
         <img
             class="frame active"
             src="https://i.ibb.co/jP6QSPFd/1000040572-removebg-preview.png"
             alt="Cliente 2">
 
 
-        <!-- FRAME 2 - GAMBA DESTRA -->
-
         <img
             class="frame"
             src="https://i.ibb.co/vxJCRK81/1000040573-removebg-preview.png"
             alt="Cliente 2">
+
+
+    </div>
+
+
+
+    <!-- ==================================================
+         CUOCO
+    ================================================== -->
+
+    <div id="cook">
+
+
+        <!-- 1 -->
+
+        <img
+            class="active"
+            src="https://i.ibb.co/zWHKf82f/IMG-20260829-WA0002-removebg-preview.png"
+            alt="Cuoco frame 1">
+
+
+        <!-- 2 -->
+
+        <img
+            src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
+            alt="Cuoco frame 2">
+
+
+        <!-- 3 -->
+
+        <img
+            src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
+            alt="Cuoco frame 3">
+
+
+        <!-- 4 -->
+
+        <img
+            src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
+            alt="Cuoco frame 4">
+
+
+        <!-- 5 -->
+
+        <img
+            src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
+            alt="Cuoco frame 5">
 
 
     </div>
@@ -461,9 +516,11 @@ body {
    VARIABILI
 ================================================== */
 
-let frame1 = 0;
+let customerFrame1 = 0;
 
-let frame2 = 0;
+let customerFrame2 = 0;
+
+let cookFrame = 0;
 
 let animationTimer = null;
 
@@ -477,14 +534,10 @@ document
     .addEventListener("click", function() {
 
 
-        /* NASCONDE LA HOME */
-
         document
             .getElementById("menu")
             .style.display = "none";
 
-
-        /* MOSTRA IL GIOCO */
 
         document
             .getElementById("game")
@@ -523,19 +576,21 @@ document
             "walkDown 5s linear forwards";
 
 
-        /* AVVIA ANIMAZIONE */
+        /* =====================
+           AVVIA ANIMAZIONI
+        ===================== */
 
-        startWalking();
+        startAnimations();
 
     });
 
 
 
 /* ==================================================
-   ANIMAZIONE CAMMINATA
+   ANIMAZIONI
 ================================================== */
 
-function startWalking() {
+function startAnimations() {
 
 
     if (animationTimer !== null) {
@@ -545,9 +600,11 @@ function startWalking() {
     }
 
 
-    frame1 = 0;
+    customerFrame1 = 0;
 
-    frame2 = 0;
+    customerFrame2 = 0;
+
+    cookFrame = 0;
 
 
     animationTimer = setInterval(function() {
@@ -557,29 +614,29 @@ function startWalking() {
            CLIENTE 1
         ================================================== */
 
-        const customer1Frames =
+        const c1 =
             document
                 .getElementById("customer1")
                 .querySelectorAll(".frame");
 
 
-        customer1Frames.forEach(function(frame) {
+        c1.forEach(function(frame) {
 
             frame.classList.remove("active");
 
         });
 
 
-        customer1Frames[frame1]
+        c1[customerFrame1]
             .classList.add("active");
 
 
-        frame1++;
+        customerFrame1++;
 
 
-        if (frame1 >= 2) {
+        if (customerFrame1 >= 2) {
 
-            frame1 = 0;
+            customerFrame1 = 0;
 
         }
 
@@ -589,29 +646,61 @@ function startWalking() {
            CLIENTE 2
         ================================================== */
 
-        const customer2Frames =
+        const c2 =
             document
                 .getElementById("customer2")
                 .querySelectorAll(".frame");
 
 
-        customer2Frames.forEach(function(frame) {
+        c2.forEach(function(frame) {
 
             frame.classList.remove("active");
 
         });
 
 
-        customer2Frames[frame2]
+        c2[customerFrame2]
             .classList.add("active");
 
 
-        frame2++;
+        customerFrame2++;
 
 
-        if (frame2 >= 2) {
+        if (customerFrame2 >= 2) {
 
-            frame2 = 0;
+            customerFrame2 = 0;
+
+        }
+
+
+
+        /* ==================================================
+           CUOCO
+        ================================================== */
+
+        const cookFrames =
+            document
+                .getElementById("cook")
+                .querySelectorAll("img");
+
+
+        cookFrames.forEach(function(frame) {
+
+            frame.classList.remove("active");
+
+        });
+
+
+        cookFrames[cookFrame]
+            .classList.add("active");
+
+
+        cookFrame++;
+
+
+        if (cookFrame >= 5) {
+
+            cookFrame = 0;
 
         }
 
