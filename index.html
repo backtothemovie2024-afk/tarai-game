@@ -175,7 +175,7 @@ body {
 
 
 /* ==================================================
-   CUCINE
+   CUCINA
 ================================================== */
 
 #kitchen,
@@ -445,9 +445,9 @@ body {
 
     position: absolute;
 
-    width: 28px;
+    width: 42px;
 
-    height: 28px;
+    height: 42px;
 
     object-fit: contain;
 
@@ -475,9 +475,9 @@ body {
 
     .pasta {
 
-        width: 20px;
+        width: 30px;
 
-        height: 20px;
+        height: 30px;
 
     }
 
@@ -521,9 +521,7 @@ body {
     <div id="game">
 
 
-        <!-- ==================================================
-             BACKGROUND
-        ================================================== -->
+        <!-- BACKGROUND -->
 
         <img
             id="background"
@@ -532,9 +530,7 @@ body {
 
 
 
-        <!-- ==================================================
-             CUCINA INTEGRA
-        ================================================== -->
+        <!-- CUCINA INTEGRA -->
 
         <img
             id="kitchen"
@@ -543,9 +539,7 @@ body {
 
 
 
-        <!-- ==================================================
-             CUCINA DANNEGGIATA 50%
-        ================================================== -->
+        <!-- CUCINA DANNEGGIATA 50% -->
 
         <img
             id="kitchenDamaged"
@@ -554,9 +548,7 @@ body {
 
 
 
-        <!-- ==================================================
-             CUCINA DISTRUTTA 20%
-        ================================================== -->
+        <!-- CUCINA DISTRUTTA 20% -->
 
         <img
             id="kitchenDestroyed"
@@ -565,9 +557,7 @@ body {
 
 
 
-        <!-- ==================================================
-             HUD
-        ================================================== -->
+        <!-- HUD -->
 
         <div id="hud">
 
@@ -629,22 +619,36 @@ body {
 
         <div id="cook">
 
+            <!-- FRAME 1 - FERMO -->
+
             <img
                 class="active"
                 src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
                 alt="">
 
+
+            <!-- FRAME 2 -->
+
             <img
                 src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
                 alt="">
+
+
+            <!-- FRAME 3 - LANCIO -->
 
             <img
                 src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
                 alt="">
 
+
+            <!-- FRAME 4 -->
+
             <img
                 src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
                 alt="">
+
+
+            <!-- FRAME 5 -->
 
             <img
                 src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
@@ -676,6 +680,8 @@ let customerTimer = null;
 let cookTimer = null;
 
 let pastaTimer = null;
+
+let cookAttackTimer = null;
 
 
 /* ==================================================
@@ -750,15 +756,27 @@ document
             .classList.remove("satisfied");
 
 
+        document
+            .getElementById("customer1")
+            .style.display = "block";
+
+
+        document
+            .getElementById("customer2")
+            .style.display = "block";
+
+
         /* CUCINE */
 
         document
             .getElementById("kitchen")
             .style.display = "block";
 
+
         document
             .getElementById("kitchenDamaged")
             .style.display = "none";
+
 
         document
             .getElementById("kitchenDestroyed")
@@ -773,7 +791,6 @@ document
         const customer1 =
             document.getElementById("customer1");
 
-        customer1.style.display = "block";
 
         customer1.style.animation = "none";
 
@@ -788,7 +805,6 @@ document
         const customer2 =
             document.getElementById("customer2");
 
-        customer2.style.display = "block";
 
         customer2.style.animation = "none";
 
@@ -798,7 +814,7 @@ document
             "walkDown 20s linear forwards";
 
 
-        /* AVVIA */
+        /* AVVIA SISTEMI */
 
         startCustomerAnimation();
 
@@ -1063,7 +1079,150 @@ function startCustomerAnimation() {
 
 
 /* ==================================================
-   ANIMAZIONE CUOCO
+   CUOCO FERMO
+================================================== */
+
+function setCookFrame(frameNumber) {
+
+
+    const cookFrames =
+        document
+            .getElementById("cook")
+            .querySelectorAll("img");
+
+
+    cookFrames.forEach(function(frame) {
+
+        frame.classList.remove("active");
+
+    });
+
+
+    cookFrames[frameNumber]
+        .classList.add("active");
+
+}
+
+
+
+/* ==================================================
+   ANIMAZIONE ATTACCO CUOCO
+================================================== */
+
+function playCookAttack() {
+
+
+    const target =
+        getNearestCustomer();
+
+
+    /*
+       Se non c'è nessun cliente,
+       il cuoco rimane fermo.
+    */
+
+    if (target === null) {
+
+        setCookFrame(0);
+
+        return;
+
+    }
+
+
+    /*
+       Sicurezza:
+       interrompe eventuale animazione precedente
+    */
+
+    if (cookAttackTimer !== null) {
+
+        clearTimeout(cookAttackTimer);
+
+    }
+
+
+    cookFrame = 0;
+
+
+    /*
+       FRAME 1
+       preparazione
+    */
+
+    setCookFrame(0);
+
+
+    /*
+       FRAME 2
+       preparazione
+    */
+
+    cookAttackTimer =
+        setTimeout(function() {
+
+            setCookFrame(1);
+
+        }, 120);
+
+
+    /*
+       FRAME 3
+       LANCIO DELLA PASTA
+    */
+
+    cookAttackTimer =
+        setTimeout(function() {
+
+            setCookFrame(2);
+
+            throwPasta(target);
+
+        }, 240);
+
+
+    /*
+       FRAME 4
+    */
+
+    cookAttackTimer =
+        setTimeout(function() {
+
+            setCookFrame(3);
+
+        }, 360);
+
+
+    /*
+       FRAME 5
+       ritorno
+    */
+
+    cookAttackTimer =
+        setTimeout(function() {
+
+            setCookFrame(4);
+
+        }, 480);
+
+
+    /*
+       TORNA FERMO
+    */
+
+    cookAttackTimer =
+        setTimeout(function() {
+
+            setCookFrame(0);
+
+        }, 600);
+
+}
+
+
+
+/* ==================================================
+   SISTEMA ATTACCO
 ================================================== */
 
 function startCookAnimation() {
@@ -1076,41 +1235,24 @@ function startCookAnimation() {
     }
 
 
-    cookFrame = 0;
+    /*
+       Il cuoco rimane fermo.
+    */
 
+    setCookFrame(0);
+
+
+    /*
+       Ogni 3 secondi controlla
+       se può attaccare.
+    */
 
     cookTimer =
         setInterval(function() {
 
+            playCookAttack();
 
-            const cookFrames =
-                document
-                    .getElementById("cook")
-                    .querySelectorAll("img");
-
-
-            cookFrames.forEach(function(frame) {
-
-                frame.classList.remove("active");
-
-            });
-
-
-            cookFrames[cookFrame]
-                .classList.add("active");
-
-
-            cookFrame++;
-
-
-            if (cookFrame >= 5) {
-
-                cookFrame = 0;
-
-            }
-
-
-        }, 120);
+        }, 3000);
 
 }
 
@@ -1123,24 +1265,17 @@ function startCookAnimation() {
 function startPastaSystem() {
 
 
+    /*
+       Non serve più un lancio separato:
+       il lancio è sincronizzato
+       con l'animazione del cuoco.
+    */
+
     if (pastaTimer !== null) {
 
         clearInterval(pastaTimer);
 
     }
-
-
-    /*
-       Primo lancio dopo 3 secondi.
-       Poi un lancio ogni 3 secondi.
-    */
-
-    pastaTimer =
-        setInterval(function() {
-
-            throwPasta();
-
-        }, 3000);
 
 }
 
@@ -1238,14 +1373,35 @@ function getNearestCustomer() {
    LANCIA PASTA
 ================================================== */
 
-function throwPasta() {
+function throwPasta(target) {
 
 
-    const target =
-        getNearestCustomer();
+    if (!target) {
+
+        return;
+
+    }
 
 
-    if (target === null) {
+    /*
+       Controlla che il cliente
+       sia ancora valido.
+    */
+
+    if (
+        target.id === "customer1" &&
+        customer1Satisfied
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        target.id === "customer2" &&
+        customer2Satisfied
+    ) {
 
         return;
 
@@ -1276,54 +1432,56 @@ function throwPasta() {
 
 
     /*
-       Punto di partenza:
-       circa nella zona della mano
+       PARTENZA DALLA MANO
     */
 
-    let startX =
+    const startX =
         cookRect.left +
         cookRect.width * 0.72;
 
 
-    let startY =
+    const startY =
         cookRect.top +
         cookRect.height * 0.32;
 
 
     /*
-       Punto di arrivo:
-       centro del cliente
+       ARRIVO SUL CLIENTE
     */
 
-    let endX =
+    const endX =
         targetRect.left +
         targetRect.width / 2;
 
 
-    let endY =
+    const endY =
         targetRect.top +
         targetRect.height / 2;
 
-
-    /*
-       Inseriamo la pasta nel gioco
-    */
 
     document
         .getElementById("game")
         .appendChild(pasta);
 
 
+    /*
+       Il game è il contenitore
+       della posizione.
+    */
+
+    const gameRect =
+        document
+            .getElementById("game")
+            .getBoundingClientRect();
+
+
     pasta.style.left =
-        startX + "px";
+        (startX - gameRect.left) + "px";
+
 
     pasta.style.top =
-        startY + "px";
+        (startY - gameRect.top) + "px";
 
-
-    /*
-       Animazione volo
-    */
 
     const duration = 600;
 
@@ -1349,10 +1507,6 @@ function throwPasta() {
         }
 
 
-        /*
-           Movimento lineare
-        */
-
         const currentX =
             startX +
             (endX - startX) *
@@ -1366,15 +1520,12 @@ function throwPasta() {
 
 
         pasta.style.left =
-            currentX + "px";
+            (currentX - gameRect.left) + "px";
+
 
         pasta.style.top =
-            currentY + "px";
+            (currentY - gameRect.top) + "px";
 
-
-        /*
-           HIT
-        */
 
         if (progress >= 1) {
 
@@ -1402,10 +1553,6 @@ function throwPasta() {
 
 function hitCustomer(customer, pasta) {
 
-
-    /*
-       Rimuove la pasta
-    */
 
     if (pasta &&
         pasta.parentNode) {
@@ -1555,7 +1702,6 @@ function satisfyCustomer2() {
 }
 
 </script>
-
 
 </body>
 
