@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tarai Rush</title>
 
 <style>
-
 * {
     box-sizing: border-box;
 }
@@ -25,137 +19,88 @@ html, body {
     font-family: Arial, sans-serif;
 }
 
-
 /* HOME */
-
 #menu {
     width: 100vw;
     height: 100vh;
-
     background: #1b1b2f;
-
     display: flex;
     flex-direction: column;
-
     justify-content: center;
     align-items: center;
 }
 
 #menu h1 {
-    margin: 0 0 40px;
-
     color: #ffd447;
-
     font-size: 55px;
-
-    font-weight: 900;
+    margin: 0 0 40px;
 }
 
-button {
+#playButton {
     width: 240px;
     height: 70px;
-
     border: none;
     border-radius: 18px;
-
     background: #ef6428;
-
     color: white;
-
     font-size: 28px;
-
     font-weight: bold;
 }
 
-
 /* LIVELLO */
-
 #game {
     display: none;
-
     position: relative;
-
     width: 100vw;
     height: 100vh;
-
     overflow: hidden;
-
     background: white;
 }
 
-
 /* HUD */
-
 #hud {
     position: absolute;
-
     top: 15px;
     left: 20px;
     right: 20px;
-
     display: flex;
-
     justify-content: space-between;
-
     font-size: 22px;
-
     font-weight: bold;
-
     z-index: 10;
 }
 
-
 /* CLIENTE */
-
 #customer {
-
     position: absolute;
-
+    left: 50%;
+    top: -220px;
     width: 150px;
     height: 200px;
-
-    left: 50%;
-
-    top: -200px;
-
     transform: translateX(-50%);
-
     z-index: 5;
 }
 
-
 #customer img {
-
     width: 100%;
     height: 100%;
-
     object-fit: contain;
-
-    display: block;
 }
 
-
 /* MOVIMENTO */
-
-@keyframes moveCustomer {
-
+@keyframes walkDown {
     from {
-        top: -200px;
+        top: -220px;
     }
 
     to {
         top: 55vh;
     }
-
 }
-
 </style>
-
 </head>
 
-
 <body>
-
 
 <!-- HOME -->
 
@@ -163,32 +108,26 @@ button {
 
     <h1>TARAI RUSH</h1>
 
-    <button onclick="startGame()">
+    <button id="playButton">
         PLAY
     </button>
 
 </div>
 
 
-<!-- LIVELLO -->
+<!-- LIVELLO 1 -->
 
 <div id="game">
 
     <div id="hud">
-
         <span>❤️ 3</span>
-
         <span>⭐ 0</span>
-
     </div>
-
 
     <div id="customer">
 
-        <img
-            id="customerSprite"
-            src="https://i.ibb.co/WWQSVh2c/Screenshot-20260829-161529-Grok-2.jpg"
-            alt="Cliente">
+        <img id="customerSprite"
+        src="https://i.ibb.co/WWQSVh2c/Screenshot-20260829-161529-Grok-2.jpg">
 
     </div>
 
@@ -211,55 +150,41 @@ const frames = [
 
 
 let currentFrame = 0;
+let animationTimer = null;
 
 
-function startGame() {
+document.getElementById("playButton").onclick = function() {
 
     document.getElementById("menu").style.display = "none";
 
     document.getElementById("game").style.display = "block";
 
+    const customer = document.getElementById("customer");
 
-    const customer =
-        document.getElementById("customer");
+    customer.style.animation = "walkDown 5s linear forwards";
 
+    currentFrame = 0;
 
-    customer.style.animation =
-        "moveCustomer 5s linear forwards";
-
-
-    animateWalk();
-
-}
+    animateCustomer();
+};
 
 
-function animateWalk() {
+function animateCustomer() {
 
-    const sprite =
-        document.getElementById("customerSprite");
+    const image = document.getElementById("customerSprite");
 
-
-    sprite.src =
-        frames[currentFrame];
-
+    image.src = frames[currentFrame];
 
     currentFrame++;
 
-
     if (currentFrame >= frames.length) {
-
         currentFrame = 0;
-
     }
 
-
-    setTimeout(animateWalk, 150);
-
+    animationTimer = setTimeout(animateCustomer, 500);
 }
 
 </script>
 
-
 </body>
-
 </html>
