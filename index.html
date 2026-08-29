@@ -6,15 +6,11 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+content="width=device-width, initial-scale=1.0">
 
 <title>Tarai Rush</title>
 
 <style>
-
-/* =========================
-   IMPOSTAZIONI GENERALI
-========================= */
 
 * {
     box-sizing: border-box;
@@ -24,9 +20,12 @@ html,
 body {
     margin: 0;
     padding: 0;
+
     width: 100%;
     height: 100%;
+
     overflow: hidden;
+
     font-family: Arial, sans-serif;
 }
 
@@ -43,14 +42,14 @@ body {
     background: #1b1b2f;
 
     display: flex;
+
     flex-direction: column;
 
     justify-content: center;
+
     align-items: center;
 }
 
-
-/* TITOLO */
 
 #menu h1 {
 
@@ -62,18 +61,14 @@ body {
 
     font-weight: 900;
 
-    letter-spacing: 3px;
-
     text-shadow:
         4px 4px 0 #63240d;
 }
 
 
-/* PLAY */
-
 .menu-button {
 
-    width: min(70vw, 280px);
+    width: 240px;
 
     height: 70px;
 
@@ -88,25 +83,11 @@ body {
     font-size: 28px;
 
     font-weight: 900;
-
-    box-shadow:
-        0 7px 0 #8d2e0e;
-
-    cursor: pointer;
-}
-
-
-.menu-button:active {
-
-    transform: translateY(6px);
-
-    box-shadow:
-        0 1px 0 #8d2e0e;
 }
 
 
 /* =========================
-   LIVELLO 1
+   LIVELLO
 ========================= */
 
 #game {
@@ -143,11 +124,11 @@ body {
 
     justify-content: space-between;
 
-    color: black;
-
     font-size: 22px;
 
     font-weight: bold;
+
+    color: black;
 
     z-index: 20;
 }
@@ -157,26 +138,19 @@ body {
    CLIENTE
 ========================= */
 
-/*
-   Questa è la "finestra"
-   attraverso cui vediamo
-   un frame alla volta.
-*/
-
 #customer {
 
     position: absolute;
 
-    top: 50%;
-
     left: 50%;
+
+    top: -180px;
+
+    transform: translateX(-50%);
 
     width: 150px;
 
-    height: 200px;
-
-    transform:
-        translate(-50%, -50%);
+    height: 180px;
 
     overflow: hidden;
 
@@ -184,42 +158,68 @@ body {
 }
 
 
-/*
-   Lo sprite contiene
-   4 frame affiancati.
-*/
+/* =========================
+   SPRITE
+========================= */
 
 #customerSprite {
 
-    position: absolute;
-
-    top: 0;
-
-    left: 0;
-
     width: 600px;
 
-    height: 200px;
+    height: 180px;
 
     max-width: none;
 
+    background-image:
+        url("https://i.ibb.co/39yMsFWJ/1787786320198-3.jpg");
+
+    background-size: 600px 180px;
+
+    background-repeat: no-repeat;
+
     animation:
+
         walk 0.8s steps(4) infinite;
 }
 
 
 /* =========================
-   ANIMAZIONE 4 FRAME
+   4 FRAME
 ========================= */
 
 @keyframes walk {
 
-    0% {
-        left: 0;
+    from {
+
+        background-position-x: 0;
+
     }
 
-    100% {
-        left: -450px;
+    to {
+
+        background-position-x: -450px;
+
+    }
+
+}
+
+
+/* =========================
+   MOVIMENTO
+========================= */
+
+@keyframes moveDown {
+
+    from {
+
+        top: -180px;
+
+    }
+
+    to {
+
+        top: 55vh;
+
     }
 
 }
@@ -232,9 +232,7 @@ body {
 <body>
 
 
-<!-- =========================
-     HOME
-========================= -->
+<!-- HOME -->
 
 <div id="menu">
 
@@ -254,38 +252,23 @@ body {
 
 
 
-<!-- =========================
-     LIVELLO 1
-========================= -->
+<!-- GIOCO -->
 
 <div id="game">
 
 
-    <!-- HUD -->
-
     <div id="hud">
 
-        <span>
-            ❤️ 3
-        </span>
+        <span>❤️ 3</span>
 
-        <span>
-            ⭐ 0
-        </span>
+        <span>⭐ 0</span>
 
     </div>
 
 
-    <!-- CLIENTE -->
-
     <div id="customer">
 
-        <img
-            id="customerSprite"
-
-            src="https://i.ibb.co/39yMsFWJ/1787786320198-3.jpg"
-
-            alt="Cliente">
+        <div id="customerSprite"></div>
 
     </div>
 
@@ -296,19 +279,19 @@ body {
 
 <script>
 
-/* =========================
-   AVVIO DEL GIOCO
-========================= */
-
 function startGame() {
 
-    document
-        .getElementById("menu")
-        .style.display = "none";
+    document.getElementById("menu").style.display = "none";
 
-    document
-        .getElementById("game")
-        .style.display = "block";
+    document.getElementById("game").style.display = "block";
+
+
+    const customer =
+        document.getElementById("customer");
+
+
+    customer.style.animation =
+        "moveDown 5s linear forwards";
 
 }
 
