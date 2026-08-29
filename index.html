@@ -5,7 +5,8 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Tarai Rush</title>
 
@@ -196,6 +197,7 @@ body {
     object-fit: contain;
 
     pointer-events: none;
+
 }
 
 
@@ -224,7 +226,7 @@ body {
 
 
 /* ==================================================
-   CUCINA GRAVEMENTE DANNEGGIATA
+   CUCINA DISTRUTTA
 ================================================== */
 
 #kitchenDestroyed {
@@ -237,8 +239,7 @@ body {
 
 
 /* ==================================================
-   BARRA ENERGIA
-   INVISIBILE
+   BARRA ENERGIA INVISIBILE
 ================================================== */
 
 #energyContainer,
@@ -470,8 +471,7 @@ body {
         <img
             id="cover"
             src="https://i.ibb.co/qMC7T0bk/1787735382053.png"
-            alt="Tarai Rush">
-
+            alt="">
 
         <button id="playButton">
 
@@ -490,12 +490,14 @@ body {
     <div id="game">
 
 
-        <!-- BACKGROUND -->
+        <!-- ==================================================
+             BACKGROUND
+        ================================================== -->
 
         <img
             id="background"
             src="https://i.ibb.co/pj7trt5y/IMG-20260829-WA0012.jpg"
-            alt="Background">
+            alt="">
 
 
 
@@ -506,7 +508,7 @@ body {
         <img
             id="kitchen"
             src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png"
-            alt="Cucina">
+            alt="">
 
 
 
@@ -517,18 +519,18 @@ body {
         <img
             id="kitchenDamaged"
             src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"
-            alt="Cucina danneggiata">
+            alt="">
 
 
 
         <!-- ==================================================
-             CUCINA GRAVEMENTE DANNEGGIATA 20%
+             CUCINA DISTRUTTA 20%
         ================================================== -->
 
         <img
             id="kitchenDestroyed"
-            src=src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"
-            alt="Cucina gravemente danneggiata">
+            src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"
+            alt="">
 
 
 
@@ -576,12 +578,12 @@ body {
             <img
                 class="frame active"
                 src="https://i.ibb.co/xqSsVvcc/Screenshot-20260829-161529-Grok-2-removebg-preview.png"
-                alt="Cliente 1">
+                alt="">
 
             <img
                 class="frame"
                 src="https://i.ibb.co/4nvV4nPq/Screenshot-20260829-161529-Grok-3-removebg-preview.png"
-                alt="Cliente 1">
+                alt="">
 
         </div>
 
@@ -598,12 +600,12 @@ body {
             <img
                 class="frame active"
                 src="https://i.ibb.co/jP6QSPFd/1000040572-removebg-preview.png"
-                alt="Cliente 2">
+                alt="">
 
             <img
                 class="frame"
                 src="https://i.ibb.co/vxJCRK81/1000040573-removebg-preview.png"
-                alt="Cliente 2">
+                alt="">
 
         </div>
 
@@ -618,23 +620,23 @@ body {
             <img
                 class="active"
                 src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-                alt="Cuoco frame 1">
+                alt="">
 
             <img
                 src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
-                alt="Cuoco frame 2">
+                alt="">
 
             <img
                 src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
-                alt="Cuoco frame 3">
+                alt="">
 
             <img
                 src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
-                alt="Cuoco frame 4">
+                alt="">
 
             <img
                 src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-                alt="Cuoco frame 5">
+                alt="">
 
         </div>
 
@@ -728,8 +730,6 @@ document
             .style.display = "none";
 
 
-        /* AGGIORNA STATO */
-
         updateKitchenEnergy();
 
 
@@ -785,22 +785,15 @@ document
 
 
 /* ==================================================
-   AGGIORNA STATO CUCINA
+   STATO CUCINA
 ================================================== */
 
 function updateKitchenEnergy() {
 
 
-    /*
-       La barra è invisibile,
-       ma il valore continua ad essere
-       utilizzato dal gioco.
-    */
-
-
     /* ==============================================
-       CUCINA INTEGRA
        100 - 51%
+       CUCINA INTEGRA
     ============================================== */
 
     if (kitchenEnergy > 50) {
@@ -822,10 +815,9 @@ function updateKitchenEnergy() {
     }
 
 
-
     /* ==============================================
-       CUCINA DANNEGGIATA
        50 - 21%
+       CUCINA DANNEGGIATA
     ============================================== */
 
     else if (kitchenEnergy > 20) {
@@ -847,10 +839,9 @@ function updateKitchenEnergy() {
     }
 
 
-
     /* ==============================================
-       CUCINA GRAVEMENTE DANNEGGIATA
        20 - 0%
+       CUCINA DISTRUTTA
     ============================================== */
 
     else {
@@ -948,7 +939,7 @@ function startKitchenEnergySystem() {
 
 
 /* ==================================================
-   RILEVAMENTO ARRIVO CLIENTI
+   RILEVAMENTO CLIENTI
 ================================================== */
 
 function startCustomerKitchenDetection() {
