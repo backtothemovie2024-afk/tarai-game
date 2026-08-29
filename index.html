@@ -292,7 +292,7 @@ body {
 
 
 /* ==================================================
-   CLIENTE SODDISFATTO
+   CLIENTE BLOCCATO / SODDISFATTO
 ================================================== */
 
 .customer.satisfied {
@@ -426,7 +426,6 @@ body {
     object-position: center;
 
     display: none;
-
 }
 
 
@@ -445,9 +444,9 @@ body {
 
     position: absolute;
 
-    width: 42px;
+    width: 84px;
 
-    height: 42px;
+    height: 84px;
 
     object-fit: contain;
 
@@ -475,9 +474,9 @@ body {
 
     .pasta {
 
-        width: 30px;
+        width: 60px;
 
-        height: 30px;
+        height: 60px;
 
     }
 
@@ -521,7 +520,9 @@ body {
     <div id="game">
 
 
-        <!-- BACKGROUND -->
+        <!-- ==================================================
+             BACKGROUND
+        ================================================== -->
 
         <img
             id="background"
@@ -530,7 +531,9 @@ body {
 
 
 
-        <!-- CUCINA INTEGRA -->
+        <!-- ==================================================
+             CUCINA INTEGRA
+        ================================================== -->
 
         <img
             id="kitchen"
@@ -539,7 +542,9 @@ body {
 
 
 
-        <!-- CUCINA DANNEGGIATA 50% -->
+        <!-- ==================================================
+             CUCINA DANNEGGIATA 50%
+        ================================================== -->
 
         <img
             id="kitchenDamaged"
@@ -548,7 +553,9 @@ body {
 
 
 
-        <!-- CUCINA DISTRUTTA 20% -->
+        <!-- ==================================================
+             CUCINA DISTRUTTA 20%
+        ================================================== -->
 
         <img
             id="kitchenDestroyed"
@@ -557,7 +564,9 @@ body {
 
 
 
-        <!-- HUD -->
+        <!-- ==================================================
+             HUD
+        ================================================== -->
 
         <div id="hud">
 
@@ -619,7 +628,9 @@ body {
 
         <div id="cook">
 
-            <!-- FRAME 1 - FERMO -->
+
+            <!-- FRAME 1
+                 POSIZIONE NORMALE -->
 
             <img
                 class="active"
@@ -627,32 +638,37 @@ body {
                 alt="">
 
 
-            <!-- FRAME 2 -->
+            <!-- FRAME 2
+                 PREPARAZIONE -->
 
             <img
                 src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
                 alt="">
 
 
-            <!-- FRAME 3 - LANCIO -->
+            <!-- FRAME 3
+                 PREPARAZIONE -->
 
             <img
                 src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
                 alt="">
 
 
-            <!-- FRAME 4 -->
+            <!-- FRAME 4
+                 LANCIO DELLA PASTA -->
 
             <img
                 src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
                 alt="">
 
 
-            <!-- FRAME 5 -->
+            <!-- FRAME 5
+                 FINE LANCIO -->
 
             <img
                 src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
                 alt="">
+
 
         </div>
 
@@ -679,9 +695,9 @@ let customerTimer = null;
 
 let cookTimer = null;
 
-let pastaTimer = null;
-
 let cookAttackTimer = null;
+
+let firstAttackTimer = null;
 
 
 /* ==================================================
@@ -766,17 +782,15 @@ document
             .style.display = "block";
 
 
-        /* CUCINE */
+        /* CUCINA */
 
         document
             .getElementById("kitchen")
             .style.display = "block";
 
-
         document
             .getElementById("kitchenDamaged")
             .style.display = "none";
-
 
         document
             .getElementById("kitchenDestroyed")
@@ -824,7 +838,7 @@ document
 
         startCustomerKitchenDetection();
 
-        startPastaSystem();
+        startFirstAttackDetection();
 
     });
 
@@ -910,16 +924,20 @@ function startKitchenEnergySystem() {
             let damage = 0;
 
 
-            if (customer1AtKitchen &&
-                !customer1Satisfied) {
+            if (
+                customer1AtKitchen &&
+                !customer1Satisfied
+            ) {
 
                 damage++;
 
             }
 
 
-            if (customer2AtKitchen &&
-                !customer2Satisfied) {
+            if (
+                customer2AtKitchen &&
+                !customer2Satisfied
+            ) {
 
                 damage++;
 
@@ -950,7 +968,7 @@ function startKitchenEnergySystem() {
 
 
 /* ==================================================
-   RILEVAMENTO ARRIVO CLIENTI
+   ARRIVO ALLA CUCINA
 ================================================== */
 
 function startCustomerKitchenDetection() {
@@ -977,6 +995,105 @@ function startCustomerKitchenDetection() {
         }
 
     }, 13200);
+
+}
+
+
+
+/* ==================================================
+   CONTROLLO CLIENTI NELLA SCHERMATA
+================================================== */
+
+function customerIsVisible(customer) {
+
+
+    if (!customer ||
+        customer.style.display === "none") {
+
+        return false;
+
+    }
+
+
+    const rect =
+        customer.getBoundingClientRect();
+
+
+    const game =
+        document.getElementById("game");
+
+
+    const gameRect =
+        game.getBoundingClientRect();
+
+
+    return (
+
+        rect.bottom > gameRect.top &&
+
+        rect.top < gameRect.bottom
+
+    );
+
+}
+
+
+
+/* ==================================================
+   PRIMO ATTACCO
+================================================== */
+
+function startFirstAttackDetection() {
+
+
+    if (firstAttackTimer !== null) {
+
+        clearInterval(firstAttackTimer);
+
+    }
+
+
+    firstAttackTimer =
+        setInterval(function() {
+
+
+            const c1 =
+                document.getElementById("customer1");
+
+
+            const c2 =
+                document.getElementById("customer2");
+
+
+            if (
+                customerIsVisible(c1) &&
+                !customer1Satisfied
+            ) {
+
+                playCookAttack();
+
+                clearInterval(firstAttackTimer);
+
+                return;
+
+            }
+
+
+            if (
+                customerIsVisible(c2) &&
+                !customer2Satisfied
+            ) {
+
+                playCookAttack();
+
+                clearInterval(firstAttackTimer);
+
+                return;
+
+            }
+
+
+        }, 100);
 
 }
 
@@ -1079,7 +1196,7 @@ function startCustomerAnimation() {
 
 
 /* ==================================================
-   CUOCO FERMO
+   CAMBIO FRAME CUOCO
 ================================================== */
 
 function setCookFrame(frameNumber) {
@@ -1106,20 +1223,15 @@ function setCookFrame(frameNumber) {
 
 
 /* ==================================================
-   ANIMAZIONE ATTACCO CUOCO
+   ANIMAZIONE ATTACCO
 ================================================== */
 
 function playCookAttack() {
 
 
     const target =
-        getNearestCustomer();
+        getNearestVisibleCustomer();
 
-
-    /*
-       Se non c'è nessun cliente,
-       il cuoco rimane fermo.
-    */
 
     if (target === null) {
 
@@ -1131,23 +1243,7 @@ function playCookAttack() {
 
 
     /*
-       Sicurezza:
-       interrompe eventuale animazione precedente
-    */
-
-    if (cookAttackTimer !== null) {
-
-        clearTimeout(cookAttackTimer);
-
-    }
-
-
-    cookFrame = 0;
-
-
-    /*
        FRAME 1
-       preparazione
     */
 
     setCookFrame(0);
@@ -1155,74 +1251,67 @@ function playCookAttack() {
 
     /*
        FRAME 2
-       preparazione
     */
 
-    cookAttackTimer =
-        setTimeout(function() {
+    setTimeout(function() {
 
-            setCookFrame(1);
+        setCookFrame(1);
 
-        }, 120);
+    }, 120);
 
 
     /*
        FRAME 3
-       LANCIO DELLA PASTA
     */
 
-    cookAttackTimer =
-        setTimeout(function() {
+    setTimeout(function() {
 
-            setCookFrame(2);
+        setCookFrame(2);
 
-            throwPasta(target);
-
-        }, 240);
+    }, 240);
 
 
     /*
        FRAME 4
+       QUI PARTE LA PASTA
     */
 
-    cookAttackTimer =
-        setTimeout(function() {
+    setTimeout(function() {
 
-            setCookFrame(3);
+        setCookFrame(3);
 
-        }, 360);
+        throwPasta(target);
+
+    }, 360);
 
 
     /*
        FRAME 5
-       ritorno
     */
 
-    cookAttackTimer =
-        setTimeout(function() {
+    setTimeout(function() {
 
-            setCookFrame(4);
+        setCookFrame(4);
 
-        }, 480);
+    }, 480);
 
 
     /*
        TORNA FERMO
     */
 
-    cookAttackTimer =
-        setTimeout(function() {
+    setTimeout(function() {
 
-            setCookFrame(0);
+        setCookFrame(0);
 
-        }, 600);
+    }, 600);
 
 }
 
 
 
 /* ==================================================
-   SISTEMA ATTACCO
+   ATTACCO OGNI 3 SECONDI
 ================================================== */
 
 function startCookAnimation() {
@@ -1235,16 +1324,12 @@ function startCookAnimation() {
     }
 
 
-    /*
-       Il cuoco rimane fermo.
-    */
-
     setCookFrame(0);
 
 
     /*
-       Ogni 3 secondi controlla
-       se può attaccare.
+       Dopo il primo attacco,
+       controlla ogni 3 secondi.
     */
 
     cookTimer =
@@ -1259,33 +1344,10 @@ function startCookAnimation() {
 
 
 /* ==================================================
-   SISTEMA PASTA
+   TROVA CLIENTE VISIBILE PIÙ VICINO
 ================================================== */
 
-function startPastaSystem() {
-
-
-    /*
-       Non serve più un lancio separato:
-       il lancio è sincronizzato
-       con l'animazione del cuoco.
-    */
-
-    if (pastaTimer !== null) {
-
-        clearInterval(pastaTimer);
-
-    }
-
-}
-
-
-
-/* ==================================================
-   TROVA CLIENTE PIÙ VICINO
-================================================== */
-
-function getNearestCustomer() {
+function getNearestVisibleCustomer() {
 
 
     const customers = [];
@@ -1299,16 +1361,20 @@ function getNearestCustomer() {
         document.getElementById("customer2");
 
 
-    if (!customer1Satisfied &&
-        customer1AtKitchen) {
+    if (
+        customerIsVisible(c1) &&
+        !customer1Satisfied
+    ) {
 
         customers.push(c1);
 
     }
 
 
-    if (!customer2Satisfied &&
-        customer2AtKitchen) {
+    if (
+        customerIsVisible(c2) &&
+        !customer2Satisfied
+    ) {
 
         customers.push(c2);
 
@@ -1322,16 +1388,17 @@ function getNearestCustomer() {
     }
 
 
-    const kitchen =
-        document.getElementById("kitchen");
+    const cook =
+        document.getElementById("cook");
 
 
-    const kitchenRect =
-        kitchen.getBoundingClientRect();
+    const cookRect =
+        cook.getBoundingClientRect();
 
 
-    const kitchenY =
-        kitchenRect.top;
+    const cookX =
+        cookRect.left +
+        cookRect.width / 2;
 
 
     let nearest = null;
@@ -1346,10 +1413,13 @@ function getNearestCustomer() {
             customer.getBoundingClientRect();
 
 
+        const customerX =
+            rect.left +
+            rect.width / 2;
+
+
         const distance =
-            Math.abs(
-                rect.bottom - kitchenY
-            );
+            Math.abs(customerX - cookX);
 
 
         if (distance < nearestDistance) {
@@ -1383,11 +1453,6 @@ function throwPasta(target) {
     }
 
 
-    /*
-       Controlla che il cliente
-       sia ancora valido.
-    */
-
     if (
         target.id === "customer1" &&
         customer1Satisfied
@@ -1420,6 +1485,14 @@ function throwPasta(target) {
         target.getBoundingClientRect();
 
 
+    const game =
+        document.getElementById("game");
+
+
+    const gameRect =
+        game.getBoundingClientRect();
+
+
     const pasta =
         document.createElement("img");
 
@@ -1446,7 +1519,7 @@ function throwPasta(target) {
 
 
     /*
-       ARRIVO SUL CLIENTE
+       ARRIVO AL CENTRO DEL CLIENTE
     */
 
     const endX =
@@ -1459,28 +1532,23 @@ function throwPasta(target) {
         targetRect.height / 2;
 
 
-    document
-        .getElementById("game")
-        .appendChild(pasta);
-
-
-    /*
-       Il game è il contenitore
-       della posizione.
-    */
-
-    const gameRect =
-        document
-            .getElementById("game")
-            .getBoundingClientRect();
+    game.appendChild(pasta);
 
 
     pasta.style.left =
-        (startX - gameRect.left) + "px";
+        (
+            startX -
+            gameRect.left -
+            42
+        ) + "px";
 
 
     pasta.style.top =
-        (startY - gameRect.top) + "px";
+        (
+            startY -
+            gameRect.top -
+            42
+        ) + "px";
 
 
     const duration = 600;
@@ -1520,11 +1588,19 @@ function throwPasta(target) {
 
 
         pasta.style.left =
-            (currentX - gameRect.left) + "px";
+            (
+                currentX -
+                gameRect.left -
+                42
+            ) + "px";
 
 
         pasta.style.top =
-            (currentY - gameRect.top) + "px";
+            (
+                currentY -
+                gameRect.top -
+                42
+            ) + "px";
 
 
         if (progress >= 1) {
@@ -1554,8 +1630,10 @@ function throwPasta(target) {
 function hitCustomer(customer, pasta) {
 
 
-    if (pasta &&
-        pasta.parentNode) {
+    if (
+        pasta &&
+        pasta.parentNode
+    ) {
 
         pasta.parentNode.removeChild(pasta);
 
