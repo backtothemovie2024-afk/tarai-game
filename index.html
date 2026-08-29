@@ -201,20 +201,12 @@ body {
 }
 
 
-/* ==================================================
-   CUCINA INTEGRA
-================================================== */
-
 #kitchen {
 
     z-index: 15;
 
 }
 
-
-/* ==================================================
-   CUCINA DANNEGGIATA
-================================================== */
 
 #kitchenDamaged {
 
@@ -224,10 +216,6 @@ body {
 
 }
 
-
-/* ==================================================
-   CUCINA DISTRUTTA
-================================================== */
 
 #kitchenDestroyed {
 
@@ -299,6 +287,18 @@ body {
         20s
         linear
         forwards;
+
+}
+
+
+/* ==================================================
+   CLIENTE SODDISFATTO
+================================================== */
+
+.customer.satisfied {
+
+    animation: none;
+
 }
 
 
@@ -401,6 +401,7 @@ body {
     transform: translateX(-50%);
 
     z-index: 20;
+
 }
 
 
@@ -425,12 +426,34 @@ body {
     object-position: center;
 
     display: none;
+
 }
 
 
 #cook img.active {
 
     display: block;
+
+}
+
+
+/* ==================================================
+   PASTA
+================================================== */
+
+.pasta {
+
+    position: absolute;
+
+    width: 28px;
+
+    height: 28px;
+
+    object-fit: contain;
+
+    z-index: 25;
+
+    pointer-events: none;
 
 }
 
@@ -447,6 +470,14 @@ body {
         width: 65px;
 
         height: 88px;
+
+    }
+
+    .pasta {
+
+        width: 20px;
+
+        height: 20px;
 
     }
 
@@ -531,25 +562,6 @@ body {
             id="kitchenDestroyed"
             src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"
             alt="">
-
-
-
-        <!-- ==================================================
-             BARRA ENERGIA INVISIBILE
-        ================================================== -->
-
-        <div id="energyContainer">
-
-            <div id="energyBar"></div>
-
-        </div>
-
-
-        <div id="energyText">
-
-            100%
-
-        </div>
 
 
 
@@ -663,6 +675,8 @@ let customerTimer = null;
 
 let cookTimer = null;
 
+let pastaTimer = null;
+
 
 /* ==================================================
    ENERGIA CUCINA
@@ -678,6 +692,19 @@ let customer2AtKitchen = false;
 
 
 /* ==================================================
+   HP CLIENTI
+================================================== */
+
+let customer1HP = 50;
+
+let customer2HP = 50;
+
+let customer1Satisfied = false;
+
+let customer2Satisfied = false;
+
+
+/* ==================================================
    PLAY
 ================================================== */
 
@@ -686,21 +713,17 @@ document
     .addEventListener("click", function() {
 
 
-        /* NASCONDE MENU */
-
         document
             .getElementById("menu")
             .style.display = "none";
 
-
-        /* MOSTRA GIOCO */
 
         document
             .getElementById("game")
             .style.display = "block";
 
 
-        /* RESET ENERGIA */
+        /* RESET */
 
         kitchenEnergy = 100;
 
@@ -708,22 +731,34 @@ document
 
         customer2AtKitchen = false;
 
+        customer1HP = 50;
 
-        /* CUCINA INTEGRA */
+        customer2HP = 50;
+
+        customer1Satisfied = false;
+
+        customer2Satisfied = false;
+
+
+        document
+            .getElementById("customer1")
+            .classList.remove("satisfied");
+
+
+        document
+            .getElementById("customer2")
+            .classList.remove("satisfied");
+
+
+        /* CUCINE */
 
         document
             .getElementById("kitchen")
             .style.display = "block";
 
-
-        /* CUCINA DANNEGGIATA NASCOSTA */
-
         document
             .getElementById("kitchenDamaged")
             .style.display = "none";
-
-
-        /* CUCINA DISTRUTTA NASCOSTA */
 
         document
             .getElementById("kitchenDestroyed")
@@ -733,14 +768,12 @@ document
         updateKitchenEnergy();
 
 
-
-        /* ==========================================
-           CLIENTE 1
-        ========================================== */
+        /* CLIENTE 1 */
 
         const customer1 =
             document.getElementById("customer1");
 
+        customer1.style.display = "block";
 
         customer1.style.animation = "none";
 
@@ -750,14 +783,12 @@ document
             "walkDown 20s linear forwards";
 
 
-
-        /* ==========================================
-           CLIENTE 2
-        ========================================== */
+        /* CLIENTE 2 */
 
         const customer2 =
             document.getElementById("customer2");
 
+        customer2.style.display = "block";
 
         customer2.style.animation = "none";
 
@@ -767,10 +798,7 @@ document
             "walkDown 20s linear forwards";
 
 
-
-        /* ==========================================
-           AVVIA SISTEMI
-        ========================================== */
+        /* AVVIA */
 
         startCustomerAnimation();
 
@@ -779,6 +807,8 @@ document
         startKitchenEnergySystem();
 
         startCustomerKitchenDetection();
+
+        startPastaSystem();
 
     });
 
@@ -791,34 +821,21 @@ document
 function updateKitchenEnergy() {
 
 
-    /* ==============================================
-       100 - 51%
-       CUCINA INTEGRA
-    ============================================== */
-
     if (kitchenEnergy > 50) {
 
         document
             .getElementById("kitchen")
             .style.display = "block";
 
-
         document
             .getElementById("kitchenDamaged")
             .style.display = "none";
-
 
         document
             .getElementById("kitchenDestroyed")
             .style.display = "none";
 
     }
-
-
-    /* ==============================================
-       50 - 21%
-       CUCINA DANNEGGIATA
-    ============================================== */
 
     else if (kitchenEnergy > 20) {
 
@@ -826,11 +843,9 @@ function updateKitchenEnergy() {
             .getElementById("kitchen")
             .style.display = "none";
 
-
         document
             .getElementById("kitchenDamaged")
             .style.display = "block";
-
 
         document
             .getElementById("kitchenDestroyed")
@@ -838,23 +853,15 @@ function updateKitchenEnergy() {
 
     }
 
-
-    /* ==============================================
-       20 - 0%
-       CUCINA DISTRUTTA
-    ============================================== */
-
     else {
 
         document
             .getElementById("kitchen")
             .style.display = "none";
 
-
         document
             .getElementById("kitchenDamaged")
             .style.display = "none";
-
 
         document
             .getElementById("kitchenDestroyed")
@@ -867,7 +874,7 @@ function updateKitchenEnergy() {
 
 
 /* ==================================================
-   DANNO ALLA CUCINA
+   ENERGIA CUCINA
 ================================================== */
 
 function startKitchenEnergySystem() {
@@ -887,25 +894,21 @@ function startKitchenEnergySystem() {
             let damage = 0;
 
 
-            /* CLIENTE 1 */
-
-            if (customer1AtKitchen) {
-
-                damage++;
-
-            }
-
-
-            /* CLIENTE 2 */
-
-            if (customer2AtKitchen) {
+            if (customer1AtKitchen &&
+                !customer1Satisfied) {
 
                 damage++;
 
             }
 
 
-            /* APPLICA DANNO */
+            if (customer2AtKitchen &&
+                !customer2Satisfied) {
+
+                damage++;
+
+            }
+
 
             if (damage > 0) {
 
@@ -921,14 +924,6 @@ function startKitchenEnergySystem() {
 
                 updateKitchenEnergy();
 
-
-                console.log(
-                    "Energia cucina:",
-                    kitchenEnergy,
-                    "Danno:",
-                    damage
-                );
-
             }
 
 
@@ -939,25 +934,19 @@ function startKitchenEnergySystem() {
 
 
 /* ==================================================
-   RILEVAMENTO CLIENTI
+   RILEVAMENTO ARRIVO CLIENTI
 ================================================== */
 
 function startCustomerKitchenDetection() {
 
 
-    /*
-       I clienti arrivano alla cucina
-       dopo circa 13,2 secondi.
-    */
-
-
     setTimeout(function() {
 
-        customer1AtKitchen = true;
+        if (!customer1Satisfied) {
 
-        console.log(
-            "Cliente 1 arrivato alla cucina"
-        );
+            customer1AtKitchen = true;
+
+        }
 
     }, 13200);
 
@@ -965,11 +954,11 @@ function startCustomerKitchenDetection() {
 
     setTimeout(function() {
 
-        customer2AtKitchen = true;
+        if (!customer2Satisfied) {
 
-        console.log(
-            "Cliente 2 arrivato alla cucina"
-        );
+            customer2AtKitchen = true;
+
+        }
 
     }, 13200);
 
@@ -1002,29 +991,33 @@ function startCustomerAnimation() {
 
             /* CLIENTE 1 */
 
-            const c1 =
-                document
-                    .getElementById("customer1")
-                    .querySelectorAll(".frame");
+            if (!customer1Satisfied) {
+
+                const c1 =
+                    document
+                        .getElementById("customer1")
+                        .querySelectorAll(".frame");
 
 
-            c1.forEach(function(frame) {
+                c1.forEach(function(frame) {
 
-                frame.classList.remove("active");
+                    frame.classList.remove("active");
 
-            });
-
-
-            c1[customerFrame1]
-                .classList.add("active");
+                });
 
 
-            customerFrame1++;
+                c1[customerFrame1]
+                    .classList.add("active");
 
 
-            if (customerFrame1 >= 2) {
+                customerFrame1++;
 
-                customerFrame1 = 0;
+
+                if (customerFrame1 >= 2) {
+
+                    customerFrame1 = 0;
+
+                }
 
             }
 
@@ -1032,29 +1025,33 @@ function startCustomerAnimation() {
 
             /* CLIENTE 2 */
 
-            const c2 =
-                document
-                    .getElementById("customer2")
-                    .querySelectorAll(".frame");
+            if (!customer2Satisfied) {
+
+                const c2 =
+                    document
+                        .getElementById("customer2")
+                        .querySelectorAll(".frame");
 
 
-            c2.forEach(function(frame) {
+                c2.forEach(function(frame) {
 
-                frame.classList.remove("active");
+                    frame.classList.remove("active");
 
-            });
-
-
-            c2[customerFrame2]
-                .classList.add("active");
+                });
 
 
-            customerFrame2++;
+                c2[customerFrame2]
+                    .classList.add("active");
 
 
-            if (customerFrame2 >= 2) {
+                customerFrame2++;
 
-                customerFrame2 = 0;
+
+                if (customerFrame2 >= 2) {
+
+                    customerFrame2 = 0;
+
+                }
 
             }
 
@@ -1114,6 +1111,446 @@ function startCookAnimation() {
 
 
         }, 120);
+
+}
+
+
+
+/* ==================================================
+   SISTEMA PASTA
+================================================== */
+
+function startPastaSystem() {
+
+
+    if (pastaTimer !== null) {
+
+        clearInterval(pastaTimer);
+
+    }
+
+
+    /*
+       Primo lancio dopo 3 secondi.
+       Poi un lancio ogni 3 secondi.
+    */
+
+    pastaTimer =
+        setInterval(function() {
+
+            throwPasta();
+
+        }, 3000);
+
+}
+
+
+
+/* ==================================================
+   TROVA CLIENTE PIÙ VICINO
+================================================== */
+
+function getNearestCustomer() {
+
+
+    const customers = [];
+
+
+    const c1 =
+        document.getElementById("customer1");
+
+
+    const c2 =
+        document.getElementById("customer2");
+
+
+    if (!customer1Satisfied &&
+        customer1AtKitchen) {
+
+        customers.push(c1);
+
+    }
+
+
+    if (!customer2Satisfied &&
+        customer2AtKitchen) {
+
+        customers.push(c2);
+
+    }
+
+
+    if (customers.length === 0) {
+
+        return null;
+
+    }
+
+
+    const kitchen =
+        document.getElementById("kitchen");
+
+
+    const kitchenRect =
+        kitchen.getBoundingClientRect();
+
+
+    const kitchenY =
+        kitchenRect.top;
+
+
+    let nearest = null;
+
+    let nearestDistance = Infinity;
+
+
+    customers.forEach(function(customer) {
+
+
+        const rect =
+            customer.getBoundingClientRect();
+
+
+        const distance =
+            Math.abs(
+                rect.bottom - kitchenY
+            );
+
+
+        if (distance < nearestDistance) {
+
+            nearestDistance = distance;
+
+            nearest = customer;
+
+        }
+
+    });
+
+
+    return nearest;
+
+}
+
+
+
+/* ==================================================
+   LANCIA PASTA
+================================================== */
+
+function throwPasta() {
+
+
+    const target =
+        getNearestCustomer();
+
+
+    if (target === null) {
+
+        return;
+
+    }
+
+
+    const cook =
+        document.getElementById("cook");
+
+
+    const cookRect =
+        cook.getBoundingClientRect();
+
+
+    const targetRect =
+        target.getBoundingClientRect();
+
+
+    const pasta =
+        document.createElement("img");
+
+
+    pasta.className = "pasta";
+
+
+    pasta.src =
+        "https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png";
+
+
+    /*
+       Punto di partenza:
+       circa nella zona della mano
+    */
+
+    let startX =
+        cookRect.left +
+        cookRect.width * 0.72;
+
+
+    let startY =
+        cookRect.top +
+        cookRect.height * 0.32;
+
+
+    /*
+       Punto di arrivo:
+       centro del cliente
+    */
+
+    let endX =
+        targetRect.left +
+        targetRect.width / 2;
+
+
+    let endY =
+        targetRect.top +
+        targetRect.height / 2;
+
+
+    /*
+       Inseriamo la pasta nel gioco
+    */
+
+    document
+        .getElementById("game")
+        .appendChild(pasta);
+
+
+    pasta.style.left =
+        startX + "px";
+
+    pasta.style.top =
+        startY + "px";
+
+
+    /*
+       Animazione volo
+    */
+
+    const duration = 600;
+
+    const startTime =
+        performance.now();
+
+
+    function movePasta(currentTime) {
+
+
+        const elapsed =
+            currentTime - startTime;
+
+
+        let progress =
+            elapsed / duration;
+
+
+        if (progress > 1) {
+
+            progress = 1;
+
+        }
+
+
+        /*
+           Movimento lineare
+        */
+
+        const currentX =
+            startX +
+            (endX - startX) *
+            progress;
+
+
+        const currentY =
+            startY +
+            (endY - startY) *
+            progress;
+
+
+        pasta.style.left =
+            currentX + "px";
+
+        pasta.style.top =
+            currentY + "px";
+
+
+        /*
+           HIT
+        */
+
+        if (progress >= 1) {
+
+            hitCustomer(target, pasta);
+
+            return;
+
+        }
+
+
+        requestAnimationFrame(movePasta);
+
+    }
+
+
+    requestAnimationFrame(movePasta);
+
+}
+
+
+
+/* ==================================================
+   HIT CLIENTE
+================================================== */
+
+function hitCustomer(customer, pasta) {
+
+
+    /*
+       Rimuove la pasta
+    */
+
+    if (pasta &&
+        pasta.parentNode) {
+
+        pasta.parentNode.removeChild(pasta);
+
+    }
+
+
+    /*
+       CLIENTE 1
+    */
+
+    if (customer.id === "customer1") {
+
+
+        if (customer1Satisfied) {
+
+            return;
+
+        }
+
+
+        customer1HP -= 5;
+
+
+        console.log(
+            "Cliente 1 HP:",
+            customer1HP
+        );
+
+
+        if (customer1HP <= 0) {
+
+            satisfyCustomer1();
+
+        }
+
+    }
+
+
+    /*
+       CLIENTE 2
+    */
+
+    if (customer.id === "customer2") {
+
+
+        if (customer2Satisfied) {
+
+            return;
+
+        }
+
+
+        customer2HP -= 5;
+
+
+        console.log(
+            "Cliente 2 HP:",
+            customer2HP
+        );
+
+
+        if (customer2HP <= 0) {
+
+            satisfyCustomer2();
+
+        }
+
+    }
+
+}
+
+
+
+/* ==================================================
+   CLIENTE 1 SODDISFATTO
+================================================== */
+
+function satisfyCustomer1() {
+
+
+    customer1Satisfied = true;
+
+    customer1AtKitchen = false;
+
+
+    const customer =
+        document.getElementById("customer1");
+
+
+    /*
+       BLOCCA IL CLIENTE
+    */
+
+    customer.classList.add("satisfied");
+
+
+    /*
+       ASPETTA 1 SECONDO
+    */
+
+    setTimeout(function() {
+
+        customer.style.display = "none";
+
+    }, 1000);
+
+}
+
+
+
+/* ==================================================
+   CLIENTE 2 SODDISFATTO
+================================================== */
+
+function satisfyCustomer2() {
+
+
+    customer2Satisfied = true;
+
+    customer2AtKitchen = false;
+
+
+    const customer =
+        document.getElementById("customer2");
+
+
+    /*
+       BLOCCA IL CLIENTE
+    */
+
+    customer.classList.add("satisfied");
+
+
+    /*
+       ASPETTA 1 SECONDO
+    */
+
+    setTimeout(function() {
+
+        customer.style.display = "none";
+
+    }, 1000);
 
 }
 
