@@ -1,14 +1,237 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
+
 <head>
-    <title>Tarai Game</title>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Tarai Rush</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+
+/* =========================
+   HOME
+========================= */
+
+#menu {
+
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    padding-bottom: 70px;
+
+    background-image:
+        linear-gradient(
+            rgba(0,0,0,0.15),
+            rgba(0,0,0,0.35)
+        ),
+        url("https://i.ibb.co/JFzbTpBT/1787735382053.png");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+}
+
+
+/* =========================
+   TITOLO
+========================= */
+
+.logo {
+
+    position: absolute;
+
+    top: 50px;
+
+    text-align: center;
+
+}
+
+.logo h1 {
+
+    margin: 0;
+
+    font-size: 58px;
+
+    color: #ffd447;
+
+    font-weight: 900;
+
+    text-shadow:
+        4px 4px 0 #63240d;
+
+}
+
+.logo h2 {
+
+    margin: -5px 0 0;
+
+    color: white;
+
+    font-size: 34px;
+
+    letter-spacing: 8px;
+
+    text-shadow:
+        3px 3px 0 #63240d;
+
+}
+
+
+/* =========================
+   PULSANTI
+========================= */
+
+.menu-button {
+
+    width: 240px;
+
+    height: 65px;
+
+    margin: 10px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    background: #ef6428;
+
+    color: white;
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    box-shadow:
+        0 7px 0 #8d2e0e,
+        0 10px 20px rgba(0,0,0,0.4);
+
+}
+
+
+/* =========================
+   GIOCO
+========================= */
+
+#game {
+
+    display: none;
+
+    width: 100%;
+
+    height: 100vh;
+
+    background: #c98a4b;
+
+    color: white;
+
+    text-align: center;
+
+}
+
+#game h1 {
+
+    padding-top: 50px;
+
+}
+
+</style>
+
 </head>
+
 
 <body>
 
-    <h1>TARAI GAME</h1>
 
-    <button>PLAY</button>
+<!-- =========================
+     MENU
+========================= -->
+
+<div id="menu">
+
+    <div class="logo">
+
+        <h1>TARAI</h1>
+
+        <h2>RUSH</h2>
+
+    </div>
+
+
+    <button
+        class="menu-button"
+        onclick="startGame()">
+
+        PLAY
+
+    </button>
+
+
+    <button class="menu-button">
+
+        SETTINGS
+
+    </button>
+
+</div>
+
+
+
+<!-- =========================
+     GIOCO
+========================= -->
+
+<div id="game">
+
+    <h1>LEVEL 1</h1>
+
+</div>
+
+
+
+<script>
+
+function startGame() {
+
+    document.getElementById("menu").style.display = "none";
+
+    document.getElementById("game").style.display = "block";
+
+}
+
+</script>
+
 
 </body>
+
 </html>
