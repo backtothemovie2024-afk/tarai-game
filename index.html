@@ -245,10 +245,13 @@ body {
 }
 
 
+/* =====================
+   POSIZIONI CLIENTI
+===================== */
+
 #customer1 {
     left: 35%;
 }
-
 
 #customer2 {
     left: 65%;
@@ -306,8 +309,8 @@ body {
     position: absolute;
 
     /*
-       Secondo cerchio da sinistra.
-       Valore regolabile in seguito.
+       Posizione del secondo cerchio
+       da sinistra.
     */
 
     left: 50%;
@@ -342,8 +345,6 @@ body {
     display: none;
 }
 
-
-/* FRAME ATTIVO */
 
 #cook img.active {
     display: block;
@@ -464,40 +465,40 @@ body {
     <div id="cook">
 
 
-        <!-- 1 -->
+        <!-- FRAME 1 -->
 
         <img
             class="active"
-            src="https://i.ibb.co/zWHKf82f/IMG-20260829-WA0002-removebg-preview.png"
-            alt="Cuoco frame 1">
+            src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
+            alt="Cuoco 1">
 
 
-        <!-- 2 -->
-
-        <img
-            src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
-            alt="Cuoco frame 2">
-
-
-        <!-- 3 -->
-
-        <img
-            src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
-            alt="Cuoco frame 3">
-
-
-        <!-- 4 -->
+        <!-- FRAME 2 -->
 
         <img
             src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
-            alt="Cuoco frame 4">
+            alt="Cuoco 2">
 
 
-        <!-- 5 -->
+        <!-- FRAME 3 -->
+
+        <img
+            src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
+            alt="Cuoco 3">
+
+
+        <!-- FRAME 4 -->
+
+        <img
+            src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
+            alt="Cuoco 4">
+
+
+        <!-- FRAME 5 -->
 
         <img
             src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-            alt="Cuoco frame 5">
+            alt="Cuoco 5">
 
 
     </div>
@@ -522,7 +523,9 @@ let customerFrame2 = 0;
 
 let cookFrame = 0;
 
-let animationTimer = null;
+let customerTimer = null;
+
+let cookTimer = null;
 
 
 /* ==================================================
@@ -576,26 +579,26 @@ document
             "walkDown 5s linear forwards";
 
 
-        /* =====================
-           AVVIA ANIMAZIONI
-        ===================== */
+        /* AVVIA */
 
-        startAnimations();
+        startCustomerAnimation();
+
+        startCookAnimation();
 
     });
 
 
 
 /* ==================================================
-   ANIMAZIONI
+   ANIMAZIONE CLIENTE 1 E 2
 ================================================== */
 
-function startAnimations() {
+function startCustomerAnimation() {
 
 
-    if (animationTimer !== null) {
+    if (customerTimer !== null) {
 
-        clearInterval(animationTimer);
+        clearInterval(customerTimer);
 
     }
 
@@ -604,15 +607,13 @@ function startAnimations() {
 
     customerFrame2 = 0;
 
-    cookFrame = 0;
+
+    customerTimer = setInterval(function() {
 
 
-    animationTimer = setInterval(function() {
-
-
-        /* ==================================================
+        /* =====================
            CLIENTE 1
-        ================================================== */
+        ===================== */
 
         const c1 =
             document
@@ -642,9 +643,9 @@ function startAnimations() {
 
 
 
-        /* ==================================================
+        /* =====================
            CLIENTE 2
-        ================================================== */
+        ===================== */
 
         const c2 =
             document
@@ -673,10 +674,31 @@ function startAnimations() {
         }
 
 
+    }, 300);
 
-        /* ==================================================
-           CUOCO
-        ================================================== */
+}
+
+
+
+/* ==================================================
+   ANIMAZIONE CUOCO
+================================================== */
+
+function startCookAnimation() {
+
+
+    if (cookTimer !== null) {
+
+        clearInterval(cookTimer);
+
+    }
+
+
+    cookFrame = 0;
+
+
+    cookTimer = setInterval(function() {
+
 
         const cookFrames =
             document
@@ -705,7 +727,7 @@ function startAnimations() {
         }
 
 
-    }, 300);
+    }, 120);
 
 }
 
@@ -714,4 +736,4 @@ function startAnimations() {
 
 </body>
 
-</html>
+    </html>
