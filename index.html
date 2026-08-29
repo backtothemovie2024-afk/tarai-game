@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>Tarai Rush</title>
 
 <style>
 
-html, body {
+/* =========================
+   IMPOSTAZIONI GENERALI
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -17,9 +30,13 @@ html, body {
     font-family: Arial, sans-serif;
 }
 
-/* HOME */
+
+/* =========================
+   HOME
+========================= */
 
 #menu {
+
     width: 100vw;
     height: 100vh;
 
@@ -27,129 +44,277 @@ html, body {
 
     display: flex;
     flex-direction: column;
+
     justify-content: center;
     align-items: center;
 }
 
-h1 {
+
+/* TITOLO */
+
+#menu h1 {
+
+    margin: 0 0 45px;
+
     color: #ffd447;
-    font-size: 55px;
-    margin: 0 0 40px;
+
+    font-size: clamp(45px, 14vw, 70px);
+
+    font-weight: 900;
+
+    letter-spacing: 3px;
+
+    text-shadow:
+        4px 4px 0 #63240d;
 }
 
-button {
-    width: 240px;
-    height: 65px;
+
+/* PLAY */
+
+.menu-button {
+
+    width: min(70vw, 280px);
+
+    height: 70px;
 
     border: none;
-    border-radius: 15px;
+
+    border-radius: 18px;
 
     background: #ef6428;
+
     color: white;
 
     font-size: 28px;
-    font-weight: bold;
+
+    font-weight: 900;
+
+    box-shadow:
+        0 7px 0 #8d2e0e;
+
+    cursor: pointer;
 }
 
-/* LIVELLO */
+
+.menu-button:active {
+
+    transform: translateY(6px);
+
+    box-shadow:
+        0 1px 0 #8d2e0e;
+}
+
+
+/* =========================
+   LIVELLO 1
+========================= */
 
 #game {
+
     display: none;
 
     position: relative;
 
     width: 100vw;
+
     height: 100vh;
+
+    overflow: hidden;
 
     background: white;
 }
 
-/* HUD */
+
+/* =========================
+   HUD
+========================= */
 
 #hud {
+
     position: absolute;
 
     top: 15px;
+
     left: 20px;
+
     right: 20px;
 
     display: flex;
+
     justify-content: space-between;
 
+    color: black;
+
     font-size: 22px;
+
     font-weight: bold;
 
-    color: black;
+    z-index: 20;
 }
 
-/* SPRITE */
+
+/* =========================
+   CLIENTE
+========================= */
+
+/*
+   Questa è la "finestra"
+   attraverso cui vediamo
+   un frame alla volta.
+*/
 
 #customer {
 
     position: absolute;
 
     top: 50%;
+
     left: 50%;
 
-    transform: translate(-50%, -50%);
-
     width: 150px;
+
     height: 200px;
 
-    object-fit: contain;
+    transform:
+        translate(-50%, -50%);
+
+    overflow: hidden;
+
+    z-index: 10;
+}
+
+
+/*
+   Lo sprite contiene
+   4 frame affiancati.
+*/
+
+#customerSprite {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 600px;
+
+    height: 200px;
+
+    max-width: none;
+
+    animation:
+        walk 0.8s steps(4) infinite;
+}
+
+
+/* =========================
+   ANIMAZIONE 4 FRAME
+========================= */
+
+@keyframes walk {
+
+    0% {
+        left: 0;
+    }
+
+    100% {
+        left: -450px;
+    }
+
 }
 
 </style>
+
 </head>
+
 
 <body>
 
 
-<!-- HOME -->
+<!-- =========================
+     HOME
+========================= -->
 
 <div id="menu">
 
-    <h1>TARAI RUSH</h1>
+    <h1>
+        TARAI RUSH
+    </h1>
 
-    <button onclick="startGame()">
+    <button
+        class="menu-button"
+        onclick="startGame()">
+
         PLAY
+
     </button>
 
 </div>
 
 
-<!-- LIVELLO -->
+
+<!-- =========================
+     LIVELLO 1
+========================= -->
 
 <div id="game">
 
+
+    <!-- HUD -->
+
     <div id="hud">
 
-        <span>❤️ 3</span>
+        <span>
+            ❤️ 3
+        </span>
 
-        <span>⭐ 0</span>
+        <span>
+            ⭐ 0
+        </span>
 
     </div>
 
 
-    <img
-        id="customer"
-        src="https://i.ibb.co/39yMsFWJ/1787786320198-3.jpg"
-        alt="Cliente">
+    <!-- CLIENTE -->
+
+    <div id="customer">
+
+        <img
+            id="customerSprite"
+
+            src="https://i.ibb.co/39yMsFWJ/1787786320198-3.jpg"
+
+            alt="Cliente">
+
+    </div>
+
 
 </div>
 
 
+
 <script>
+
+/* =========================
+   AVVIO DEL GIOCO
+========================= */
 
 function startGame() {
 
-    document.getElementById("menu").style.display = "none";
+    document
+        .getElementById("menu")
+        .style.display = "none";
 
-    document.getElementById("game").style.display = "block";
+    document
+        .getElementById("game")
+        .style.display = "block";
 
 }
 
 </script>
 
+
 </body>
+
 </html>
