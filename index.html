@@ -5,8 +5,7 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Tarai Rush</title>
 
@@ -196,6 +195,7 @@ body {
     object-fit: contain;
 
     pointer-events: none;
+
 }
 
 
@@ -206,6 +206,7 @@ body {
 #kitchen {
 
     z-index: 15;
+
 }
 
 
@@ -218,6 +219,7 @@ body {
     z-index: 16;
 
     display: none;
+
 }
 
 
@@ -248,6 +250,7 @@ body {
     overflow: hidden;
 
     z-index: 40;
+
 }
 
 
@@ -262,6 +265,7 @@ body {
     transition:
         width 0.3s linear,
         background 0.3s linear;
+
 }
 
 
@@ -288,6 +292,7 @@ body {
         -1px -1px 2px black;
 
     pointer-events: none;
+
 }
 
 
@@ -340,6 +345,7 @@ body {
         20s
         linear
         forwards;
+
 }
 
 
@@ -350,6 +356,7 @@ body {
 #customer1 {
 
     left: 35%;
+
 }
 
 
@@ -360,6 +367,7 @@ body {
 #customer2 {
 
     left: 65%;
+
 }
 
 
@@ -384,12 +392,14 @@ body {
     object-position: center;
 
     display: none;
+
 }
 
 
 .customer .frame.active {
 
     display: block;
+
 }
 
 
@@ -463,12 +473,14 @@ body {
     object-position: center;
 
     display: none;
+
 }
 
 
 #cook img.active {
 
     display: block;
+
 }
 
 
@@ -564,6 +576,7 @@ body {
             <div id="energyBar"></div>
 
         </div>
+
 
         <div id="energyText">
 
@@ -706,21 +719,21 @@ document
     .addEventListener("click", function() {
 
 
-        /* MENU */
+        /* NASCONDE IL MENU */
 
         document
             .getElementById("menu")
             .style.display = "none";
 
 
-        /* GIOCO */
+        /* MOSTRA IL GIOCO */
 
         document
             .getElementById("game")
             .style.display = "block";
 
 
-        /* RESET */
+        /* RESET ENERGIA */
 
         kitchenEnergy = 100;
 
@@ -729,23 +742,29 @@ document
         customer2AtKitchen = false;
 
 
-        /* RESET VISIVO */
+        /* CUCINA INTEGRA */
 
         document
             .getElementById("kitchen")
             .style.display = "block";
 
 
+        /* CUCINA DANNEGGIATA NASCOSTA */
+
         document
             .getElementById("kitchenDamaged")
             .style.display = "none";
 
 
+        /* AGGIORNA BARRA */
+
         updateKitchenEnergy();
 
 
 
-        /* CLIENTE 1 */
+        /* ==========================================
+           CLIENTE 1
+        ========================================== */
 
         const customer1 =
             document.getElementById("customer1");
@@ -760,7 +779,9 @@ document
 
 
 
-        /* CLIENTE 2 */
+        /* ==========================================
+           CLIENTE 2
+        ========================================== */
 
         const customer2 =
             document.getElementById("customer2");
@@ -775,16 +796,15 @@ document
 
 
 
-        /* ANIMAZIONI */
+        /* ==========================================
+           AVVIA SISTEMI
+        ========================================== */
 
         startCustomerAnimation();
 
         startCookAnimation();
 
         startKitchenEnergySystem();
-
-
-        /* CONTROLLO ARRIVO */
 
         startCustomerKitchenDetection();
 
@@ -793,7 +813,7 @@ document
 
 
 /* ==================================================
-   AGGIORNA BARRA ENERGIA
+   AGGIORNA ENERGIA
 ================================================== */
 
 function updateKitchenEnergy() {
@@ -816,7 +836,7 @@ function updateKitchenEnergy() {
 
 
 
-    /* COLORE */
+    /* COLORE BARRA */
 
     if (kitchenEnergy > 50) {
 
@@ -841,7 +861,7 @@ function updateKitchenEnergy() {
 
 
 
-    /* CAMBIO CUCINA */
+    /* CAMBIO CUCINA AL 50% */
 
     if (kitchenEnergy <= 50) {
 
@@ -861,7 +881,7 @@ function updateKitchenEnergy() {
 
 
 /* ==================================================
-   SISTEMA DANNO CUCINA
+   DANNO ALLA CUCINA
 ================================================== */
 
 function startKitchenEnergySystem() {
@@ -881,6 +901,8 @@ function startKitchenEnergySystem() {
             let damage = 0;
 
 
+            /* CLIENTE 1 */
+
             if (customer1AtKitchen) {
 
                 damage++;
@@ -888,12 +910,16 @@ function startKitchenEnergySystem() {
             }
 
 
+            /* CLIENTE 2 */
+
             if (customer2AtKitchen) {
 
                 damage++;
 
             }
 
+
+            /* APPLICA DANNO */
 
             if (damage > 0) {
 
@@ -912,7 +938,9 @@ function startKitchenEnergySystem() {
 
                 console.log(
                     "Energia cucina:",
-                    kitchenEnergy
+                    kitchenEnergy,
+                    "Danno:",
+                    damage
                 );
 
             }
@@ -925,71 +953,50 @@ function startKitchenEnergySystem() {
 
 
 /* ==================================================
-   CONTROLLO ARRIVO CLIENTI
+   RILEVAMENTO CLIENTI
 ================================================== */
 
 function startCustomerKitchenDetection() {
 
 
-    const detectionTimer =
-        setInterval(function() {
+    /*
+       Il cliente arriva alla cucina
+       dopo circa 13 secondi.
+
+       La camminata dura 20 secondi
+       e raggiunge il 69% al 65%.
+
+       20 × 0.65 = 13 secondi
+    */
 
 
-            const customer1 =
-                document.getElementById("customer1");
+    setTimeout(function() {
 
 
-            const customer2 =
-                document.getElementById("customer2");
+        customer1AtKitchen = true;
 
 
-            const game =
-                document.getElementById("game");
+        console.log(
+            "Cliente 1 arrivato alla cucina"
+        );
 
 
-            const limit =
-                game.clientHeight * 0.69;
-
-
-
-            /* CLIENTE 1 */
-
-            if (
-                !customer1AtKitchen &&
-                customer1.offsetTop >= limit
-            ) {
-
-                customer1AtKitchen = true;
-
-            }
+    }, 13200);
 
 
 
-            /* CLIENTE 2 */
-
-            if (
-                !customer2AtKitchen &&
-                customer2.offsetTop >= limit
-            ) {
-
-                customer2AtKitchen = true;
-
-            }
+    setTimeout(function() {
 
 
-            /* SE ENTRAMBI SONO ARRIVATI */
-
-            if (
-                customer1AtKitchen &&
-                customer2AtKitchen
-            ) {
-
-                clearInterval(detectionTimer);
-
-            }
+        customer2AtKitchen = true;
 
 
-        }, 100);
+        console.log(
+            "Cliente 2 arrivato alla cucina"
+        );
+
+
+    }, 13200);
 
 }
 
@@ -1018,7 +1025,9 @@ function startCustomerAnimation() {
         setInterval(function() {
 
 
-            /* CLIENTE 1 */
+            /* ======================================
+               CLIENTE 1
+            ====================================== */
 
             const c1 =
                 document
@@ -1048,7 +1057,9 @@ function startCustomerAnimation() {
 
 
 
-            /* CLIENTE 2 */
+            /* ======================================
+               CLIENTE 2
+            ====================================== */
 
             const c2 =
                 document
