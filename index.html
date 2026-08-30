@@ -2936,16 +2936,15 @@ function satisfyCustomer(customer) {
     */
 
     const happyFrame =
-        element
-        .querySelector(
-            ".happy-frame"
-        );
+    element.querySelector(".happy-frame");
 
-    if (happyFrame) {
+if (happyFrame) {
 
-        happyFrame.style.display =
-            "block";
-    }
+    happyFrame.style.display = "block";
+    happyFrame.style.visibility = "visible";
+    happyFrame.style.opacity = "1";
+    happyFrame.style.zIndex = "56";
+}
 
     /*
        MOSTRA IL CUORE
