@@ -298,7 +298,7 @@ body {
 
     display: none;
 
-    z-index: 2;
+    z-index: 10;
 }
 
 /* ==================================================
@@ -320,7 +320,7 @@ body {
 
     line-height: 1;
 
-    z-index: 5;
+    z-index: 15;
 
     display: none;
 
@@ -1726,15 +1726,6 @@ function startKitchenEnergySystem() {
     setInterval(
         function() {
 
-            /*
-               La cucina NON viene attaccata
-               dai giocatori.
-
-               Questo sistema mantiene solo
-               il danno causato dai clienti
-               già arrivati alla cucina.
-            */
-
             let damage = 0;
 
             customers.forEach(
@@ -1840,10 +1831,6 @@ function startFirstAttackDetection() {
                 getNearestCustomerToKitchen();
 
             if (target) {
-
-                /*
-                   Avviamo entrambi i personaggi.
-                */
 
                 playCookAttack();
 
@@ -1977,11 +1964,6 @@ function startCookAnimation() {
     setInterval(
         function() {
 
-            /*
-               Se non ci sono clienti,
-               NON viene lanciata pasta.
-            */
-
             if (
                 getNearestCustomerToKitchen()
             ) {
@@ -2100,11 +2082,6 @@ function startWaitressAnimation() {
     setInterval(
         function() {
 
-            /*
-               Se non ci sono clienti,
-               NON viene lanciato il cocktail.
-            */
-
             if (
                 getNearestCustomerToKitchen()
             ) {
@@ -2171,13 +2148,6 @@ function getNearestCustomerToKitchen() {
                 customer.element
                 .getBoundingClientRect();
 
-            /*
-               IMPORTANTE:
-               il cliente già arrivato
-               alla cucina è quello
-               con la distanza minore.
-            */
-
             const customerBottom =
                 rect.bottom;
 
@@ -2234,10 +2204,6 @@ function throwPasta(target) {
         cook
         .getBoundingClientRect();
 
-    /*
-       PARTENZA DALLA MANO
-    */
-
     const startX =
         cookRect.left +
         cookRect.width *
@@ -2248,10 +2214,6 @@ function throwPasta(target) {
         cookRect.height *
         0.32;
 
-    /*
-       HITBOX INVISIBILE
-    */
-
     const hitMarker =
         document.createElement("div");
 
@@ -2259,10 +2221,6 @@ function throwPasta(target) {
         "hit-marker";
 
     game.appendChild(hitMarker);
-
-    /*
-       PASTA
-    */
 
     const pasta =
         document.createElement("img");
@@ -2300,13 +2258,6 @@ function throwPasta(target) {
 
     let lastTime =
         performance.now();
-
-    /*
-       IMPORTANTE:
-       target viene fissato quando
-       parte il proiettile.
-       Durante il volo NON cambia.
-    */
 
     function movePasta(currentTime) {
 
@@ -2575,10 +2526,6 @@ function throwCocktail(target) {
         waitress
         .getBoundingClientRect();
 
-    /*
-       PARTENZA DALLA MANO
-    */
-
     const startX =
         waitressRect.left +
         waitressRect.width *
@@ -2589,10 +2536,6 @@ function throwCocktail(target) {
         waitressRect.height *
         0.30;
 
-    /*
-       HITBOX INVISIBILE
-    */
-
     const hitMarker =
         document.createElement("div");
 
@@ -2600,11 +2543,6 @@ function throwCocktail(target) {
         "hit-marker";
 
     game.appendChild(hitMarker);
-
-    /*
-       COCKTAIL
-       STESSA DIMENSIONE DELLA PASTA
-    */
 
     const cocktail =
         document.createElement("div");
@@ -2639,11 +2577,6 @@ function throwCocktail(target) {
 
     let lastTime =
         performance.now();
-
-    /*
-       TARGET FISSATO:
-       durante il volo non cambia.
-    */
 
     function moveCocktail(currentTime) {
 
@@ -2938,7 +2871,8 @@ function satisfyCustomer(customer) {
         customer.element;
 
     /*
-       FERMA IL MOVIMENTO
+       FERMA COMPLETAMENTE
+       IL MOVIMENTO
     */
 
     element.classList.add(
@@ -2952,7 +2886,8 @@ function satisfyCustomer(customer) {
         "none";
 
     /*
-       NASCONDE I FRAME NORMALI
+       NASCONDE FORZATAMENTE
+       TUTTI I FRAME NORMALI
     */
 
     const normalFrames =
@@ -2964,17 +2899,19 @@ function satisfyCustomer(customer) {
     normalFrames.forEach(
         function(frame) {
 
-            frame.classList
-            .remove(
+            frame.classList.remove(
                 "active"
             );
+
+            frame.style.display =
+                "none";
 
         }
     );
 
     /*
-       MOSTRA LO SPRITE FELICE
-       SPECIFICO DEL CLIENTE
+       MOSTRA FORZATAMENTE
+       LO SPRITE FELICE
     */
 
     const happyFrame =
@@ -2987,6 +2924,15 @@ function satisfyCustomer(customer) {
 
         happyFrame.style.display =
             "block";
+
+        happyFrame.style.visibility =
+            "visible";
+
+        happyFrame.style.opacity =
+            "1";
+
+        happyFrame.style.zIndex =
+            "10";
     }
 
     /*
@@ -3003,11 +2949,6 @@ function satisfyCustomer(customer) {
 
         heart.style.display =
             "block";
-
-        /*
-           Riavvia l'animazione
-           del cuore.
-        */
 
         heart.style.animation =
             "none";
