@@ -171,7 +171,9 @@ body {
 
 
 #kitchen {
+
     z-index: 15;
+
 }
 
 
@@ -180,6 +182,7 @@ body {
     z-index: 16;
 
     display: none;
+
 }
 
 
@@ -188,6 +191,7 @@ body {
     z-index: 17;
 
     display: none;
+
 }
 
 
@@ -216,6 +220,7 @@ body {
     font-weight: bold;
 
     z-index: 30;
+
 }
 
 
@@ -231,11 +236,27 @@ body {
 
     height: 135px;
 
+    top: -130px;
+
     z-index: 10;
 
-    left: 50%;
+    animation:
 
-    top: 7%;
+        walkDown
+
+        40s
+
+        linear
+
+        forwards;
+
+}
+
+
+.customer.satisfied {
+
+    animation: none;
+
 }
 
 
@@ -245,12 +266,9 @@ body {
 
 #customer3 {
 
-    width: 110px;
+    width: 115px;
 
-    height: 149px;
-
-    transform:
-        translateX(-50%);
+    height: 155px;
 
 }
 
@@ -274,12 +292,14 @@ body {
     object-fit: contain;
 
     display: none;
+
 }
 
 
 .customer .frame.active {
 
     display: block;
+
 }
 
 
@@ -391,127 +411,61 @@ body {
 
 
 /* ==================================================
-   MOVIMENTO
-   I CLIENTI VANNO SEMPRE VERSO LA CUCINA.
-
-   I 6 PUNTI SONO INVISIBILI.
+   POSIZIONI CLIENTI
 ================================================== */
 
-@keyframes walkDown1 {
+/*
+   Cliente 1 e 2 vengono spostati verso
+   i rispettivi lati per creare più spazio
+   tra loro.
+*/
 
-    0% {
-        top: 7%;
-        left: 50%;
-    }
+#customer1 {
 
-    16% {
-        top: 18%;
-        left: 50%;
-    }
-
-    32% {
-        top: 29%;
-        left: 50%;
-    }
-
-    48% {
-        top: 40%;
-        left: 50%;
-    }
-
-    64% {
-        top: 51%;
-        left: 45%;
-    }
-
-    80% {
-        top: 61%;
-        left: 36%;
-    }
-
-    100% {
-        top: 69%;
-        left: 25%;
-    }
+    left: 17%;
 
 }
 
 
-@keyframes walkDown2 {
+#customer2 {
 
-    0% {
-        top: 7%;
-        left: 50%;
-    }
-
-    16% {
-        top: 18%;
-        left: 50%;
-    }
-
-    32% {
-        top: 29%;
-        left: 50%;
-    }
-
-    48% {
-        top: 40%;
-        left: 50%;
-    }
-
-    64% {
-        top: 51%;
-        left: 55%;
-    }
-
-    80% {
-        top: 61%;
-        left: 64%;
-    }
-
-    100% {
-        top: 69%;
-        left: 75%;
-    }
+    left: 83%;
 
 }
 
 
-@keyframes walkDown3 {
+#customer3 {
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+}
+
+
+/* ==================================================
+   MOVIMENTO CLIENTI
+================================================== */
+
+@keyframes walkDown {
 
     0% {
-        top: 7%;
-        left: 50%;
+
+        top: -130px;
+
     }
 
-    16% {
-        top: 18%;
-        left: 50%;
-    }
+    65% {
 
-    32% {
-        top: 29%;
-        left: 50%;
-    }
+        top: 69%;
 
-    48% {
-        top: 40%;
-        left: 50%;
-    }
-
-    64% {
-        top: 51%;
-        left: 50%;
-    }
-
-    80% {
-        top: 61%;
-        left: 50%;
     }
 
     100% {
+
         top: 69%;
-        left: 50%;
+
     }
 
 }
@@ -641,13 +595,20 @@ body {
 
     }
 
+
+    /*
+       Anche su schermo piccolo
+       Cliente 3 rimane leggermente più grande.
+    */
+
     #customer3 {
 
-        width: 72px;
+        width: 75px;
 
-        height: 98px;
+        height: 100px;
 
     }
+
 
     .pasta {
 
@@ -666,6 +627,7 @@ body {
 
 <body>
 
+
 <div id="phone">
 
 
@@ -682,10 +644,13 @@ body {
     >
 
     <button id="playButton">
+
         PLAY
+
     </button>
 
 </div>
+
 
 
 <!-- ==================================================
@@ -694,12 +659,15 @@ body {
 
 <div id="game">
 
+
     <img
         id="background"
         src="https://i.ibb.co/pj7trt5y/IMG-20260829-WA0012.jpg"
         alt=""
     >
 
+
+    <!-- CUCINA NORMALE -->
 
     <img
         id="kitchen"
@@ -708,12 +676,16 @@ body {
     >
 
 
+    <!-- CUCINA DANNEGGIATA -->
+
     <img
         id="kitchenDamaged"
         src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"
         alt=""
     >
 
+
+    <!-- CUCINA DISTRUTTA -->
 
     <img
         id="kitchenDestroyed"
@@ -729,6 +701,7 @@ body {
         <span>⭐ 0</span>
 
     </div>
+
 
 
     <!-- ==================================================
@@ -765,6 +738,7 @@ body {
     </div>
 
 
+
     <!-- ==================================================
          CLIENTE 2
     ================================================== -->
@@ -799,6 +773,7 @@ body {
     </div>
 
 
+
     <!-- ==================================================
          CLIENTE 3
     ================================================== -->
@@ -825,6 +800,7 @@ body {
         </div>
 
     </div>
+
 
 
     <!-- ==================================================
@@ -861,9 +837,11 @@ body {
 
     </div>
 
+
 </div>
 
 </div>
+
 
 
 <script>
@@ -1016,47 +994,22 @@ document
         normalFrames3[0].classList.add("active");
 
 
-        /*
-           POSIZIONE INIZIALE:
-           PORTA
-        */
-
-        customer1.style.left = "50%";
-        customer1.style.top = "7%";
-
-        customer2.style.left = "50%";
-        customer2.style.top = "7%";
-
-        customer3.style.left = "50%";
-        customer3.style.top = "7%";
-
-
-        /*
-           AVVIO PERCORSI
-        */
-
         customer1.style.animation = "none";
-
         void customer1.offsetWidth;
-
         customer1.style.animation =
-            "walkDown1 40s linear forwards";
+            "walkDown 40s linear forwards";
 
 
         customer2.style.animation = "none";
-
         void customer2.offsetWidth;
-
         customer2.style.animation =
-            "walkDown2 40s linear forwards";
+            "walkDown 40s linear forwards";
 
 
         customer3.style.animation = "none";
-
         void customer3.offsetWidth;
-
         customer3.style.animation =
-            "walkDown3 40s linear forwards";
+            "walkDown 40s linear forwards";
 
 
         document
@@ -1075,13 +1028,9 @@ document
         updateKitchenEnergy();
 
         startCustomerAnimation();
-
         startCookAnimation();
-
         startKitchenEnergySystem();
-
         startCustomerKitchenDetection();
-
         startFirstAttackDetection();
 
     }
@@ -1096,49 +1045,40 @@ function updateKitchenEnergy() {
 
     if (kitchenEnergy > 50) {
 
-        document
-        .getElementById("kitchen")
-        .style.display = "block";
+        document.getElementById("kitchen").style.display =
+            "block";
 
-        document
-        .getElementById("kitchenDamaged")
-        .style.display = "none";
+        document.getElementById("kitchenDamaged").style.display =
+            "none";
 
-        document
-        .getElementById("kitchenDestroyed")
-        .style.display = "none";
+        document.getElementById("kitchenDestroyed").style.display =
+            "none";
 
     }
 
     else if (kitchenEnergy > 20) {
 
-        document
-        .getElementById("kitchen")
-        .style.display = "none";
+        document.getElementById("kitchen").style.display =
+            "none";
 
-        document
-        .getElementById("kitchenDamaged")
-        .style.display = "block";
+        document.getElementById("kitchenDamaged").style.display =
+            "block";
 
-        document
-        .getElementById("kitchenDestroyed")
-        .style.display = "none";
+        document.getElementById("kitchenDestroyed").style.display =
+            "none";
 
     }
 
     else {
 
-        document
-        .getElementById("kitchen")
-        .style.display = "none";
+        document.getElementById("kitchen").style.display =
+            "none";
 
-        document
-        .getElementById("kitchenDamaged")
-        .style.display = "none";
+        document.getElementById("kitchenDamaged").style.display =
+            "none";
 
-        document
-        .getElementById("kitchenDestroyed")
-        .style.display = "block";
+        document.getElementById("kitchenDestroyed").style.display =
+            "block";
 
     }
 
@@ -1153,12 +1093,9 @@ function startKitchenEnergySystem() {
 
     if (kitchenDamageTimer !== null) {
 
-        clearInterval(
-            kitchenDamageTimer
-        );
+        clearInterval(kitchenDamageTimer);
 
     }
-
 
     kitchenDamageTimer =
     setInterval(
@@ -1166,48 +1103,34 @@ function startKitchenEnergySystem() {
 
             let damage = 0;
 
-
             if (
                 customer1AtKitchen &&
                 !customer1Satisfied
             ) {
-
                 damage++;
-
             }
-
 
             if (
                 customer2AtKitchen &&
                 !customer2Satisfied
             ) {
-
                 damage++;
-
             }
-
 
             if (
                 customer3AtKitchen &&
                 !customer3Satisfied
             ) {
-
                 damage++;
-
             }
-
 
             if (damage > 0) {
 
                 kitchenEnergy -= damage;
 
-
                 if (kitchenEnergy < 0) {
-
                     kitchenEnergy = 0;
-
                 }
-
 
                 updateKitchenEnergy();
 
@@ -1230,9 +1153,7 @@ function startCustomerKitchenDetection() {
         function() {
 
             if (!customer1Satisfied) {
-
                 customer1AtKitchen = true;
-
             }
 
         },
@@ -1244,9 +1165,7 @@ function startCustomerKitchenDetection() {
         function() {
 
             if (!customer2Satisfied) {
-
                 customer2AtKitchen = true;
-
             }
 
         },
@@ -1258,9 +1177,7 @@ function startCustomerKitchenDetection() {
         function() {
 
             if (!customer3Satisfied) {
-
                 customer3AtKitchen = true;
-
             }
 
         },
@@ -1285,18 +1202,14 @@ function customerIsVisible(customer) {
 
     }
 
-
     const rect =
         customer.getBoundingClientRect();
-
 
     const game =
         document.getElementById("game");
 
-
     const gameRect =
         game.getBoundingClientRect();
-
 
     return (
 
@@ -1316,12 +1229,9 @@ function startFirstAttackDetection() {
 
     if (firstAttackTimer !== null) {
 
-        clearInterval(
-            firstAttackTimer
-        );
+        clearInterval(firstAttackTimer);
 
     }
-
 
     firstAttackTimer =
     setInterval(
@@ -1344,9 +1254,7 @@ function startFirstAttackDetection() {
 
                 playCookAttack();
 
-                clearInterval(
-                    firstAttackTimer
-                );
+                clearInterval(firstAttackTimer);
 
                 return;
 
@@ -1360,9 +1268,7 @@ function startFirstAttackDetection() {
 
                 playCookAttack();
 
-                clearInterval(
-                    firstAttackTimer
-                );
+                clearInterval(firstAttackTimer);
 
                 return;
 
@@ -1376,9 +1282,7 @@ function startFirstAttackDetection() {
 
                 playCookAttack();
 
-                clearInterval(
-                    firstAttackTimer
-                );
+                clearInterval(firstAttackTimer);
 
                 return;
 
@@ -1399,12 +1303,9 @@ function startCustomerAnimation() {
 
     if (customerTimer !== null) {
 
-        clearInterval(
-            customerTimer
-        );
+        clearInterval(customerTimer);
 
     }
-
 
     customerFrame1 = 0;
     customerFrame2 = 0;
@@ -1414,7 +1315,6 @@ function startCustomerAnimation() {
     customerTimer =
     setInterval(
         function() {
-
 
             /* CLIENTE 1 */
 
@@ -1428,15 +1328,14 @@ function startCustomerAnimation() {
 
                 frames.forEach(
                     function(frame) {
-
                         frame.classList.remove("active");
-
                     }
                 );
 
 
                 frames[customerFrame1]
-                .classList.add("active");
+                .classList
+                .add("active");
 
 
                 customerFrame1++;
@@ -1466,15 +1365,14 @@ function startCustomerAnimation() {
 
                 frames.forEach(
                     function(frame) {
-
                         frame.classList.remove("active");
-
                     }
                 );
 
 
                 frames[customerFrame2]
-                .classList.add("active");
+                .classList
+                .add("active");
 
 
                 customerFrame2++;
@@ -1545,15 +1443,14 @@ function setCookFrame(frameNumber) {
 
     frames.forEach(
         function(frame) {
-
             frame.classList.remove("active");
-
         }
     );
 
 
     frames[frameNumber]
-    .classList.add("active");
+    .classList
+    .add("active");
 
 }
 
@@ -1582,9 +1479,7 @@ function playCookAttack() {
 
     setTimeout(
         function() {
-
             setCookFrame(1);
-
         },
         120
     );
@@ -1592,9 +1487,7 @@ function playCookAttack() {
 
     setTimeout(
         function() {
-
             setCookFrame(2);
-
         },
         240
     );
@@ -1614,9 +1507,7 @@ function playCookAttack() {
 
     setTimeout(
         function() {
-
             setCookFrame(4);
-
         },
         480
     );
@@ -1624,9 +1515,7 @@ function playCookAttack() {
 
     setTimeout(
         function() {
-
             setCookFrame(0);
-
         },
         600
     );
@@ -1642,12 +1531,9 @@ function startCookAnimation() {
 
     if (cookTimer !== null) {
 
-        clearInterval(
-            cookTimer
-        );
+        clearInterval(cookTimer);
 
     }
-
 
     setCookFrame(0);
 
@@ -1724,7 +1610,6 @@ function getNearestVisibleCustomer() {
     const cook =
         document.getElementById("cook");
 
-
     const cookRect =
         cook.getBoundingClientRect();
 
@@ -1788,9 +1673,7 @@ function getNearestVisibleCustomer() {
 function throwPasta(target) {
 
     if (!target) {
-
         return;
-
     }
 
 
@@ -1798,9 +1681,7 @@ function throwPasta(target) {
         target.id === "customer1" &&
         customer1Satisfied
     ) {
-
         return;
-
     }
 
 
@@ -1808,9 +1689,7 @@ function throwPasta(target) {
         target.id === "customer2" &&
         customer2Satisfied
     ) {
-
         return;
-
     }
 
 
@@ -1818,15 +1697,12 @@ function throwPasta(target) {
         target.id === "customer3" &&
         customer3Satisfied
     ) {
-
         return;
-
     }
 
 
     const cook =
         document.getElementById("cook");
-
 
     const game =
         document.getElementById("game");
@@ -1834,7 +1710,6 @@ function throwPasta(target) {
 
     const gameRect =
         game.getBoundingClientRect();
-
 
     const cookRect =
         cook.getBoundingClientRect();
@@ -1853,36 +1728,26 @@ function throwPasta(target) {
     const hitMarker =
         document.createElement("div");
 
-
     hitMarker.className =
         "hit-marker";
 
-
-    game.appendChild(
-        hitMarker
-    );
+    game.appendChild(hitMarker);
 
 
     const pasta =
         document.createElement("img");
 
-
     pasta.className =
         "pasta";
-
 
     pasta.src =
         "https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png";
 
-
-    game.appendChild(
-        pasta
-    );
+    game.appendChild(pasta);
 
 
     let currentX =
         startX;
-
 
     let currentY =
         startY;
@@ -2099,9 +1964,7 @@ function hitCustomer(customer, pasta) {
     ) {
 
         pasta.parentNode
-        .removeChild(
-            pasta
-        );
+        .removeChild(pasta);
 
     }
 
@@ -2112,21 +1975,13 @@ function hitCustomer(customer, pasta) {
     ) {
 
         if (customer1Satisfied) {
-
             return;
-
         }
-
 
         customer1HP -= 5;
 
-
-        if (
-            customer1HP <= 0
-        ) {
-
+        if (customer1HP <= 0) {
             satisfyCustomer1();
-
         }
 
     }
@@ -2138,21 +1993,13 @@ function hitCustomer(customer, pasta) {
     ) {
 
         if (customer2Satisfied) {
-
             return;
-
         }
-
 
         customer2HP -= 5;
 
-
-        if (
-            customer2HP <= 0
-        ) {
-
+        if (customer2HP <= 0) {
             satisfyCustomer2();
-
         }
 
     }
@@ -2164,21 +2011,13 @@ function hitCustomer(customer, pasta) {
     ) {
 
         if (customer3Satisfied) {
-
             return;
-
         }
-
 
         customer3HP -= 5;
 
-
-        if (
-            customer3HP <= 0
-        ) {
-
+        if (customer3HP <= 0) {
             satisfyCustomer3();
-
         }
 
     }
@@ -2201,9 +2040,7 @@ function satisfyCustomer1() {
         document.getElementById("customer1");
 
 
-    customer.classList.add(
-        "satisfied"
-    );
+    customer.classList.add("satisfied");
 
 
     const normalFrames =
@@ -2212,9 +2049,7 @@ function satisfyCustomer1() {
 
     normalFrames.forEach(
         function(frame) {
-
             frame.classList.remove("active");
-
         }
     );
 
@@ -2258,9 +2093,7 @@ function satisfyCustomer2() {
         document.getElementById("customer2");
 
 
-    customer.classList.add(
-        "satisfied"
-    );
+    customer.classList.add("satisfied");
 
 
     const normalFrames =
@@ -2269,9 +2102,7 @@ function satisfyCustomer2() {
 
     normalFrames.forEach(
         function(frame) {
-
             frame.classList.remove("active");
-
         }
     );
 
@@ -2315,9 +2146,7 @@ function satisfyCustomer3() {
         document.getElementById("customer3");
 
 
-    customer.classList.add(
-        "satisfied"
-    );
+    customer.classList.add("satisfied");
 
 
     const normalFrames =
@@ -2326,9 +2155,7 @@ function satisfyCustomer3() {
 
     normalFrames.forEach(
         function(frame) {
-
             frame.classList.remove("active");
-
         }
     );
 
@@ -2360,7 +2187,3 @@ function satisfyCustomer3() {
 
 </body>
 </html>
-
-Nota importante: ho impostato per ora i percorsi in modo conservativo, usando il corridoio centrale per la maggior parte della discesa e portando poi i clienti verso le rispettive posizioni davanti alla cucina. Così possiamo vedere il risultato reale e poi correggere solo le coordinate dei punti se qualche cliente passa ancora troppo vicino a un tavolo.
-
-Il Cliente 3 è circa il 10% più grande degli altri due.
