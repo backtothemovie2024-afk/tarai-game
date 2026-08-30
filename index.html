@@ -229,9 +229,17 @@ body {
     pointer-events: none;
 }
 
+/*
+   IMPORTANTE:
+   quando il cliente viene soddisfatto
+   deve stare SOPRA la cucina.
+*/
+
 .customer.satisfied {
 
     animation: none !important;
+
+    z-index: 70 !important;
 }
 
 #customer3 {
@@ -297,6 +305,10 @@ body {
     object-fit: contain;
 
     display: none;
+
+    visibility: hidden;
+
+    opacity: 0;
 
     z-index: 2;
 }
@@ -2096,21 +2108,9 @@ function startWaitressAnimation() {
 
 /* ==================================================
    CLIENTE PIÙ VICINO ALLA CUCINA
-   MODIFICATO
 ================================================== */
 
 function getNearestCustomerToKitchen() {
-
-    /*
-       Consideriamo tutti i clienti:
-       - non soddisfatti
-       - visibili
-       - già arrivati alla cucina
-         oppure ancora in movimento
-
-       I clienti già alla cucina hanno
-       PRIORITÀ ASSOLUTA.
-    */
 
     const validCustomers =
         customers.filter(
@@ -2135,12 +2135,6 @@ function getNearestCustomerToKitchen() {
         return null;
     }
 
-    /*
-       PRIMA CERCHIAMO I CLIENTI
-       CHE STANNO GIÀ ATTACCANDO
-       LA CUCINA.
-    */
-
     const kitchenCustomers =
         validCustomers.filter(
             function(customer) {
@@ -2148,11 +2142,6 @@ function getNearestCustomerToKitchen() {
                 return customer.atKitchen;
             }
         );
-
-    /*
-       Se ce ne sono, scegliamo quello
-       più vicino alla linea della cucina.
-    */
 
     const candidates =
         kitchenCustomers.length > 0
@@ -2882,10 +2871,18 @@ function hitCustomer(
 
 /* ==================================================
    CLIENTE SODDISFATTO
-   VERSIONE CON SPRITE FELICE
+   SPRITE FELICE VISIBILE
 ================================================== */
 
 function satisfyCustomer(customer) {
+
+    if (
+        !customer ||
+        customer.satisfied
+    ) {
+
+        return;
+    }
 
     customer.satisfied =
         true;
@@ -2897,7 +2894,8 @@ function satisfyCustomer(customer) {
         customer.element;
 
     /*
-       FERMA IL MOVIMENTO
+       FERMA COMPLETAMENTE
+       IL MOVIMENTO
     */
 
     element.classList.add(
@@ -2911,23 +2909,32 @@ function satisfyCustomer(customer) {
         "none";
 
     /*
-       NASCONDE I FRAME NORMALI
+       PORTA IL CLIENTE
+       SOPRA LA CUCINA
+    */
+
+    element.style.zIndex =
+        "70";
+
+    /*
+       NASCONDE TUTTI
+       I FRAME NORMALI
     */
 
     const normalFrames =
-        element
-        .querySelectorAll(
+        element.querySelectorAll(
             ".frame"
         );
 
     normalFrames.forEach(
         function(frame) {
 
-            frame.classList
-            .remove(
+            frame.classList.remove(
                 "active"
             );
 
+            frame.style.display =
+                "none";
         }
     );
 
@@ -2936,23 +2943,53 @@ function satisfyCustomer(customer) {
     */
 
     const happyFrame =
-    element.querySelector(".happy-frame");
+        element.querySelector(
+            ".happy-frame"
+        );
 
-if (happyFrame) {
+    if (happyFrame) {
 
-    happyFrame.style.display = "block";
-    happyFrame.style.visibility = "visible";
-    happyFrame.style.opacity = "1";
-    happyFrame.style.zIndex = "56";
-}
+        happyFrame.style.display =
+            "block";
+
+        happyFrame.style.visibility =
+            "visible";
+
+        happyFrame.style.opacity =
+            "1";
+
+        happyFrame.style.zIndex =
+            "2";
+
+        /*
+           Forza il browser
+           a ridisegnare lo sprite
+        */
+
+        void happyFrame.offsetWidth;
+
+        requestAnimationFrame(
+            function() {
+
+                happyFrame.style.display =
+                    "block";
+
+                happyFrame.style.visibility =
+                    "visible";
+
+                happyFrame.style.opacity =
+                    "1";
+
+            }
+        );
+    }
 
     /*
        MOSTRA IL CUORE
     */
 
     const heart =
-        element
-        .querySelector(
+        element.querySelector(
             ".heart"
         );
 
@@ -2971,12 +3008,17 @@ if (happyFrame) {
     }
 
     /*
-       LO SPRITE FELICE RESTA
-       VISIBILE PER 1 SECONDO
+       SPRITE FELICE + CUORE
+       RESTANO VISIBILI
+       PER 1 SECONDO
     */
 
     setTimeout(
         function() {
+
+            if (!element) {
+                return;
+            }
 
             element.style.display =
                 "none";
@@ -2985,6 +3027,12 @@ if (happyFrame) {
 
                 happyFrame.style.display =
                     "none";
+
+                happyFrame.style.visibility =
+                    "hidden";
+
+                happyFrame.style.opacity =
+                    "0";
             }
 
             if (heart) {
