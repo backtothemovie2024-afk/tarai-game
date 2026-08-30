@@ -779,11 +779,11 @@ const CUSTOMER_WALK_TIME = 70;
 
 const LANES = [
 
-    30,
-    40,
+    28,
+    39,
     50,
-    60,
-    70
+    61,
+    72
 
 ];
 
@@ -1402,8 +1402,23 @@ function customerIsVisible(
 
 
 /* ==================================================
-   Z-INDEX
+   Z-INDEX CLIENTI
 ================================================== */
+
+/*
+   Il cliente davanti deve stare
+   SOPRA il cliente dietro.
+
+   Quindi ordiniamo i clienti
+   dal più in alto al più in basso.
+
+   Quello più in basso nello schermo
+   è più vicino alla cucina e riceve
+   lo z-index maggiore.
+
+   La cucina rimane comunque
+   a z-index 50.
+*/
 
 function startZIndexSystem() {
 
@@ -1451,24 +1466,42 @@ function updateZIndexes() {
         );
 
 
+    /*
+       Ordiniamo dal cliente più indietro
+       al cliente più avanti.
+    */
+
+    activeCustomers.sort(
+        function(a, b) {
+
+            const aTop =
+                a
+                .getBoundingClientRect()
+                .top;
+
+
+            const bTop =
+                b
+                .getBoundingClientRect()
+                .top;
+
+
+            return aTop - bTop;
+
+        }
+    );
+
+
+    /*
+       Il cliente davanti riceve
+       lo z-index maggiore.
+    */
+
     activeCustomers.forEach(
-        function(customer) {
-
-
-            const rect =
-                customer
-                .getBoundingClientRect();
-
-
-            /*
-               I clienti possono stare
-               solo tra z-index 10 e 14.
-
-               La cucina è a 50.
-            */
+        function(customer, index) {
 
             customer.style.zIndex =
-                10;
+                10 + index;
 
         }
     );
@@ -2537,6 +2570,7 @@ function satisfyCustomer2() {
     }
 
 }
+
 
 </script>
 
