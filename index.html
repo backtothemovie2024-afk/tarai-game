@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
 
 <meta charset="UTF-8">
@@ -18,17 +17,12 @@ content="width=device-width, initial-scale=1.0">
 
 html,
 body {
-
     margin: 0;
     padding: 0;
-
     width: 100%;
     height: 100%;
-
     overflow: hidden;
-
     background: #111;
-
     font-family: Arial, sans-serif;
 }
 
@@ -38,19 +32,12 @@ body {
 ================================================== */
 
 #phone {
-
     position: relative;
-
     width: min(100vw, 56.25vh);
-
     height: min(100vh, 177.7778vw);
-
     aspect-ratio: 9 / 16;
-
     margin: auto;
-
     overflow: hidden;
-
     background: black;
 }
 
@@ -60,60 +47,35 @@ body {
 ================================================== */
 
 #menu {
-
     position: absolute;
-
     inset: 0;
-
     background: black;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     z-index: 100;
 }
 
-
 #cover {
-
     position: absolute;
-
     width: 100%;
     height: 100%;
-
     object-fit: cover;
-
     z-index: 10;
 }
 
-
 #playButton {
-
     position: absolute;
-
     bottom: 12%;
-
     width: 60%;
-
     max-width: 240px;
-
     height: 70px;
-
     border: none;
-
     border-radius: 18px;
-
     background: #ef6428;
-
     color: white;
-
     font-size: 28px;
-
     font-weight: bold;
-
     z-index: 30;
 }
 
@@ -123,30 +85,19 @@ body {
 ================================================== */
 
 #game {
-
     display: none;
-
     position: absolute;
-
     inset: 0;
-
     overflow: hidden;
-
     background: black;
 }
 
-
 #background {
-
     position: absolute;
-
     inset: 0;
-
     width: 100%;
     height: 100%;
-
     object-fit: cover;
-
     z-index: 0;
 }
 
@@ -160,13 +111,9 @@ body {
 #kitchenDestroyed {
 
     position: absolute;
-
     left: 50%;
-
     top: 83%;
-
     width: 115%;
-
     height: auto;
 
     transform:
@@ -175,29 +122,18 @@ body {
     pointer-events: none;
 }
 
-
 #kitchen {
-
-    z-index: 70;
-
+    z-index: 15;
 }
-
 
 #kitchenDamaged {
-
-    z-index: 71;
-
+    z-index: 16;
     display: none;
-
 }
 
-
 #kitchenDestroyed {
-
-    z-index: 72;
-
+    z-index: 17;
     display: none;
-
 }
 
 
@@ -206,48 +142,24 @@ body {
 ================================================== */
 
 #hud {
-
     position: absolute;
-
     top: 15px;
-
     left: 20px;
-
     right: 20px;
 
     display: flex;
-
     justify-content: space-between;
 
     color: white;
-
     font-size: 22px;
-
     font-weight: bold;
 
-    z-index: 100;
+    z-index: 80;
 }
 
 
 /* ==================================================
-   CONTENITORE CLIENTI
-================================================== */
-
-#customersLayer {
-
-    position: absolute;
-
-    inset: 0;
-
-    z-index: 20;
-
-    pointer-events: none;
-
-}
-
-
-/* ==================================================
-   CLIENTE
+   CLIENTI
 ================================================== */
 
 .customer {
@@ -255,21 +167,32 @@ body {
     position: absolute;
 
     width: 100px;
-
     height: 135px;
 
-    top: -150px;
+    top: -170px;
 
-    transform:
-        translateX(-50%);
+    z-index: 40;
 
     pointer-events: none;
+}
 
+.customer.satisfied {
+    animation: none !important;
 }
 
 
 /* ==================================================
-   SPRITE
+   CLIENTE 3 LEGGERMENTE PIÙ GRANDE
+================================================== */
+
+#customer3 {
+    width: 108px;
+    height: 146px;
+}
+
+
+/* ==================================================
+   SPRITE NORMALI
 ================================================== */
 
 .customer .frame {
@@ -287,11 +210,21 @@ body {
     display: none;
 }
 
-
 .customer .frame.active {
-
     display: block;
+}
 
+
+/* ==================================================
+   CLIENTE 3 - SPECCHIO
+================================================== */
+
+#customer3 .walking-frame {
+    transform: scaleX(1);
+}
+
+#customer3 .walking-frame.flipped {
+    transform: scaleX(-1);
 }
 
 
@@ -318,26 +251,6 @@ body {
 
 
 /* ==================================================
-   CLIENTE 3
-================================================== */
-
-.customer.type3 .walking-frame {
-
-    transform:
-        scaleX(1);
-
-}
-
-
-.customer.type3 .walking-frame.flipped {
-
-    transform:
-        scaleX(-1);
-
-}
-
-
-/* ==================================================
    CUORE
 ================================================== */
 
@@ -346,7 +259,6 @@ body {
     position: absolute;
 
     left: 50%;
-
     top: -18px;
 
     transform:
@@ -365,37 +277,48 @@ body {
         0.8s
         ease-in-out
         infinite alternate;
-
 }
-
 
 .customer.satisfied .heart {
-
     display: block;
-
 }
-
 
 @keyframes heartFloat {
 
     0% {
-
         transform:
             translateX(-50%)
             translateY(0)
             scale(1);
-
     }
 
     100% {
-
         transform:
             translateX(-50%)
             translateY(-7px)
             scale(1.12);
+    }
+}
 
+
+/* ==================================================
+   MOVIMENTO CLIENTE
+   50 SECONDI
+================================================== */
+
+@keyframes walkDown {
+
+    0% {
+        top: -170px;
     }
 
+    65% {
+        top: 69%;
+    }
+
+    100% {
+        top: 69%;
+    }
 }
 
 
@@ -408,20 +331,16 @@ body {
     position: absolute;
 
     left: 43%;
-
     bottom: 7%;
 
     width: 100px;
-
     height: 135px;
 
     transform:
         translateX(-50%);
 
-    z-index: 80;
-
+    z-index: 50;
 }
-
 
 #cook img {
 
@@ -438,11 +357,8 @@ body {
     display: none;
 }
 
-
 #cook img.active {
-
     display: block;
-
 }
 
 
@@ -455,20 +371,18 @@ body {
     position: absolute;
 
     width: 84px;
-
     height: 84px;
 
     object-fit: contain;
 
-    z-index: 90;
+    z-index: 60;
 
     pointer-events: none;
-
 }
 
 
 /* ==================================================
-   HIT MARKER INVISIBILE
+   HITBOX INVISIBILE
 ================================================== */
 
 .hit-marker {
@@ -491,12 +405,11 @@ body {
     transform:
         translate(-50%, -50%);
 
-    z-index: 95;
+    z-index: 90;
 
     pointer-events: none;
 
     opacity: 0;
-
 }
 
 
@@ -509,42 +422,26 @@ body {
     .customer {
 
         width: 65px;
-
         height: 88px;
-
     }
 
-
-    /*
-       Cliente 3 leggermente più grande
-    */
-
-    .customer.type3 {
+    #customer3 {
 
         width: 72px;
-
-        height: 96px;
-
+        height: 97px;
     }
-
 
     #cook {
 
         width: 65px;
-
         height: 88px;
-
     }
-
 
     .pasta {
 
         width: 60px;
-
         height: 60px;
-
     }
-
 }
 
 </style>
@@ -571,13 +468,10 @@ body {
     >
 
     <button id="playButton">
-
         PLAY
-
     </button>
 
 </div>
-
 
 
 <!-- ==================================================
@@ -594,25 +488,17 @@ body {
     >
 
 
-    <!-- CUCINA NORMALE -->
-
     <img
         id="kitchen"
         src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png"
         alt=""
     >
 
-
-    <!-- CUCINA DANNEGGIATA -->
-
     <img
         id="kitchenDamaged"
         src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"
         alt=""
     >
-
-
-    <!-- CUCINA DISTRUTTA -->
 
     <img
         id="kitchenDestroyed"
@@ -621,547 +507,29 @@ body {
     >
 
 
-
-    <!-- ==================================================
-         HUD
-    ================================================== -->
-
     <div id="hud">
 
-        <span id="lives">
+        <span>❤️ 3</span>
 
-            ❤️ 3
-
-        </span>
-
-        <span id="score">
-
-            ⭐ 0
-
-        </span>
+        <span>⭐ 0</span>
 
     </div>
 
 
-
     <!-- ==================================================
-         CLIENTI DINAMICI
+         CONTENITORE CLIENTI
     ================================================== -->
 
-    <div id="customersLayer"></div>
-
+    <div id="customers"></div>
 
 
     <!-- ==================================================
-         CUOCO
+         TEMPLATE CLIENTE 1
     ================================================== -->
 
-    <div id="cook">
+    <template id="customer1Template">
 
-
-        <img
-            class="active"
-            src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-            alt=""
-        >
-
-
-        <img
-            src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
-            alt=""
-        >
-
-
-        <img
-            src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
-            alt=""
-        >
-
-
-        <img
-            src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
-            alt=""
-        >
-
-
-        <img
-            src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-            alt=""
-        >
-
-    </div>
-
-
-</div>
-
-</div>
-
-
-
-<script>
-
-
-/* ==================================================
-   CONFIGURAZIONE
-================================================== */
-
-
-/*
-   5 CORSIE
-
-   Sono tutte nello spazio centrale
-   tra i tavoli di sinistra e quelli
-   di destra.
-
-   Se nel background vuoi spostarle,
-   basta modificare questi 5 valori.
-*/
-
-const LANES = [
-
-    38,
-    44,
-    50,
-    56,
-    62
-
-];
-
-
-/*
-   Tutti i clienti nascono dalla stessa
-   posizione centrale.
-
-   50 = centro dello schermo.
-*/
-
-const SPAWN_X = 50;
-
-
-/*
-   Partenza fuori dallo schermo.
-
-   Il cliente entra dalla zona della porta.
-*/
-
-const SPAWN_Y = -12;
-
-
-/*
-   Punto in cui il cliente arriva
-   davanti alla cucina.
-*/
-
-const KITCHEN_Y = 69;
-
-
-/*
-   Durata del movimento.
-
-   Tutti percorrono la stessa distanza.
-*/
-
-const WALK_DURATION = 26;
-
-
-/*
-   15 clienti nella prima wave.
-*/
-
-const WAVE_SIZE = 15;
-
-
-/*
-   Un cliente ogni 2.5 secondi.
-*/
-
-const SPAWN_INTERVAL = 2500;
-
-
-/*
-   Distanza minima verticale tra clienti
-   della stessa corsia.
-
-   Serve per evitare sovrapposizioni
-   eccessive.
-*/
-
-const MIN_CUSTOMER_DISTANCE = 7;
-
-
-/* ==================================================
-   HITBOX
-================================================== */
-
-const HIT_X = 5;
-
-const HIT_Y = 0;
-
-const HIT_POSITION_Y = 0.45;
-
-
-/* ==================================================
-   VARIABILI
-================================================== */
-
-let kitchenEnergy = 100;
-
-let cookTimer = null;
-
-let customerSpawnTimer = null;
-
-let firstAttackTimer = null;
-
-let kitchenDamageTimer = null;
-
-let customerAnimationTimer = null;
-
-let customers = [];
-
-let customerIdCounter = 0;
-
-let waveRunning = false;
-
-
-/* ==================================================
-   PLAY
-================================================== */
-
-document
-.getElementById("playButton")
-.addEventListener(
-    "click",
-    function() {
-
-
-        document
-        .getElementById("menu")
-        .style.display =
-            "none";
-
-
-        document
-        .getElementById("game")
-        .style.display =
-            "block";
-
-
-        resetGame();
-
-
-        startWave1();
-
-
-        startCookAnimation();
-
-
-        startKitchenEnergySystem();
-
-
-        startFirstAttackDetection();
-
-
-        startCustomerAnimation();
-
-    }
-);
-
-
-/* ==================================================
-   RESET
-================================================== */
-
-function resetGame() {
-
-
-    kitchenEnergy = 100;
-
-
-    customers = [];
-
-
-    customerIdCounter = 0;
-
-
-    waveRunning = false;
-
-
-    clearAllTimers();
-
-
-    document
-    .getElementById(
-        "customersLayer"
-    )
-    .innerHTML = "";
-
-
-    document
-    .getElementById(
-        "kitchen"
-    )
-    .style.display =
-        "block";
-
-
-    document
-    .getElementById(
-        "kitchenDamaged"
-    )
-    .style.display =
-        "none";
-
-
-    document
-    .getElementById(
-        "kitchenDestroyed"
-    )
-    .style.display =
-        "none";
-
-
-    setCookFrame(0);
-
-}
-
-
-/* ==================================================
-   TIMER
-================================================== */
-
-function clearAllTimers() {
-
-
-    if (
-        cookTimer !== null
-    ) {
-
-        clearInterval(
-            cookTimer
-        );
-
-        cookTimer = null;
-
-    }
-
-
-    if (
-        customerSpawnTimer !== null
-    ) {
-
-        clearTimeout(
-            customerSpawnTimer
-        );
-
-        customerSpawnTimer = null;
-
-    }
-
-
-    if (
-        firstAttackTimer !== null
-    ) {
-
-        clearInterval(
-            firstAttackTimer
-        );
-
-        firstAttackTimer = null;
-
-    }
-
-
-    if (
-        kitchenDamageTimer !== null
-    ) {
-
-        clearInterval(
-            kitchenDamageTimer
-        );
-
-        kitchenDamageTimer = null;
-
-    }
-
-
-    if (
-        customerAnimationTimer !== null
-    ) {
-
-        clearInterval(
-            customerAnimationTimer
-        );
-
-        customerAnimationTimer = null;
-
-    }
-
-}
-
-
-/* ==================================================
-   WAVE 1
-================================================== */
-
-function startWave1() {
-
-
-    waveRunning = true;
-
-
-    spawnWaveCustomer(0);
-
-}
-
-
-/* ==================================================
-   GENERAZIONE CLIENTI
-================================================== */
-
-function spawnWaveCustomer(
-    index
-) {
-
-
-    if (
-        index >= WAVE_SIZE
-    ) {
-
-        waveRunning = false;
-
-        return;
-
-    }
-
-
-    createCustomer();
-
-
-    customerSpawnTimer =
-    setTimeout(
-        function() {
-
-            spawnWaveCustomer(
-                index + 1
-            );
-
-        },
-        SPAWN_INTERVAL
-    );
-
-}
-
-
-/* ==================================================
-   CREA CLIENTE
-================================================== */
-
-function createCustomer() {
-
-
-    const layer =
-        document
-        .getElementById(
-            "customersLayer"
-        );
-
-
-    /*
-       Scegliamo casualmente
-       uno dei 3 sprite.
-    */
-
-    const type =
-        Math.floor(
-            Math.random() * 3
-        ) + 1;
-
-
-    /*
-       Scegliamo casualmente
-       una delle 5 corsie.
-    */
-
-    const laneIndex =
-        Math.floor(
-            Math.random() *
-            LANES.length
-        );
-
-
-    const laneX =
-        LANES[
-            laneIndex
-        ];
-
-
-    /*
-       Creiamo il cliente.
-    */
-
-    const customer =
-        document.createElement(
-            "div"
-        );
-
-
-    customer.className =
-        "customer type" +
-        type;
-
-
-    customer.dataset.type =
-        type;
-
-
-    customer.dataset.lane =
-        laneIndex;
-
-
-    customer.dataset.satisfied =
-        "false";
-
-
-    customer.dataset.hp =
-        "50";
-
-
-    customer.dataset.id =
-        customerIdCounter++;
-
-
-    /*
-       POSIZIONE INIZIALE
-
-       Tutti partono esattamente
-       dallo stesso punto centrale.
-    */
-
-    customer.style.left =
-        SPAWN_X + "%";
-
-
-    customer.style.top =
-        SPAWN_Y + "%";
-
-
-    /*
-       Z-index iniziale.
-    */
-
-    customer.style.zIndex =
-        "20";
-
-
-    /* ==================================================
-       SPRITE
-    ================================================== */
-
-    if (
-        type === 1
-    ) {
-
-        customer.innerHTML = `
+        <div class="customer">
 
             <img
                 class="frame active"
@@ -1185,16 +553,18 @@ function createCustomer() {
                 ❤️
             </div>
 
-        `;
+        </div>
 
-    }
+    </template>
 
 
-    if (
-        type === 2
-    ) {
+    <!-- ==================================================
+         TEMPLATE CLIENTE 2
+    ================================================== -->
 
-        customer.innerHTML = `
+    <template id="customer2Template">
+
+        <div class="customer">
 
             <img
                 class="frame active"
@@ -1218,16 +588,18 @@ function createCustomer() {
                 ❤️
             </div>
 
-        `;
+        </div>
 
-    }
+    </template>
 
 
-    if (
-        type === 3
-    ) {
+    <!-- ==================================================
+         TEMPLATE CLIENTE 3
+    ================================================== -->
 
-        customer.innerHTML = `
+    <template id="customer3Template">
+
+        <div class="customer">
 
             <img
                 class="frame walking-frame active"
@@ -1245,53 +617,587 @@ function createCustomer() {
                 ❤️
             </div>
 
-        `;
+        </div>
+
+    </template>
+
+
+    <!-- ==================================================
+         CUOCO
+    ================================================== -->
+
+    <div id="cook">
+
+        <img
+            class="active"
+            src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
+            alt=""
+        >
+
+        <img
+            src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
+            alt=""
+        >
+
+        <img
+            src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
+            alt=""
+        >
+
+        <img
+            src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
+            alt=""
+        >
+
+        <img
+            src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
+            alt=""
+        >
+
+    </div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+
+/* ==================================================
+   CONFIGURAZIONE
+================================================== */
+
+const HIT_X = 5;
+
+const HIT_Y = 0;
+
+const HIT_POSITION_Y = 0.45;
+
+
+/*
+   5 CORSIE.
+
+   Sono distribuite tra la fila
+   di tavoli sinistra e la fila
+   di tavoli destra.
+
+   I valori sono percentuali
+   rispetto alla larghezza del gioco.
+*/
+
+const LANES = [
+
+    30,
+
+    40,
+
+    50,
+
+    60,
+
+    70
+
+];
+
+
+/*
+   I clienti partono tutti
+   dallo stesso punto centrale
+   in alto.
+*/
+
+const SPAWN_X = 50;
+
+
+/*
+   Un cliente ogni 2.5 secondi.
+*/
+
+const SPAWN_INTERVAL = 2500;
+
+
+/*
+   15 clienti nella prima wave.
+*/
+
+const WAVE_SIZE = 15;
+
+
+/*
+   50 secondi di camminata.
+*/
+
+const WALK_TIME = 50;
+
+
+/*
+   Distanza minima verticale
+   prima di permettere a due
+   clienti della stessa corsia
+   di sovrapporsi.
+*/
+
+const MIN_DISTANCE = 9;
+
+
+/* ==================================================
+   VARIABILI
+================================================== */
+
+let customers = [];
+
+let spawnTimer = null;
+
+let waveIndex = 0;
+
+let customerAnimationTimer = null;
+
+let cookTimer = null;
+
+let firstAttackTimer = null;
+
+let kitchenDamageTimer = null;
+
+let kitchenEnergy = 100;
+
+
+/* ==================================================
+   PLAY
+================================================== */
+
+document
+.getElementById("playButton")
+.addEventListener(
+    "click",
+    startGame
+);
+
+
+function startGame() {
+
+
+    document
+    .getElementById("menu")
+    .style.display = "none";
+
+
+    document
+    .getElementById("game")
+    .style.display = "block";
+
+
+    kitchenEnergy = 100;
+
+
+    customers = [];
+
+
+    waveIndex = 0;
+
+
+    clearAllTimers();
+
+
+    clearCustomers();
+
+
+    document
+    .getElementById("kitchen")
+    .style.display = "block";
+
+
+    document
+    .getElementById("kitchenDamaged")
+    .style.display = "none";
+
+
+    document
+    .getElementById("kitchenDestroyed")
+    .style.display = "none";
+
+
+    updateKitchenEnergy();
+
+
+    startCustomerAnimation();
+
+
+    startCookAnimation();
+
+
+    startKitchenEnergySystem();
+
+
+    startFirstAttackDetection();
+
+
+    /*
+       Parte la prima wave
+       da 15 clienti.
+    */
+
+    startWave();
+
+}
+
+
+/* ==================================================
+   RESET TIMER
+================================================== */
+
+function clearAllTimers() {
+
+
+    if (spawnTimer !== null) {
+
+        clearInterval(spawnTimer);
+
+        spawnTimer = null;
 
     }
 
 
-    layer.appendChild(
-        customer
+    if (customerAnimationTimer !== null) {
+
+        clearInterval(
+            customerAnimationTimer
+        );
+
+        customerAnimationTimer = null;
+
+    }
+
+
+    if (cookTimer !== null) {
+
+        clearInterval(cookTimer);
+
+        cookTimer = null;
+
+    }
+
+
+    if (firstAttackTimer !== null) {
+
+        clearInterval(
+            firstAttackTimer
+        );
+
+        firstAttackTimer = null;
+
+    }
+
+
+    if (kitchenDamageTimer !== null) {
+
+        clearInterval(
+            kitchenDamageTimer
+        );
+
+        kitchenDamageTimer = null;
+
+    }
+
+}
+
+
+/* ==================================================
+   WAVE 1
+================================================== */
+
+function startWave() {
+
+
+    let spawned = 0;
+
+
+    /*
+       Primo cliente immediato.
+    */
+
+    spawnCustomer();
+
+
+    spawned++;
+
+
+    spawnTimer =
+    setInterval(
+        function() {
+
+
+            if (
+                spawned >= WAVE_SIZE
+            ) {
+
+
+                clearInterval(
+                    spawnTimer
+                );
+
+
+                spawnTimer = null;
+
+
+                return;
+
+            }
+
+
+            spawnCustomer();
+
+
+            spawned++;
+
+
+        },
+        SPAWN_INTERVAL
+    );
+
+}
+
+
+/* ==================================================
+   SCELTA CORSIA
+================================================== */
+
+function chooseLane() {
+
+
+    /*
+       Cerchiamo prima le corsie
+       meno utilizzate.
+
+       In questo modo tutte e 5
+       vengono realmente sfruttate.
+    */
+
+    const counts =
+        LANES.map(
+            function(lane) {
+
+                return customers.filter(
+                    function(c) {
+
+                        return (
+                            c.lane === lane &&
+                            c.element.style.display !== "none"
+                        );
+
+                    }
+                ).length;
+
+            }
+        );
+
+
+    const minimum =
+        Math.min(...counts);
+
+
+    const available =
+        [];
+
+
+    counts.forEach(
+        function(count, index) {
+
+            if (
+                count === minimum
+            ) {
+
+                available.push(index);
+
+            }
+
+        }
     );
 
 
     /*
-       Salviamo i dati del cliente.
+       Tra le corsie meno utilizzate
+       ne scegliamo una casualmente.
     */
 
-    const data = {
+    const randomIndex =
+        Math.floor(
+            Math.random() *
+            available.length
+        );
 
-        element: customer,
 
-        type: type,
+    return LANES[
+        available[randomIndex]
+    ];
 
-        lane: laneIndex,
+}
 
-        laneX: laneX,
 
-        hp: 50,
+/* ==================================================
+   TIPO CLIENTE
+================================================== */
 
-        satisfied: false,
+function chooseCustomerType() {
 
-        y: SPAWN_Y
+
+    return (
+        Math.floor(
+            Math.random() * 3
+        ) + 1
+    );
+
+}
+
+
+/* ==================================================
+   CREA CLIENTE
+================================================== */
+
+function spawnCustomer() {
+
+
+    const type =
+        chooseCustomerType();
+
+
+    const lane =
+        chooseLane();
+
+
+    let templateId;
+
+
+    if (
+        type === 1
+    ) {
+
+        templateId =
+            "customer1Template";
+
+    }
+
+    else if (
+        type === 2
+    ) {
+
+        templateId =
+            "customer2Template";
+
+    }
+
+    else {
+
+        templateId =
+            "customer3Template";
+
+    }
+
+
+    const template =
+        document
+        .getElementById(
+            templateId
+        );
+
+
+    const clone =
+        template
+        .content
+        .cloneNode(true);
+
+
+    const customerElement =
+        clone
+        .querySelector(
+            ".customer"
+        );
+
+
+    const customerData = {
+
+        element:
+            customerElement,
+
+        type:
+            type,
+
+        lane:
+            lane,
+
+        hp:
+            50,
+
+        satisfied:
+            false,
+
+        atKitchen:
+            false
 
     };
 
 
+    /*
+       Posizione iniziale.
+
+       TUTTI partono dal centro
+       dello schermo e molto in alto,
+       fuori dallo schermo.
+    */
+
+    customerElement.style.left =
+        SPAWN_X + "%";
+
+
+    customerElement.style.top =
+        "-170px";
+
+
+    customerElement.style.transform =
+        "translateX(-50%)";
+
+
+    /*
+       Il cliente parte dal centro
+       e raggiunge progressivamente
+       la propria corsia.
+    */
+
+    customerElement.dataset.lane =
+        lane;
+
+
+    document
+    .getElementById("customers")
+    .appendChild(
+        customerElement
+    );
+
+
     customers.push(
-        data
+        customerData
     );
 
 
     /*
-       Il cliente si sposta prima
-       verso la propria corsia.
+       Animazione verso la corsia.
 
-       Poi continua verso la cucina.
+       Prima parte:
+       centro -> corsia.
+
+       Seconda parte:
+       discesa verso la cucina.
     */
 
-    animateCustomer(
-        data
+    requestAnimationFrame(
+        function() {
+
+            moveCustomerToLane(
+                customerData
+            );
+
+        }
     );
 
 }
@@ -1301,261 +1207,46 @@ function createCustomer() {
    MOVIMENTO CLIENTE
 ================================================== */
 
-function animateCustomer(
-    data
+function moveCustomerToLane(
+    customer
 ) {
 
 
-    const customer =
-        data.element;
-
-
-    /*
-       Punto iniziale.
-    */
-
-    const startX =
-        SPAWN_X;
-
-
-    const startY =
-        SPAWN_Y;
-
-
-    /*
-       Prima fase:
-
-       dalla porta centrale
-       verso la corsia scelta.
-    */
-
-    const laneTime = 1800;
-
-
-    const startTime =
-        performance.now();
-
-
-    function move(
-        now
+    if (
+        !customer ||
+        customer.satisfied
     ) {
 
-
-        if (
-            data.satisfied
-        ) {
-
-            return;
-
-        }
-
-
-        const elapsed =
-            now -
-            startTime;
-
-
-        /*
-         * FASE 1
-         *
-         * Porta -> corsia
-         */
-
-        if (
-            elapsed <
-            laneTime
-        ) {
-
-
-            const progress =
-                elapsed /
-                laneTime;
-
-
-            /*
-               Movimento leggermente
-               morbido.
-            */
-
-            const eased =
-                progress *
-                progress *
-                (3 - 2 * progress);
-
-
-            const x =
-                startX +
-                (
-                    data.laneX -
-                    startX
-                ) *
-                eased;
-
-
-            const y =
-                startY +
-                (
-                    8 -
-                    startY
-                ) *
-                progress;
-
-
-            data.y = y;
-
-
-            customer.style.left =
-                x + "%";
-
-
-            customer.style.top =
-                y + "%";
-
-
-            updateCustomerDepth(
-                data
-            );
-
-
-            requestAnimationFrame(
-                move
-            );
-
-
-            return;
-
-        }
-
-
-        /*
-         * FASE 2
-         *
-         * Corsia -> cucina
-         */
-
-        const walkElapsed =
-            elapsed -
-            laneTime;
-
-
-        const walkDuration =
-            WALK_DURATION *
-            1000;
-
-
-        const progress =
-            Math.min(
-                walkElapsed /
-                walkDuration,
-                1
-            );
-
-
-        const y =
-            8 +
-            (
-                KITCHEN_Y -
-                8
-            ) *
-            progress;
-
-
-        data.y = y;
-
-
-        customer.style.left =
-            data.laneX + "%";
-
-
-        customer.style.top =
-            y + "%";
-
-
-        updateCustomerDepth(
-            data
-        );
-
-
-        /*
-           Arrivato alla cucina.
-        */
-
-        if (
-            progress >= 1
-        ) {
-
-            customer.style.top =
-                KITCHEN_Y + "%";
-
-            return;
-
-        }
-
-
-        requestAnimationFrame(
-            move
-        );
+        return;
 
     }
 
 
-    requestAnimationFrame(
-        move
-    );
-
-}
-
-
-/* ==================================================
-   PROFONDITÀ CLIENTI
-================================================== */
-
-/*
-   Questa è la parte importante:
-
-   più il cliente è in basso,
-   più è "avanti".
-
-   Quindi il cliente davanti
-   viene disegnato SOPRA quello dietro.
-
-   In questo modo, se due clienti
-   sono troppo vicini sulla stessa
-   corsia, quello dietro non copre
-   quello davanti.
-*/
-
-function updateCustomerDepth(
-    data
-) {
-
-
-    const customer =
-        data.element;
-
-
-    const depth =
-        Math.round(
-            20 +
-            data.y * 2
-        );
-
-
-    customer.style.zIndex =
-        depth;
+    const element =
+        customer.element;
 
 
     /*
-       Controlliamo gli altri clienti
-       sulla stessa corsia.
+       Usiamo una transizione CSS
+       per portare il cliente
+       dal punto centrale alla
+       corsia assegnata.
     */
 
-    customers.forEach(
-        function(other) {
+    element.style.transition =
+        "left 1.2s ease-out";
+
+
+    element.style.left =
+        customer.lane + "%";
+
+
+    setTimeout(
+        function() {
 
 
             if (
-                other === data
+                customer.satisfied
             ) {
 
                 return;
@@ -1563,82 +1254,65 @@ function updateCustomerDepth(
             }
 
 
-            if (
-                other.satisfied
-            ) {
-
-                return;
-
-            }
-
-
-            if (
-                other.lane !==
-                data.lane
-            ) {
-
-                return;
-
-            }
-
-
-            const distance =
-                Math.abs(
-                    other.y -
-                    data.y
-                );
+            element.style.transition =
+                "none";
 
 
             /*
-               Se sono molto vicini,
-               quello davanti rimane
-               visivamente sopra.
+               La discesa dura 50 secondi.
             */
 
-            if (
-                distance <
-                MIN_CUSTOMER_DISTANCE
-            ) {
+            element.style.animation =
+                "walkDown " +
+                WALK_TIME +
+                "s linear forwards";
 
 
-                if (
-                    data.y >
-                    other.y
-                ) {
-
-                    data.element.style.zIndex =
-                        "60";
-
-
-                    other.element.style.zIndex =
-                        "50";
-
-                }
-
-                else {
-
-                    data.element.style.zIndex =
-                        "50";
-
-
-                    other.element.style.zIndex =
-                        "60";
-
-                }
-
-            }
-
-        }
+        },
+        1200
     );
 
 }
 
 
 /* ==================================================
-   ANIMAZIONE SPRITE CLIENTI
+   PULIZIA CLIENTI
+================================================== */
+
+function clearCustomers() {
+
+
+    const container =
+        document
+        .getElementById(
+            "customers"
+        );
+
+
+    container.innerHTML = "";
+
+
+    customers = [];
+
+}
+
+
+/* ==================================================
+   ANIMAZIONE CLIENTI
 ================================================== */
 
 function startCustomerAnimation() {
+
+
+    if (
+        customerAnimationTimer !== null
+    ) {
+
+        clearInterval(
+            customerAnimationTimer
+        );
+
+    }
 
 
     customerAnimationTimer =
@@ -1647,11 +1321,11 @@ function startCustomerAnimation() {
 
 
             customers.forEach(
-                function(data) {
+                function(customer) {
 
 
                     if (
-                        data.satisfied
+                        customer.satisfied
                     ) {
 
                         return;
@@ -1659,35 +1333,27 @@ function startCustomerAnimation() {
                     }
 
 
-                    const customer =
-                        data.element;
+                    const frames =
+                        customer.element
+                        .querySelectorAll(
+                            ".frame"
+                        );
 
+
+                    /*
+                       Cliente 1 e 2:
+                       alternanza frame.
+                    */
 
                     if (
-                        data.type === 1 ||
-                        data.type === 2
+                        customer.type === 1 ||
+                        customer.type === 2
                     ) {
-
-
-                        const frames =
-                            customer
-                            .querySelectorAll(
-                                ".frame"
-                            );
-
-
-                        if (
-                            !frames.length
-                        ) {
-
-                            return;
-
-                        }
 
 
                         let current =
                             parseInt(
-                                customer
+                                customer.element
                                 .dataset
                                 .frame ||
                                 "0"
@@ -1706,7 +1372,8 @@ function startCustomerAnimation() {
                         );
 
 
-                        current++;
+                        current =
+                            current + 1;
 
 
                         if (
@@ -1728,24 +1395,27 @@ function startCustomerAnimation() {
                         );
 
 
-                        customer.dataset.frame =
+                        customer.element
+                        .dataset
+                        .frame =
                             current;
+
 
                     }
 
 
                     /*
                        Cliente 3:
-                       alterna originale/specchiato.
+                       alternanza originale/specchio.
                     */
 
                     if (
-                        data.type === 3
+                        customer.type === 3
                     ) {
 
 
                         const walkingFrame =
-                            customer
+                            customer.element
                             .querySelector(
                                 ".walking-frame"
                             );
@@ -1753,12 +1423,25 @@ function startCustomerAnimation() {
 
                         if (
                             walkingFrame
+                            .classList
+                            .contains(
+                                "flipped"
+                            )
                         ) {
-
 
                             walkingFrame
                             .classList
-                            .toggle(
+                            .remove(
+                                "flipped"
+                            );
+
+                        }
+
+                        else {
+
+                            walkingFrame
+                            .classList
+                            .add(
                                 "flipped"
                             );
 
@@ -1770,8 +1453,196 @@ function startCustomerAnimation() {
             );
 
 
+            /*
+               Controllo sovrapposizione.
+            */
+
+            preventOverlap();
+
+
         },
         300
+    );
+
+}
+
+
+/* ==================================================
+   EVITA SOVRAPPOSIZIONE
+================================================== */
+
+function preventOverlap() {
+
+
+    const activeCustomers =
+        customers.filter(
+            function(c) {
+
+                return (
+                    !c.satisfied &&
+                    c.element.style.display !== "none"
+                );
+
+            }
+        );
+
+
+    /*
+       Raggruppiamo per corsia.
+    */
+
+    LANES.forEach(
+        function(lane) {
+
+
+            const laneCustomers =
+                activeCustomers
+                .filter(
+                    function(c) {
+
+                        return (
+                            c.lane === lane
+                        );
+
+                    }
+                );
+
+
+            /*
+               Dal più avanti
+               al più indietro.
+            */
+
+            laneCustomers.sort(
+                function(a, b) {
+
+
+                    const aRect =
+                        a.element
+                        .getBoundingClientRect();
+
+
+                    const bRect =
+                        b.element
+                        .getBoundingClientRect();
+
+
+                    return (
+                        aRect.top -
+                        bRect.top
+                    );
+
+                }
+            );
+
+
+            for (
+                let i = 1;
+                i < laneCustomers.length;
+                i++
+            ) {
+
+
+                const front =
+                    laneCustomers[i - 1];
+
+
+                const back =
+                    laneCustomers[i];
+
+
+                const frontRect =
+                    front.element
+                    .getBoundingClientRect();
+
+
+                const backRect =
+                    back.element
+                    .getBoundingClientRect();
+
+
+                const distance =
+                    backRect.top -
+                    frontRect.top;
+
+
+                /*
+                   Se sono troppo vicini,
+                   quello dietro viene
+                   nascosto dietro quello
+                   davanti.
+                */
+
+                if (
+                    distance <
+                    MIN_DISTANCE
+                ) {
+
+                    back.element.style.zIndex =
+                        front.element.style.zIndex - 1;
+
+                }
+
+                else {
+
+                    back.element.style.zIndex =
+                        40;
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==================================================
+   CLIENTE VISIBILE
+================================================== */
+
+function customerIsVisible(
+    customer
+) {
+
+
+    if (
+        !customer ||
+        customer.element.style.display ===
+        "none"
+    ) {
+
+        return false;
+
+    }
+
+
+    const rect =
+        customer.element
+        .getBoundingClientRect();
+
+
+    const game =
+        document
+        .getElementById(
+            "game"
+        );
+
+
+    const gameRect =
+        game
+        .getBoundingClientRect();
+
+
+    return (
+
+        rect.bottom >
+            gameRect.top &&
+
+        rect.top <
+            gameRect.bottom
+
     );
 
 }
@@ -1876,10 +1747,21 @@ function updateKitchenEnergy() {
 
 
 /* ==================================================
-   DANNO CUCINA
+   ENERGIA CUCINA
 ================================================== */
 
 function startKitchenEnergySystem() {
+
+
+    if (
+        kitchenDamageTimer !== null
+    ) {
+
+        clearInterval(
+            kitchenDamageTimer
+        );
+
+    }
 
 
     kitchenDamageTimer =
@@ -1891,12 +1773,12 @@ function startKitchenEnergySystem() {
 
 
             customers.forEach(
-                function(data) {
+                function(customer) {
 
 
                     if (
-                        !data.satisfied &&
-                        data.y >= 65
+                        customer.atKitchen &&
+                        !customer.satisfied
                     ) {
 
                         damage++;
@@ -1937,61 +1819,67 @@ function startKitchenEnergySystem() {
 
 
 /* ==================================================
-   CLIENTE VISIBILE
+   CONTROLLO CLIENTI ARRIVATI
 ================================================== */
 
-function customerIsVisible(
-    customer
-) {
+setInterval(
+    function() {
 
 
-    if (
-        !customer
-    ) {
-
-        return false;
-
-    }
+        customers.forEach(
+            function(customer) {
 
 
-    if (
-        customer.style.display ===
-        "none"
-    ) {
+                if (
+                    customer.satisfied
+                ) {
 
-        return false;
+                    return;
 
-    }
-
-
-    const rect =
-        customer
-        .getBoundingClientRect();
+                }
 
 
-    const game =
-        document
-        .getElementById(
-            "game"
+                const rect =
+                    customer.element
+                    .getBoundingClientRect();
+
+
+                const game =
+                    document
+                    .getElementById(
+                        "game"
+                    );
+
+
+                const gameRect =
+                    game
+                    .getBoundingClientRect();
+
+
+                const kitchenLine =
+                    gameRect.top +
+                    gameRect.height *
+                    0.69;
+
+
+                if (
+                    rect.top >=
+                    kitchenLine -
+                    30
+                ) {
+
+                    customer.atKitchen =
+                        true;
+
+                }
+
+            }
         );
 
 
-    const gameRect =
-        game
-        .getBoundingClientRect();
-
-
-    return (
-
-        rect.bottom >
-            gameRect.top &&
-
-        rect.top <
-            gameRect.bottom
-
-    );
-
-}
+    },
+    200
+);
 
 
 /* ==================================================
@@ -1999,6 +1887,17 @@ function customerIsVisible(
 ================================================== */
 
 function startFirstAttackDetection() {
+
+
+    if (
+        firstAttackTimer !== null
+    ) {
+
+        clearInterval(
+            firstAttackTimer
+        );
+
+    }
 
 
     firstAttackTimer =
@@ -2036,109 +1935,6 @@ function startFirstAttackDetection() {
 
 
 /* ==================================================
-   CLIENTE PIÙ VICINO
-================================================== */
-
-function getNearestVisibleCustomer() {
-
-
-    const available =
-        customers.filter(
-            function(data) {
-
-                return (
-
-                    !data.satisfied &&
-
-                    customerIsVisible(
-                        data.element
-                    )
-
-                );
-
-            }
-        );
-
-
-    if (
-        available.length === 0
-    ) {
-
-        return null;
-
-    }
-
-
-    const cook =
-        document
-        .getElementById(
-            "cook"
-        );
-
-
-    const cookRect =
-        cook.getBoundingClientRect();
-
-
-    const cookX =
-        cookRect.left +
-        cookRect.width / 2;
-
-
-    let nearest =
-        null;
-
-
-    let nearestDistance =
-        Infinity;
-
-
-    available.forEach(
-        function(data) {
-
-
-            const rect =
-                data.element
-                .getBoundingClientRect();
-
-
-            const customerX =
-                rect.left +
-                rect.width / 2;
-
-
-            const distance =
-                Math.abs(
-                    customerX -
-                    cookX
-                );
-
-
-            if (
-                distance <
-                nearestDistance
-            ) {
-
-
-                nearestDistance =
-                    distance;
-
-
-                nearest =
-                    data;
-
-            }
-
-        }
-    );
-
-
-    return nearest;
-
-}
-
-
-/* ==================================================
    FRAME CUOCO
 ================================================== */
 
@@ -2170,9 +1966,7 @@ function setCookFrame(
 
 
     if (
-        frames[
-            frameNumber
-        ]
+        frames[frameNumber]
     ) {
 
         frames[
@@ -2189,7 +1983,7 @@ function setCookFrame(
 
 
 /* ==================================================
-   ATTACCO CUOCO
+   ATTACCO
 ================================================== */
 
 function playCookAttack() {
@@ -2273,10 +2067,21 @@ function playCookAttack() {
 
 
 /* ==================================================
-   ATTACCO AUTOMATICO
+   ATTACCO OGNI 3 SECONDI
 ================================================== */
 
 function startCookAnimation() {
+
+
+    if (
+        cookTimer !== null
+    ) {
+
+        clearInterval(
+            cookTimer
+        );
+
+    }
 
 
     setCookFrame(0);
@@ -2291,6 +2096,102 @@ function startCookAnimation() {
         },
         3000
     );
+
+}
+
+
+/* ==================================================
+   CLIENTE PIÙ VICINO
+================================================== */
+
+function getNearestVisibleCustomer() {
+
+
+    const visible =
+        customers.filter(
+            function(customer) {
+
+                return (
+                    !customer.satisfied &&
+                    customerIsVisible(customer)
+                );
+
+            }
+        );
+
+
+    if (
+        visible.length === 0
+    ) {
+
+        return null;
+
+    }
+
+
+    const cook =
+        document
+        .getElementById(
+            "cook"
+        );
+
+
+    const cookRect =
+        cook.getBoundingClientRect();
+
+
+    const cookX =
+        cookRect.left +
+        cookRect.width / 2;
+
+
+    let nearest =
+        null;
+
+
+    let nearestDistance =
+        Infinity;
+
+
+    visible.forEach(
+        function(customer) {
+
+
+            const rect =
+                customer.element
+                .getBoundingClientRect();
+
+
+            const customerX =
+                rect.left +
+                rect.width / 2;
+
+
+            const distance =
+                Math.abs(
+                    customerX -
+                    cookX
+                );
+
+
+            if (
+                distance <
+                nearestDistance
+            ) {
+
+                nearestDistance =
+                    distance;
+
+                nearest =
+                    customer;
+
+            }
+
+        }
+    );
+
+
+    return nearest;
 
 }
 
@@ -2314,10 +2215,6 @@ function throwPasta(
     }
 
 
-    const targetElement =
-        target.element;
-
-
     const cook =
         document
         .getElementById(
@@ -2333,29 +2230,29 @@ function throwPasta(
 
 
     const gameRect =
-        game.getBoundingClientRect();
+        game
+        .getBoundingClientRect();
 
 
     const cookRect =
-        cook.getBoundingClientRect();
+        cook
+        .getBoundingClientRect();
 
-
-    /*
-       PARTENZA MANO
-    */
 
     const startX =
         cookRect.left +
-        cookRect.width * 0.72;
+        cookRect.width *
+        0.72;
 
 
     const startY =
         cookRect.top +
-        cookRect.height * 0.32;
+        cookRect.height *
+        0.32;
 
 
     /*
-       HIT MARKER INVISIBILE
+       HITBOX INVISIBILE
     */
 
     const hitMarker =
@@ -2434,6 +2331,7 @@ function throwPasta(
 
 
         if (
+            !target ||
             target.satisfied
         ) {
 
@@ -2461,13 +2359,8 @@ function throwPasta(
         }
 
 
-        /*
-           Il bersaglio segue
-           sempre il cliente.
-        */
-
         const targetRect =
-            targetElement
+            target.element
             .getBoundingClientRect();
 
 
@@ -2546,6 +2439,7 @@ function throwPasta(
 
             currentY =
                 endY;
+
 
         }
 
@@ -2650,7 +2544,7 @@ function throwPasta(
 ================================================== */
 
 function hitCustomer(
-    data,
+    customer,
     pasta
 ) {
 
@@ -2666,8 +2560,8 @@ function hitCustomer(
 
 
     if (
-        !data ||
-        data.satisfied
+        !customer ||
+        customer.satisfied
     ) {
 
         return;
@@ -2675,15 +2569,15 @@ function hitCustomer(
     }
 
 
-    data.hp -= 5;
+    customer.hp -= 5;
 
 
     if (
-        data.hp <= 0
+        customer.hp <= 0
     ) {
 
         satisfyCustomer(
-            data
+            customer
         );
 
     }
@@ -2696,48 +2590,48 @@ function hitCustomer(
 ================================================== */
 
 function satisfyCustomer(
-    data
+    customer
 ) {
 
 
-    if (
-        data.satisfied
-    ) {
-
-        return;
-
-    }
-
-
-    data.satisfied =
+    customer.satisfied =
         true;
 
 
-    data.element
-    .dataset
-    .satisfied =
-        "true";
+    customer.atKitchen =
+        false;
 
 
-    data.element
-    .classList
-    .add(
+    const element =
+        customer.element;
+
+
+    element.classList.add(
         "satisfied"
     );
 
 
     /*
-       Nascondiamo sprite normali.
+       Ferma completamente
+       l'animazione di camminata.
     */
 
-    const frames =
-        data.element
+    element.style.animation =
+        "none";
+
+
+    /*
+       Nascondi frame normali.
+    */
+
+    const normalFrames =
+        element
         .querySelectorAll(
             ".frame"
         );
 
 
-    frames.forEach(
+    normalFrames.forEach(
         function(frame) {
 
             frame.classList
@@ -2750,47 +2644,36 @@ function satisfyCustomer(
 
 
     /*
-       Mostriamo sprite felice.
+       Mostra sprite felice.
     */
 
-    const happy =
-        data.element
+    const happyFrame =
+        element
         .querySelector(
             ".happy-frame"
         );
 
 
-    if (
-        happy
-    ) {
-
-        happy.style.display =
-            "block";
-
-    }
+    happyFrame.style.display =
+        "block";
 
 
     /*
-       Dopo 1 secondo
-       il cliente esce dal gioco.
+       Dopo un secondo
+       il cliente scompare.
     */
 
     setTimeout(
         function() {
 
 
-            data.element.style.display =
+            element.style.display =
                 "none";
 
 
-            if (
-                happy
-            ) {
+            happyFrame.style.display =
+                "none";
 
-                happy.style.display =
-                    "none";
-
-            }
 
         },
         1000
@@ -2798,8 +2681,8 @@ function satisfyCustomer(
 
 }
 
+
 </script>
 
 </body>
-
 </html>
