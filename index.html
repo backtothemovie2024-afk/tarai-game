@@ -104,6 +104,7 @@ body {
 
 /* ==================================================
    CUCINA
+   LA CUCINA DEVE STARE DAVANTI AI CLIENTI
 ================================================== */
 
 #kitchen,
@@ -123,16 +124,16 @@ body {
 }
 
 #kitchen {
-    z-index: 15;
+    z-index: 45;
 }
 
 #kitchenDamaged {
-    z-index: 16;
+    z-index: 46;
     display: none;
 }
 
 #kitchenDestroyed {
-    z-index: 17;
+    z-index: 47;
     display: none;
 }
 
@@ -303,7 +304,7 @@ body {
 
 /* ==================================================
    MOVIMENTO CLIENTE
-   50 SECONDI
+   60 SECONDI
 ================================================== */
 
 @keyframes walkDown {
@@ -442,6 +443,7 @@ body {
         width: 60px;
         height: 60px;
     }
+
 }
 
 </style>
@@ -682,9 +684,6 @@ const HIT_POSITION_Y = 0.45;
    Sono distribuite tra la fila
    di tavoli sinistra e la fila
    di tavoli destra.
-
-   I valori sono percentuali
-   rispetto alla larghezza del gioco.
 */
 
 const LANES = [
@@ -726,10 +725,10 @@ const WAVE_SIZE = 15;
 
 
 /*
-   50 secondi di camminata.
+   60 secondi di camminata.
 */
 
-const WALK_TIME = 50;
+const WALK_TIME = 60;
 
 
 /*
@@ -1168,6 +1167,20 @@ function spawnCustomer() {
         lane;
 
 
+    /*
+       Cliente 3 leggermente più grande.
+    */
+
+    if (
+        type === 3
+    ) {
+
+        customerElement.id =
+            "customer3";
+
+    }
+
+
     document
     .getElementById("customers")
     .appendChild(
@@ -1182,12 +1195,6 @@ function spawnCustomer() {
 
     /*
        Animazione verso la corsia.
-
-       Prima parte:
-       centro -> corsia.
-
-       Seconda parte:
-       discesa verso la cucina.
     */
 
     requestAnimationFrame(
@@ -1227,8 +1234,7 @@ function moveCustomerToLane(
 
 
     /*
-       Usiamo una transizione CSS
-       per portare il cliente
+       Portiamo il cliente
        dal punto centrale alla
        corsia assegnata.
     */
@@ -1259,7 +1265,7 @@ function moveCustomerToLane(
 
 
             /*
-               La discesa dura 50 secondi.
+               La discesa dura 60 secondi.
             */
 
             element.style.animation =
