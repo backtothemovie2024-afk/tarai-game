@@ -147,6 +147,7 @@ body {
 
 /* ==================================================
    CUCINA
+   SEMPRE SOPRA I CLIENTI
 ================================================== */
 
 #kitchen,
@@ -167,19 +168,24 @@ body {
         translate(-50%, -50%);
 
     pointer-events: none;
+
+    /*
+       La cucina deve sempre essere
+       disegnata sopra i clienti.
+    */
+
+    z-index: 50;
 }
 
 
 #kitchen {
 
-    z-index: 15;
+    display: block;
 
 }
 
 
 #kitchenDamaged {
-
-    z-index: 16;
 
     display: none;
 
@@ -187,8 +193,6 @@ body {
 
 
 #kitchenDestroyed {
-
-    z-index: 17;
 
     display: none;
 
@@ -219,8 +223,7 @@ body {
 
     font-weight: bold;
 
-    z-index: 30;
-
+    z-index: 80;
 }
 
 
@@ -238,13 +241,14 @@ body {
 
     top: -130px;
 
+    /*
+       I clienti rimangono sempre
+       sotto la cucina.
+    */
+
+    z-index: 10;
 }
 
-
-/*
-   Il movimento viene applicato
-   direttamente al singolo cliente.
-*/
 
 .customer.walking {
 
@@ -252,7 +256,7 @@ body {
 
         walkDown
 
-        75s
+        60s
 
         linear
 
@@ -260,11 +264,6 @@ body {
 
 }
 
-
-/*
-   Quando soddisfatto NON deve più
-   continuare a camminare.
-*/
 
 .customer.satisfied {
 
@@ -430,7 +429,7 @@ body {
     transform:
         translateX(-50%);
 
-    z-index: 20;
+    z-index: 60;
 
 }
 
@@ -475,7 +474,7 @@ body {
 
     object-fit: contain;
 
-    z-index: 25;
+    z-index: 70;
 
     pointer-events: none;
 
@@ -631,7 +630,7 @@ body {
 
 
     <!-- ==================================================
-         CLIENTE 1 TEMPLATE
+         TEMPLATE CLIENTE 1
     ================================================== -->
 
     <div
@@ -667,7 +666,7 @@ body {
 
 
     <!-- ==================================================
-         CLIENTE 2 TEMPLATE
+         TEMPLATE CLIENTE 2
     ================================================== -->
 
     <div
@@ -762,44 +761,19 @@ const HIT_POSITION_Y = 0.45;
    IMPOSTAZIONI WAVE 1
 ================================================== */
 
-
-/*
-   NUMERO CLIENTI
-*/
-
 const TOTAL_CUSTOMERS = 10;
-
-
-/*
-   PRIMO CLIENTE:
-   secondo 1
-*/
 
 const FIRST_SPAWN_SECOND = 1;
 
-
-/*
-   ULTIMO CLIENTE:
-   secondo 60
-*/
-
 const LAST_SPAWN_SECOND = 60;
 
-
-/*
-   VELOCITÀ CLIENTI
-
-   Ogni cliente impiega 75 secondi
-   dalla comparsa alla cucina.
-*/
-
-const CUSTOMER_WALK_TIME = 75;
+const CUSTOMER_WALK_TIME = 70;
 
 
 /*
    CINQUE CORSIE
 
-   TUTTE comprese nel corridoio
+   Tutte comprese nel corridoio
    centrale tra le due file di tavoli.
 */
 
@@ -812,16 +786,6 @@ const LANES = [
     70
 
 ];
-
-
-
-/*
-   VITA CLIENTE
-
-   6 paste × 5 danni = 30 HP
-*/
-
-const CUSTOMER_MAX_HP = 30;
 
 
 
@@ -839,13 +803,9 @@ let kitchenDamageTimer = null;
 
 let zIndexTimer = null;
 
-
 let kitchenEnergy = 100;
 
-
 let customers = [];
-
-let customerCounter = 0;
 
 
 
@@ -872,19 +832,10 @@ document
             "block";
 
 
-        /* RESET */
-
         kitchenEnergy = 100;
 
         customers = [];
 
-        customerCounter = 0;
-
-
-
-        /* ==================================================
-           ELIMINA EVENTUALI CLIENTI PRECEDENTI
-        ================================================== */
 
         document
         .querySelectorAll(
@@ -899,31 +850,20 @@ document
         );
 
 
-
-        /* ==================================================
-           RESET CUCINA
-        ================================================== */
-
         document
-        .getElementById(
-            "kitchen"
-        )
+        .getElementById("kitchen")
         .style.display =
             "block";
 
 
         document
-        .getElementById(
-            "kitchenDamaged"
-        )
+        .getElementById("kitchenDamaged")
         .style.display =
             "none";
 
 
         document
-        .getElementById(
-            "kitchenDestroyed"
-        )
+        .getElementById("kitchenDestroyed")
         .style.display =
             "none";
 
@@ -931,18 +871,8 @@ document
         updateKitchenEnergy();
 
 
-
-        /* ==================================================
-           CREA WAVE 1
-        ================================================== */
-
         createWave1();
 
-
-
-        /* ==================================================
-           SISTEMI
-        ================================================== */
 
         startCustomerAnimation();
 
@@ -965,14 +895,6 @@ document
 
 function createWave1() {
 
-
-    /*
-       Il primo cliente appare al secondo 1.
-       L'ultimo appare al secondo 60.
-
-       Gli altri vengono distribuiti
-       casualmente tra questi due estremi.
-    */
 
     const spawnTimes = [
 
@@ -1028,11 +950,6 @@ function createWave1() {
     );
 
 
-
-    /*
-       SPAWN
-    */
-
     spawnTimes.forEach(
         function(second, index) {
 
@@ -1070,11 +987,6 @@ function spawnCustomer(
             "game"
         );
 
-
-    /*
-       Tipo casuale:
-       Cliente 1 oppure Cliente 2.
-    */
 
     const type =
         Math.random() < 0.5
@@ -1130,18 +1042,9 @@ function spawnCustomer(
     );
 
 
-    /*
-       Partenza sopra lo schermo.
-    */
-
     customer.style.top =
         "-130px";
 
-
-
-    /*
-       UNA DELLE 5 CORSIE
-    */
 
     const laneIndex =
         Math.floor(
@@ -1159,25 +1062,17 @@ function spawnCustomer(
         "%";
 
 
-
-    /*
-       Tipo cliente.
-    */
-
     customer.dataset.type =
         type;
 
 
-
     /*
-       30 HP.
-
-       Servono quindi 6 colpi:
-       30 → 25 → 20 → 15 → 10 → 5 → 0
+       6 colpi necessari
+       per soddisfare il cliente.
     */
 
     customer.dataset.hp =
-        CUSTOMER_MAX_HP.toString();
+        "30";
 
 
     customer.dataset.satisfied =
@@ -1188,18 +1083,9 @@ function spawnCustomer(
         "false";
 
 
-    customer.dataset.spawned =
-        "true";
-
-
     customer.dataset.frame =
         "0";
 
-
-
-    /*
-       Primo frame normale.
-    */
 
     const frames =
         customer
@@ -1233,11 +1119,6 @@ function spawnCustomer(
     }
 
 
-
-    /*
-       Sprite felice nascosto.
-    */
-
     const happyFrame =
         customer
         .querySelector(
@@ -1249,11 +1130,6 @@ function spawnCustomer(
         "none";
 
 
-
-    /*
-       Inseriamo il cliente.
-    */
-
     game.appendChild(
         customer
     );
@@ -1263,11 +1139,6 @@ function spawnCustomer(
         customer
     );
 
-
-
-    /*
-       Parte la camminata.
-    */
 
     requestAnimationFrame(
         function() {
@@ -1288,13 +1159,9 @@ function spawnCustomer(
     );
 
 
-
     /*
-       Dopo 75 secondi dalla comparsa
-       il cliente è arrivato alla cucina.
-
-       A questo punto viene messo
-       DIETRO la cucina.
+       Quando arriva in fondo,
+       la cucina lo coprirà visivamente.
     */
 
     setTimeout(
@@ -1309,22 +1176,6 @@ function spawnCustomer(
 
                 customer.dataset.atKitchen =
                     "true";
-
-
-                /*
-                   IMPORTANTE:
-
-                   La cucina ha z-index 15.
-
-                   Il cliente viene portato
-                   sotto la cucina.
-
-                   Quindi sarà visivamente
-                   nascosto dalla cucina.
-                */
-
-                customer.style.zIndex =
-                    "10";
 
 
                 updateZIndexes();
@@ -1352,25 +1203,19 @@ function updateKitchenEnergy() {
 
 
         document
-        .getElementById(
-            "kitchen"
-        )
+        .getElementById("kitchen")
         .style.display =
             "block";
 
 
         document
-        .getElementById(
-            "kitchenDamaged"
-        )
+        .getElementById("kitchenDamaged")
         .style.display =
             "none";
 
 
         document
-        .getElementById(
-            "kitchenDestroyed"
-        )
+        .getElementById("kitchenDestroyed")
         .style.display =
             "none";
 
@@ -1383,25 +1228,19 @@ function updateKitchenEnergy() {
 
 
         document
-        .getElementById(
-            "kitchen"
-        )
+        .getElementById("kitchen")
         .style.display =
             "none";
 
 
         document
-        .getElementById(
-            "kitchenDamaged"
-        )
+        .getElementById("kitchenDamaged")
         .style.display =
             "block";
 
 
         document
-        .getElementById(
-            "kitchenDestroyed"
-        )
+        .getElementById("kitchenDestroyed")
         .style.display =
             "none";
 
@@ -1412,25 +1251,19 @@ function updateKitchenEnergy() {
 
 
         document
-        .getElementById(
-            "kitchen"
-        )
+        .getElementById("kitchen")
         .style.display =
             "none";
 
 
         document
-        .getElementById(
-            "kitchenDamaged"
-        )
+        .getElementById("kitchenDamaged")
         .style.display =
             "none";
 
 
         document
-        .getElementById(
-            "kitchenDestroyed"
-        )
+        .getElementById("kitchenDestroyed")
         .style.display =
             "block";
 
@@ -1569,7 +1402,7 @@ function customerIsVisible(
 
 
 /* ==================================================
-   Z-INDEX CLIENTI
+   Z-INDEX
 ================================================== */
 
 function startZIndexSystem() {
@@ -1599,7 +1432,6 @@ function startZIndexSystem() {
 }
 
 
-
 function updateZIndexes() {
 
 
@@ -1623,42 +1455,20 @@ function updateZIndexes() {
         function(customer) {
 
 
-            /*
-               Se è già arrivato alla cucina
-               deve rimanere DIETRO la cucina.
-            */
-
-            if (
-                customer.dataset.atKitchen ===
-                "true"
-            ) {
-
-                customer.style.zIndex =
-                    "10";
-
-                return;
-
-            }
-
-
-
-            /*
-               Prima della cucina:
-
-               più avanti = più vicino alla cucina
-               = sopra i clienti dietro.
-            */
-
             const rect =
                 customer
                 .getBoundingClientRect();
 
 
+            /*
+               I clienti possono stare
+               solo tra z-index 10 e 14.
+
+               La cucina è a 50.
+            */
+
             customer.style.zIndex =
-                Math.round(
-                    rect.top
-                ) +
-                100;
+                10;
 
         }
     );
@@ -1838,12 +1648,8 @@ function setCookFrame(
 
     const frames =
         document
-        .getElementById(
-            "cook"
-        )
-        .querySelectorAll(
-            "img"
-        );
+        .getElementById("cook")
+        .querySelectorAll("img");
 
 
     frames.forEach(
@@ -1862,9 +1668,7 @@ function setCookFrame(
         frames[frameNumber]
     ) {
 
-        frames[
-            frameNumber
-        ]
+        frames[frameNumber]
         .classList
         .add(
             "active"
@@ -1921,16 +1725,11 @@ function playCookAttack() {
     );
 
 
-    /*
-       FRAME 4 = LANCIO
-    */
-
     setTimeout(
         function() {
 
 
             if (
-                target &&
                 target.dataset.satisfied !==
                 "true"
             ) {
@@ -1964,25 +1763,7 @@ function playCookAttack() {
     setTimeout(
         function() {
 
-            /*
-               Se non ci sono più clienti,
-               il cuoco rimane fermo.
-            */
-
-            if (
-                getNearestVisibleCustomer() ===
-                null
-            ) {
-
-                setCookFrame(0);
-
-            }
-
-            else {
-
-                setCookFrame(0);
-
-            }
+            setCookFrame(0);
 
         },
         600
@@ -2104,16 +1885,6 @@ function getNearestVisibleCustomer() {
     }
 
 
-
-    /*
-       Il cliente più vicino alla cucina
-       è quello più in basso.
-
-       Quindi guardiamo SOLO il TOP.
-
-       La corsia non conta.
-    */
-
     let nearest =
         activeCustomers[0];
 
@@ -2187,16 +1958,12 @@ function throwPasta(
 
     const cook =
         document
-        .getElementById(
-            "cook"
-        );
+        .getElementById("cook");
 
 
     const game =
         document
-        .getElementById(
-            "game"
-        );
+        .getElementById("game");
 
 
     const gameRect =
@@ -2207,11 +1974,6 @@ function throwPasta(
         cook.getBoundingClientRect();
 
 
-
-    /* ==================================================
-       PARTENZA MANO
-    ================================================== */
-
     const startX =
         cookRect.left +
         cookRect.width * 0.72;
@@ -2221,11 +1983,6 @@ function throwPasta(
         cookRect.top +
         cookRect.height * 0.32;
 
-
-
-    /* ==================================================
-       PUNTO ROSSO
-    ================================================== */
 
     const hitMarker =
         document.createElement(
@@ -2241,11 +1998,6 @@ function throwPasta(
         hitMarker
     );
 
-
-
-    /* ==================================================
-       PASTA
-    ================================================== */
 
     const pasta =
         document.createElement(
@@ -2265,11 +2017,6 @@ function throwPasta(
         pasta
     );
 
-
-
-    /* ==================================================
-       POSIZIONE INIZIALE
-    ================================================== */
 
     let currentX =
         startX;
@@ -2295,11 +2042,6 @@ function throwPasta(
         ) + "px";
 
 
-
-    /* ==================================================
-       VELOCITÀ PASTA
-    ================================================== */
-
     const speed = 350;
 
 
@@ -2307,10 +2049,6 @@ function throwPasta(
         performance.now();
 
 
-
-    /* ==================================================
-       MOVIMENTO PASTA
-    ================================================== */
 
     function movePasta(
         currentTime
@@ -2347,12 +2085,6 @@ function throwPasta(
         }
 
 
-
-        /*
-           Il bersaglio segue
-           sempre il cliente.
-        */
-
         const targetRect =
             target.getBoundingClientRect();
 
@@ -2370,11 +2102,6 @@ function throwPasta(
             HIT_Y;
 
 
-
-        /* ==================================================
-           PUNTO IMPATTO
-        ================================================== */
-
         hitMarker.style.left =
             (
                 endX -
@@ -2389,11 +2116,6 @@ function throwPasta(
             ) + "px";
 
 
-
-        /* ==================================================
-           TEMPO
-        ================================================== */
-
         const deltaTime =
             Math.min(
                 (
@@ -2407,11 +2129,6 @@ function throwPasta(
         lastTime =
             currentTime;
 
-
-
-        /* ==================================================
-           DIREZIONE
-        ================================================== */
 
         const dx =
             endX -
@@ -2429,11 +2146,6 @@ function throwPasta(
                 dy * dy
             );
 
-
-
-        /* ==================================================
-           MOVIMENTO
-        ================================================== */
 
         const movement =
             speed *
@@ -2477,11 +2189,6 @@ function throwPasta(
         }
 
 
-
-        /* ==================================================
-           AGGIORNA PASTA
-        ================================================== */
-
         pasta.style.left =
             (
                 currentX -
@@ -2497,11 +2204,6 @@ function throwPasta(
                 42
             ) + "px";
 
-
-
-        /* ==================================================
-           IMPATTO
-        ================================================== */
 
         const remainingX =
             endX -
@@ -2594,18 +2296,10 @@ function hitCustomer(
     }
 
 
-    /*
-       Ogni pasta infligge 5 danni.
-
-       HP iniziali = 30.
-
-       Servono quindi 6 paste.
-    */
-
     let hp =
         parseInt(
             customer.dataset.hp ||
-            CUSTOMER_MAX_HP
+            "30"
         );
 
 
@@ -2616,6 +2310,9 @@ function hitCustomer(
         hp;
 
 
+    /*
+       30 HP / 5 danni = 6 paste.
+    */
 
     if (
         hp <= 0
@@ -2651,11 +2348,6 @@ function satisfyCustomer(
     }
 
 
-
-    /*
-       BLOCCO IMMEDIATO DEL MOVIMENTO
-    */
-
     const rect =
         customer
         .getBoundingClientRect();
@@ -2683,6 +2375,11 @@ function satisfyCustomer(
         gameRect.left;
 
 
+    /*
+       Blocca definitivamente
+       la camminata.
+    */
+
     customer.style.animation =
         "none";
 
@@ -2709,11 +2406,6 @@ function satisfyCustomer(
         "px";
 
 
-
-    /*
-       Cliente soddisfatto.
-    */
-
     customer.dataset.satisfied =
         "true";
 
@@ -2721,11 +2413,6 @@ function satisfyCustomer(
     customer.dataset.atKitchen =
         "false";
 
-
-
-    /*
-       Frame normali nascosti.
-    */
 
     const normalFrames =
         customer
@@ -2746,11 +2433,6 @@ function satisfyCustomer(
     );
 
 
-
-    /*
-       Mostriamo animazione felice.
-    */
-
     const happyFrame =
         customer
         .querySelector(
@@ -2762,18 +2444,8 @@ function satisfyCustomer(
         "block";
 
 
-
-    /*
-       Il cuore appare automaticamente.
-    */
-
     updateZIndexes();
 
-
-
-    /*
-       Dopo 1 secondo scompare.
-    */
 
     setTimeout(
         function() {
@@ -2865,7 +2537,6 @@ function satisfyCustomer2() {
     }
 
 }
-
 
 </script>
 
