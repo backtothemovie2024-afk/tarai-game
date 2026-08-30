@@ -243,11 +243,6 @@ body {
 }
 
 
-/*
-   Il movimento viene applicato
-   direttamente al singolo cliente.
-*/
-
 .customer.walking {
 
     animation:
@@ -262,11 +257,6 @@ body {
 
 }
 
-
-/*
-   Quando soddisfatto NON deve più
-   continuare a camminare.
-*/
 
 .customer.satisfied {
 
@@ -632,11 +622,7 @@ body {
 
 
     <!-- ==================================================
-         CLIENTI
-         
-         I due elementi qui sotto sono TEMPLATE.
-         Durante la partita vengono creati 15 clienti
-         casualmente usando questi due tipi.
+         TEMPLATE CLIENTE 1
     ================================================== -->
 
     <div
@@ -670,6 +656,10 @@ body {
     </div>
 
 
+
+    <!-- ==================================================
+         TEMPLATE CLIENTE 2
+    ================================================== -->
 
     <div
         id="customer2Template"
@@ -709,31 +699,26 @@ body {
 
     <div id="cook">
 
-
         <img
             class="active"
             src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
             alt=""
         >
 
-
         <img
             src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
             alt=""
         >
-
 
         <img
             src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
             alt=""
         >
 
-
         <img
             src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
             alt=""
         >
-
 
         <img
             src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
@@ -770,48 +755,61 @@ const HIT_POSITION_Y = 0.45;
 
 
 /*
-   Numero totale di clienti
+   NUMERO TOTALE CLIENTI
+
+   MODIFICATO:
+   15 → 10
 */
 
-const TOTAL_CUSTOMERS = 15;
+const TOTAL_CUSTOMERS = 10;
 
 
 /*
-   Il primo cliente appare
-   al secondo 1.
+   Primo cliente:
+   secondo 1
 */
 
 const FIRST_SPAWN_SECOND = 1;
 
 
 /*
-   L'ultimo cliente appare
-   al secondo 60.
+   Ultimo cliente:
+   secondo 60
 */
 
 const LAST_SPAWN_SECOND = 60;
 
 
 /*
-   Ogni cliente impiega 60 secondi
-   dalla propria comparsa ad arrivare
-   alla cucina.
+   Ogni cliente impiega
+   60 secondi dalla comparsa
+   ad arrivare alla cucina.
 */
 
 const CUSTOMER_WALK_TIME = 60;
 
 
 /*
-   Cinque corsie invisibili.
+   ==================================================
+   5 CORSIE DEL CORRIDOIO CENTRALE
+   ==================================================
+
+   Le corsie sono state ristrette
+   rispetto alla versione precedente.
+
+   Tutte rimangono comprese
+   nella zona centrale tra
+   le due file di tavoli.
+
 */
 
 const LANES = [
 
-    20,
     35,
+    42.5,
     50,
-    65,
-    80
+    57.5,
+    65
 
 ];
 
@@ -853,15 +851,6 @@ let customer2HP = 50;
 let customer1Satisfied = false;
 
 let customer2Satisfied = false;
-
-
-
-/*
-   Queste variabili non vengono più usate
-   per identificare una sola istanza.
-   Le manteniamo per non modificare
-   la logica originale più del necessario.
-*/
 
 
 
@@ -965,7 +954,7 @@ document
 
 
         /* ==================================================
-           GENERAZIONE WAVE
+           GENERAZIONE WAVE 1
         ================================================== */
 
         createWave1();
@@ -999,12 +988,20 @@ function createWave1() {
 
 
     /*
-       Generiamo 15 istanti di spawn
-       compresi tra 1 e 60 secondi.
+       Generiamo 10 istanti di spawn.
 
-       Il primo è obbligatoriamente 1.
-       L'ultimo è obbligatoriamente 60.
-       Gli altri sono casuali.
+       Il primo è obbligatoriamente
+       al secondo 1.
+
+       L'ultimo è obbligatoriamente
+       al secondo 60.
+
+       Gli altri 8 vengono scelti
+       casualmente tra 2 e 59.
+
+       In questo modo i clienti
+       sono più distanziati rispetto
+       alla versione precedente.
     */
 
     const spawnTimes = [
@@ -1025,11 +1022,12 @@ function createWave1() {
                 Math.random() *
                 (
                     LAST_SPAWN_SECOND -
-                    FIRST_SPAWN_SECOND +
+                    FIRST_SPAWN_SECOND -
                     1
                 )
             ) +
-            FIRST_SPAWN_SECOND;
+            FIRST_SPAWN_SECOND +
+            1;
 
 
         if (
@@ -1063,7 +1061,7 @@ function createWave1() {
 
 
     /*
-       Creiamo i 15 clienti
+       Creiamo i 10 clienti
        nei tempi stabiliti.
     */
 
@@ -1107,7 +1105,7 @@ function spawnCustomer(
 
     /*
        Tipo casuale:
-       1 oppure 2.
+       Cliente 1 oppure Cliente 2.
     */
 
     const type =
@@ -1166,8 +1164,7 @@ function spawnCustomer(
 
 
     /*
-       Tutti i clienti partono
-       da sopra lo schermo.
+       Partenza sopra lo schermo.
     */
 
     customer.style.top =
@@ -1176,8 +1173,12 @@ function spawnCustomer(
 
 
     /*
-       Scegliamo casualmente
-       una delle 5 corsie.
+       ==================================================
+       SCELTA DELLE 5 CORSIE
+       ==================================================
+
+       Tutte le corsie sono comprese
+       nel corridoio centrale.
     */
 
     const laneIndex =
@@ -1207,8 +1208,7 @@ function spawnCustomer(
 
 
     /*
-       HP indipendente per ogni cliente.
-       Ogni cliente parte da 50.
+       HP indipendente.
     */
 
     customer.dataset.hp =
@@ -1225,6 +1225,10 @@ function spawnCustomer(
 
     customer.dataset.spawned =
         "true";
+
+
+    customer.dataset.frame =
+        "0";
 
 
 
@@ -1266,7 +1270,7 @@ function spawnCustomer(
 
 
     /*
-       Lo sprite felice parte nascosto.
+       Sprite felice nascosto.
     */
 
     const happyFrame =
@@ -1298,8 +1302,8 @@ function spawnCustomer(
 
 
     /*
-       Dopo un frame facciamo partire
-       la camminata di 60 secondi.
+       Facciamo partire
+       la camminata.
     */
 
     requestAnimationFrame(
@@ -1586,16 +1590,6 @@ function customerIsVisible(
    Z-INDEX CLIENTI
 ================================================== */
 
-
-/*
-   Il cliente più avanti,
-   cioè più vicino alla cucina,
-   viene disegnato sopra
-   quelli dietro.
-
-   Non dipende dalla corsia.
-*/
-
 function startZIndexSystem() {
 
 
@@ -1652,9 +1646,8 @@ function updateZIndexes() {
 
 
             /*
-               Più basso nello schermo =
-               più vicino alla cucina =
-               z-index maggiore.
+               Più avanti = più in basso
+               = z-index maggiore.
             */
 
             customer.style.zIndex =
@@ -1932,11 +1925,6 @@ function playCookAttack() {
         function() {
 
 
-            /*
-               Controlliamo nuovamente
-               che il cliente sia ancora valido.
-            */
-
             if (
                 target.dataset.satisfied !==
                 "true"
@@ -2010,11 +1998,6 @@ function startCookAnimation() {
             const target =
                 getNearestVisibleCustomer();
 
-
-            /*
-               Se esiste un cliente,
-               il cuoco attacca.
-            */
 
             if (
                 target !== null
@@ -2100,11 +2083,10 @@ function getNearestVisibleCustomer() {
 
 
     /*
-       Il cliente più vicino alla cucina
-       è quello con il TOP più grande.
+       Il cliente con TOP maggiore
+       è quello più vicino alla cucina.
 
-       Quindi NON guardiamo la corsia.
-       NON guardiamo la distanza orizzontale.
+       La corsia non viene considerata.
     */
 
     let nearest =
@@ -2601,7 +2583,6 @@ function hitCustomer(
         hp;
 
 
-
     if (
         hp <= 0
     ) {
@@ -2638,14 +2619,11 @@ function satisfyCustomer(
 
 
     /*
-       IMPORTANTE:
+       BLOCCO IMMEDIATO DEL MOVIMENTO
 
-       Blocchiamo immediatamente
-       il movimento del cliente.
-
-       Quindi lo sprite felice
-       rimane ESATTAMENTE nella posizione
-       in cui è stato soddisfatto.
+       Il cliente rimane esattamente
+       nella posizione in cui è stato
+       soddisfatto.
     */
 
     const rect =
@@ -2758,9 +2736,7 @@ function satisfyCustomer(
 
     /*
        Il cuore viene mostrato
-       automaticamente da:
-       
-       .customer.satisfied .heart
+       automaticamente.
     */
 
     updateZIndexes();
@@ -2768,7 +2744,7 @@ function satisfyCustomer(
 
 
     /*
-       Dopo ESATTAMENTE 1 secondo
+       Dopo 1 secondo
        il cliente scompare.
     */
 
@@ -2790,11 +2766,6 @@ function satisfyCustomer(
             );
 
 
-            /*
-               Aggiorniamo il livello
-               dei clienti rimasti.
-            */
-
             updateZIndexes();
 
 
@@ -2808,7 +2779,6 @@ function satisfyCustomer(
 
 /* ==================================================
    COMPATIBILITÀ
-   FUNZIONI ORIGINALI
 ================================================== */
 
 function satisfyCustomer1() {
