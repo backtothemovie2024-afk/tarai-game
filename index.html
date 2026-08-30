@@ -236,19 +236,9 @@ body {
 
     height: 135px;
 
-    top: -130px;
+    top: 7%;
 
     z-index: 10;
-
-    animation:
-
-        walkDown
-
-        40s
-
-        linear
-
-        forwards;
 
 }
 
@@ -301,11 +291,6 @@ body {
 
 }
 
-
-/*
-   Quando viene aggiunta questa classe,
-   lo sprite viene specchiato.
-*/
 
 #customer3 .walking-frame.flipped {
 
@@ -406,16 +391,20 @@ body {
    POSIZIONI CLIENTI
 ================================================== */
 
+/*
+   Tutti partono dalla porta.
+*/
+
 #customer1 {
 
-    left: 25%;
+    left: 50%;
 
 }
 
 
 #customer2 {
 
-    left: 75%;
+    left: 50%;
 
 }
 
@@ -431,14 +420,25 @@ body {
 
 
 /* ==================================================
-   MOVIMENTO CLIENTI
+   MOVIMENTO CLIENTE 1
+   PORTA -> SINISTRA
 ================================================== */
 
-@keyframes walkDown {
+@keyframes walkDown1 {
 
     0% {
 
-        top: -130px;
+        top: 7%;
+
+        left: 50%;
+
+    }
+
+    20% {
+
+        top: 25%;
+
+        left: 25%;
 
     }
 
@@ -446,11 +446,91 @@ body {
 
         top: 69%;
 
+        left: 25%;
+
     }
 
     100% {
 
         top: 69%;
+
+        left: 25%;
+
+    }
+
+}
+
+
+/* ==================================================
+   MOVIMENTO CLIENTE 2
+   PORTA -> DESTRA
+================================================== */
+
+@keyframes walkDown2 {
+
+    0% {
+
+        top: 7%;
+
+        left: 50%;
+
+    }
+
+    20% {
+
+        top: 25%;
+
+        left: 75%;
+
+    }
+
+    65% {
+
+        top: 69%;
+
+        left: 75%;
+
+    }
+
+    100% {
+
+        top: 69%;
+
+        left: 75%;
+
+    }
+
+}
+
+
+/* ==================================================
+   MOVIMENTO CLIENTE 3
+   PORTA -> CENTRO
+================================================== */
+
+@keyframes walkDown3 {
+
+    0% {
+
+        top: 7%;
+
+        left: 50%;
+
+    }
+
+    65% {
+
+        top: 69%;
+
+        left: 50%;
+
+    }
+
+    100% {
+
+        top: 69%;
+
+        left: 50%;
 
     }
 
@@ -685,15 +765,11 @@ body {
         class="customer"
     >
 
-        <!-- FRAME NORMALE 1 -->
-
         <img
             class="frame active"
             src="https://i.ibb.co/xqSsVvcc/Screenshot-20260829-161529-Grok-2-removebg-preview.png"
             alt=""
         >
-
-        <!-- FRAME NORMALE 2 -->
 
         <img
             class="frame"
@@ -701,15 +777,11 @@ body {
             alt=""
         >
 
-        <!-- SPRITE FELICE CLIENTE 1 -->
-
         <img
             class="happy-frame"
             src="https://i.ibb.co/mV43yWMM/grok-1788037208959-removebg-preview.png"
             alt=""
         >
-
-        <!-- CUORE -->
 
         <div class="heart">
             ❤️
@@ -728,15 +800,11 @@ body {
         class="customer"
     >
 
-        <!-- FRAME NORMALE 1 -->
-
         <img
             class="frame active"
             src="https://i.ibb.co/jP6QSPFd/1000040572-removebg-preview.png"
             alt=""
         >
-
-        <!-- FRAME NORMALE 2 -->
 
         <img
             class="frame"
@@ -744,15 +812,11 @@ body {
             alt=""
         >
 
-        <!-- SPRITE FELICE CLIENTE 2 -->
-
         <img
             class="happy-frame"
             src="https://i.ibb.co/m5xmJrBq/Screenshot-20260830-060945-Grok-removebg-preview.png"
             alt=""
         >
-
-        <!-- CUORE -->
 
         <div class="heart">
             ❤️
@@ -771,23 +835,17 @@ body {
         class="customer"
     >
 
-        <!-- SPRITE CAMMINATA -->
-
         <img
             class="frame walking-frame active"
             src="https://i.ibb.co/cS3HRnCY/grok-1788046169803-removebg-preview.png"
             alt=""
         >
 
-        <!-- SPRITE FELICE -->
-
         <img
             class="happy-frame"
             src="https://i.ibb.co/jmGQ910/grok-1788046178397-removebg-preview.png"
             alt=""
         >
-
-        <!-- CUORE -->
 
         <div class="heart">
             ❤️
@@ -803,41 +861,26 @@ body {
 
     <div id="cook">
 
-
-        <!-- FRAME 1 -->
-
         <img
             class="active"
             src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
             alt=""
         >
 
-
-        <!-- FRAME 2 -->
-
         <img
             src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
             alt=""
         >
-
-
-        <!-- FRAME 3 -->
 
         <img
             src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
             alt=""
         >
 
-
-        <!-- FRAME 4 = LANCIO -->
-
         <img
             src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
             alt=""
         >
-
-
-        <!-- FRAME 5 -->
 
         <img
             src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
@@ -1144,6 +1187,36 @@ document
         );
 
 
+        /*
+           RESET POSIZIONE
+           PORTA
+        */
+
+        customer1.style.left =
+            "50%";
+
+        customer1.style.top =
+            "7%";
+
+
+        customer2.style.left =
+            "50%";
+
+        customer2.style.top =
+            "7%";
+
+
+        customer3.style.left =
+            "50%";
+
+        customer3.style.top =
+            "7%";
+
+
+        /*
+           AVVIO MOVIMENTO
+        */
+
         customer1.style.animation =
             "none";
 
@@ -1152,7 +1225,7 @@ document
 
 
         customer1.style.animation =
-            "walkDown 40s linear forwards";
+            "walkDown1 40s linear forwards";
 
 
         customer2.style.animation =
@@ -1163,7 +1236,7 @@ document
 
 
         customer2.style.animation =
-            "walkDown 40s linear forwards";
+            "walkDown2 40s linear forwards";
 
 
         customer3.style.animation =
@@ -1174,7 +1247,7 @@ document
 
 
         customer3.style.animation =
-            "walkDown 40s linear forwards";
+            "walkDown3 40s linear forwards";
 
 
         document
@@ -1924,11 +1997,6 @@ function playCookAttack() {
     );
 
 
-    /*
-       FRAME 4
-       = LANCIO
-    */
-
     setTimeout(
         function() {
 
@@ -2323,11 +2391,6 @@ function throwPasta(
     ) {
 
 
-        /*
-           CALCOLIAMO OGNI FRAME
-           LA NUOVA POSIZIONE DEL CLIENTE.
-        */
-
         const targetRect =
             target.getBoundingClientRect();
 
@@ -2346,10 +2409,6 @@ function throwPasta(
 
 
 
-        /* ==================================================
-           IL PUNTO DI IMPATTO SEGUE IL CLIENTE
-        ================================================== */
-
         hitMarker.style.left =
             (
                 endX -
@@ -2365,10 +2424,6 @@ function throwPasta(
 
 
 
-        /* ==================================================
-           TEMPO TRA FRAME
-        ================================================== */
-
         const deltaTime =
             Math.min(
                 (
@@ -2383,10 +2438,6 @@ function throwPasta(
             currentTime;
 
 
-
-        /* ==================================================
-           DIREZIONE
-        ================================================== */
 
         const dx =
             endX -
@@ -2405,10 +2456,6 @@ function throwPasta(
             );
 
 
-
-        /* ==================================================
-           MOVIMENTO
-        ================================================== */
 
         const movement =
             speed *
@@ -2453,10 +2500,6 @@ function throwPasta(
 
 
 
-        /* ==================================================
-           AGGIORNA PASTA
-        ================================================== */
-
         pasta.style.left =
             (
                 currentX -
@@ -2473,10 +2516,6 @@ function throwPasta(
             ) + "px";
 
 
-
-        /* ==================================================
-           IMPATTO
-        ================================================== */
 
         const remainingX =
             endX -
@@ -2682,10 +2721,6 @@ function satisfyCustomer1() {
     );
 
 
-    /*
-       Nascondiamo i frame normali.
-    */
-
     const normalFrames =
         customer
         .querySelectorAll(
@@ -2705,10 +2740,6 @@ function satisfyCustomer1() {
     );
 
 
-    /*
-       Mostriamo lo sprite felice.
-    */
-
     const happyFrame =
         customer
         .querySelector(
@@ -2719,11 +2750,6 @@ function satisfyCustomer1() {
     happyFrame.style.display =
         "block";
 
-
-    /*
-       Dopo 1 secondo
-       il cliente scompare.
-    */
 
     setTimeout(
         function() {
@@ -2772,10 +2798,6 @@ function satisfyCustomer2() {
     );
 
 
-    /*
-       Nascondiamo i frame normali.
-    */
-
     const normalFrames =
         customer
         .querySelectorAll(
@@ -2795,10 +2817,6 @@ function satisfyCustomer2() {
     );
 
 
-    /*
-       Mostriamo lo sprite felice.
-    */
-
     const happyFrame =
         customer
         .querySelector(
@@ -2809,11 +2827,6 @@ function satisfyCustomer2() {
     happyFrame.style.display =
         "block";
 
-
-    /*
-       Dopo 1 secondo
-       il cliente scompare.
-    */
 
     setTimeout(
         function() {
@@ -2862,11 +2875,6 @@ function satisfyCustomer3() {
     );
 
 
-    /*
-       Nascondiamo il frame
-       di camminata.
-    */
-
     const normalFrames =
         customer
         .querySelectorAll(
@@ -2886,11 +2894,6 @@ function satisfyCustomer3() {
     );
 
 
-    /*
-       Mostriamo la posa felice.
-       NON viene specchiata.
-    */
-
     const happyFrame =
         customer
         .querySelector(
@@ -2901,11 +2904,6 @@ function satisfyCustomer3() {
     happyFrame.style.display =
         "block";
 
-
-    /*
-       Dopo 1 secondo
-       il cliente scompare.
-    */
 
     setTimeout(
         function() {
