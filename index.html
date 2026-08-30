@@ -225,6 +225,27 @@ body {
 
 
 /* ==================================================
+   CONTENITORE CLIENTI
+================================================== */
+
+#customersLayer {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    pointer-events: none;
+
+    z-index: 10;
+
+}
+
+
+/* ==================================================
    CLIENTI
 ================================================== */
 
@@ -239,16 +260,6 @@ body {
     top: -130px;
 
     z-index: 10;
-
-    animation:
-
-        walkDown
-
-        40s
-
-        linear
-
-        forwards;
 
 }
 
@@ -378,25 +389,8 @@ body {
 
 
 /* ==================================================
-   CLIENTI
-================================================== */
-
-#customer1 {
-
-    left: 35%;
-
-}
-
-
-#customer2 {
-
-    left: 65%;
-
-}
-
-
-/* ==================================================
    MOVIMENTO CLIENTI
+   60 SECONDI
 ================================================== */
 
 @keyframes walkDown {
@@ -418,6 +412,52 @@ body {
         top: 69%;
 
     }
+
+}
+
+
+/* ==================================================
+   COLONNE INVISIBILI
+================================================== */
+
+/*
+   Lo spazio centrale viene diviso
+   logicamente in 5 colonne.
+
+   Non vengono visualizzate.
+*/
+
+.customer.column1 {
+
+    left: 30%;
+
+}
+
+
+.customer.column2 {
+
+    left: 35%;
+
+}
+
+
+.customer.column3 {
+
+    left: 40%;
+
+}
+
+
+.customer.column4 {
+
+    left: 45%;
+
+}
+
+
+.customer.column5 {
+
+    left: 50%;
 
 }
 
@@ -640,90 +680,11 @@ body {
     </div>
 
 
-
     <!-- ==================================================
-         CLIENTE 1
+         CONTENITORE CLIENTI
     ================================================== -->
 
-    <div
-        id="customer1"
-        class="customer"
-    >
-
-        <!-- FRAME NORMALE 1 -->
-
-        <img
-            class="frame active"
-            src=https://i.ibb.co/5XMzbb9t/IMG-20260830-WA0000-removebg-preview.png
-            alt=""
-        >
-
-        <!-- FRAME NORMALE 2 -->
-
-        <img
-            class="frame"
-            src=https://i.ibb.co/zVPnZjZP/IMG-20260830-WA0001-removebg-preview.png
-            alt=""
-        >
-
-        <!-- SPRITE FELICE CLIENTE 1 -->
-
-        <img
-            class="happy-frame"
-            src="https://i.ibb.co/mV43yWMM/grok-1788037208959-removebg-preview.png"
-            alt=""
-        >
-
-        <!-- CUORE -->
-
-        <div class="heart">
-            ❤️
-        </div>
-
-    </div>
-
-
-
-    <!-- ==================================================
-         CLIENTE 2
-    ================================================== -->
-
-    <div
-        id="customer2"
-        class="customer"
-    >
-
-        <!-- FRAME NORMALE 1 -->
-
-        <img
-            class="frame active"
-            src="https://i.ibb.co/jP6QSPFd/1000040572-removebg-preview.png"
-            alt=""
-        >
-
-        <!-- FRAME NORMALE 2 -->
-
-        <img
-            class="frame"
-            src="https://i.ibb.co/vxJCRK81/1000040573-removebg-preview.png"
-            alt=""
-        >
-
-        <!-- SPRITE FELICE CLIENTE 2 -->
-
-        <img
-            class="happy-frame"
-            src="https://i.ibb.co/m5xmJrBq/Screenshot-20260830-060945-Grok-removebg-preview.png"
-            alt=""
-        >
-
-        <!-- CUORE -->
-
-        <div class="heart">
-            ❤️
-        </div>
-
-    </div>
+    <div id="customersLayer"></div>
 
 
 
@@ -790,45 +751,51 @@ body {
    REGOLAZIONE HITBOX
 ================================================== */
 
-
-/*
-   HIT_X
-
-   Negativo = sinistra
-   Positivo = destra
-*/
-
 const HIT_X = 5;
 
-
-/*
-   HIT_Y
-
-   Negativo = alto
-   Positivo = basso
-*/
-
 const HIT_Y = 0;
-
-
-/*
-   Percentuale dell'altezza
-   dello sprite del cliente.
-
-   0.45 = 45%
-*/
 
 const HIT_POSITION_Y = 0.45;
 
 
 
 /* ==================================================
-   VARIABILI
+   WAVE 1
 ================================================== */
 
-let customerFrame1 = 0;
+const TOTAL_CUSTOMERS = 15;
 
-let customerFrame2 = 0;
+
+/*
+   60 secondi per arrivare
+   alla cucina.
+*/
+
+const CUSTOMER_WALK_TIME = 60;
+
+
+/*
+   Intervallo casuale tra
+   gli spawn.
+*/
+
+const MIN_SPAWN_DELAY = 1500;
+
+const MAX_SPAWN_DELAY = 4500;
+
+
+/*
+   Le 5 colonne sono numerate
+   da 1 a 5.
+*/
+
+const TOTAL_COLUMNS = 5;
+
+
+
+/* ==================================================
+   VARIABILI
+================================================== */
 
 let customerTimer = null;
 
@@ -838,23 +805,31 @@ let firstAttackTimer = null;
 
 let kitchenDamageTimer = null;
 
+let spawnTimer = null;
+
 
 let kitchenEnergy = 100;
 
 
-let customer1AtKitchen = false;
+let customers = [];
 
-let customer2AtKitchen = false;
+let customersSpawned = 0;
 
-
-let customer1HP = 50;
-
-let customer2HP = 50;
+let customersSatisfied = 0;
 
 
-let customer1Satisfied = false;
+/*
+   ID progressivo dei clienti.
+*/
 
-let customer2Satisfied = false;
+let nextCustomerId = 1;
+
+
+/*
+   Indica se la wave è iniziata.
+*/
+
+let waveStarted = false;
 
 
 
@@ -884,159 +859,32 @@ document
         kitchenEnergy = 100;
 
 
-        customer1AtKitchen =
-            false;
+        customers = [];
 
-        customer2AtKitchen =
-            false;
+        customersSpawned = 0;
 
+        customersSatisfied = 0;
 
-        customer1HP = 50;
+        nextCustomerId = 1;
 
-        customer2HP = 50;
-
-
-        customer1Satisfied =
-            false;
-
-        customer2Satisfied =
-            false;
-
-
-        const customer1 =
-            document
-            .getElementById(
-                "customer1"
-            );
-
-
-        const customer2 =
-            document
-            .getElementById(
-                "customer2"
-            );
-
-
-        customer1.style.display =
-            "block";
-
-
-        customer2.style.display =
-            "block";
-
-
-        customer1.classList
-        .remove(
-            "satisfied"
-        );
-
-
-        customer2.classList
-        .remove(
-            "satisfied"
-        );
+        waveStarted = true;
 
 
         /*
-           Nascondiamo nuovamente
-           gli sprite felici quando
-           si ricomincia la partita.
+           Eliminiamo eventuali
+           vecchi clienti.
         */
 
-        customer1
-        .querySelector(
-            ".happy-frame"
+        document
+        .getElementById(
+            "customersLayer"
         )
-        .style.display =
-            "none";
-
-
-        customer2
-        .querySelector(
-            ".happy-frame"
-        )
-        .style.display =
-            "none";
+        .innerHTML = "";
 
 
         /*
-           Riattiviamo il primo
-           frame normale.
+           Reset cucina.
         */
-
-        const normalFrames1 =
-            customer1
-            .querySelectorAll(
-                ".frame"
-            );
-
-
-        const normalFrames2 =
-            customer2
-            .querySelectorAll(
-                ".frame"
-            );
-
-
-        normalFrames1.forEach(
-            function(frame) {
-
-                frame.classList
-                .remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-        normalFrames2.forEach(
-            function(frame) {
-
-                frame.classList
-                .remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-        normalFrames1[0]
-        .classList
-        .add(
-            "active"
-        );
-
-
-        normalFrames2[0]
-        .classList
-        .add(
-            "active"
-        );
-
-
-        customer1.style.animation =
-            "none";
-
-
-        void customer1.offsetWidth;
-
-
-        customer1.style.animation =
-            "walkDown 40s linear forwards";
-
-
-        customer2.style.animation =
-            "none";
-
-
-        void customer2.offsetWidth;
-
-
-        customer2.style.animation =
-            "walkDown 40s linear forwards";
-
 
         document
         .getElementById(
@@ -1065,18 +913,552 @@ document
         updateKitchenEnergy();
 
 
-        startCustomerAnimation();
+        startWave1();
 
         startCookAnimation();
 
         startKitchenEnergySystem();
 
-        startCustomerKitchenDetection();
-
-        startFirstAttackDetection();
-
     }
 );
+
+
+
+/* ==================================================
+   CREAZIONE WAVE 1
+================================================== */
+
+function startWave1() {
+
+
+    if (
+        spawnTimer !== null
+    ) {
+
+        clearTimeout(
+            spawnTimer
+        );
+
+    }
+
+
+    spawnNextCustomer();
+
+}
+
+
+
+/* ==================================================
+   SPAWN CLIENTE
+================================================== */
+
+function spawnNextCustomer() {
+
+
+    if (
+        customersSpawned >=
+        TOTAL_CUSTOMERS
+    ) {
+
+        return;
+
+    }
+
+
+    createCustomer();
+
+
+    customersSpawned++;
+
+
+    if (
+        customersSpawned <
+        TOTAL_CUSTOMERS
+    ) {
+
+
+        const delay =
+            randomNumber(
+                MIN_SPAWN_DELAY,
+                MAX_SPAWN_DELAY
+            );
+
+
+        spawnTimer =
+            setTimeout(
+                function() {
+
+                    spawnNextCustomer();
+
+                },
+                delay
+            );
+
+    }
+
+}
+
+
+
+/* ==================================================
+   CREA CLIENTE
+================================================== */
+
+function createCustomer() {
+
+
+    const layer =
+        document
+        .getElementById(
+            "customersLayer"
+        );
+
+
+    const customer =
+        document.createElement(
+            "div"
+        );
+
+
+    customer.className =
+        "customer";
+
+
+    customer.dataset.id =
+        nextCustomerId;
+
+
+    /*
+       Tipo casuale:
+
+       1 = Cliente 1
+       2 = Cliente 2
+    */
+
+    const customerType =
+        Math.random() < 0.5
+            ? 1
+            : 2;
+
+
+    customer.dataset.type =
+        customerType;
+
+
+    /*
+       Colonna casuale
+       da 1 a 5.
+    */
+
+    const column =
+        Math.floor(
+            Math.random() *
+            TOTAL_COLUMNS
+        ) + 1;
+
+
+    customer.dataset.column =
+        column;
+
+
+    customer.classList.add(
+        "column" + column
+    );
+
+
+    /*
+       Sprite Cliente 1.
+    */
+
+    if (
+        customerType === 1
+    ) {
+
+
+        customer.innerHTML = `
+
+            <img
+                class="frame active"
+                src="https://i.ibb.co/5XMzbb9t/IMG-20260830-WA0000-removebg-preview.png"
+                alt=""
+            >
+
+            <img
+                class="frame"
+                src="https://i.ibb.co/zVPnZjZP/IMG-20260830-WA0001-removebg-preview.png"
+                alt=""
+            >
+
+            <img
+                class="happy-frame"
+                src="https://i.ibb.co/mV43yWMM/grok-1788037208959-removebg-preview.png"
+                alt=""
+            >
+
+            <div class="heart">
+                ❤️
+            </div>
+
+        `;
+
+    }
+
+
+    /*
+       Sprite Cliente 2.
+    */
+
+    else {
+
+
+        customer.innerHTML = `
+
+            <img
+                class="frame active"
+                src="https://i.ibb.co/jP6QSPFd/1000040572-removebg-preview.png"
+                alt=""
+            >
+
+            <img
+                class="frame"
+                src="https://i.ibb.co/vxJCRK81/1000040573-removebg-preview.png"
+                alt=""
+            >
+
+            <img
+                class="happy-frame"
+                src="https://i.ibb.co/m5xmJrBq/Screenshot-20260830-060945-Grok-removebg-preview.png"
+                alt=""
+            >
+
+            <div class="heart">
+                ❤️
+            </div>
+
+        `;
+
+    }
+
+
+    layer.appendChild(
+        customer
+    );
+
+
+    /*
+       Oggetto cliente.
+    */
+
+    const customerData = {
+
+        id:
+            nextCustomerId,
+
+        element:
+            customer,
+
+        type:
+            customerType,
+
+        column:
+            column,
+
+        hp:
+            50,
+
+        satisfied:
+            false,
+
+        atKitchen:
+            false
+
+    };
+
+
+    nextCustomerId++;
+
+
+    customers.push(
+        customerData
+    );
+
+
+    /*
+       Animazione di camminata.
+    */
+
+    customer.style.animation =
+        "none";
+
+
+    void customer.offsetWidth;
+
+
+    customer.style.animation =
+        "walkDown " +
+        CUSTOMER_WALK_TIME +
+        "s linear forwards";
+
+
+    /*
+       Iniziamo l'animazione
+       dei due frame.
+    */
+
+    updateCustomerDepth();
+
+
+    /*
+       Aggiorna la posizione
+       e la sovrapposizione.
+    */
+
+    requestAnimationFrame(
+        function() {
+
+            updateCustomerDepth();
+
+        }
+    );
+
+}
+
+
+
+/* ==================================================
+   ANIMAZIONE SPRITE CLIENTI
+================================================== */
+
+function startCustomerAnimation() {
+
+
+    if (
+        customerTimer !== null
+    ) {
+
+        clearInterval(
+            customerTimer
+        );
+
+    }
+
+
+    customerTimer =
+        setInterval(
+            function() {
+
+
+                customers.forEach(
+                    function(data) {
+
+
+                        if (
+                            data.satisfied
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        const frames =
+                            data.element
+                            .querySelectorAll(
+                                ".frame"
+                            );
+
+
+                        if (
+                            frames.length === 0
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        let currentFrame =
+                            parseInt(
+                                data.element
+                                .dataset
+                                .frame || "0"
+                            );
+
+
+                        frames.forEach(
+                            function(frame) {
+
+                                frame.classList
+                                .remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                        frames[
+                            currentFrame
+                        ]
+                        .classList
+                        .add(
+                            "active"
+                        );
+
+
+                        currentFrame++;
+
+
+                        if (
+                            currentFrame >=
+                            frames.length
+                        ) {
+
+                            currentFrame = 0;
+
+                        }
+
+
+                        data.element
+                        .dataset
+                        .frame =
+                            currentFrame;
+
+                    }
+                );
+
+
+            },
+            300
+        );
+
+}
+
+
+
+/* ==================================================
+   ORDINE DI SOVRAPPOSIZIONE
+================================================== */
+
+/*
+   Il cliente più avanti verso
+   la cucina viene disegnato
+   sopra quello dietro.
+
+   Più il cliente è in basso,
+   maggiore sarà lo z-index.
+*/
+
+function updateCustomerDepth() {
+
+
+    customers.forEach(
+        function(data) {
+
+
+            if (
+                !data.element ||
+                data.satisfied
+            ) {
+
+                return;
+
+            }
+
+
+            const rect =
+                data.element
+                .getBoundingClientRect();
+
+
+            /*
+               Usiamo la posizione
+               verticale reale.
+            */
+
+            const depth =
+                Math.round(
+                    rect.top
+                );
+
+
+            data.element.style.zIndex =
+                10 +
+                depth;
+
+        }
+    );
+
+
+    requestAnimationFrame(
+        updateCustomerDepth
+    );
+
+}
+
+
+
+/* ==================================================
+   CLIENTE ALLA CUCINA
+================================================== */
+
+function updateCustomersAtKitchen() {
+
+
+    const game =
+        document
+        .getElementById(
+            "game"
+        );
+
+
+    const gameRect =
+        game.getBoundingClientRect();
+
+
+    const kitchenLine =
+        gameRect.top +
+        gameRect.height *
+        0.69;
+
+
+    customers.forEach(
+        function(data) {
+
+
+            if (
+                data.satisfied
+            ) {
+
+                return;
+
+            }
+
+
+            const rect =
+                data.element
+                .getBoundingClientRect();
+
+
+            /*
+               Il cliente è arrivato
+               alla posizione della cucina.
+            */
+
+            if (
+                rect.top >=
+                kitchenLine - 15
+            ) {
+
+                data.atKitchen =
+                    true;
+
+            }
+
+        }
+    );
+
+}
 
 
 
@@ -1182,7 +1564,7 @@ function updateKitchenEnergy() {
 
 
 /* ==================================================
-   ENERGIA
+   ENERGIA CUCINA
 ================================================== */
 
 function startKitchenEnergySystem() {
@@ -1200,107 +1582,59 @@ function startKitchenEnergySystem() {
 
 
     kitchenDamageTimer =
-    setInterval(
-        function() {
+        setInterval(
+            function() {
 
 
-            let damage = 0;
+                updateCustomersAtKitchen();
 
 
-            if (
-                customer1AtKitchen &&
-                !customer1Satisfied
-            ) {
-
-                damage++;
-
-            }
+                let damage = 0;
 
 
-            if (
-                customer2AtKitchen &&
-                !customer2Satisfied
-            ) {
-
-                damage++;
-
-            }
+                customers.forEach(
+                    function(data) {
 
 
-            if (
-                damage > 0
-            ) {
+                        if (
+                            data.atKitchen &&
+                            !data.satisfied
+                        ) {
 
+                            damage++;
 
-                kitchenEnergy -=
-                    damage;
+                        }
+
+                    }
+                );
 
 
                 if (
-                    kitchenEnergy < 0
+                    damage > 0
                 ) {
 
-                    kitchenEnergy = 0;
+
+                    kitchenEnergy -=
+                        damage;
+
+
+                    if (
+                        kitchenEnergy < 0
+                    ) {
+
+                        kitchenEnergy = 0;
+
+                    }
+
+
+                    updateKitchenEnergy();
 
                 }
 
 
-                updateKitchenEnergy();
-
-            }
-
-
-        },
-        5000
-    );
-
-}
-
-
-
-/* ==================================================
-   ARRIVO CLIENTI
-================================================== */
-
-function startCustomerKitchenDetection() {
-
-
-    setTimeout(
-        function() {
-
-
-            if (
-                !customer1Satisfied
-            ) {
-
-                customer1AtKitchen =
-                    true;
-
-            }
-
-
-        },
-        26000
-    );
-
-
-    setTimeout(
-        function() {
-
-
-            if (
-                !customer2Satisfied
-            ) {
-
-                customer2AtKitchen =
-                    true;
-
-            }
-
-
-        },
-        26000
-    );
+            },
+            5000
+        );
 
 }
 
@@ -1358,82 +1692,234 @@ function customerIsVisible(
 
 
 /* ==================================================
-   PRIMO ATTACCO
+   TROVA CLIENTE PIÙ VICINO
+   ALLA CUCINA
 ================================================== */
 
-function startFirstAttackDetection() {
+function getNearestVisibleCustomer() {
+
+
+    const available =
+        customers.filter(
+            function(data) {
+
+
+                return (
+
+                    !data.satisfied &&
+
+                    customerIsVisible(
+                        data.element
+                    )
+
+                );
+
+            }
+        );
 
 
     if (
-        firstAttackTimer !== null
+        available.length === 0
     ) {
 
-        clearInterval(
-            firstAttackTimer
-        );
+        return null;
 
     }
 
 
-    firstAttackTimer =
-    setInterval(
+    /*
+       Ordiniamo dal più vicino
+       alla cucina al più lontano.
+
+       rect.top maggiore =
+       cliente più in basso =
+       cliente più vicino alla cucina.
+    */
+
+    available.sort(
+        function(a, b) {
+
+
+            const rectA =
+                a.element
+                .getBoundingClientRect();
+
+
+            const rectB =
+                b.element
+                .getBoundingClientRect();
+
+
+            return (
+                rectB.top -
+                rectA.top
+            );
+
+        }
+    );
+
+
+    return available[0].element;
+
+}
+
+
+
+/* ==================================================
+   CLIENTE VISIBILE
+================================================== */
+
+function getCustomerData(
+    element
+) {
+
+
+    for (
+        let i = 0;
+        i < customers.length;
+        i++
+    ) {
+
+
+        if (
+            customers[i].element ===
+            element
+        ) {
+
+            return customers[i];
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+
+/* ==================================================
+   ATTACCO
+================================================== */
+
+function playCookAttack() {
+
+
+    const target =
+        getNearestVisibleCustomer();
+
+
+    /*
+       Se non ci sono clienti,
+       il cuoco non attacca.
+    */
+
+    if (
+        target === null
+    ) {
+
+        setCookFrame(0);
+
+        return;
+
+    }
+
+
+    setCookFrame(0);
+
+
+    setTimeout(
+        function() {
+
+            /*
+               Ricontrolliamo che
+               esista ancora un bersaglio.
+            */
+
+            if (
+                target &&
+                document
+                .body
+                .contains(target)
+            ) {
+
+                setCookFrame(1);
+
+            }
+
+        },
+        120
+    );
+
+
+    setTimeout(
+        function() {
+
+            if (
+                target &&
+                document
+                .body
+                .contains(target)
+            ) {
+
+                setCookFrame(2);
+
+            }
+
+        },
+        240
+    );
+
+
+    /*
+       FRAME 4
+       = LANCIO
+    */
+
+    setTimeout(
         function() {
 
 
-            const c1 =
-                document
-                .getElementById(
-                    "customer1"
-                );
-
-
-            const c2 =
-                document
-                .getElementById(
-                    "customer2"
-                );
-
-
             if (
-                customerIsVisible(c1) &&
-                !customer1Satisfied
+                target &&
+                document
+                .body
+                .contains(target)
             ) {
 
 
-                playCookAttack();
+                setCookFrame(3);
 
 
-                clearInterval(
-                    firstAttackTimer
+                throwPasta(
+                    target
                 );
 
-
-                return;
-
             }
-
-
-            if (
-                customerIsVisible(c2) &&
-                !customer2Satisfied
-            ) {
-
-
-                playCookAttack();
-
-
-                clearInterval(
-                    firstAttackTimer
-                );
-
-
-                return;
-
-            }
-
 
         },
-        100
+        360
+    );
+
+
+    setTimeout(
+        function() {
+
+            setCookFrame(4);
+
+        },
+        480
+    );
+
+
+    setTimeout(
+        function() {
+
+            setCookFrame(0);
+
+        },
+        600
     );
 
 }
@@ -1441,139 +1927,67 @@ function startFirstAttackDetection() {
 
 
 /* ==================================================
-   ANIMAZIONE CLIENTI
+   ATTACCO CONTINUO
 ================================================== */
 
-function startCustomerAnimation() {
+function startCookAnimation() {
 
 
     if (
-        customerTimer !== null
+        cookTimer !== null
     ) {
 
         clearInterval(
-            customerTimer
+            cookTimer
         );
 
     }
 
 
-    customerFrame1 = 0;
-
-    customerFrame2 = 0;
+    setCookFrame(0);
 
 
-    customerTimer =
-    setInterval(
-        function() {
+    /*
+       Primo controllo rapido.
+    */
+
+    cookTimer =
+        setInterval(
+            function() {
 
 
-            if (
-                !customer1Satisfied
-            ) {
+                /*
+                   Se esiste almeno
+                   un cliente disponibile,
+                   il cuoco attacca.
 
+                   La funzione sceglierà
+                   SEMPRE quello più
+                   vicino alla cucina.
+                */
 
-                const frames =
-                    document
-                    .getElementById(
-                        "customer1"
-                    )
-                    .querySelectorAll(
-                        ".frame"
-                    );
-
-
-                frames.forEach(
-                    function(frame) {
-
-                        frame.classList
-                        .remove(
-                            "active"
-                        );
-
-                    }
-                );
-
-
-                frames[
-                    customerFrame1
-                ]
-                .classList
-                .add(
-                    "active"
-                );
-
-
-                customerFrame1++;
+                const target =
+                    getNearestVisibleCustomer();
 
 
                 if (
-                    customerFrame1 >=
-                    frames.length
+                    target !== null
                 ) {
 
-                    customerFrame1 = 0;
+                    playCookAttack();
 
                 }
 
-            }
+                else {
 
-
-
-            if (
-                !customer2Satisfied
-            ) {
-
-
-                const frames =
-                    document
-                    .getElementById(
-                        "customer2"
-                    )
-                    .querySelectorAll(
-                        ".frame"
-                    );
-
-
-                frames.forEach(
-                    function(frame) {
-
-                        frame.classList
-                        .remove(
-                            "active"
-                        );
-
-                    }
-                );
-
-
-                frames[
-                    customerFrame2
-                ]
-                .classList
-                .add(
-                    "active"
-                );
-
-
-                customerFrame2++;
-
-
-                if (
-                    customerFrame2 >=
-                    frames.length
-                ) {
-
-                    customerFrame2 = 0;
+                    setCookFrame(0);
 
                 }
 
-            }
 
-
-        },
-        300
-    );
+            },
+            3000
+        );
 
 }
 
@@ -1610,259 +2024,19 @@ function setCookFrame(
     );
 
 
-    frames[
-        frameNumber
-    ]
-    .classList
-    .add(
-        "active"
-    );
-
-}
-
-
-
-/* ==================================================
-   ATTACCO
-================================================== */
-
-function playCookAttack() {
-
-
-    const target =
-        getNearestVisibleCustomer();
-
-
     if (
-        target === null
+        frames[frameNumber]
     ) {
 
-        setCookFrame(0);
-
-        return;
-
-    }
-
-
-    setCookFrame(0);
-
-
-    setTimeout(
-        function() {
-
-            setCookFrame(1);
-
-        },
-        120
-    );
-
-
-    setTimeout(
-        function() {
-
-            setCookFrame(2);
-
-        },
-        240
-    );
-
-
-    /*
-       FRAME 4
-       = LANCIO
-    */
-
-    setTimeout(
-        function() {
-
-
-            setCookFrame(3);
-
-
-            throwPasta(
-                target
-            );
-
-
-        },
-        360
-    );
-
-
-    setTimeout(
-        function() {
-
-            setCookFrame(4);
-
-        },
-        480
-    );
-
-
-    setTimeout(
-        function() {
-
-            setCookFrame(0);
-
-        },
-        600
-    );
-
-}
-
-
-
-/* ==================================================
-   ATTACCO OGNI 3 SECONDI
-================================================== */
-
-function startCookAnimation() {
-
-
-    if (
-        cookTimer !== null
-    ) {
-
-        clearInterval(
-            cookTimer
+        frames[
+            frameNumber
+        ]
+        .classList
+        .add(
+            "active"
         );
 
     }
-
-
-    setCookFrame(0);
-
-
-    cookTimer =
-    setInterval(
-        function() {
-
-            playCookAttack();
-
-        },
-        3000
-    );
-
-}
-
-
-
-/* ==================================================
-   CLIENTE PIÙ VICINO
-================================================== */
-
-function getNearestVisibleCustomer() {
-
-
-    const customers = [];
-
-
-    const c1 =
-        document
-        .getElementById(
-            "customer1"
-        );
-
-
-    const c2 =
-        document
-        .getElementById(
-            "customer2"
-        );
-
-
-    if (
-        customerIsVisible(c1) &&
-        !customer1Satisfied
-    ) {
-
-        customers.push(c1);
-
-    }
-
-
-    if (
-        customerIsVisible(c2) &&
-        !customer2Satisfied
-    ) {
-
-        customers.push(c2);
-
-    }
-
-
-    if (
-        customers.length === 0
-    ) {
-
-        return null;
-
-    }
-
-
-    const cook =
-        document
-        .getElementById(
-            "cook"
-        );
-
-
-    const cookRect =
-        cook.getBoundingClientRect();
-
-
-    const cookX =
-        cookRect.left +
-        cookRect.width / 2;
-
-
-    let nearest = null;
-
-    let nearestDistance =
-        Infinity;
-
-
-    customers.forEach(
-        function(customer) {
-
-
-            const rect =
-                customer
-                .getBoundingClientRect();
-
-
-            const customerX =
-                rect.left +
-                rect.width / 2;
-
-
-            const distance =
-                Math.abs(
-                    customerX -
-                    cookX
-                );
-
-
-            if (
-                distance <
-                nearestDistance
-            ) {
-
-
-                nearestDistance =
-                    distance;
-
-
-                nearest =
-                    customer;
-
-            }
-
-        }
-    );
-
-
-    return nearest;
 
 }
 
@@ -1884,21 +2058,15 @@ function throwPasta(
     }
 
 
-    if (
-        target.id ===
-            "customer1" &&
-        customer1Satisfied
-    ) {
-
-        return;
-
-    }
+    const targetData =
+        getCustomerData(
+            target
+        );
 
 
     if (
-        target.id ===
-            "customer2" &&
-        customer2Satisfied
+        !targetData ||
+        targetData.satisfied
     ) {
 
         return;
@@ -1966,7 +2134,7 @@ function throwPasta(
 
     /* ==================================================
        PASTA
-    ================================================== */
+================================================== */
 
     const pasta =
         document.createElement(
@@ -1990,7 +2158,7 @@ function throwPasta(
 
     /* ==================================================
        POSIZIONE INIZIALE
-    ================================================== */
+================================================== */
 
     let currentX =
         startX;
@@ -2018,7 +2186,7 @@ function throwPasta(
 
 
     /* ==================================================
-       VELOCITÀ
+       VELOCITÀ PASTA
 ================================================== */
 
     const speed = 350;
@@ -2039,9 +2207,43 @@ function throwPasta(
 
 
         /*
-           CALCOLIAMO OGNI FRAME
-           LA NUOVA POSIZIONE DEL CLIENTE.
+           Se il cliente è già soddisfatto,
+           interrompiamo il volo.
         */
+
+        if (
+            targetData.satisfied
+        ) {
+
+
+            if (
+                pasta.parentNode
+            ) {
+
+                pasta.parentNode
+                .removeChild(
+                    pasta
+                );
+
+            }
+
+
+            if (
+                hitMarker.parentNode
+            ) {
+
+                hitMarker.parentNode
+                .removeChild(
+                    hitMarker
+                );
+
+            }
+
+
+            return;
+
+        }
+
 
         const targetRect =
             target.getBoundingClientRect();
@@ -2062,7 +2264,7 @@ function throwPasta(
 
 
         /* ==================================================
-           IL PUNTO DI IMPATTO SEGUE IL CLIENTE
+           PUNTO IMPATTO
         ================================================== */
 
         hitMarker.style.left =
@@ -2081,7 +2283,7 @@ function throwPasta(
 
 
         /* ==================================================
-           TEMPO TRA FRAME
+           DELTA TIME
         ================================================== */
 
         const deltaTime =
@@ -2280,60 +2482,33 @@ function hitCustomer(
     }
 
 
+    const data =
+        getCustomerData(
+            customer
+        );
+
+
     if (
-        customer.id ===
-        "customer1"
+        !data ||
+        data.satisfied
     ) {
 
-
-        if (
-            customer1Satisfied
-        ) {
-
-            return;
-
-        }
-
-
-        customer1HP -= 5;
-
-
-        if (
-            customer1HP <= 0
-        ) {
-
-            satisfyCustomer1();
-
-        }
+        return;
 
     }
 
 
+    data.hp -= 5;
+
+
     if (
-        customer.id ===
-        "customer2"
+        data.hp <= 0
     ) {
 
 
-        if (
-            customer2Satisfied
-        ) {
-
-            return;
-
-        }
-
-
-        customer2HP -= 5;
-
-
-        if (
-            customer2HP <= 0
-        ) {
-
-            satisfyCustomer2();
-
-        }
+        satisfyCustomer(
+            data
+        );
 
     }
 
@@ -2342,25 +2517,37 @@ function hitCustomer(
 
 
 /* ==================================================
-   CLIENTE 1 SODDISFATTO
+   CLIENTE SODDISFATTO
 ================================================== */
 
-function satisfyCustomer1() {
+function satisfyCustomer(
+    data
+) {
 
 
-    customer1Satisfied =
+    if (
+        !data ||
+        data.satisfied
+    ) {
+
+        return;
+
+    }
+
+
+    data.satisfied =
         true;
 
 
-    customer1AtKitchen =
+    data.atKitchen =
         false;
 
 
+    customersSatisfied++;
+
+
     const customer =
-        document
-        .getElementById(
-            "customer1"
-        );
+        data.element;
 
 
     customer.classList.add(
@@ -2407,6 +2594,12 @@ function satisfyCustomer1() {
 
 
     /*
+       Il cuore viene mostrato
+       tramite .satisfied.
+    */
+
+
+    /*
        Dopo 1 secondo
        il cliente scompare.
     */
@@ -2421,6 +2614,35 @@ function satisfyCustomer1() {
 
             happyFrame.style.display =
                 "none";
+
+
+            /*
+               Aggiorniamo nuovamente
+               l'ordine dei clienti.
+            */
+
+            updateCustomerDepth();
+
+
+            /*
+               Se tutti i 15 clienti
+               sono stati soddisfatti,
+               la wave è terminata.
+            */
+
+            if (
+                customersSatisfied >=
+                TOTAL_CUSTOMERS
+            ) {
+
+
+                waveStarted =
+                    false;
+
+
+                setCookFrame(0);
+
+            }
 
 
         },
@@ -2432,92 +2654,32 @@ function satisfyCustomer1() {
 
 
 /* ==================================================
-   CLIENTE 2 SODDISFATTO
+   NUMERO CASUALE
 ================================================== */
 
-function satisfyCustomer2() {
+function randomNumber(
+    min,
+    max
+) {
 
 
-    customer2Satisfied =
-        true;
-
-
-    customer2AtKitchen =
-        false;
-
-
-    const customer =
-        document
-        .getElementById(
-            "customer2"
-        );
-
-
-    customer.classList.add(
-        "satisfied"
-    );
-
-
-    /*
-       Nascondiamo i frame normali.
-    */
-
-    const normalFrames =
-        customer
-        .querySelectorAll(
-            ".frame"
-        );
-
-
-    normalFrames.forEach(
-        function(frame) {
-
-            frame.classList
-            .remove(
-                "active"
-            );
-
-        }
-    );
-
-
-    /*
-       Mostriamo lo sprite felice.
-    */
-
-    const happyFrame =
-        customer
-        .querySelector(
-            ".happy-frame"
-        );
-
-
-    happyFrame.style.display =
-        "block";
-
-
-    /*
-       Dopo 1 secondo
-       il cliente scompare.
-    */
-
-    setTimeout(
-        function() {
-
-
-            customer.style.display =
-                "none";
-
-
-            happyFrame.style.display =
-                "none";
-
-
-        },
-        1000
-    );
+    return Math.floor(
+        Math.random() *
+        (
+            max - min + 1
+        )
+    ) + min;
 
 }
+
+
+
+/* ==================================================
+   AVVIO ANIMAZIONE CLIENTI
+================================================== */
+
+startCustomerAnimation();
+
 
 </script>
 
