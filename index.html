@@ -267,18 +267,6 @@ body {
 }
 
 /* ==================================================
-   CLIENTE 3
-================================================== */
-
-#customer3 .walking-frame {
-    transform: scaleX(1);
-}
-
-#customer3 .walking-frame.flipped {
-    transform: scaleX(-1);
-}
-
-/* ==================================================
    SPRITE FELICE
 ================================================== */
 
@@ -297,8 +285,6 @@ body {
     object-fit: contain;
 
     display: none;
-
-    z-index: 10;
 }
 
 /* ==================================================
@@ -320,7 +306,7 @@ body {
 
     line-height: 1;
 
-    z-index: 15;
+    z-index: 5;
 
     display: none;
 
@@ -859,7 +845,7 @@ body {
 
     <!-- ==================================================
          CUOCO
-    ================================================== -->
+================================================== -->
 
     <div
         id="cook"
@@ -896,7 +882,7 @@ body {
 
     <!-- ==================================================
          CAMERIERA
-    ================================================== -->
+================================================== -->
 
     <div
         id="waitress"
@@ -2861,6 +2847,14 @@ function hitCustomer(
 
 function satisfyCustomer(customer) {
 
+    if (
+        !customer ||
+        customer.satisfied
+    ) {
+
+        return;
+    }
+
     customer.satisfied =
         true;
 
@@ -2870,14 +2864,37 @@ function satisfyCustomer(customer) {
     const element =
         customer.element;
 
+    const game =
+        document
+        .getElementById("game");
+
     /*
-       FERMA COMPLETAMENTE
-       IL MOVIMENTO
+       SALVIAMO LA POSIZIONE
+       ESATTA DEL CLIENTE
     */
 
-    element.classList.add(
-        "satisfied"
-    );
+    const rect =
+        element
+        .getBoundingClientRect();
+
+    const gameRect =
+        game
+        .getBoundingClientRect();
+
+    /*
+       PRENDIAMO LO SPRITE FELICE
+       PRIMA DI NASCONDERE IL CLIENTE
+    */
+
+    const originalHappy =
+        element
+        .querySelector(
+            ".happy-frame"
+        );
+
+    /*
+       NASCONDIAMO IL CLIENTE NORMALE
+    */
 
     element.style.animation =
         "none";
@@ -2885,106 +2902,135 @@ function satisfyCustomer(customer) {
     element.style.transition =
         "none";
 
-    /*
-       NASCONDE FORZATAMENTE
-       TUTTI I FRAME NORMALI
-    */
-
-    const normalFrames =
-        element
-        .querySelectorAll(
-            ".frame"
-        );
-
-    normalFrames.forEach(
-        function(frame) {
-
-            frame.classList.remove(
-                "active"
-            );
-
-            frame.style.display =
-                "none";
-
-        }
-    );
+    element.style.display =
+        "none";
 
     /*
-       MOSTRA FORZATAMENTE
-       LO SPRITE FELICE
+       SE LO SPRITE FELICE ESISTE,
+       CREIAMO UNA COPIA SEPARATA
     */
 
-    const happyFrame =
-        element
-        .querySelector(
-            ".happy-frame"
-        );
+    if (originalHappy) {
 
-    if (happyFrame) {
+        const happy =
+            document.createElement("img");
 
-        happyFrame.style.display =
+        happy.src =
+            originalHappy.src;
+
+        happy.style.position =
+            "absolute";
+
+        happy.style.left =
+            (
+                rect.left -
+                gameRect.left
+            ) + "px";
+
+        happy.style.top =
+            (
+                rect.top -
+                gameRect.top
+            ) + "px";
+
+        happy.style.width =
+            rect.width + "px";
+
+        happy.style.height =
+            rect.height + "px";
+
+        happy.style.objectFit =
+            "contain";
+
+        happy.style.display =
             "block";
 
-        happyFrame.style.visibility =
+        happy.style.visibility =
             "visible";
 
-        happyFrame.style.opacity =
+        happy.style.opacity =
             "1";
 
-        happyFrame.style.zIndex =
-            "10";
-    }
+        happy.style.zIndex =
+            "100";
 
-    /*
-       MOSTRA IL CUORE
-    */
-
-    const heart =
-        element
-        .querySelector(
-            ".heart"
-        );
-
-    if (heart) {
-
-        heart.style.display =
-            "block";
-
-        heart.style.animation =
+        happy.style.pointerEvents =
             "none";
 
-        void heart.offsetWidth;
+        game.appendChild(happy);
+
+        /*
+           CUORE SOPRA LO SPRITE FELICE
+        */
+
+        const heart =
+            document.createElement("div");
+
+        heart.innerHTML =
+            "❤️";
+
+        heart.style.position =
+            "absolute";
+
+        heart.style.left =
+            (
+                rect.left -
+                gameRect.left +
+                rect.width / 2
+            ) + "px";
+
+        heart.style.top =
+            (
+                rect.top -
+                gameRect.top -
+                12
+            ) + "px";
+
+        heart.style.transform =
+            "translateX(-50%)";
+
+        heart.style.fontSize =
+            "12px";
+
+        heart.style.lineHeight =
+            "1";
+
+        heart.style.zIndex =
+            "101";
+
+        heart.style.pointerEvents =
+            "none";
 
         heart.style.animation =
             "heartFloat 0.8s ease-in-out infinite alternate";
+
+        game.appendChild(heart);
+
+        /*
+           FELICITÀ VISIBILE PER 1 SECONDO
+        */
+
+        setTimeout(
+            function() {
+
+                if (
+                    happy.parentNode
+                ) {
+
+                    happy.remove();
+                }
+
+                if (
+                    heart.parentNode
+                ) {
+
+                    heart.remove();
+                }
+
+            },
+            1000
+        );
     }
-
-    /*
-       DOPO 1 SECONDO
-       IL CLIENTE SCOMPARE
-    */
-
-    setTimeout(
-        function() {
-
-            element.style.display =
-                "none";
-
-            if (happyFrame) {
-
-                happyFrame.style.display =
-                    "none";
-            }
-
-            if (heart) {
-
-                heart.style.display =
-                    "none";
-            }
-
-        },
-        1000
-    );
 }
 
 </script>
