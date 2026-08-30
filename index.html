@@ -104,7 +104,6 @@ body {
 
 /* ==================================================
    CUCINA
-   LA CUCINA DEVE STARE DAVANTI AI CLIENTI
 ================================================== */
 
 #kitchen,
@@ -265,7 +264,7 @@ body {
     transform:
         translateX(-50%);
 
-    font-size: 24px;
+    font-size: 12px;
 
     line-height: 1;
 
@@ -304,7 +303,6 @@ body {
 
 /* ==================================================
    MOVIMENTO CLIENTE
-   60 SECONDI
 ================================================== */
 
 @keyframes walkDown {
@@ -678,65 +676,24 @@ const HIT_Y = 0;
 const HIT_POSITION_Y = 0.45;
 
 
-/*
-   5 CORSIE.
-
-   Sono distribuite tra la fila
-   di tavoli sinistra e la fila
-   di tavoli destra.
-*/
-
 const LANES = [
 
     30,
-
     40,
-
     50,
-
     60,
-
     70
 
 ];
 
 
-/*
-   I clienti partono tutti
-   dallo stesso punto centrale
-   in alto.
-*/
-
 const SPAWN_X = 50;
-
-
-/*
-   Un cliente ogni 2.5 secondi.
-*/
 
 const SPAWN_INTERVAL = 2500;
 
-
-/*
-   15 clienti nella prima wave.
-*/
-
 const WAVE_SIZE = 15;
 
-
-/*
-   60 secondi di camminata.
-*/
-
 const WALK_TIME = 60;
-
-
-/*
-   Distanza minima verticale
-   prima di permettere a due
-   clienti della stessa corsia
-   di sovrapporsi.
-*/
 
 const MIN_DISTANCE = 9;
 
@@ -789,15 +746,11 @@ function startGame() {
 
     kitchenEnergy = 100;
 
-
     customers = [];
-
 
     waveIndex = 0;
 
-
     clearAllTimers();
-
 
     clearCustomers();
 
@@ -819,23 +772,13 @@ function startGame() {
 
     updateKitchenEnergy();
 
-
     startCustomerAnimation();
-
 
     startCookAnimation();
 
-
     startKitchenEnergySystem();
 
-
     startFirstAttackDetection();
-
-
-    /*
-       Parte la prima wave
-       da 15 clienti.
-    */
 
     startWave();
 
@@ -912,12 +855,7 @@ function startWave() {
     let spawned = 0;
 
 
-    /*
-       Primo cliente immediato.
-    */
-
     spawnCustomer();
-
 
     spawned++;
 
@@ -936,9 +874,7 @@ function startWave() {
                     spawnTimer
                 );
 
-
                 spawnTimer = null;
-
 
                 return;
 
@@ -946,7 +882,6 @@ function startWave() {
 
 
             spawnCustomer();
-
 
             spawned++;
 
@@ -964,14 +899,6 @@ function startWave() {
 
 function chooseLane() {
 
-
-    /*
-       Cerchiamo prima le corsie
-       meno utilizzate.
-
-       In questo modo tutte e 5
-       vengono realmente sfruttate.
-    */
 
     const counts =
         LANES.map(
@@ -1014,11 +941,6 @@ function chooseLane() {
         }
     );
 
-
-    /*
-       Tra le corsie meno utilizzate
-       ne scegliamo una casualmente.
-    */
 
     const randomIndex =
         Math.floor(
@@ -1137,14 +1059,6 @@ function spawnCustomer() {
     };
 
 
-    /*
-       Posizione iniziale.
-
-       TUTTI partono dal centro
-       dello schermo e molto in alto,
-       fuori dallo schermo.
-    */
-
     customerElement.style.left =
         SPAWN_X + "%";
 
@@ -1157,19 +1071,9 @@ function spawnCustomer() {
         "translateX(-50%)";
 
 
-    /*
-       Il cliente parte dal centro
-       e raggiunge progressivamente
-       la propria corsia.
-    */
-
     customerElement.dataset.lane =
         lane;
 
-
-    /*
-       Cliente 3 leggermente più grande.
-    */
 
     if (
         type === 3
@@ -1192,10 +1096,6 @@ function spawnCustomer() {
         customerData
     );
 
-
-    /*
-       Animazione verso la corsia.
-    */
 
     requestAnimationFrame(
         function() {
@@ -1233,12 +1133,6 @@ function moveCustomerToLane(
         customer.element;
 
 
-    /*
-       Portiamo il cliente
-       dal punto centrale alla
-       corsia assegnata.
-    */
-
     element.style.transition =
         "left 1.2s ease-out";
 
@@ -1263,10 +1157,6 @@ function moveCustomerToLane(
             element.style.transition =
                 "none";
 
-
-            /*
-               La discesa dura 60 secondi.
-            */
 
             element.style.animation =
                 "walkDown " +
@@ -1296,7 +1186,6 @@ function clearCustomers() {
 
 
     container.innerHTML = "";
-
 
     customers = [];
 
@@ -1345,11 +1234,6 @@ function startCustomerAnimation() {
                             ".frame"
                         );
 
-
-                    /*
-                       Cliente 1 e 2:
-                       alternanza frame.
-                    */
 
                     if (
                         customer.type === 1 ||
@@ -1406,14 +1290,8 @@ function startCustomerAnimation() {
                         .frame =
                             current;
 
-
                     }
 
-
-                    /*
-                       Cliente 3:
-                       alternanza originale/specchio.
-                    */
 
                     if (
                         customer.type === 3
@@ -1459,10 +1337,6 @@ function startCustomerAnimation() {
             );
 
 
-            /*
-               Controllo sovrapposizione.
-            */
-
             preventOverlap();
 
 
@@ -1493,10 +1367,6 @@ function preventOverlap() {
         );
 
 
-    /*
-       Raggruppiamo per corsia.
-    */
-
     LANES.forEach(
         function(lane) {
 
@@ -1513,11 +1383,6 @@ function preventOverlap() {
                     }
                 );
 
-
-            /*
-               Dal più avanti
-               al più indietro.
-            */
 
             laneCustomers.sort(
                 function(a, b) {
@@ -1571,13 +1436,6 @@ function preventOverlap() {
                     backRect.top -
                     frontRect.top;
 
-
-                /*
-                   Se sono troppo vicini,
-                   quello dietro viene
-                   nascosto dietro quello
-                   davanti.
-                */
 
                 if (
                     distance <
@@ -1995,6 +1853,18 @@ function setCookFrame(
 function playCookAttack() {
 
 
+    /*
+       IMPORTANTE:
+
+       Il bersaglio viene scelto
+       UNA SOLA VOLTA all'inizio
+       dell'attacco.
+
+       Se cambia la posizione dei clienti
+       mentre la pasta è in volo,
+       questa pasta NON cambia bersaglio.
+    */
+
     const target =
         getNearestVisibleCustomer();
 
@@ -2097,6 +1967,12 @@ function startCookAnimation() {
     setInterval(
         function() {
 
+            /*
+               Ad ogni nuovo attacco
+               viene scelto nuovamente
+               il cliente più vicino.
+            */
+
             playCookAttack();
 
         },
@@ -2107,7 +1983,7 @@ function startCookAnimation() {
 
 
 /* ==================================================
-   CLIENTE PIÙ VICINO
+   CLIENTE PIÙ VICINO ALLA CUCINA
 ================================================== */
 
 function getNearestVisibleCustomer() {
@@ -2135,28 +2011,12 @@ function getNearestVisibleCustomer() {
     }
 
 
-    const cook =
-        document
-        .getElementById(
-            "cook"
-        );
-
-
-    const cookRect =
-        cook.getBoundingClientRect();
-
-
-    const cookX =
-        cookRect.left +
-        cookRect.width / 2;
-
-
     let nearest =
         null;
 
 
-    let nearestDistance =
-        Infinity;
+    let nearestTop =
+        -Infinity;
 
 
     visible.forEach(
@@ -2168,25 +2028,22 @@ function getNearestVisibleCustomer() {
                 .getBoundingClientRect();
 
 
-            const customerX =
-                rect.left +
-                rect.width / 2;
+            /*
+               Più il valore TOP è grande,
+               più il cliente è in basso
+               sullo schermo.
 
-
-            const distance =
-                Math.abs(
-                    customerX -
-                    cookX
-                );
-
+               Quindi è più vicino
+               alla cucina.
+            */
 
             if (
-                distance <
-                nearestDistance
+                rect.top >
+                nearestTop
             ) {
 
-                nearestDistance =
-                    distance;
+                nearestTop =
+                    rect.top;
 
                 nearest =
                     customer;
@@ -2336,6 +2193,13 @@ function throwPasta(
     ) {
 
 
+        /*
+           IL TARGET RIMANE FISSO.
+
+           NON cerchiamo un nuovo cliente
+           durante questo volo.
+        */
+
         if (
             !target ||
             target.satisfied
@@ -2369,6 +2233,12 @@ function throwPasta(
             target.element
             .getBoundingClientRect();
 
+
+        /*
+           Il punto d'impatto
+           segue il cliente scelto
+           durante il suo movimento.
+        */
 
         const endX =
             targetRect.left +
@@ -2445,7 +2315,6 @@ function throwPasta(
 
             currentY =
                 endY;
-
 
         }
 
@@ -2617,18 +2486,9 @@ function satisfyCustomer(
     );
 
 
-    /*
-       Ferma completamente
-       l'animazione di camminata.
-    */
-
     element.style.animation =
         "none";
 
-
-    /*
-       Nascondi frame normali.
-    */
 
     const normalFrames =
         element
@@ -2649,10 +2509,6 @@ function satisfyCustomer(
     );
 
 
-    /*
-       Mostra sprite felice.
-    */
-
     const happyFrame =
         element
         .querySelector(
@@ -2663,11 +2519,6 @@ function satisfyCustomer(
     happyFrame.style.display =
         "block";
 
-
-    /*
-       Dopo un secondo
-       il cliente scompare.
-    */
 
     setTimeout(
         function() {
@@ -2686,7 +2537,6 @@ function satisfyCustomer(
     );
 
 }
-
 
 </script>
 
