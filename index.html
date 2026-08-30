@@ -26,11 +26,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-
-/* ==================================================
-   TELEFONO
-================================================== */
-
 #phone {
 
     position: relative;
@@ -46,11 +41,6 @@ body {
 
     background: black;
 }
-
-
-/* ==================================================
-   MENU
-================================================== */
 
 #menu {
 
@@ -69,7 +59,6 @@ body {
     z-index: 100;
 }
 
-
 #cover {
 
     position: absolute;
@@ -81,7 +70,6 @@ body {
 
     z-index: 10;
 }
-
 
 #playButton {
 
@@ -108,13 +96,7 @@ body {
     font-weight: bold;
 
     z-index: 30;
-
 }
-
-
-/* ==================================================
-   GIOCO
-================================================== */
 
 #game {
 
@@ -129,7 +111,6 @@ body {
     background: black;
 }
 
-
 #background {
 
     position: absolute;
@@ -143,11 +124,6 @@ body {
 
     z-index: 0;
 }
-
-
-/* ==================================================
-   CUCINA
-================================================== */
 
 #kitchen,
 #kitchenDamaged,
@@ -169,35 +145,23 @@ body {
     pointer-events: none;
 }
 
-
 #kitchen {
-
     z-index: 15;
-
 }
-
 
 #kitchenDamaged {
 
     z-index: 16;
 
     display: none;
-
 }
-
 
 #kitchenDestroyed {
 
     z-index: 17;
 
     display: none;
-
 }
-
-
-/* ==================================================
-   HUD
-================================================== */
 
 #hud {
 
@@ -220,7 +184,6 @@ body {
     font-weight: bold;
 
     z-index: 30;
-
 }
 
 
@@ -236,9 +199,28 @@ body {
 
     height: 135px;
 
-    top: 18%;
+    top: -150px;
 
     z-index: 10;
+
+    animation:
+
+        walkDown
+
+        40s
+
+        linear
+
+        forwards;
+
+}
+
+
+#customer3 {
+
+    width: 112px;
+
+    height: 151px;
 
 }
 
@@ -246,26 +228,8 @@ body {
 .customer.satisfied {
 
     animation: none;
-
 }
 
-
-/* ==================================================
-   CLIENTE 3 LEGGERMENTE PIÙ GRANDE
-================================================== */
-
-#customer3 {
-
-    width: 115px;
-
-    height: 155px;
-
-}
-
-
-/* ==================================================
-   SPRITE NORMALI
-================================================== */
 
 .customer .frame {
 
@@ -282,26 +246,19 @@ body {
     object-fit: contain;
 
     display: none;
-
 }
 
 
 .customer .frame.active {
 
     display: block;
-
 }
 
-
-/* ==================================================
-   CLIENTE 3 - SPECCHIO CAMMINATA
-================================================== */
 
 #customer3 .walking-frame {
 
     transform:
         scaleX(1);
-
 }
 
 
@@ -309,13 +266,8 @@ body {
 
     transform:
         scaleX(-1);
-
 }
 
-
-/* ==================================================
-   SPRITE FELICE
-================================================== */
 
 .customer .happy-frame {
 
@@ -334,13 +286,8 @@ body {
     display: none;
 
     z-index: 2;
-
 }
 
-
-/* ==================================================
-   CUORICINO
-================================================== */
 
 .heart {
 
@@ -366,14 +313,12 @@ body {
         0.8s
         ease-in-out
         infinite alternate;
-
 }
 
 
 .customer.satisfied .heart {
 
     display: block;
-
 }
 
 
@@ -401,36 +346,66 @@ body {
 
 
 /* ==================================================
-   POSIZIONI INIZIALI
-   TUTTI PARTONO DALLA PORTA
+   MOVIMENTO CLIENTI
 ================================================== */
 
-#customer1 {
+/*
+   Le 5 corsie sono distribuite
+   nello spazio centrale tra le
+   due file di tavoli.
 
+   I valori sono percentuali
+   rispetto alla larghezza del gioco.
+*/
+
+.customer.lane1 {
+    left: 37%;
+}
+
+.customer.lane2 {
+    left: 43%;
+}
+
+.customer.lane3 {
     left: 50%;
+}
 
-    transform:
-        translateX(-50%);
+.customer.lane4 {
+    left: 57%;
+}
 
+.customer.lane5 {
+    left: 63%;
 }
 
 
-#customer2 {
+/*
+   I clienti partono leggermente
+   fuori dallo schermo.
 
-    left: 50%;
+   La porta è nella parte alta
+   del background.
+*/
 
-    transform:
-        translateX(-50%);
+@keyframes walkDown {
 
-}
+    0% {
 
+        top: -150px;
 
-#customer3 {
+    }
 
-    left: 50%;
+    65% {
 
-    transform:
-        translateX(-50%);
+        top: 69%;
+
+    }
+
+    100% {
+
+        top: 69%;
+
+    }
 
 }
 
@@ -455,7 +430,6 @@ body {
         translateX(-50%);
 
     z-index: 20;
-
 }
 
 
@@ -474,14 +448,12 @@ body {
     object-fit: contain;
 
     display: none;
-
 }
 
 
 #cook img.active {
 
     display: block;
-
 }
 
 
@@ -502,13 +474,11 @@ body {
     z-index: 25;
 
     pointer-events: none;
-
 }
 
 
 /* ==================================================
-   PUNTO ROSSO
-   INVISIBILE MA FUNZIONANTE
+   HITBOX INVISIBILE
 ================================================== */
 
 .hit-marker {
@@ -544,14 +514,9 @@ body {
 }
 
 
-/* ==================================================
-   RESPONSIVE
-================================================== */
-
 @media (max-width: 500px) {
 
-    .customer,
-    #cook {
+    .customer {
 
         width: 65px;
 
@@ -559,20 +524,13 @@ body {
 
     }
 
-
-    /*
-       Cliente 3 rimane leggermente
-       più grande anche su telefono.
-    */
-
     #customer3 {
 
-        width: 75px;
+        width: 73px;
 
-        height: 100px;
+        height: 98px;
 
     }
-
 
     .pasta {
 
@@ -595,10 +553,6 @@ body {
 <div id="phone">
 
 
-<!-- ==================================================
-     MENU
-================================================== -->
-
 <div id="menu">
 
     <img
@@ -608,205 +562,185 @@ body {
     >
 
     <button id="playButton">
-
         PLAY
-
     </button>
 
 </div>
 
 
-
-<!-- ==================================================
-   GIOCO
-================================================== -->
-
 <div id="game">
 
 
+<img
+    id="background"
+    src="https://i.ibb.co/pj7trt5y/IMG-20260829-WA0012.jpg"
+    alt=""
+>
+
+
+<img
+    id="kitchen"
+    src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png"
+    alt=""
+>
+
+
+<img
+    id="kitchenDamaged"
+    src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"
+    alt=""
+>
+
+
+<img
+    id="kitchenDestroyed"
+    src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"
+    alt=""
+>
+
+
+<div id="hud">
+
+    <span>❤️ 3</span>
+
+    <span>⭐ 0</span>
+
+</div>
+
+
+<!-- CLIENTE 1 -->
+
+<div
+    id="customer1"
+    class="customer lane1"
+>
+
     <img
-        id="background"
-        src="https://i.ibb.co/pj7trt5y/IMG-20260829-WA0012.jpg"
+        class="frame active"
+        src="https://i.ibb.co/xqSsVvcc/Screenshot-20260829-161529-Grok-2-removebg-preview.png"
         alt=""
     >
 
-
     <img
-        id="kitchen"
-        src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png"
+        class="frame"
+        src="https://i.ibb.co/4nvV4nPq/Screenshot-20260829-161529-Grok-3-removebg-preview.png"
         alt=""
     >
 
-
     <img
-        id="kitchenDamaged"
-        src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"
+        class="happy-frame"
+        src="https://i.ibb.co/mV43yWMM/grok-1788037208959-removebg-preview.png"
         alt=""
     >
 
+    <div class="heart">
+        ❤️
+    </div>
+
+</div>
+
+
+<!-- CLIENTE 2 -->
+
+<div
+    id="customer2"
+    class="customer lane5"
+>
 
     <img
-        id="kitchenDestroyed"
-        src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"
+        class="frame active"
+        src="https://i.ibb.co/jP6QSPFd/1000040572-removebg-preview.png"
         alt=""
     >
 
-
-    <div id="hud">
-
-        <span>❤️ 3</span>
-
-        <span>⭐ 0</span>
-
-    </div>
-
-
-
-    <!-- ==================================================
-         CLIENTE 1
-    ================================================== -->
-
-    <div
-        id="customer1"
-        class="customer"
+    <img
+        class="frame"
+        src="https://i.ibb.co/vxJCRK81/1000040573-removebg-preview.png"
+        alt=""
     >
 
-        <img
-            class="frame active"
-            src="https://i.ibb.co/xqSsVvcc/Screenshot-20260829-161529-Grok-2-removebg-preview.png"
-            alt=""
-        >
-
-        <img
-            class="frame"
-            src="https://i.ibb.co/4nvV4nPq/Screenshot-20260829-161529-Grok-3-removebg-preview.png"
-            alt=""
-        >
-
-        <img
-            class="happy-frame"
-            src="https://i.ibb.co/mV43yWMM/grok-1788037208959-removebg-preview.png"
-            alt=""
-        >
-
-        <div class="heart">
-            ❤️
-        </div>
-
-    </div>
-
-
-
-    <!-- ==================================================
-         CLIENTE 2
-    ================================================== -->
-
-    <div
-        id="customer2"
-        class="customer"
+    <img
+        class="happy-frame"
+        src="https://i.ibb.co/m5xmJrBq/Screenshot-20260830-060945-Grok-removebg-preview.png"
+        alt=""
     >
 
-        <img
-            class="frame active"
-            src="https://i.ibb.co/jP6QSPFd/1000040572-removebg-preview.png"
-            alt=""
-        >
-
-        <img
-            class="frame"
-            src="https://i.ibb.co/vxJCRK81/1000040573-removebg-preview.png"
-            alt=""
-        >
-
-        <img
-            class="happy-frame"
-            src="https://i.ibb.co/m5xmJrBq/Screenshot-20260830-060945-Grok-removebg-preview.png"
-            alt=""
-        >
-
-        <div class="heart">
-            ❤️
-        </div>
-
+    <div class="heart">
+        ❤️
     </div>
 
+</div>
 
 
-    <!-- ==================================================
-         CLIENTE 3
-    ================================================== -->
+<!-- CLIENTE 3 -->
 
-    <div
-        id="customer3"
-        class="customer"
+<div
+    id="customer3"
+    class="customer lane3"
+>
+
+    <img
+        class="frame walking-frame active"
+        src="https://i.ibb.co/cS3HRnCY/grok-1788046169803-removebg-preview.png"
+        alt=""
     >
 
-        <img
-            class="frame walking-frame active"
-            src="https://i.ibb.co/cS3HRnCY/grok-1788046169803-removebg-preview.png"
-            alt=""
-        >
+    <img
+        class="happy-frame"
+        src="https://i.ibb.co/jmGQ910/grok-1788046178397-removebg-preview.png"
+        alt=""
+    >
 
-        <img
-            class="happy-frame"
-            src="https://i.ibb.co/jmGQ910/grok-1788046178397-removebg-preview.png"
-            alt=""
-        >
-
-        <div class="heart">
-            ❤️
-        </div>
-
+    <div class="heart">
+        ❤️
     </div>
 
+</div>
 
 
-    <!-- ==================================================
-         CUOCO
-    ================================================== -->
+<!-- CUOCO -->
 
-    <div id="cook">
+<div id="cook">
 
-        <img
-            class="active"
-            src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-            alt=""
-        >
+    <img
+        class="active"
+        src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
+        alt=""
+    >
 
-        <img
-            src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
-            alt=""
-        >
+    <img
+        src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
+        alt=""
+    >
 
-        <img
-            src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
-            alt=""
-        >
+    <img
+        src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
+        alt=""
+    >
 
-        <img
-            src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
-            alt=""
-        >
+    <img
+        src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
+        alt=""
+    >
 
-        <img
-            src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-            alt=""
-        >
+    <img
+        src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
+        alt=""
+    >
 
-    </div>
+</div>
 
 
 </div>
 
 </div>
-
 
 
 <script>
 
 
 /* ==================================================
-   REGOLAZIONE HITBOX
+   HITBOX
 ================================================== */
 
 const HIT_X = 5;
@@ -814,50 +748,6 @@ const HIT_X = 5;
 const HIT_Y = 0;
 
 const HIT_POSITION_Y = 0.45;
-
-
-
-/* ==================================================
-   6 CORSIE INVISIBILI
-================================================== */
-
-/*
-   Tutte le corsie sono nel corridoio
-   tra i tavoli della fila sinistra
-   e quelli della fila destra.
-
-   I valori sono percentuali della
-   larghezza del gioco.
-
-   NON vengono disegnate sullo schermo.
-*/
-
-const LANES = [
-
-    40,
-
-    44,
-
-    47,
-
-    53,
-
-    56,
-
-    60
-
-];
-
-
-
-/* ==================================================
-   PUNTO DI INGRESSO DALLA PORTA
-================================================== */
-
-const ENTRANCE_X = 50;
-
-const ENTRANCE_Y = 18;
-
 
 
 /* ==================================================
@@ -878,9 +768,7 @@ let firstAttackTimer = null;
 
 let kitchenDamageTimer = null;
 
-
 let kitchenEnergy = 100;
-
 
 let customer1AtKitchen = false;
 
@@ -888,13 +776,11 @@ let customer2AtKitchen = false;
 
 let customer3AtKitchen = false;
 
-
 let customer1HP = 50;
 
 let customer2HP = 50;
 
 let customer3HP = 50;
-
 
 let customer1Satisfied = false;
 
@@ -903,57 +789,71 @@ let customer2Satisfied = false;
 let customer3Satisfied = false;
 
 
-
 /* ==================================================
-   POSIZIONE CORSIA CLIENTI
-================================================== */
-
-let customer1Lane = null;
-
-let customer2Lane = null;
-
-let customer3Lane = null;
-
-
-
-/* ==================================================
-   SCEGLI CORSIA CASUALE
-================================================== */
-
-function chooseRandomLane() {
-
-    return LANES[
-        Math.floor(
-            Math.random() *
-            LANES.length
-        )
-    ];
-
-}
-
-
-
-/* ==================================================
-   ASSEGNA LE 3 CORSIE
+   ASSEGNAZIONE CORSIE
 ================================================== */
 
 function assignCustomerLanes() {
 
+    const lanes = [
+        "lane1",
+        "lane2",
+        "lane3",
+        "lane4",
+        "lane5"
+    ];
 
-    customer1Lane =
-        chooseRandomLane();
+
+    /*
+       Mischiamo le corsie.
+    */
+
+    for (
+        let i = lanes.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() *
+                (i + 1)
+            );
+
+        [
+            lanes[i],
+            lanes[j]
+        ] = [
+            lanes[j],
+            lanes[i]
+        ];
+
+    }
 
 
-    customer2Lane =
-        chooseRandomLane();
+    /*
+       Assegniamo una corsia
+       diversa a ogni cliente.
+    */
+
+    document
+    .getElementById("customer1")
+    .className =
+        "customer " + lanes[0];
 
 
-    customer3Lane =
-        chooseRandomLane();
+    document
+    .getElementById("customer2")
+    .className =
+        "customer " + lanes[1];
 
+
+    document
+    .getElementById("customer3")
+    .className =
+        "customer " + lanes[2];
 
 }
-
 
 
 /* ==================================================
@@ -982,14 +882,11 @@ document
         kitchenEnergy = 100;
 
 
-        customer1AtKitchen =
-            false;
+        customer1AtKitchen = false;
 
-        customer2AtKitchen =
-            false;
+        customer2AtKitchen = false;
 
-        customer3AtKitchen =
-            false;
+        customer3AtKitchen = false;
 
 
         customer1HP = 50;
@@ -999,103 +896,58 @@ document
         customer3HP = 50;
 
 
-        customer1Satisfied =
-            false;
+        customer1Satisfied = false;
 
-        customer2Satisfied =
-            false;
+        customer2Satisfied = false;
 
-        customer3Satisfied =
-            false;
+        customer3Satisfied = false;
+
+
+        const customer1 =
+            document
+            .getElementById("customer1");
+
+
+        const customer2 =
+            document
+            .getElementById("customer2");
+
+
+        const customer3 =
+            document
+            .getElementById("customer3");
+
+
+        customer1.style.display = "block";
+
+        customer2.style.display = "block";
+
+        customer3.style.display = "block";
+
+
+        customer1.classList.remove("satisfied");
+
+        customer2.classList.remove("satisfied");
+
+        customer3.classList.remove("satisfied");
 
 
         /*
-           Ogni partita assegna
-           casualmente una corsia
-           a ciascun cliente.
+           Nuove corsie.
         */
 
         assignCustomerLanes();
 
 
-        const customer1 =
-            document
-            .getElementById(
-                "customer1"
-            );
-
-
-        const customer2 =
-            document
-            .getElementById(
-                "customer2"
-            );
-
-
-        const customer3 =
-            document
-            .getElementById(
-                "customer3"
-            );
-
-
-        customer1.style.display =
-            "block";
-
-
-        customer2.style.display =
-            "block";
-
-
-        customer3.style.display =
-            "block";
-
-
-        customer1.classList
-        .remove(
-            "satisfied"
-        );
-
-
-        customer2.classList
-        .remove(
-            "satisfied"
-        );
-
-
-        customer3.classList
-        .remove(
-            "satisfied"
-        );
-
-
         /*
-           Tutti partono
-           dalla stessa porta.
+           Reset posizione verticale.
         */
 
-        customer1.style.left =
-            ENTRANCE_X + "%";
+        customer1.style.top = "-150px";
 
+        customer2.style.top = "-150px";
 
-        customer2.style.left =
-            ENTRANCE_X + "%";
-
-
-        customer3.style.left =
-            ENTRANCE_X + "%";
-
-
-        customer1.style.top =
-            ENTRANCE_Y + "%";
-
-
-        customer2.style.top =
-            ENTRANCE_Y + "%";
-
-
-        customer3.style.top =
-            ENTRANCE_Y + "%";
+        customer3.style.top = "-150px";
 
 
         /*
@@ -1103,27 +955,18 @@ document
         */
 
         customer1
-        .querySelector(
-            ".happy-frame"
-        )
-        .style.display =
-            "none";
+        .querySelector(".happy-frame")
+        .style.display = "none";
 
 
         customer2
-        .querySelector(
-            ".happy-frame"
-        )
-        .style.display =
-            "none";
+        .querySelector(".happy-frame")
+        .style.display = "none";
 
 
         customer3
-        .querySelector(
-            ".happy-frame"
-        )
-        .style.display =
-            "none";
+        .querySelector(".happy-frame")
+        .style.display = "none";
 
 
         /*
@@ -1132,50 +975,38 @@ document
 
         const walkingFrame3 =
             customer3
-            .querySelector(
-                ".walking-frame"
-            );
+            .querySelector(".walking-frame");
 
 
-        walkingFrame3.classList
-        .remove(
-            "flipped"
-        );
+        walkingFrame3
+        .classList
+        .remove("flipped");
 
 
         /*
-           Riattiviamo il primo
-           frame normale.
+           Reset frame normali.
         */
 
         const normalFrames1 =
             customer1
-            .querySelectorAll(
-                ".frame"
-            );
+            .querySelectorAll(".frame");
 
 
         const normalFrames2 =
             customer2
-            .querySelectorAll(
-                ".frame"
-            );
+            .querySelectorAll(".frame");
 
 
         const normalFrames3 =
             customer3
-            .querySelectorAll(
-                ".frame"
-            );
+            .querySelectorAll(".frame");
 
 
         normalFrames1.forEach(
             function(frame) {
 
                 frame.classList
-                .remove(
-                    "active"
-                );
+                .remove("active");
 
             }
         );
@@ -1185,9 +1016,7 @@ document
             function(frame) {
 
                 frame.classList
-                .remove(
-                    "active"
-                );
+                .remove("active");
 
             }
         );
@@ -1197,9 +1026,7 @@ document
             function(frame) {
 
                 frame.classList
-                .remove(
-                    "active"
-                );
+                .remove("active");
 
             }
         );
@@ -1207,53 +1034,63 @@ document
 
         normalFrames1[0]
         .classList
-        .add(
-            "active"
-        );
+        .add("active");
 
 
         normalFrames2[0]
         .classList
-        .add(
-            "active"
-        );
+        .add("active");
 
 
         normalFrames3[0]
         .classList
-        .add(
-            "active"
-        );
+        .add("active");
 
 
         /*
-           Avviamo il movimento
-           dalla porta alle corsie.
+           Riavvio animazioni.
         */
 
-        startCustomerMovement();
+        customer1.style.animation = "none";
+
+        customer2.style.animation = "none";
+
+        customer3.style.animation = "none";
+
+
+        void customer1.offsetWidth;
+
+        void customer2.offsetWidth;
+
+        void customer3.offsetWidth;
+
+
+        customer1.style.animation =
+            "walkDown 40s linear forwards";
+
+
+        customer2.style.animation =
+            "walkDown 40s linear forwards";
+
+
+        customer3.style.animation =
+            "walkDown 40s linear forwards";
 
 
         document
-        .getElementById(
-            "kitchen"
-        )
+        .getElementById("kitchen")
         .style.display =
             "block";
 
 
         document
-        .getElementById(
-            "kitchenDamaged"
-        )
+        .getElementById("kitchenDamaged")
         .style.display =
             "none";
 
 
         document
-        .getElementById(
-            "kitchenDestroyed"
-        )
+        .getElementById("kitchenDestroyed")
         .style.display =
             "none";
 
@@ -1275,180 +1112,6 @@ document
 );
 
 
-
-/* ==================================================
-   MOVIMENTO CLIENTI
-================================================== */
-
-/*
-   FASE 1:
-   partono tutti dalla porta.
-
-   FASE 2:
-   ognuno raggiunge la propria
-   corsia casuale.
-
-   FASE 3:
-   continua dritto verso la cucina.
-*/
-
-function startCustomerMovement() {
-
-
-    const customer1 =
-        document.getElementById(
-            "customer1"
-        );
-
-
-    const customer2 =
-        document.getElementById(
-            "customer2"
-        );
-
-
-    const customer3 =
-        document.getElementById(
-            "customer3"
-        );
-
-
-    moveCustomer(
-        customer1,
-        customer1Lane,
-        0
-    );
-
-
-    moveCustomer(
-        customer2,
-        customer2Lane,
-        700
-    );
-
-
-    moveCustomer(
-        customer3,
-        customer3Lane,
-        1400
-    );
-
-}
-
-
-
-/* ==================================================
-   MOVIMENTO SINGOLO CLIENTE
-================================================== */
-
-function moveCustomer(
-    customer,
-    lane,
-    delay
-) {
-
-
-    setTimeout(
-        function() {
-
-
-            if (
-                !customer ||
-                customer.classList
-                .contains("satisfied")
-            ) {
-
-                return;
-
-            }
-
-
-            /*
-               Punto di ingresso.
-            */
-
-            const startX =
-                ENTRANCE_X;
-
-
-            const startY =
-                ENTRANCE_Y;
-
-
-            /*
-               Punto dove termina
-               l'ingresso nella corsia.
-            */
-
-            const laneX =
-                lane;
-
-
-            /*
-               Il cliente prima si sposta
-               orizzontalmente verso la corsia.
-            */
-
-            customer.style.left =
-                startX + "%";
-
-
-            customer.style.top =
-                startY + "%";
-
-
-            customer.style.transition =
-                "left 1.2s linear";
-
-
-            void customer.offsetWidth;
-
-
-            customer.style.left =
-                laneX + "%";
-
-
-            /*
-               Dopo aver raggiunto la corsia,
-               parte il movimento verticale
-               verso la cucina.
-            */
-
-            setTimeout(
-                function() {
-
-
-                    if (
-                        customer.classList
-                        .contains("satisfied")
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    customer.style.transition =
-                        "top 24s linear";
-
-
-                    customer.style.top =
-                        "69%";
-
-
-                },
-                1200
-            );
-
-
-        },
-        delay
-    );
-
-}
-
-
-
 /* ==================================================
    CUCINA
 ================================================== */
@@ -1460,30 +1123,20 @@ function updateKitchenEnergy() {
         kitchenEnergy > 50
     ) {
 
-
         document
-        .getElementById(
-            "kitchen"
-        )
+        .getElementById("kitchen")
         .style.display =
             "block";
 
-
         document
-        .getElementById(
-            "kitchenDamaged"
-        )
+        .getElementById("kitchenDamaged")
         .style.display =
             "none";
 
-
         document
-        .getElementById(
-            "kitchenDestroyed"
-        )
+        .getElementById("kitchenDestroyed")
         .style.display =
             "none";
-
 
     }
 
@@ -1491,63 +1144,43 @@ function updateKitchenEnergy() {
         kitchenEnergy > 20
     ) {
 
-
         document
-        .getElementById(
-            "kitchen"
-        )
+        .getElementById("kitchen")
         .style.display =
             "none";
 
-
         document
-        .getElementById(
-            "kitchenDamaged"
-        )
+        .getElementById("kitchenDamaged")
         .style.display =
             "block";
 
-
         document
-        .getElementById(
-            "kitchenDestroyed"
-        )
+        .getElementById("kitchenDestroyed")
         .style.display =
             "none";
-
 
     }
 
     else {
 
-
         document
-        .getElementById(
-            "kitchen"
-        )
+        .getElementById("kitchen")
         .style.display =
             "none";
 
-
         document
-        .getElementById(
-            "kitchenDamaged"
-        )
+        .getElementById("kitchenDamaged")
         .style.display =
             "none";
 
-
         document
-        .getElementById(
-            "kitchenDestroyed"
-        )
+        .getElementById("kitchenDestroyed")
         .style.display =
             "block";
 
     }
 
 }
-
 
 
 /* ==================================================
@@ -1610,9 +1243,7 @@ function startKitchenEnergySystem() {
                 damage > 0
             ) {
 
-
-                kitchenEnergy -=
-                    damage;
+                kitchenEnergy -= damage;
 
 
                 if (
@@ -1628,13 +1259,11 @@ function startKitchenEnergySystem() {
 
             }
 
-
         },
         5000
     );
 
 }
-
 
 
 /* ==================================================
@@ -1647,16 +1276,13 @@ function startCustomerKitchenDetection() {
     setTimeout(
         function() {
 
-
             if (
                 !customer1Satisfied
             ) {
 
-                customer1AtKitchen =
-                    true;
+                customer1AtKitchen = true;
 
             }
-
 
         },
         26000
@@ -1665,17 +1291,14 @@ function startCustomerKitchenDetection() {
 
     setTimeout(
         function() {
-
 
             if (
                 !customer2Satisfied
             ) {
 
-                customer2AtKitchen =
-                    true;
+                customer2AtKitchen = true;
 
             }
-
 
         },
         26000
@@ -1685,16 +1308,13 @@ function startCustomerKitchenDetection() {
     setTimeout(
         function() {
 
-
             if (
                 !customer3Satisfied
             ) {
 
-                customer3AtKitchen =
-                    true;
+                customer3AtKitchen = true;
 
             }
-
 
         },
         26000
@@ -1703,20 +1323,16 @@ function startCustomerKitchenDetection() {
 }
 
 
-
 /* ==================================================
-   CLIENTE VISIBILE
+   VISIBILITÀ
 ================================================== */
 
-function customerIsVisible(
-    customer
-) {
+function customerIsVisible(customer) {
 
 
     if (
         !customer ||
-        customer.style.display ===
-            "none"
+        customer.style.display === "none"
     ) {
 
         return false;
@@ -1731,9 +1347,7 @@ function customerIsVisible(
 
     const game =
         document
-        .getElementById(
-            "game"
-        );
+        .getElementById("game");
 
 
     const gameRect =
@@ -1752,7 +1366,6 @@ function customerIsVisible(
     );
 
 }
-
 
 
 /* ==================================================
@@ -1780,23 +1393,17 @@ function startFirstAttackDetection() {
 
             const c1 =
                 document
-                .getElementById(
-                    "customer1"
-                );
+                .getElementById("customer1");
 
 
             const c2 =
                 document
-                .getElementById(
-                    "customer2"
-                );
+                .getElementById("customer2");
 
 
             const c3 =
                 document
-                .getElementById(
-                    "customer3"
-                );
+                .getElementById("customer3");
 
 
             if (
@@ -1804,14 +1411,11 @@ function startFirstAttackDetection() {
                 !customer1Satisfied
             ) {
 
-
                 playCookAttack();
-
 
                 clearInterval(
                     firstAttackTimer
                 );
-
 
                 return;
 
@@ -1823,14 +1427,11 @@ function startFirstAttackDetection() {
                 !customer2Satisfied
             ) {
 
-
                 playCookAttack();
-
 
                 clearInterval(
                     firstAttackTimer
                 );
-
 
                 return;
 
@@ -1842,26 +1443,21 @@ function startFirstAttackDetection() {
                 !customer3Satisfied
             ) {
 
-
                 playCookAttack();
-
 
                 clearInterval(
                     firstAttackTimer
                 );
 
-
                 return;
 
             }
-
 
         },
         100
     );
 
 }
-
 
 
 /* ==================================================
@@ -1894,44 +1490,29 @@ function startCustomerAnimation() {
         function() {
 
 
-            /*
-               CLIENTE 1
-            */
-
             if (
                 !customer1Satisfied
             ) {
 
-
                 const frames =
                     document
-                    .getElementById(
-                        "customer1"
-                    )
-                    .querySelectorAll(
-                        ".frame"
-                    );
+                    .getElementById("customer1")
+                    .querySelectorAll(".frame");
 
 
                 frames.forEach(
                     function(frame) {
 
                         frame.classList
-                        .remove(
-                            "active"
-                        );
+                        .remove("active");
 
                     }
                 );
 
 
-                frames[
-                    customerFrame1
-                ]
+                frames[customerFrame1]
                 .classList
-                .add(
-                    "active"
-                );
+                .add("active");
 
 
                 customerFrame1++;
@@ -1949,45 +1530,29 @@ function startCustomerAnimation() {
             }
 
 
-
-            /*
-               CLIENTE 2
-            */
-
             if (
                 !customer2Satisfied
             ) {
 
-
                 const frames =
                     document
-                    .getElementById(
-                        "customer2"
-                    )
-                    .querySelectorAll(
-                        ".frame"
-                    );
+                    .getElementById("customer2")
+                    .querySelectorAll(".frame");
 
 
                 frames.forEach(
                     function(frame) {
 
                         frame.classList
-                        .remove(
-                            "active"
-                        );
+                        .remove("active");
 
                     }
                 );
 
 
-                frames[
-                    customerFrame2
-                ]
+                frames[customerFrame2]
                 .classList
-                .add(
-                    "active"
-                );
+                .add("active");
 
 
                 customerFrame2++;
@@ -2005,42 +1570,25 @@ function startCustomerAnimation() {
             }
 
 
-
-            /*
-               CLIENTE 3
-
-               Originale -> specchio
-               -> originale -> specchio
-            */
-
             if (
                 !customer3Satisfied
             ) {
 
-
                 const walkingFrame =
                     document
-                    .getElementById(
-                        "customer3"
-                    )
-                    .querySelector(
-                        ".walking-frame"
-                    );
+                    .getElementById("customer3")
+                    .querySelector(".walking-frame");
 
 
                 if (
                     walkingFrame
                     .classList
-                    .contains(
-                        "flipped"
-                    )
+                    .contains("flipped")
                 ) {
 
                     walkingFrame
                     .classList
-                    .remove(
-                        "flipped"
-                    );
+                    .remove("flipped");
 
                 }
 
@@ -2048,14 +1596,11 @@ function startCustomerAnimation() {
 
                     walkingFrame
                     .classList
-                    .add(
-                        "flipped"
-                    );
+                    .add("flipped");
 
                 }
 
             }
-
 
         },
         300
@@ -2064,48 +1609,34 @@ function startCustomerAnimation() {
 }
 
 
-
 /* ==================================================
    FRAME CUOCO
 ================================================== */
 
-function setCookFrame(
-    frameNumber
-) {
+function setCookFrame(frameNumber) {
 
 
     const frames =
         document
-        .getElementById(
-            "cook"
-        )
-        .querySelectorAll(
-            "img"
-        );
+        .getElementById("cook")
+        .querySelectorAll("img");
 
 
     frames.forEach(
         function(frame) {
 
             frame.classList
-            .remove(
-                "active"
-            );
+            .remove("active");
 
         }
     );
 
 
-    frames[
-        frameNumber
-    ]
+    frames[frameNumber]
     .classList
-    .add(
-        "active"
-    );
+    .add("active");
 
 }
-
 
 
 /* ==================================================
@@ -2135,9 +1666,7 @@ function playCookAttack() {
 
     setTimeout(
         function() {
-
             setCookFrame(1);
-
         },
         120
     );
@@ -2145,9 +1674,7 @@ function playCookAttack() {
 
     setTimeout(
         function() {
-
             setCookFrame(2);
-
         },
         240
     );
@@ -2156,14 +1683,9 @@ function playCookAttack() {
     setTimeout(
         function() {
 
-
             setCookFrame(3);
 
-
-            throwPasta(
-                target
-            );
-
+            throwPasta(target);
 
         },
         360
@@ -2172,9 +1694,7 @@ function playCookAttack() {
 
     setTimeout(
         function() {
-
             setCookFrame(4);
-
         },
         480
     );
@@ -2182,15 +1702,12 @@ function playCookAttack() {
 
     setTimeout(
         function() {
-
             setCookFrame(0);
-
         },
         600
     );
 
 }
-
 
 
 /* ==================================================
@@ -2227,7 +1744,6 @@ function startCookAnimation() {
 }
 
 
-
 /* ==================================================
    CLIENTE PIÙ VICINO
 ================================================== */
@@ -2240,23 +1756,17 @@ function getNearestVisibleCustomer() {
 
     const c1 =
         document
-        .getElementById(
-            "customer1"
-        );
+        .getElementById("customer1");
 
 
     const c2 =
         document
-        .getElementById(
-            "customer2"
-        );
+        .getElementById("customer2");
 
 
     const c3 =
         document
-        .getElementById(
-            "customer3"
-        );
+        .getElementById("customer3");
 
 
     if (
@@ -2300,9 +1810,7 @@ function getNearestVisibleCustomer() {
 
     const cook =
         document
-        .getElementById(
-            "cook"
-        );
+        .getElementById("cook");
 
 
     const cookRect =
@@ -2346,10 +1854,8 @@ function getNearestVisibleCustomer() {
                 nearestDistance
             ) {
 
-
                 nearestDistance =
                     distance;
-
 
                 nearest =
                     customer;
@@ -2365,68 +1871,50 @@ function getNearestVisibleCustomer() {
 }
 
 
-
 /* ==================================================
    LANCIO PASTA
 ================================================== */
 
-function throwPasta(
-    target
-) {
+function throwPasta(target) {
 
 
     if (!target) {
-
         return;
-
     }
 
 
     if (
-        target.id ===
-            "customer1" &&
+        target.id === "customer1" &&
         customer1Satisfied
     ) {
-
         return;
-
     }
 
 
     if (
-        target.id ===
-            "customer2" &&
+        target.id === "customer2" &&
         customer2Satisfied
     ) {
-
         return;
-
     }
 
 
     if (
-        target.id ===
-            "customer3" &&
+        target.id === "customer3" &&
         customer3Satisfied
     ) {
-
         return;
-
     }
 
 
     const cook =
         document
-        .getElementById(
-            "cook"
-        );
+        .getElementById("cook");
 
 
     const game =
         document
-        .getElementById(
-            "game"
-        );
+        .getElementById("game");
 
 
     const gameRect =
@@ -2448,9 +1936,7 @@ function throwPasta(
 
 
     const hitMarker =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
 
     hitMarker.className =
@@ -2463,9 +1949,7 @@ function throwPasta(
 
 
     const pasta =
-        document.createElement(
-            "img"
-        );
+        document.createElement("img");
 
 
     pasta.className =
@@ -2512,9 +1996,7 @@ function throwPasta(
         performance.now();
 
 
-    function movePasta(
-        currentTime
-    ) {
+    function movePasta(currentTime) {
 
 
         const targetRect =
@@ -2589,19 +2071,13 @@ function throwPasta(
             movement
         ) {
 
+            currentX = endX;
 
-            currentX =
-                endX;
-
-
-            currentY =
-                endY;
-
+            currentY = endY;
 
         }
 
         else {
-
 
             currentX +=
                 (
@@ -2699,22 +2175,17 @@ function throwPasta(
 }
 
 
-
 /* ==================================================
    COLPITO
 ================================================== */
 
-function hitCustomer(
-    customer,
-    pasta
-) {
+function hitCustomer(customer, pasta) {
 
 
     if (
         pasta &&
         pasta.parentNode
     ) {
-
 
         pasta.parentNode
         .removeChild(
@@ -2729,13 +2200,10 @@ function hitCustomer(
         "customer1"
     ) {
 
-
         if (
             customer1Satisfied
         ) {
-
             return;
-
         }
 
 
@@ -2758,13 +2226,10 @@ function hitCustomer(
         "customer2"
     ) {
 
-
         if (
             customer2Satisfied
         ) {
-
             return;
-
         }
 
 
@@ -2787,13 +2252,10 @@ function hitCustomer(
         "customer3"
     ) {
 
-
         if (
             customer3Satisfied
         ) {
-
             return;
-
         }
 
 
@@ -2813,7 +2275,6 @@ function hitCustomer(
 }
 
 
-
 /* ==================================================
    CLIENTE 1 SODDISFATTO
 ================================================== */
@@ -2821,19 +2282,14 @@ function hitCustomer(
 function satisfyCustomer1() {
 
 
-    customer1Satisfied =
-        true;
+    customer1Satisfied = true;
 
-
-    customer1AtKitchen =
-        false;
+    customer1AtKitchen = false;
 
 
     const customer =
         document
-        .getElementById(
-            "customer1"
-        );
+        .getElementById("customer1");
 
 
     customer.classList.add(
@@ -2843,18 +2299,14 @@ function satisfyCustomer1() {
 
     const normalFrames =
         customer
-        .querySelectorAll(
-            ".frame"
-        );
+        .querySelectorAll(".frame");
 
 
     normalFrames.forEach(
         function(frame) {
 
             frame.classList
-            .remove(
-                "active"
-            );
+            .remove("active");
 
         }
     );
@@ -2862,9 +2314,7 @@ function satisfyCustomer1() {
 
     const happyFrame =
         customer
-        .querySelector(
-            ".happy-frame"
-        );
+        .querySelector(".happy-frame");
 
 
     happyFrame.style.display =
@@ -2874,21 +2324,17 @@ function satisfyCustomer1() {
     setTimeout(
         function() {
 
-
             customer.style.display =
                 "none";
 
-
             happyFrame.style.display =
                 "none";
-
 
         },
         1000
     );
 
 }
-
 
 
 /* ==================================================
@@ -2898,19 +2344,14 @@ function satisfyCustomer1() {
 function satisfyCustomer2() {
 
 
-    customer2Satisfied =
-        true;
+    customer2Satisfied = true;
 
-
-    customer2AtKitchen =
-        false;
+    customer2AtKitchen = false;
 
 
     const customer =
         document
-        .getElementById(
-            "customer2"
-        );
+        .getElementById("customer2");
 
 
     customer.classList.add(
@@ -2920,18 +2361,14 @@ function satisfyCustomer2() {
 
     const normalFrames =
         customer
-        .querySelectorAll(
-            ".frame"
-        );
+        .querySelectorAll(".frame");
 
 
     normalFrames.forEach(
         function(frame) {
 
             frame.classList
-            .remove(
-                "active"
-            );
+            .remove("active");
 
         }
     );
@@ -2939,9 +2376,7 @@ function satisfyCustomer2() {
 
     const happyFrame =
         customer
-        .querySelector(
-            ".happy-frame"
-        );
+        .querySelector(".happy-frame");
 
 
     happyFrame.style.display =
@@ -2951,21 +2386,17 @@ function satisfyCustomer2() {
     setTimeout(
         function() {
 
-
             customer.style.display =
                 "none";
 
-
             happyFrame.style.display =
                 "none";
-
 
         },
         1000
     );
 
 }
-
 
 
 /* ==================================================
@@ -2975,19 +2406,14 @@ function satisfyCustomer2() {
 function satisfyCustomer3() {
 
 
-    customer3Satisfied =
-        true;
+    customer3Satisfied = true;
 
-
-    customer3AtKitchen =
-        false;
+    customer3AtKitchen = false;
 
 
     const customer =
         document
-        .getElementById(
-            "customer3"
-        );
+        .getElementById("customer3");
 
 
     customer.classList.add(
@@ -2997,18 +2423,14 @@ function satisfyCustomer3() {
 
     const normalFrames =
         customer
-        .querySelectorAll(
-            ".frame"
-        );
+        .querySelectorAll(".frame");
 
 
     normalFrames.forEach(
         function(frame) {
 
             frame.classList
-            .remove(
-                "active"
-            );
+            .remove("active");
 
         }
     );
@@ -3016,9 +2438,7 @@ function satisfyCustomer3() {
 
     const happyFrame =
         customer
-        .querySelector(
-            ".happy-frame"
-        );
+        .querySelector(".happy-frame");
 
 
     happyFrame.style.display =
@@ -3028,14 +2448,11 @@ function satisfyCustomer3() {
     setTimeout(
         function() {
 
-
             customer.style.display =
                 "none";
 
-
             happyFrame.style.display =
                 "none";
-
 
         },
         1000
@@ -3046,4 +2463,4 @@ function satisfyCustomer3() {
 </script>
 
 </body>
-    </html>
+</html>
