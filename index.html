@@ -18,20 +18,14 @@ content="width=device-width, initial-scale=1.0">
 
 html,
 body {
-
     margin: 0;
     padding: 0;
-
     width: 100%;
     height: 100%;
-
     overflow: hidden;
-
     background: #111;
-
     font-family: Arial, sans-serif;
 }
-
 
 /* ==================================================
    TELEFONO
@@ -53,7 +47,6 @@ body {
 
     background: black;
 }
-
 
 /* ==================================================
    MENU
@@ -81,6 +74,7 @@ body {
     position: absolute;
 
     width: 100%;
+
     height: 100%;
 
     object-fit: cover;
@@ -115,7 +109,6 @@ body {
     z-index: 30;
 }
 
-
 /* ==================================================
    GIOCO
 ================================================== */
@@ -140,13 +133,13 @@ body {
     inset: 0;
 
     width: 100%;
+
     height: 100%;
 
     object-fit: cover;
 
     z-index: 0;
 }
-
 
 /* ==================================================
    CUCINA
@@ -190,7 +183,6 @@ body {
     display: none;
 }
 
-
 /* ==================================================
    HUD
 ================================================== */
@@ -217,7 +209,6 @@ body {
 
     z-index: 80;
 }
-
 
 /* ==================================================
    CLIENTI
@@ -250,7 +241,6 @@ body {
     height: 146px;
 }
 
-
 /* ==================================================
    FRAME CLIENTI
 ================================================== */
@@ -260,9 +250,11 @@ body {
     position: absolute;
 
     top: 0;
+
     left: 0;
 
     width: 100%;
+
     height: 100%;
 
     object-fit: contain;
@@ -274,9 +266,8 @@ body {
     display: block;
 }
 
-
 /* ==================================================
-   CLIENTE 3 SPECCHIO
+   CLIENTE 3
 ================================================== */
 
 #customer3 .walking-frame {
@@ -287,7 +278,6 @@ body {
     transform: scaleX(-1);
 }
 
-
 /* ==================================================
    SPRITE FELICE
 ================================================== */
@@ -297,9 +287,11 @@ body {
     position: absolute;
 
     top: 0;
+
     left: 0;
 
     width: 100%;
+
     height: 100%;
 
     object-fit: contain;
@@ -308,7 +300,6 @@ body {
 
     z-index: 2;
 }
-
 
 /* ==================================================
    CUORE
@@ -341,7 +332,9 @@ body {
 }
 
 .customer.satisfied .heart {
+
     display: block;
+
 }
 
 @keyframes heartFloat {
@@ -363,7 +356,6 @@ body {
     }
 }
 
-
 /* ==================================================
    MOVIMENTO CLIENTI
 ================================================== */
@@ -382,7 +374,6 @@ body {
         top: 69%;
     }
 }
-
 
 /* ==================================================
    PERSONAGGI GIOCANTI
@@ -406,7 +397,6 @@ body {
     pointer-events: none;
 }
 
-
 /* ==================================================
    CUOCO
 ================================================== */
@@ -420,9 +410,11 @@ body {
     position: absolute;
 
     top: 0;
+
     left: 0;
 
     width: 100%;
+
     height: 100%;
 
     object-fit: contain;
@@ -433,7 +425,6 @@ body {
 #cook img.active {
     display: block;
 }
-
 
 /* ==================================================
    CAMERIERA
@@ -448,9 +439,11 @@ body {
     position: absolute;
 
     top: 0;
+
     left: 0;
 
     width: 100%;
+
     height: 100%;
 
     object-fit: contain;
@@ -462,7 +455,6 @@ body {
     display: block;
 }
 
-
 /* ==================================================
    PASTA
 ================================================== */
@@ -472,6 +464,7 @@ body {
     position: absolute;
 
     width: 84px;
+
     height: 84px;
 
     object-fit: contain;
@@ -481,21 +474,16 @@ body {
     pointer-events: none;
 }
 
-
 /* ==================================================
    COCKTAIL
 ================================================== */
-
-/*
-   ORA VIENE USATO DIRETTAMENTE
-   IL PNG DEL DRINK
-*/
 
 .cocktail {
 
     position: absolute;
 
     width: 84px;
+
     height: 84px;
 
     object-fit: contain;
@@ -503,8 +491,16 @@ body {
     z-index: 61;
 
     pointer-events: none;
-}
 
+    background-image:
+        url("https://i.ibb.co/QvkZKDkL/Screenshot-20260830-210005-Grok-removebg-preview.png");
+
+    background-repeat: no-repeat;
+
+    background-position: center;
+
+    background-size: contain;
+}
 
 /* ==================================================
    HITBOX INVISIBILE
@@ -515,6 +511,7 @@ body {
     position: absolute;
 
     width: 22px;
+
     height: 22px;
 
     border-radius: 50%;
@@ -537,6 +534,63 @@ body {
     opacity: 0;
 }
 
+/* ==================================================
+   IMPATTO PASTA
+================================================== */
+
+.pasta-impact {
+
+    position: absolute;
+
+    width: 12px;
+
+    height: 12px;
+
+    border-radius: 50%;
+
+    background: #fff4d6;
+
+    box-shadow:
+        0 0 5px #fff,
+        0 0 10px rgba(255,180,80,0.9);
+
+    z-index: 75;
+
+    pointer-events: none;
+
+    transform:
+        translate(-50%, -50%);
+
+    animation:
+        pastaImpact
+        0.3s
+        ease-out
+        forwards;
+}
+
+@keyframes pastaImpact {
+
+    0% {
+
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(0.5);
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            translate(
+                calc(-50% + var(--dx)),
+                calc(-50% + var(--dy))
+            )
+            scale(0.15);
+    }
+}
 
 /* ==================================================
    SCHIZZO COCKTAIL
@@ -547,6 +601,7 @@ body {
     position: absolute;
 
     width: 8px;
+
     height: 8px;
 
     border-radius: 50%;
@@ -594,62 +649,6 @@ body {
     }
 }
 
-
-/* ==================================================
-   IMPATTO PASTA
-================================================== */
-
-.pasta-impact {
-
-    position: absolute;
-
-    width: 12px;
-    height: 12px;
-
-    border-radius: 50%;
-
-    background: #f5c77a;
-
-    box-shadow:
-        0 0 8px rgba(255,210,120,0.9);
-
-    z-index: 75;
-
-    pointer-events: none;
-
-    transform:
-        translate(-50%, -50%)
-        scale(0.5);
-
-    animation:
-        pastaImpact
-        0.25s
-        ease-out
-        forwards;
-}
-
-@keyframes pastaImpact {
-
-    0% {
-
-        opacity: 1;
-
-        transform:
-            translate(-50%, -50%)
-            scale(0.5);
-    }
-
-    100% {
-
-        opacity: 0;
-
-        transform:
-            translate(-50%, -50%)
-            scale(2.5);
-    }
-}
-
-
 /* ==================================================
    RESPONSIVE
 ================================================== */
@@ -659,30 +658,35 @@ body {
     .customer {
 
         width: 65px;
+
         height: 88px;
     }
 
     #customer3 {
 
         width: 72px;
+
         height: 97px;
     }
 
     .player-character {
 
         width: 65px;
+
         height: 88px;
     }
 
     .pasta {
 
         width: 60px;
+
         height: 60px;
     }
 
     .cocktail {
 
         width: 60px;
+
         height: 60px;
     }
 }
@@ -691,12 +695,9 @@ body {
 
 </head>
 
-
 <body>
 
-
 <div id="phone">
-
 
 <!-- ==================================================
      MENU
@@ -715,7 +716,6 @@ body {
     </button>
 
 </div>
-
 
 <!-- ==================================================
      GIOCO
@@ -747,201 +747,188 @@ body {
         alt=""
     >
 
+    <!-- HUD -->
 
-<!-- ==================================================
-     HUD
-================================================== -->
+    <div id="hud">
 
-<div id="hud">
+        <span>❤️ 3</span>
 
-    <span>❤️ 3</span>
+        <span>⭐ 0</span>
 
-    <span>⭐ 0</span>
+    </div>
 
-</div>
+    <!-- CLIENTI -->
 
+    <div id="customers"></div>
 
-<!-- ==================================================
-     CLIENTI
-================================================== -->
+    <!-- ==================================================
+         CLIENTE 1
+    ================================================== -->
 
-<div id="customers"></div>
+    <template id="customer1Template">
 
+        <div class="customer">
 
-<!-- ==================================================
-     CLIENTE 1
-================================================== -->
+            <img
+                class="frame active"
+                src="https://i.ibb.co/xqSsVvcc/Screenshot-20260829-161529-Grok-2-removebg-preview.png"
+                alt=""
+            >
 
-<template id="customer1Template">
+            <img
+                class="frame"
+                src="https://i.ibb.co/4nvV4nPq/Screenshot-20260829-161529-Grok-3-removebg-preview.png"
+                alt=""
+            >
 
-<div class="customer">
+            <img
+                class="happy-frame"
+                src="https://i.ibb.co/mV43yWMM/grok-1788037208959-removebg-preview.png"
+                alt=""
+            >
 
-    <img
-        class="frame active"
-        src="https://i.ibb.co/xqSsVvcc/Screenshot-20260829-161529-Grok-2-removebg-preview.png"
-        alt=""
+            <div class="heart">
+                ❤️
+            </div>
+
+        </div>
+
+    </template>
+
+    <!-- ==================================================
+         CLIENTE 2
+    ================================================== -->
+
+    <template id="customer2Template">
+
+        <div class="customer">
+
+            <img
+                class="frame active"
+                src="https://i.ibb.co/jP6QSPFd/1000040572-removebg-preview.png"
+                alt=""
+            >
+
+            <img
+                class="frame"
+                src="https://i.ibb.co/vxJCRK81/1000040573-removebg-preview.png"
+                alt=""
+            >
+
+            <img
+                class="happy-frame"
+                src="https://i.ibb.co/m5xmJrBq/Screenshot-20260830-060945-Grok-removebg-preview.png"
+                alt=""
+            >
+
+            <div class="heart">
+                ❤️
+            </div>
+
+        </div>
+
+    </template>
+
+    <!-- ==================================================
+         CLIENTE 3
+    ================================================== -->
+
+    <template id="customer3Template">
+
+        <div class="customer">
+
+            <img
+                class="frame walking-frame active"
+                src="https://i.ibb.co/cS3HRnCY/grok-1788046169803-removebg-preview.png"
+                alt=""
+            >
+
+            <img
+                class="happy-frame"
+                src="https://i.ibb.co/jmGQ910/grok-1788046178397-removebg-preview.png"
+                alt=""
+            >
+
+            <div class="heart">
+                ❤️
+            </div>
+
+        </div>
+
+    </template>
+
+    <!-- ==================================================
+         CUOCO
+    ================================================== -->
+
+    <div
+        id="cook"
+        class="player-character"
     >
 
-    <img
-        class="frame"
-        src="https://i.ibb.co/4nvV4nPq/Screenshot-20260829-161529-Grok-3-removebg-preview.png"
-        alt=""
+        <img
+            class="active"
+            src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
+            alt=""
+        >
+
+        <img
+            src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
+            alt=""
+        >
+
+        <img
+            src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
+            alt=""
+        >
+
+        <img
+            src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
+            alt=""
+        >
+
+        <img
+            src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
+            alt=""
+        >
+
+    </div>
+
+    <!-- ==================================================
+         CAMERIERA
+    ================================================== -->
+
+    <div
+        id="waitress"
+        class="player-character"
     >
 
-    <img
-        class="happy-frame"
-        src="https://i.ibb.co/mV43yWMM/grok-1788037208959-removebg-preview.png"
-        alt=""
-    >
+        <img
+            class="active"
+            src="https://i.ibb.co/LzxyLvGj/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
+            alt=""
+        >
 
-    <div class="heart">
-        ❤️
+        <img
+            src="https://i.ibb.co/Y4VhPb8q/Screenshot-20260830-195703-Grok-3-removebg-preview.png"
+            alt=""
+        >
+
+        <img
+            src="https://i.ibb.co/sXTLKH2/1788087630930-removebg-preview.png"
+            alt=""
+        >
+
+        <img
+            src="https://i.ibb.co/LzxyLvGj/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
+            alt=""
+        >
+
     </div>
 
 </div>
 
-</template>
-
-
-<!-- ==================================================
-     CLIENTE 2
-================================================== -->
-
-<template id="customer2Template">
-
-<div class="customer">
-
-    <img
-        class="frame active"
-        src="https://i.ibb.co/jP6QSPFd/1000040572-removebg-preview.png"
-        alt=""
-    >
-
-    <img
-        class="frame"
-        src="https://i.ibb.co/vxJCRK81/1000040573-removebg-preview.png"
-        alt=""
-    >
-
-    <img
-        class="happy-frame"
-        src="https://i.ibb.co/m5xmJrBq/Screenshot-20260830-060945-Grok-removebg-preview.png"
-        alt=""
-    >
-
-    <div class="heart">
-        ❤️
-    </div>
-
 </div>
-
-</template>
-
-
-<!-- ==================================================
-     CLIENTE 3
-================================================== -->
-
-<template id="customer3Template">
-
-<div class="customer">
-
-    <img
-        class="frame walking-frame active"
-        src="https://i.ibb.co/cS3HRnCY/grok-1788046169803-removebg-preview.png"
-        alt=""
-    >
-
-    <img
-        class="happy-frame"
-        src="https://i.ibb.co/jmGQ910/grok-1788046178397-removebg-preview.png"
-        alt=""
-    >
-
-    <div class="heart">
-        ❤️
-    </div>
-
-</div>
-
-</template>
-
-
-<!-- ==================================================
-     CUOCO
-================================================== -->
-
-<div
-    id="cook"
-    class="player-character"
->
-
-    <img
-        class="active"
-        src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-        alt=""
-    >
-
-    <img
-        src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
-        alt=""
-    >
-
-    <img
-        src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
-        alt=""
-    >
-
-    <img
-        src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
-        alt=""
-    >
-
-    <img
-        src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-        alt=""
-    >
-
-</div>
-
-
-<!-- ==================================================
-     CAMERIERA
-================================================== -->
-
-<div
-    id="waitress"
-    class="player-character"
->
-
-    <img
-        class="active"
-        src="https://i.ibb.co/LzxyLvGj/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
-        alt=""
-    >
-
-    <img
-        src="https://i.ibb.co/Y4VhPb8q/Screenshot-20260830-195703-Grok-3-removebg-preview.png"
-        alt=""
-    >
-
-    <img
-        src="https://i.ibb.co/sXTLKH2/1788087630930-removebg-preview.png"
-        alt=""
-    >
-
-    <img
-        src="https://i.ibb.co/LzxyLvGj/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
-        alt=""
-    >
-
-</div>
-
-
-</div>
-
-</div>
-
 
 <script>
 
@@ -955,7 +942,6 @@ const HIT_Y = 0;
 
 const HIT_POSITION_Y = 0.45;
 
-
 /* ==================================================
    SLOT PERSONAGGI
 ================================================== */
@@ -966,7 +952,6 @@ const PLAYER_SLOTS = [
     60,
     80
 ];
-
 
 /* ==================================================
    CORSIE
@@ -980,7 +965,6 @@ const LANES = [
     70
 ];
 
-
 /* ==================================================
    SPAWN
 ================================================== */
@@ -991,10 +975,13 @@ const SPAWN_INTERVAL = 2500;
 
 const WAVE_SIZE = 15;
 
-const WALK_TIME = 60;
+/*
+   CLIENTI PIÙ LENTI
+*/
+
+const WALK_TIME = 75;
 
 const MIN_DISTANCE = 9;
-
 
 /* ==================================================
    DANNO
@@ -1007,7 +994,6 @@ const COOK_ATTACK_INTERVAL = 3000;
 const WAITRESS_DAMAGE = 3;
 
 const WAITRESS_ATTACK_INTERVAL = 2000;
-
 
 /* ==================================================
    VARIABILI
@@ -1031,7 +1017,6 @@ let kitchenDamageTimer = null;
 
 let kitchenEnergy = 100;
 
-
 /* ==================================================
    PLAY
 ================================================== */
@@ -1043,18 +1028,15 @@ document
     startGame
 );
 
-
 function startGame() {
 
     document
     .getElementById("menu")
-    .style.display =
-        "none";
+    .style.display = "none";
 
     document
     .getElementById("game")
-    .style.display =
-        "block";
+    .style.display = "block";
 
     kitchenEnergy = 100;
 
@@ -1068,18 +1050,15 @@ function startGame() {
 
     document
     .getElementById("kitchen")
-    .style.display =
-        "block";
+    .style.display = "block";
 
     document
     .getElementById("kitchenDamaged")
-    .style.display =
-        "none";
+    .style.display = "none";
 
     document
     .getElementById("kitchenDestroyed")
-    .style.display =
-        "none";
+    .style.display = "none";
 
     updateKitchenEnergy();
 
@@ -1095,7 +1074,6 @@ function startGame() {
 
     startWave();
 }
-
 
 /* ==================================================
    TIMER
@@ -1146,7 +1124,6 @@ function clearAllTimers() {
     }
 }
 
-
 /* ==================================================
    WAVE
 ================================================== */
@@ -1181,7 +1158,6 @@ function startWave() {
     );
 }
 
-
 /* ==================================================
    SCELTA CORSIA
 ================================================== */
@@ -1196,14 +1172,15 @@ function chooseLane() {
                     function(c) {
 
                         return (
+
                             c.lane === lane &&
+
                             c.element.style.display !==
                                 "none"
-                        );
 
+                        );
                     }
                 ).length;
-
             }
         );
 
@@ -1213,14 +1190,16 @@ function chooseLane() {
     const available = [];
 
     counts.forEach(
-        function(count, index) {
+        function(
+            count,
+            index
+        ) {
 
             if (count === minimum) {
 
                 available.push(index);
 
             }
-
         }
     );
 
@@ -1235,7 +1214,6 @@ function chooseLane() {
     ];
 }
 
-
 /* ==================================================
    TIPO CLIENTE
 ================================================== */
@@ -1243,12 +1221,13 @@ function chooseLane() {
 function chooseCustomerType() {
 
     return (
+
         Math.floor(
             Math.random() * 3
         ) + 1
+
     );
 }
-
 
 /* ==================================================
    CREA CLIENTE
@@ -1282,20 +1261,21 @@ function spawnCustomer() {
 
         templateId =
             "customer3Template";
+
     }
 
     const template =
-        document.getElementById(
-            templateId
-        );
+        document
+        .getElementById(templateId);
 
     const clone =
-        template.content.cloneNode(true);
+        template
+        .content
+        .cloneNode(true);
 
     const customerElement =
-        clone.querySelector(
-            ".customer"
-        );
+        clone
+        .querySelector(".customer");
 
     const customerData = {
 
@@ -1339,13 +1319,9 @@ function spawnCustomer() {
 
     document
     .getElementById("customers")
-    .appendChild(
-        customerElement
-    );
+    .appendChild(customerElement);
 
-    customers.push(
-        customerData
-    );
+    customers.push(customerData);
 
     requestAnimationFrame(
         function() {
@@ -1357,7 +1333,6 @@ function spawnCustomer() {
         }
     );
 }
-
 
 /* ==================================================
    MOVIMENTO CLIENTE
@@ -1403,7 +1378,6 @@ function moveCustomerToLane(customer) {
     );
 }
 
-
 /* ==================================================
    PULIZIA
 ================================================== */
@@ -1411,15 +1385,13 @@ function moveCustomerToLane(customer) {
 function clearCustomers() {
 
     const container =
-        document.getElementById(
-            "customers"
-        );
+        document
+        .getElementById("customers");
 
     container.innerHTML = "";
 
     customers = [];
 }
-
 
 /* ==================================================
    ANIMAZIONE CLIENTI
@@ -1427,7 +1399,9 @@ function clearCustomers() {
 
 function startCustomerAnimation() {
 
-    if (customerAnimationTimer !== null) {
+    if (
+        customerAnimationTimer !== null
+    ) {
 
         clearInterval(
             customerAnimationTimer
@@ -1441,7 +1415,9 @@ function startCustomerAnimation() {
             customers.forEach(
                 function(customer) {
 
-                    if (customer.satisfied) {
+                    if (
+                        customer.satisfied
+                    ) {
 
                         return;
                     }
@@ -1461,19 +1437,23 @@ function startCustomerAnimation() {
                             parseInt(
                                 customer.element
                                 .dataset
-                                .frame || "0"
+                                .frame ||
+                                "0"
                             );
 
                         frames.forEach(
                             function(frame) {
 
                                 frame.classList
-                                .remove("active");
+                                .remove(
+                                    "active"
+                                );
 
                             }
                         );
 
-                        current++;
+                        current =
+                            current + 1;
 
                         if (
                             current >=
@@ -1493,7 +1473,9 @@ function startCustomerAnimation() {
                             current;
                     }
 
-                    if (customer.type === 3) {
+                    if (
+                        customer.type === 3
+                    ) {
 
                         const walkingFrame =
                             customer.element
@@ -1504,12 +1486,16 @@ function startCustomerAnimation() {
                         if (
                             walkingFrame
                             .classList
-                            .contains("flipped")
+                            .contains(
+                                "flipped"
+                            )
                         ) {
 
                             walkingFrame
                             .classList
-                            .remove("flipped");
+                            .remove(
+                                "flipped"
+                            );
 
                         }
 
@@ -1517,8 +1503,9 @@ function startCustomerAnimation() {
 
                             walkingFrame
                             .classList
-                            .add("flipped");
-
+                            .add(
+                                "flipped"
+                            );
                         }
                     }
                 }
@@ -1531,7 +1518,6 @@ function startCustomerAnimation() {
     );
 }
 
-
 /* ==================================================
    EVITA SOVRAPPOSIZIONE
 ================================================== */
@@ -1543,11 +1529,13 @@ function preventOverlap() {
             function(c) {
 
                 return (
+
                     !c.satisfied &&
+
                     c.element.style.display !==
                         "none"
-                );
 
+                );
             }
         );
 
@@ -1555,11 +1543,13 @@ function preventOverlap() {
         function(lane) {
 
             const laneCustomers =
-                activeCustomers.filter(
+                activeCustomers
+                .filter(
                     function(c) {
 
-                        return c.lane === lane;
-
+                        return (
+                            c.lane === lane
+                        );
                     }
                 );
 
@@ -1625,7 +1615,6 @@ function preventOverlap() {
     );
 }
 
-
 /* ==================================================
    VISIBILITÀ
 ================================================== */
@@ -1634,7 +1623,6 @@ function customerIsVisible(customer) {
 
     if (
         !customer ||
-        customer.satisfied ||
         customer.element.style.display ===
             "none"
     ) {
@@ -1647,17 +1635,23 @@ function customerIsVisible(customer) {
         .getBoundingClientRect();
 
     const game =
-        document.getElementById("game");
+        document
+        .getElementById("game");
 
     const gameRect =
-        game.getBoundingClientRect();
+        game
+        .getBoundingClientRect();
 
     return (
-        rect.bottom > gameRect.top &&
-        rect.top < gameRect.bottom
+
+        rect.bottom >
+            gameRect.top &&
+
+        rect.top <
+            gameRect.bottom
+
     );
 }
-
 
 /* ==================================================
    CUCINA
@@ -1669,18 +1663,15 @@ function updateKitchenEnergy() {
 
         document
         .getElementById("kitchen")
-        .style.display =
-            "block";
+        .style.display = "block";
 
         document
         .getElementById("kitchenDamaged")
-        .style.display =
-            "none";
+        .style.display = "none";
 
         document
         .getElementById("kitchenDestroyed")
-        .style.display =
-            "none";
+        .style.display = "none";
 
     }
 
@@ -1688,18 +1679,15 @@ function updateKitchenEnergy() {
 
         document
         .getElementById("kitchen")
-        .style.display =
-            "none";
+        .style.display = "none";
 
         document
         .getElementById("kitchenDamaged")
-        .style.display =
-            "block";
+        .style.display = "block";
 
         document
         .getElementById("kitchenDestroyed")
-        .style.display =
-            "none";
+        .style.display = "none";
 
     }
 
@@ -1707,29 +1695,27 @@ function updateKitchenEnergy() {
 
         document
         .getElementById("kitchen")
-        .style.display =
-            "none";
+        .style.display = "none";
 
         document
         .getElementById("kitchenDamaged")
-        .style.display =
-            "none";
+        .style.display = "none";
 
         document
         .getElementById("kitchenDestroyed")
-        .style.display =
-            "block";
+        .style.display = "block";
     }
 }
 
-
 /* ==================================================
-   DANNO ALLA CUCINA
+   DANNO CUCINA
 ================================================== */
 
 function startKitchenEnergySystem() {
 
-    if (kitchenDamageTimer !== null) {
+    if (
+        kitchenDamageTimer !== null
+    ) {
 
         clearInterval(
             kitchenDamageTimer
@@ -1739,6 +1725,15 @@ function startKitchenEnergySystem() {
     kitchenDamageTimer =
     setInterval(
         function() {
+
+            /*
+               La cucina NON viene attaccata
+               dai giocatori.
+
+               Questo sistema mantiene solo
+               il danno causato dai clienti
+               già arrivati alla cucina.
+            */
 
             let damage = 0;
 
@@ -1752,7 +1747,6 @@ function startKitchenEnergySystem() {
 
                         damage++;
                     }
-
                 }
             );
 
@@ -1773,7 +1767,6 @@ function startKitchenEnergySystem() {
     );
 }
 
-
 /* ==================================================
    CONTROLLO ARRIVO CLIENTI
 ================================================== */
@@ -1784,7 +1777,9 @@ setInterval(
         customers.forEach(
             function(customer) {
 
-                if (customer.satisfied) {
+                if (
+                    customer.satisfied
+                ) {
 
                     return;
                 }
@@ -1794,12 +1789,12 @@ setInterval(
                     .getBoundingClientRect();
 
                 const game =
-                    document.getElementById(
-                        "game"
-                    );
+                    document
+                    .getElementById("game");
 
                 const gameRect =
-                    game.getBoundingClientRect();
+                    game
+                    .getBoundingClientRect();
 
                 const kitchenLine =
                     gameRect.top +
@@ -1822,14 +1817,15 @@ setInterval(
     200
 );
 
-
 /* ==================================================
    PRIMO ATTACCO
 ================================================== */
 
 function startFirstAttackDetection() {
 
-    if (firstAttackTimer !== null) {
+    if (
+        firstAttackTimer !== null
+    ) {
 
         clearInterval(
             firstAttackTimer
@@ -1845,20 +1841,26 @@ function startFirstAttackDetection() {
 
             if (target) {
 
+                /*
+                   Avviamo entrambi i personaggi.
+                */
+
                 playCookAttack();
+
+                playWaitressAttack();
 
                 clearInterval(
                     firstAttackTimer
                 );
 
-                firstAttackTimer = null;
+                firstAttackTimer =
+                    null;
             }
 
         },
         100
     );
 }
-
 
 /* ==================================================
    FRAME CUOCO
@@ -1888,18 +1890,11 @@ function setCookFrame(frameNumber) {
     }
 }
 
-
 /* ==================================================
    ATTACCO CUOCO
 ================================================== */
 
 function playCookAttack() {
-
-    /*
-       IMPORTANTE:
-       il bersaglio viene scelto
-       SOLO quando parte il lancio.
-    */
 
     const target =
         getNearestCustomerToKitchen();
@@ -1961,14 +1956,15 @@ function playCookAttack() {
     );
 }
 
-
 /* ==================================================
    ATTACCO CUOCO OGNI 3 SECONDI
 ================================================== */
 
 function startCookAnimation() {
 
-    if (cookTimer !== null) {
+    if (
+        cookTimer !== null
+    ) {
 
         clearInterval(
             cookTimer
@@ -1981,13 +1977,22 @@ function startCookAnimation() {
     setInterval(
         function() {
 
-            playCookAttack();
+            /*
+               Se non ci sono clienti,
+               NON viene lanciata pasta.
+            */
+
+            if (
+                getNearestCustomerToKitchen()
+            ) {
+
+                playCookAttack();
+            }
 
         },
         COOK_ATTACK_INTERVAL
     );
 }
-
 
 /* ==================================================
    FRAME CAMERIERA
@@ -2016,7 +2021,6 @@ function setWaitressFrame(frameNumber) {
         .add("active");
     }
 }
-
 
 /* ==================================================
    ATTACCO CAMERIERA
@@ -2075,14 +2079,15 @@ function playWaitressAttack() {
     );
 }
 
-
 /* ==================================================
    ATTACCO CAMERIERA OGNI 2 SECONDI
 ================================================== */
 
 function startWaitressAnimation() {
 
-    if (waitressTimer !== null) {
+    if (
+        waitressTimer !== null
+    ) {
 
         clearInterval(
             waitressTimer
@@ -2095,13 +2100,22 @@ function startWaitressAnimation() {
     setInterval(
         function() {
 
-            playWaitressAttack();
+            /*
+               Se non ci sono clienti,
+               NON viene lanciato il cocktail.
+            */
+
+            if (
+                getNearestCustomerToKitchen()
+            ) {
+
+                playWaitressAttack();
+            }
 
         },
         WAITRESS_ATTACK_INTERVAL
     );
 }
-
 
 /* ==================================================
    CLIENTE PIÙ VICINO ALLA CUCINA
@@ -2109,30 +2123,36 @@ function startWaitressAnimation() {
 
 function getNearestCustomerToKitchen() {
 
-    const active =
+    const visible =
         customers.filter(
             function(customer) {
 
                 return (
-                    !customer.satisfied &&
-                    customerIsVisible(customer)
-                );
 
+                    !customer.satisfied &&
+
+                    customerIsVisible(
+                        customer
+                    )
+
+                );
             }
         );
 
-    if (active.length === 0) {
+    if (
+        visible.length === 0
+    ) {
 
         return null;
     }
 
     const game =
-        document.getElementById(
-            "game"
-        );
+        document
+        .getElementById("game");
 
     const gameRect =
-        game.getBoundingClientRect();
+        game
+        .getBoundingClientRect();
 
     const kitchenLine =
         gameRect.top +
@@ -2144,7 +2164,7 @@ function getNearestCustomerToKitchen() {
     let nearestDistance =
         Infinity;
 
-    active.forEach(
+    visible.forEach(
         function(customer) {
 
             const rect =
@@ -2152,31 +2172,20 @@ function getNearestCustomerToKitchen() {
                 .getBoundingClientRect();
 
             /*
-               Il cliente più vicino alla cucina
-               è quello con il fondo più vicino
-               alla linea della cucina.
-
-               Se è già arrivato alla cucina,
-               la distanza diventa 0 o quasi 0,
-               quindi viene scelto per primo.
+               IMPORTANTE:
+               il cliente già arrivato
+               alla cucina è quello
+               con la distanza minore.
             */
 
-            let distance =
-                kitchenLine -
+            const customerBottom =
                 rect.bottom;
 
-            /*
-               CLIENTE GIÀ ALLA CUCINA
-
-               Non permettiamo che un cliente
-               che ha superato la linea venga
-               considerato più lontano.
-            */
-
-            if (distance < 0) {
-
-                distance = 0;
-            }
+            const distance =
+                Math.abs(
+                    kitchenLine -
+                    customerBottom
+                );
 
             if (
                 distance <
@@ -2189,13 +2198,11 @@ function getNearestCustomerToKitchen() {
                 nearest =
                     customer;
             }
-
         }
     );
 
     return nearest;
 }
-
 
 /* ==================================================
    LANCIO PASTA
@@ -2212,16 +2219,24 @@ function throwPasta(target) {
     }
 
     const cook =
-        document.getElementById("cook");
+        document
+        .getElementById("cook");
 
     const game =
-        document.getElementById("game");
+        document
+        .getElementById("game");
 
     const gameRect =
-        game.getBoundingClientRect();
+        game
+        .getBoundingClientRect();
 
     const cookRect =
-        cook.getBoundingClientRect();
+        cook
+        .getBoundingClientRect();
+
+    /*
+       PARTENZA DALLA MANO
+    */
 
     const startX =
         cookRect.left +
@@ -2233,6 +2248,10 @@ function throwPasta(target) {
         cookRect.height *
         0.32;
 
+    /*
+       HITBOX INVISIBILE
+    */
+
     const hitMarker =
         document.createElement("div");
 
@@ -2240,6 +2259,10 @@ function throwPasta(target) {
         "hit-marker";
 
     game.appendChild(hitMarker);
+
+    /*
+       PASTA
+    */
 
     const pasta =
         document.createElement("img");
@@ -2272,10 +2295,18 @@ function throwPasta(target) {
             42
         ) + "px";
 
-    const speed = 350;
+    const speed =
+        350;
 
     let lastTime =
         performance.now();
+
+    /*
+       IMPORTANTE:
+       target viene fissato quando
+       parte il proiettile.
+       Durante il volo NON cambia.
+    */
 
     function movePasta(currentTime) {
 
@@ -2348,10 +2379,16 @@ function throwPasta(target) {
             speed *
             deltaTime;
 
-        if (distance <= movement) {
+        if (
+            distance <=
+            movement
+        ) {
 
-            currentX = endX;
-            currentY = endY;
+            currentX =
+                endX;
+
+            currentY =
+                endY;
 
         }
 
@@ -2403,7 +2440,8 @@ function throwPasta(target) {
             );
 
         if (
-            remainingDistance <= 3
+            remainingDistance <=
+            3
         ) {
 
             createPastaImpact(
@@ -2435,7 +2473,6 @@ function throwPasta(target) {
     );
 }
 
-
 /* ==================================================
    IMPATTO PASTA
 ================================================== */
@@ -2443,39 +2480,70 @@ function throwPasta(target) {
 function createPastaImpact(x, y) {
 
     const game =
-        document.getElementById(
-            "game"
-        );
+        document
+        .getElementById("game");
 
-    const impact =
-        document.createElement(
-            "div"
-        );
+    const directions = [
 
-    impact.className =
-        "pasta-impact";
+        [-10, -6],
 
-    impact.style.left =
-        x + "px";
+        [-6, -12],
 
-    impact.style.top =
-        y + "px";
+        [0, -15],
 
-    game.appendChild(impact);
+        [7, -11],
 
-    setTimeout(
-        function() {
+        [11, -5],
 
-            if (impact.parentNode) {
+        [7, 5],
 
-                impact.remove();
-            }
+        [-7, 5]
 
-        },
-        300
+    ];
+
+    directions.forEach(
+        function(direction) {
+
+            const particle =
+                document.createElement("div");
+
+            particle.className =
+                "pasta-impact";
+
+            particle.style.left =
+                x + "px";
+
+            particle.style.top =
+                y + "px";
+
+            particle.style.setProperty(
+                "--dx",
+                direction[0] + "px"
+            );
+
+            particle.style.setProperty(
+                "--dy",
+                direction[1] + "px"
+            );
+
+            game.appendChild(particle);
+
+            setTimeout(
+                function() {
+
+                    if (
+                        particle.parentNode
+                    ) {
+
+                        particle.remove();
+                    }
+
+                },
+                320
+            );
+        }
     );
 }
-
 
 /* ==================================================
    LANCIO COCKTAIL
@@ -2492,21 +2560,20 @@ function throwCocktail(target) {
     }
 
     const waitress =
-        document.getElementById(
-            "waitress"
-        );
+        document
+        .getElementById("waitress");
 
     const game =
-        document.getElementById(
-            "game"
-        );
+        document
+        .getElementById("game");
 
     const gameRect =
-        game.getBoundingClientRect();
+        game
+        .getBoundingClientRect();
 
     const waitressRect =
-        waitress.getBoundingClientRect();
-
+        waitress
+        .getBoundingClientRect();
 
     /*
        PARTENZA DALLA MANO
@@ -2522,52 +2589,36 @@ function throwCocktail(target) {
         waitressRect.height *
         0.30;
 
-
     /*
        HITBOX INVISIBILE
     */
 
     const hitMarker =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
     hitMarker.className =
         "hit-marker";
 
-    game.appendChild(
-        hitMarker
-    );
-
+    game.appendChild(hitMarker);
 
     /*
-       DRINK REALE
+       COCKTAIL
+       STESSA DIMENSIONE DELLA PASTA
     */
 
     const cocktail =
-        document.createElement(
-            "img"
-        );
+        document.createElement("div");
 
     cocktail.className =
         "cocktail";
 
-    cocktail.src =
-        "https://i.ibb.co/QvkZKDkL/Screenshot-20260830-210005-Grok-removebg-preview.png";
-
-    cocktail.alt = "";
-
-    game.appendChild(
-        cocktail
-    );
-
+    game.appendChild(cocktail);
 
     let currentX =
         startX;
 
     let currentY =
         startY;
-
 
     cocktail.style.left =
         (
@@ -2583,20 +2634,18 @@ function throwCocktail(target) {
             42
         ) + "px";
 
-
     const speed =
         400;
 
     let lastTime =
         performance.now();
 
+    /*
+       TARGET FISSATO:
+       durante il volo non cambia.
+    */
 
     function moveCocktail(currentTime) {
-
-        /*
-           IL BERSAGLIO NON CAMBIA
-           DURANTE IL VOLO.
-        */
 
         if (
             !target ||
@@ -2610,17 +2659,14 @@ function throwCocktail(target) {
             return;
         }
 
-
         const targetRect =
             target.element
             .getBoundingClientRect();
-
 
         const endX =
             targetRect.left +
             targetRect.width / 2 +
             HIT_X;
-
 
         const endY =
             targetRect.top +
@@ -2628,20 +2674,17 @@ function throwCocktail(target) {
             HIT_POSITION_Y +
             HIT_Y;
 
-
         hitMarker.style.left =
             (
                 endX -
                 gameRect.left
             ) + "px";
 
-
         hitMarker.style.top =
             (
                 endY -
                 gameRect.top
             ) + "px";
-
 
         const deltaTime =
             Math.min(
@@ -2652,20 +2695,16 @@ function throwCocktail(target) {
                 0.05
             );
 
-
         lastTime =
             currentTime;
-
 
         const dx =
             endX -
             currentX;
 
-
         const dy =
             endY -
             currentY;
-
 
         const distance =
             Math.sqrt(
@@ -2673,11 +2712,9 @@ function throwCocktail(target) {
                 dy * dy
             );
 
-
         const movement =
             speed *
             deltaTime;
-
 
         if (
             distance <=
@@ -2709,14 +2746,12 @@ function throwCocktail(target) {
                 movement;
         }
 
-
         cocktail.style.left =
             (
                 currentX -
                 gameRect.left -
                 42
             ) + "px";
-
 
         cocktail.style.top =
             (
@@ -2725,16 +2760,13 @@ function throwCocktail(target) {
                 42
             ) + "px";
 
-
         const remainingX =
             endX -
             currentX;
 
-
         const remainingY =
             endY -
             currentY;
-
 
         const remainingDistance =
             Math.sqrt(
@@ -2743,7 +2775,6 @@ function throwCocktail(target) {
                 remainingY *
                 remainingY
             );
-
 
         if (
             remainingDistance <=
@@ -2754,7 +2785,6 @@ function throwCocktail(target) {
 
             hitMarker.remove();
 
-
             createSplash(
                 endX -
                 gameRect.left,
@@ -2763,40 +2793,34 @@ function throwCocktail(target) {
                 gameRect.top
             );
 
-
             hitCustomer(
                 target,
                 null,
                 WAITRESS_DAMAGE
             );
 
-
             return;
         }
-
 
         requestAnimationFrame(
             moveCocktail
         );
     }
 
-
     requestAnimationFrame(
         moveCocktail
     );
 }
 
-
 /* ==================================================
-   SCHIZZO COCKTAIL
+   SCHIZZO
 ================================================== */
 
 function createSplash(x, y) {
 
     const game =
-        document.getElementById(
-            "game"
-        );
+        document
+        .getElementById("game");
 
     const directions = [
 
@@ -2820,9 +2844,7 @@ function createSplash(x, y) {
         function(direction) {
 
             const drop =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             drop.className =
                 "splash";
@@ -2843,14 +2865,14 @@ function createSplash(x, y) {
                 direction[1] + "px"
             );
 
-            game.appendChild(
-                drop
-            );
+            game.appendChild(drop);
 
             setTimeout(
                 function() {
 
-                    if (drop.parentNode) {
+                    if (
+                        drop.parentNode
+                    ) {
 
                         drop.remove();
                     }
@@ -2861,7 +2883,6 @@ function createSplash(x, y) {
         }
     );
 }
-
 
 /* ==================================================
    COLPITO
@@ -2901,7 +2922,6 @@ function hitCustomer(
     }
 }
 
-
 /* ==================================================
    CLIENTE SODDISFATTO
 ================================================== */
@@ -2917,6 +2937,10 @@ function satisfyCustomer(customer) {
     const element =
         customer.element;
 
+    /*
+       FERMA IL MOVIMENTO
+    */
+
     element.classList.add(
         "satisfied"
     );
@@ -2924,6 +2948,12 @@ function satisfyCustomer(customer) {
     element.style.animation =
         "none";
 
+    element.style.transition =
+        "none";
+
+    /*
+       NASCONDE I FRAME NORMALI
+    */
 
     const normalFrames =
         element
@@ -2935,11 +2965,17 @@ function satisfyCustomer(customer) {
         function(frame) {
 
             frame.classList
-            .remove("active");
+            .remove(
+                "active"
+            );
 
         }
     );
 
+    /*
+       MOSTRA LO SPRITE FELICE
+       SPECIFICO DEL CLIENTE
+    */
 
     const happyFrame =
         element
@@ -2947,13 +2983,45 @@ function satisfyCustomer(customer) {
             ".happy-frame"
         );
 
-
     if (happyFrame) {
 
         happyFrame.style.display =
             "block";
     }
 
+    /*
+       MOSTRA IL CUORE
+    */
+
+    const heart =
+        element
+        .querySelector(
+            ".heart"
+        );
+
+    if (heart) {
+
+        heart.style.display =
+            "block";
+
+        /*
+           Riavvia l'animazione
+           del cuore.
+        */
+
+        heart.style.animation =
+            "none";
+
+        void heart.offsetWidth;
+
+        heart.style.animation =
+            "heartFloat 0.8s ease-in-out infinite alternate";
+    }
+
+    /*
+       DOPO 1 SECONDO
+       IL CLIENTE SCOMPARE
+    */
 
     setTimeout(
         function() {
@@ -2964,6 +3032,12 @@ function satisfyCustomer(customer) {
             if (happyFrame) {
 
                 happyFrame.style.display =
+                    "none";
+            }
+
+            if (heart) {
+
+                heart.style.display =
                     "none";
             }
 
