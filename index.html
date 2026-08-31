@@ -207,7 +207,12 @@ body {
     position: absolute;
     width: 100px;
     height: 135px;
-    top: -130px;
+
+    /* MODIFICA:
+       il cliente nasce dentro la parte nera
+       visibile del background */
+    top: 8%;
+
     z-index: 10;
 }
 
@@ -289,7 +294,9 @@ body {
 @keyframes walkDown {
 
     0% {
-        top: -130px;
+        /* MODIFICA:
+           stesso punto di partenza dentro lo schermo */
+        top: 8%;
     }
 
     100% {
@@ -415,48 +422,23 @@ body {
 }
 
 /* ==================================================
-   PANNELLO POWER UP
+   PANNELLO
 ================================================== */
 
-/*
-   PANNELLO INGANDITO
-
-   Mantiene esattamente il rapporto originale:
-   430 : 560
-
-   Viene utilizzata la dimensione massima possibile
-   compatibile contemporaneamente con larghezza
-   e altezza dello schermo.
-
-   Tutto ciò che si trova dentro il pannello
-   continua ad utilizzare percentuali, quindi
-   cresce insieme al pannello mantenendo
-   le stesse posizioni relative.
-*/
-
 #powerup-panel {
-    position: relative;
-
-    width: 94%;
+    width: 92%;
     max-width: 430px;
-
-    aspect-ratio: 430 / 560;
-
-    height: auto;
-
-    max-height: 92%;
-
+    height: 560px;
     background-image:
         url("https://i.ibb.co/60d5SFdx/1788123346934-removebg-preview.png");
-
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
-
     border: none;
     border-radius: 0;
     box-shadow: none;
     padding: 0;
+    position: relative;
 }
 
 /* ==================================================
@@ -522,10 +504,6 @@ body {
     width: 78%;
     height: 78%;
 }
-
-/* ==================================================
-   POWER-UP CAMERIERA
-================================================== */
 
 .powerup-slot[data-type="waitress"] img {
     width: 68%;
@@ -600,17 +578,9 @@ body {
         font-size: 13px;
     }
 
-    /*
-       Il pannello mantiene il rapporto originale
-       anche su schermi piccoli.
-    */
-
     #powerup-panel {
         width: 94%;
-        max-width: none;
-        height: auto;
-        aspect-ratio: 430 / 560;
-        max-height: 92%;
+        height: 560px;
     }
 
 }
@@ -622,10 +592,6 @@ body {
 <body>
 
 <div id="phone">
-
-<!-- ==================================================
-     MENU
-================================================== -->
 
 <div id="menu">
 
@@ -640,10 +606,6 @@ body {
     </button>
 
 </div>
-
-<!-- ==================================================
-     GIOCO
-================================================== -->
 
 <div id="game">
 
@@ -671,10 +633,6 @@ body {
         alt=""
     >
 
-    <!-- ==================================================
-         HUD
-    ================================================== -->
-
     <div id="hud">
 
         <span>❤️ 3</span>
@@ -682,10 +640,6 @@ body {
         <span>⭐ 0</span>
 
     </div>
-
-    <!-- ==================================================
-         CLIENTE 1
-    ================================================== -->
 
     <div
         id="customer1Template"
@@ -717,10 +671,6 @@ body {
 
     </div>
 
-    <!-- ==================================================
-         CLIENTE 2
-    ================================================== -->
-
     <div
         id="customer2Template"
         class="customer customer-template"
@@ -750,10 +700,6 @@ body {
         </div>
 
     </div>
-
-    <!-- ==================================================
-         CUOCO - ZONA 2
-    ================================================== -->
 
     <div id="cook">
 
@@ -785,10 +731,6 @@ body {
 
     </div>
 
-    <!-- ==================================================
-         CAMERIERA - ZONA 3
-    ================================================== -->
-
     <div id="waitress">
 
         <img
@@ -814,10 +756,6 @@ body {
 
     </div>
 
-    <!-- ==================================================
-         BARRA ESPERIENZA
-    ================================================== -->
-
     <div id="exp-bar">
 
         <div id="exp-fill"></div>
@@ -827,10 +765,6 @@ body {
         </div>
 
     </div>
-
-    <!-- ==================================================
-         POWER UP SCREEN
-    ================================================== -->
 
     <div id="powerup-overlay">
 
@@ -1624,7 +1558,10 @@ function spawnCustomer(
         "satisfied"
     );
 
-    customer.style.top = "-130px";
+    /* MODIFICA:
+       il cliente viene creato dentro
+       la zona nera visibile */
+    customer.style.top = "8%";
 
     let laneIndex;
 
