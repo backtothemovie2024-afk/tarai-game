@@ -32,18 +32,12 @@ body {
 ================================================== */
 
 #phone {
-
     position: relative;
-
     width: min(100vw, 56.25vh);
     height: min(100vh, 177.7778vw);
-
     aspect-ratio: 9 / 16;
-
     margin: auto;
-
     overflow: hidden;
-
     background: black;
 }
 
@@ -53,62 +47,36 @@ body {
 ================================================== */
 
 #menu {
-
     position: absolute;
-
     inset: 0;
-
     background: black;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     z-index: 100;
 }
 
-
 #cover {
-
     position: absolute;
-
     width: 100%;
     height: 100%;
-
     object-fit: cover;
-
     z-index: 10;
 }
 
-
 #playButton {
-
     position: absolute;
-
     bottom: 12%;
-
     width: 60%;
-
     max-width: 240px;
-
     height: 70px;
-
     border: none;
-
     border-radius: 18px;
-
     background: #ef6428;
-
     color: white;
-
     font-size: 28px;
-
     font-weight: bold;
-
     z-index: 30;
-
 }
 
 
@@ -117,30 +85,19 @@ body {
 ================================================== */
 
 #game {
-
     display: none;
-
     position: absolute;
-
     inset: 0;
-
     overflow: hidden;
-
     background: black;
 }
 
-
 #background {
-
     position: absolute;
-
     inset: 0;
-
     width: 100%;
     height: 100%;
-
     object-fit: cover;
-
     z-index: 0;
 }
 
@@ -152,44 +109,26 @@ body {
 #kitchen,
 #kitchenDamaged,
 #kitchenDestroyed {
-
     position: absolute;
-
     left: 50%;
-
     top: 83%;
-
     width: 115%;
-
     height: auto;
-
-    transform:
-        translate(-50%, -50%);
-
+    transform: translate(-50%, -50%);
     pointer-events: none;
-
     z-index: 50;
 }
 
-
 #kitchen {
-
     display: block;
-
 }
-
 
 #kitchenDamaged {
-
     display: none;
-
 }
 
-
 #kitchenDestroyed {
-
     display: none;
-
 }
 
 
@@ -198,25 +137,15 @@ body {
 ================================================== */
 
 #hud {
-
     position: absolute;
-
     top: 15px;
-
     left: 20px;
-
     right: 20px;
-
     display: flex;
-
     justify-content: space-between;
-
     color: white;
-
     font-size: 22px;
-
     font-weight: bold;
-
     z-index: 80;
 }
 
@@ -226,46 +155,28 @@ body {
 ================================================== */
 
 #exp-bar {
-
     position: absolute;
-
     left: 2.5%;
-
     bottom: 1.5%;
-
     width: 95%;
-
     height: 30px;
-
     background: #321b10;
-
     border: 3px solid #8a512d;
-
     border-radius: 15px;
-
     box-shadow:
         0 4px 0 #160b07,
         0 6px 12px rgba(0,0,0,0.6),
         inset 0 2px 3px rgba(255,255,255,0.18);
-
     overflow: hidden;
-
     z-index: 200;
 }
 
-
 #exp-fill {
-
     position: absolute;
-
     left: 0;
-
     top: 0;
-
     width: 0%;
-
     height: 100%;
-
     background:
         linear-gradient(
             180deg,
@@ -273,39 +184,23 @@ body {
             #f5a623 50%,
             #d96b16
         );
-
     border-radius: 10px;
-
     z-index: 1;
-
-    transition:
-        width 0.35s ease-out;
+    transition: width 0.35s ease-out;
 }
 
-
 #exp-level {
-
     position: absolute;
-
     inset: 0;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     color: white;
-
     font-size: 14px;
-
     font-weight: 900;
-
     text-shadow:
         2px 2px 3px #000;
-
     z-index: 2;
-
     pointer-events: none;
 }
 
@@ -315,158 +210,96 @@ body {
 ================================================== */
 
 .customer {
-
     position: absolute;
-
     width: 100px;
-
     height: 135px;
-
     top: -130px;
-
     z-index: 10;
 }
 
-
 .customer.walking {
-
     animation:
-
         walkDown
-
         60s
-
         linear
-
         forwards;
-
 }
-
 
 .customer.satisfied {
-
     animation: none !important;
-
 }
-
 
 .customer .frame {
-
     position: absolute;
-
     top: 0;
-
     left: 0;
-
     width: 100%;
-
     height: 100%;
-
     object-fit: contain;
-
     display: none;
-
 }
-
 
 .customer .frame.active {
-
     display: block;
-
 }
-
 
 .customer .happy-frame {
-
     position: absolute;
-
     top: 0;
-
     left: 0;
-
     width: 100%;
-
     height: 100%;
-
     object-fit: contain;
-
     display: none;
-
     z-index: 2;
-
 }
 
-
 .heart {
-
     position: absolute;
-
     left: 50%;
-
     top: -18px;
-
-    transform:
-        translateX(-50%);
-
+    transform: translateX(-50%);
     font-size: 24px;
-
     line-height: 1;
-
     z-index: 5;
-
     display: none;
-
     animation:
         heartFloat
         0.8s
         ease-in-out
         infinite alternate;
-
 }
-
 
 .customer.satisfied .heart {
-
     display: block;
-
 }
-
 
 @keyframes heartFloat {
 
     0% {
-
         transform:
             translateX(-50%)
             translateY(0)
             scale(1);
-
     }
 
     100% {
-
         transform:
             translateX(-50%)
             translateY(-7px)
             scale(1.12);
-
     }
 
 }
 
-
 @keyframes walkDown {
 
     0% {
-
         top: -130px;
-
     }
 
     100% {
-
         top: 69%;
-
     }
 
 }
@@ -477,48 +310,27 @@ body {
 ================================================== */
 
 #cook {
-
     position: absolute;
-
     left: 43%;
-
     bottom: 7%;
-
     width: 100px;
-
     height: 135px;
-
-    transform:
-        translateX(-50%);
-
+    transform: translateX(-50%);
     z-index: 60;
-
 }
-
 
 #cook img {
-
     position: absolute;
-
     top: 0;
-
     left: 0;
-
     width: 100%;
-
     height: 100%;
-
     object-fit: contain;
-
     display: none;
-
 }
 
-
 #cook img.active {
-
     display: block;
-
 }
 
 
@@ -527,19 +339,12 @@ body {
 ================================================== */
 
 .pasta {
-
     position: absolute;
-
     width: 84px;
-
     height: 84px;
-
     object-fit: contain;
-
     z-index: 70;
-
     pointer-events: none;
-
 }
 
 
@@ -548,40 +353,25 @@ body {
 ================================================== */
 
 .hit-marker {
-
     position: absolute;
-
     width: 22px;
-
     height: 22px;
-
     border-radius: 50%;
-
     background: red;
-
     border: 3px solid white;
-
     box-shadow:
-
         0 0 8px red,
-
-        0 0 15px
-        rgba(255,0,0,0.8);
-
-    transform:
-        translate(-50%, -50%);
-
+        0 0 15px rgba(255,0,0,0.8);
+    transform: translate(-50%, -50%);
     z-index: 90;
-
     pointer-events: none;
-
     opacity: 0;
-
 }
 
 
 /* ==================================================
    POWER UP
+   SOLO PANNELLO NUOVO
 ================================================== */
 
 #powerup-overlay {
@@ -605,256 +395,54 @@ body {
 
 
 /*
-   IL NUOVO PANNELLO USA LA GRAFICA
-   FORNITA COME SFONDO.
+   NUOVO PANNELLO
 
-   Le dimensioni rimangono quelle
-   del pannello originale.
+   L'immagine viene usata esclusivamente
+   come pannello di sfondo.
+
+   Nessuna vecchia card,
+   nessuna vecchia immagine,
+   nessuna vecchia scritta.
 */
 
 #powerup-panel {
-
-    position: relative;
 
     width: 92%;
 
     max-width: 430px;
 
-    padding: 18px 12px 20px;
+    height: 560px;
 
-    border-radius: 20px;
+    background-image:
+        url("https://i.ibb.co/60d5SFdx/1788123346934-removebg-preview.png");
 
-    overflow: hidden;
+    background-repeat: no-repeat;
 
-}
+    background-position: center;
 
-
-/* ==================================================
-   GRAFICA NUOVO PANNELLO
-================================================== */
-
-#powerup-panel-background {
-
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-
-    height: 100%;
-
-    object-fit: fill;
-
-    z-index: 1;
-
-    pointer-events: none;
-
-}
-
-
-/* ==================================================
-   CONTENITORE DEI 3 POWER UP
-================================================== */
-
-#powerup-options {
-
-    position: relative;
-
-    z-index: 2;
-
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 8px;
-
-    justify-content: center;
-
-    align-items: stretch;
-
-}
-
-
-/* ==================================================
-   SINGOLO RIQUADRO POWER UP
-================================================== */
-
-.powerup-card {
-
-    position: relative;
-
-    width: 100%;
-
-    min-width: 0;
-
-    padding: 7px;
-
-    margin: 0;
+    background-size: 100% 100%;
 
     border: none;
 
-    border-radius: 12px;
-
-    background: transparent;
+    border-radius: 0;
 
     box-shadow: none;
 
-    cursor: pointer;
-
-    text-align: center;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: flex-start;
-
-    overflow: hidden;
-
-    transition:
-        transform 0.12s ease,
-        filter 0.12s ease;
-
-}
-
-
-.powerup-card:active {
-
-    transform:
-        translateY(3px);
-
-    filter: brightness(1.2);
-
-}
-
-
-/* ==================================================
-   IMMAGINE POWER UP
-================================================== */
-
-.powerup-image-box {
+    padding: 0;
 
     position: relative;
 
-    width: 100%;
-
-    aspect-ratio: 1 / 1;
-
-    border-radius: 9px;
-
-    background: transparent;
-
-    border: none;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    overflow: hidden;
-
 }
 
 
-.powerup-image-box img {
+/*
+   Il contenitore delle opzioni rimane completamente
+   vuoto: non vengono più create immagini o scritte.
+*/
 
-    display: block;
+#powerup-options {
 
-    width: 100%;
-
-    height: 100%;
-
-    max-width: 100%;
-
-    max-height: 100%;
-
-    object-fit: contain;
-
-}
-
-
-/* ==================================================
-   NOME POWER UP
-================================================== */
-
-.powerup-name {
-
-    width: 100%;
-
-    margin-top: 5px;
-
-    color: #ffe7a0;
-
-    font-size: 11px;
-
-    font-weight: 900;
-
-    line-height: 1.1;
-
-    text-align: center;
-
-    text-shadow:
-        2px 2px 3px #000;
-
-}
-
-
-/* ==================================================
-   DESCRIZIONE POWER UP
-================================================== */
-
-.powerup-description {
-
-    width: 100%;
-
-    margin-top: 3px;
-
-    min-height: 27px;
-
-    color: white;
-
-    font-size: 9px;
-
-    font-weight: bold;
-
-    line-height: 1.15;
-
-    text-align: center;
-
-    text-shadow:
-        1px 1px 2px #000;
-
-}
-
-
-/* ==================================================
-   LIVELLO POWER UP
-================================================== */
-
-.powerup-level {
-
-    width: 100%;
-
-    margin-top: 4px;
-
-    color: #ffe477;
-
-    font-size: 10px;
-
-    font-weight: 900;
-
-    line-height: 1;
-
-    text-align: center;
-
-    text-shadow:
-        1px 1px 2px #000;
+    display: none;
 
 }
 
@@ -864,9 +452,7 @@ body {
 ================================================== */
 
 #game.powerup-paused * {
-
     animation-play-state: paused !important;
-
 }
 
 
@@ -917,45 +503,7 @@ body {
 
         width: 94%;
 
-        padding:
-            14px 8px 16px;
-
-    }
-
-
-    #powerup-options {
-
-        gap: 6px;
-
-    }
-
-
-    .powerup-card {
-
-        padding: 5px;
-
-    }
-
-
-    .powerup-name {
-
-        font-size: 10px;
-
-    }
-
-
-    .powerup-description {
-
-        font-size: 8px;
-
-        min-height: 24px;
-
-    }
-
-
-    .powerup-level {
-
-        font-size: 9px;
+        height: 560px;
 
     }
 
@@ -985,9 +533,7 @@ body {
     >
 
     <button id="playButton">
-
         PLAY
-
     </button>
 
 </div>
@@ -1175,16 +721,6 @@ body {
 
         <div id="powerup-panel">
 
-            <!-- NUOVA GRAFICA DEL PANNELLO -->
-
-            <img
-                id="powerup-panel-background"
-                src="https://i.ibb.co/60d5SFdx/1788123346934-removebg-preview.png"
-                alt=""
-            >
-
-            <!-- I 3 POWER UP VENGONO INSERITI QUI -->
-
             <div id="powerup-options"></div>
 
         </div>
@@ -1272,25 +808,6 @@ const MAX_LEVEL = 12;
    POWER UP
 ================================================== */
 
-/*
-   Ogni potenziamento parte da LV 0.
-
-   Pasta:
-   LV1 = 2 paste
-   LV2 = 3 paste
-   LV3 = 4 paste
-
-   Speed:
-   LV1 = +33%
-   LV2 = +66%
-   LV3 = +99%
-
-   Sauce:
-   LV1 = +1 danno
-   LV2 = +2 danno
-   LV3 = +3 danno
-*/
-
 let powerUps = {
 
     pasta: 0,
@@ -1305,51 +822,118 @@ let powerUps = {
 let powerUpPaused = false;
 
 
+
 /* ==================================================
-   IMMAGINI POWER UP
+   MOSTRA POWER UP
 ================================================== */
 
-const POWERUP_DATA = {
+function showPowerUpScreen() {
 
-    pasta: {
+    if (powerUpPaused) {
 
-        name: "PASTA",
-
-        image:
-            "https://i.ibb.co/zwM5xNK/1788123621728-removebg-preview.png",
-
-        description:
-            "More pasta",
-
-    },
-
-
-    speed: {
-
-        name: "SPEED",
-
-        image:
-            "https://i.ibb.co/tP1rgx4D/1788123653567-removebg-preview.png",
-
-        description:
-            "Faster throw",
-
-    },
-
-
-    sauce: {
-
-        name: "SAUCE",
-
-        image:
-            "https://i.ibb.co/pB62NXDf/1788123663443-removebg-preview.png",
-
-        description:
-            "More damage",
+        return;
 
     }
 
-};
+
+    /*
+       Il pannello ora è soltanto l'immagine.
+       Non vengono più generate:
+       - immagini dei power-up
+       - nomi
+       - descrizioni
+       - livelli
+    */
+
+    const options =
+        document.getElementById(
+            "powerup-options"
+        );
+
+
+    options.innerHTML = "";
+
+
+    powerUpPaused = true;
+
+
+    document
+    .getElementById("game")
+    .classList
+    .add(
+        "powerup-paused"
+    );
+
+
+    document
+    .getElementById("powerup-overlay")
+    .style.display =
+        "flex";
+
+}
+
+
+
+/* ==================================================
+   SCELTA POWER UP
+================================================== */
+
+function selectPowerUp(
+    type
+) {
+
+    /*
+       Questa funzione rimane per compatibilità
+       con il sistema precedente.
+    */
+
+    if (
+        !powerUpPaused
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        powerUps[type] >= 3
+    ) {
+
+        return;
+
+    }
+
+
+    powerUps[type]++;
+
+
+    document
+    .getElementById("powerup-overlay")
+    .style.display =
+        "none";
+
+
+    document
+    .getElementById("powerup-options")
+    .innerHTML =
+        "";
+
+
+    powerUpPaused = false;
+
+
+    document
+    .getElementById("game")
+    .classList
+    .remove(
+        "powerup-paused"
+    );
+
+
+    updateEXPBar();
+
+}
 
 
 
@@ -1419,272 +1003,6 @@ function updateEXPBar() {
 
 
 /* ==================================================
-   MOSTRA POWER UP
-================================================== */
-
-function showPowerUpScreen() {
-
-    if (powerUpPaused) {
-
-        return;
-
-    }
-
-
-    const available = [
-
-        "pasta",
-        "speed",
-        "sauce"
-
-    ].filter(
-        function(type) {
-
-            return powerUps[type] < 3;
-
-        }
-    );
-
-
-    if (
-        available.length === 0
-    ) {
-
-        powerUpPaused = false;
-
-        return;
-
-    }
-
-
-    /*
-       Se rimangono meno di 3 potenziamenti
-       disponibili, mostra quelli rimasti.
-    */
-
-    const shuffled =
-        available.sort(
-            function() {
-
-                return Math.random() - 0.5;
-
-            }
-        );
-
-
-    const selected =
-        shuffled.slice(
-            0,
-            Math.min(
-                3,
-                shuffled.length
-            )
-        );
-
-
-    const options =
-        document.getElementById(
-            "powerup-options"
-        );
-
-
-    options.innerHTML = "";
-
-
-    selected.forEach(
-        function(type) {
-
-            const data =
-                POWERUP_DATA[type];
-
-
-            const nextLevel =
-                powerUps[type] + 1;
-
-
-            let effectText = "";
-
-
-            if (
-                type === "pasta"
-            ) {
-
-                effectText =
-                    nextLevel === 1
-                        ? "2 PASTA"
-                        : nextLevel === 2
-                            ? "3 PASTA"
-                            : "4 PASTA";
-
-            }
-
-
-            if (
-                type === "speed"
-            ) {
-
-                effectText =
-                    "+" +
-                    (
-                        nextLevel * 33
-                    ) +
-                    "% SPEED";
-
-            }
-
-
-            if (
-                type === "sauce"
-            ) {
-
-                effectText =
-                    "+" +
-                    nextLevel +
-                    " DAMAGE";
-
-            }
-
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                "powerup-card";
-
-
-            card.innerHTML = `
-
-                <div class="powerup-image-box">
-
-                    <img
-                        src="${data.image}"
-                        alt=""
-                    >
-
-                </div>
-
-                <div class="powerup-name">
-                    ${data.name}
-                </div>
-
-                <div class="powerup-description">
-                    ${effectText}
-                </div>
-
-                <div class="powerup-level">
-                    LV ${nextLevel}
-                </div>
-
-            `;
-
-
-            card.addEventListener(
-                "click",
-                function() {
-
-                    selectPowerUp(
-                        type
-                    );
-
-                }
-            );
-
-
-            options.appendChild(
-                card
-            );
-
-        }
-    );
-
-
-    powerUpPaused = true;
-
-
-    document
-    .getElementById("game")
-    .classList
-    .add(
-        "powerup-paused"
-    );
-
-
-    document
-    .getElementById("powerup-overlay")
-    .style.display =
-        "flex";
-
-}
-
-
-
-/* ==================================================
-   SCELTA POWER UP
-================================================== */
-
-function selectPowerUp(
-    type
-) {
-
-    if (
-        !powerUpPaused
-    ) {
-
-        return;
-
-    }
-
-
-    if (
-        powerUps[type] >= 3
-    ) {
-
-        return;
-
-    }
-
-
-    powerUps[type]++;
-
-
-    document
-    .getElementById("powerup-overlay")
-    .style.display =
-        "none";
-
-
-    document
-    .getElementById("powerup-options")
-    .innerHTML =
-        "";
-
-
-    powerUpPaused = false;
-
-
-    document
-    .getElementById("game")
-    .classList
-    .remove(
-        "powerup-paused"
-    );
-
-
-    /*
-       Se la barra aveva appena raggiunto
-       il livello successivo, la azzeriamo.
-    */
-
-    updateEXPBar();
-
-}
-
-
-
-/* ==================================================
    AGGIUNGI EXP
 ================================================== */
 
@@ -1711,12 +1029,6 @@ function addEXP(
         ];
 
 
-    /*
-       ==================================================
-       POWER UP
-       ==================================================
-    */
-
     if (
         currentEXP >=
         requiredEXP
@@ -1727,11 +1039,6 @@ function addEXP(
 
         currentLevel++;
 
-
-        /*
-           Aggiorniamo subito la barra
-           prima di mostrare il Power Up.
-        */
 
         updateEXPBar();
 
@@ -1746,7 +1053,7 @@ function addEXP(
 
     updateEXPBar();
 
- }
+}
 
 
 
@@ -1802,10 +1109,6 @@ document
         currentEXP = 0;
 
 
-        /*
-           RESET POWER UP
-        */
-
         powerUps.pasta = 0;
 
         powerUps.speed = 0;
@@ -1819,6 +1122,12 @@ document
         .getElementById("powerup-overlay")
         .style.display =
             "none";
+
+
+        document
+        .getElementById("powerup-options")
+        .innerHTML =
+            "";
 
 
         document
@@ -2937,15 +2246,6 @@ function startCookAnimation() {
 
 function getCookAttackInterval() {
 
-    /*
-       LV0 = 3000 ms
-       LV1 = 2260 ms
-       LV2 = 1807 ms
-       LV3 = 1507 ms
-
-       Circa +33% velocità per livello.
-    */
-
     return Math.round(
         3000 /
         (
@@ -3214,11 +2514,6 @@ function throwPasta(
         }
 
 
-        /*
-           Durante la schermata Power Up
-           la pasta rimane ferma.
-        */
-
         if (powerUpPaused) {
 
             lastTime =
@@ -3444,13 +2739,6 @@ function hitCustomer(
             "30"
         );
 
-
-    /*
-       DANNO BASE = 5
-       SAUCE LV1 = +1
-       SAUCE LV2 = +2
-       SAUCE LV3 = +3
-    */
 
     const damage =
         5 +
