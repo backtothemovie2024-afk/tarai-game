@@ -555,6 +555,7 @@ body {
 
 
 /* ==================================================
+   /* ==================================================
    POWER UP
 ================================================== */
 
@@ -574,12 +575,12 @@ body {
     justify-content: center;
 
     z-index: 500;
+
 }
 
 
 /* ==================================================
    PANNELLO POWER UP
-   CORNICE MOLTO PIÙ ALTA
 ================================================== */
 
 #powerup-panel {
@@ -591,18 +592,10 @@ body {
     max-width: 430px;
 
     /*
-       Prima:
-       aspect-ratio: 348 / 260
-
-       Ora il pannello è circa
-       il doppio dell'altezza.
+       PANNELLO MOLTO PIÙ ALTO
     */
 
-    height: 520px;
-
-    max-height: 82vh;
-
-    aspect-ratio: auto;
+    aspect-ratio: 348 / 520;
 
     padding: 0;
 
@@ -635,18 +628,22 @@ body {
 
 
 /* ==================================================
-   CONTENITORE
+   CONTENITORE POWER UP
 ================================================== */
 
 #powerup-options {
 
     position: absolute;
 
-    left: 6%;
+    /*
+       Area interna della cornice
+    */
 
-    right: 6%;
+    left: 5%;
 
-    top: 13%;
+    right: 5%;
+
+    top: 17%;
 
     bottom: 8%;
 
@@ -654,7 +651,7 @@ body {
 
     justify-content: space-between;
 
-    align-items: stretch;
+    align-items: flex-start;
 
     gap: 2%;
 
@@ -673,9 +670,9 @@ body {
 
     flex: 1;
 
-    height: 100%;
+    width: auto;
 
-    min-width: 0;
+    height: 100%;
 
     padding: 0;
 
@@ -708,11 +705,15 @@ body {
 
     left: 5%;
 
-    top: 2%;
+    top: 0;
 
     width: 90%;
 
-    height: 46%;
+    /*
+       Riquadro immagine più alto
+    */
+
+    height: 48%;
 
     padding: 0;
 
@@ -728,23 +729,22 @@ body {
 
     justify-content: center;
 
-    overflow: visible;
+    overflow: hidden;
 
 }
 
 
 /*
-   L'immagine rimane centrata
-   nel proprio riquadro.
+   IMMAGINE PERFETTAMENTE CENTRATA
 */
 
 .powerup-image-box img {
 
     display: block;
 
-    width: 88%;
+    width: 90%;
 
-    height: 88%;
+    height: 90%;
 
     object-fit: contain;
 
@@ -761,11 +761,11 @@ body {
 
     position: absolute;
 
-    left: 5%;
+    left: 2%;
 
-    width: 90%;
+    width: 96%;
 
-    top: 49%;
+    top: 51%;
 
     margin: 0;
 
@@ -793,11 +793,11 @@ body {
 
     position: absolute;
 
-    left: 5%;
+    left: 2%;
 
-    width: 90%;
+    width: 96%;
 
-    top: 57%;
+    top: 59%;
 
     min-height: 0;
 
@@ -827,11 +827,11 @@ body {
 
     position: absolute;
 
-    left: 5%;
+    left: 2%;
 
-    width: 90%;
+    width: 96%;
 
-    top: 68%;
+    top: 72%;
 
     margin: 0;
 
@@ -858,7 +858,8 @@ body {
     transform:
         translateY(3px);
 
-    filter: brightness(1.2);
+    filter:
+        brightness(1.2);
 
 }
 
@@ -881,99 +882,57 @@ body {
 
 @media (max-width: 500px) {
 
-    .customer,
-    #cook {
-
-        width: 65px;
-
-        height: 88px;
-
-    }
-
-
-    .pasta {
-
-        width: 60px;
-
-        height: 60px;
-
-    }
-
-
-    #exp-bar {
-
-        height: 27px;
-
-        left: 2.5%;
-
-        width: 95%;
-
-    }
-
-
-    #exp-level {
-
-        font-size: 13px;
-
-    }
-
-
     #powerup-panel {
 
         width: 94%;
 
-        height: 520px;
+        /*
+           Mantiene il pannello alto
+        */
 
-        max-height: 82vh;
+        aspect-ratio: 348 / 520;
+
+        padding: 0;
 
     }
 
 
     #powerup-options {
 
-        left: 6%;
+        left: 5%;
 
-        right: 6%;
+        right: 5%;
 
-        top: 13%;
+        top: 17%;
 
         bottom: 8%;
 
-    }
-
-
-    .powerup-name {
-
-        font-size: 10px;
+        gap: 2%;
 
     }
 
 
-    .powerup-description {
+    .powerup-card {
 
-        font-size: 8px;
+        padding: 0;
+
+    }
+
+
+    .powerup-image-box {
+
+        left: 5%;
+
+        width: 90%;
+
+        height: 48%;
 
     }
 
 
-    .powerup-level {
+    .powerup-image-box img {
 
-        font-size: 9px;
-
-    }
-
-}
-
-</style>
-
-</head>
-
-
-<body>
-
-
-<div id="phone">
-
+ 
 
 <!-- ==================================================
      MENU
