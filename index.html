@@ -169,6 +169,11 @@ body {
 
     pointer-events: none;
 
+    /*
+       La cucina deve sempre essere
+       disegnata sopra i clienti.
+    */
+
     z-index: 50;
 }
 
@@ -212,8 +217,6 @@ body {
 
     justify-content: space-between;
 
-    align-items: center;
-
     color: white;
 
     font-size: 22px;
@@ -221,190 +224,6 @@ body {
     font-weight: bold;
 
     z-index: 80;
-}
-
-
-/* ==================================================
-   BARRA EXP
-================================================== */
-
-#exp-container {
-
-    position: relative;
-
-    width: 150px;
-
-    height: 32px;
-
-    margin-left: auto;
-
-    overflow: visible;
-}
-
-
-/*
-   RIEMPIMENTO INTERNO
-
-   Il colore viene disegnato SOLO
-   dentro la parte interna della barra.
-
-   Non colora la cornice esterna.
-*/
-
-#exp-fill {
-
-    position: absolute;
-
-    left: 18%;
-
-    top: 40%;
-
-    width: 0%;
-
-    height: 29%;
-
-    background:
-        linear-gradient(
-            90deg,
-            #19c8ff,
-            #39f3ff
-        );
-
-    border-radius: 5px;
-
-    z-index: 4;
-
-    transition:
-        width 0.35s ease-out;
-
-    pointer-events: none;
-
-}
-
-
-/*
-   Effetto luminoso sul riempimento.
-*/
-
-#exp-fill::after {
-
-    content: "";
-
-    position: absolute;
-
-    top: 10%;
-
-    left: 0;
-
-    width: 100%;
-
-    height: 28%;
-
-    background:
-        rgba(255,255,255,0.4);
-
-    border-radius: 5px;
-
-}
-
-
-/*
-   IMMAGINE DELLA BARRA
-
-   Rimane sopra il riempimento
-   per mantenere la cornice originale.
-*/
-
-#exp-bar-image {
-
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-
-    height: 100%;
-
-    object-fit: fill;
-
-    z-index: 3;
-
-    pointer-events: none;
-
-}
-
-
-/*
-   PIAZZETTA SCURA SULLA SCRITTA
-   LV.1 presente nell'immagine originale.
-
-   Serve per nascondere solamente
-   il vecchio LV.1 incorporato
-   nell'immagine.
-*/
-
-#exp-level-cover {
-
-    position: absolute;
-
-    left: 37%;
-
-    top: 27%;
-
-    width: 26%;
-
-    height: 23%;
-
-    background:
-        #5b4634;
-
-    border-radius: 3px;
-
-    z-index: 5;
-
-    pointer-events: none;
-
-}
-
-
-/*
-   SCRITTA LIVELLO
-*/
-
-#exp-level {
-
-    position: absolute;
-
-    left: 37%;
-
-    top: 24%;
-
-    width: 26%;
-
-    height: 30%;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    z-index: 6;
-
-    color: #f4dfb0;
-
-    font-size: 12px;
-
-    font-weight: 900;
-
-    text-shadow:
-        1px 1px 2px #000,
-        -1px -1px 2px #000,
-        1px -1px 2px #000,
-        -1px 1px 2px #000;
-
-    pointer-events: none;
-
 }
 
 
@@ -422,6 +241,11 @@ body {
 
     top: -130px;
 
+    /*
+       I clienti rimangono sempre
+       sotto la cucina.
+    */
+
     z-index: 10;
 }
 
@@ -432,7 +256,7 @@ body {
 
         walkDown
 
-        70s
+        60s
 
         linear
 
@@ -659,6 +483,7 @@ body {
 
 /* ==================================================
    PUNTO ROSSO
+   INVISIBILE MA FUNZIONANTE
 ================================================== */
 
 .hit-marker {
@@ -715,22 +540,6 @@ body {
         width: 60px;
 
         height: 60px;
-
-    }
-
-
-    #exp-container {
-
-        width: 125px;
-
-        height: 28px;
-
-    }
-
-
-    #exp-level {
-
-        font-size: 10px;
 
     }
 
@@ -810,45 +619,11 @@ body {
     >
 
 
-    <!-- ==================================================
-         HUD
-    ================================================== -->
-
     <div id="hud">
 
         <span>❤️ 3</span>
 
-
-        <!-- BARRA EXP -->
-
-        <div id="exp-container">
-
-            <!-- RIEMPIMENTO INTERNO -->
-
-            <div id="exp-fill"></div>
-
-
-            <!-- CORNICE ORIGINALE -->
-
-            <img
-                id="exp-bar-image"
-                src="https://i.ibb.co/Zz31ms0Y/1788138130825-removebg-preview.png"
-                alt=""
-            >
-
-
-            <!-- COPERTURA DEL VECCHIO LV.1 -->
-
-            <div id="exp-level-cover"></div>
-
-
-            <!-- LIVELLO DINAMICO -->
-
-            <div id="exp-level">
-                LV 1
-            </div>
-
-        </div>
+        <span>⭐ 0</span>
 
     </div>
 
@@ -997,343 +772,20 @@ const CUSTOMER_WALK_TIME = 70;
 
 /*
    CINQUE CORSIE
+
+   Tutte comprese nel corridoio
+   centrale tra le due file di tavoli.
 */
 
 const LANES = [
 
-    30,
-    40,
+    28,
+    39,
     50,
-    60,
-    70
+    61,
+    72
 
 ];
-
-
-
-/* ==================================================
-   SISTEMA EXP
-================================================== */
-
-let currentLevel = 1;
-
-let currentEXP = 0;
-
-
-/*
-   Ogni cliente soddisfatto
-   dà 5 EXP.
-*/
-
-const EXP_PER_CUSTOMER = 5;
-
-
-/*
-   EXP necessaria per salire
-   di livello.
-
-   LV1 -> LV2 = 15
-
-   Poi aumenta gradualmente.
-*/
-
-const EXP_REQUIREMENTS = [
-
-    15,
-    20,
-    25,
-    30,
-    35,
-    40,
-    45,
-    50,
-    55,
-    60,
-    65
-
-];
-
-
-const MAX_LEVEL = 12;
-
-
-/* ==================================================
-   AGGIORNA BARRA EXP
-================================================== */
-
-function updateEXPBar() {
-
-
-    const fill =
-        document.getElementById(
-            "exp-fill"
-        );
-
-
-    const levelText =
-        document.getElementById(
-            "exp-level"
-        );
-
-
-    if (
-        currentLevel >= MAX_LEVEL
-    ) {
-
-
-        currentLevel =
-            MAX_LEVEL;
-
-
-        currentEXP = 0;
-
-
-        fill.style.transition =
-            "none";
-
-
-        fill.style.width =
-            "100%";
-
-
-        levelText.textContent =
-            "LV MAX";
-
-
-        return;
-
-    }
-
-
-    const requiredEXP =
-        EXP_REQUIREMENTS[
-            currentLevel - 1
-        ];
-
-
-    const percentage =
-        Math.min(
-            100,
-            (
-                currentEXP /
-                requiredEXP
-            ) * 100
-        );
-
-
-    fill.style.transition =
-        "width 0.35s ease-out";
-
-
-    fill.style.width =
-        percentage + "%";
-
-
-    levelText.textContent =
-        "LV " +
-        currentLevel;
-
-}
-
-
-
-/* ==================================================
-   RESET IMMEDIATO DELLA BARRA
-================================================== */
-
-function resetEXPBarInstant() {
-
-
-    const fill =
-        document.getElementById(
-            "exp-fill"
-        );
-
-
-    /*
-       Nessuna animazione
-       quando la barra torna a zero.
-    */
-
-    fill.style.transition =
-        "none";
-
-
-    fill.style.width =
-        "0%";
-
-
-    /*
-       Forza il browser ad applicare
-       immediatamente il nuovo valore.
-    */
-
-    void fill.offsetWidth;
-
-
-    /*
-       Riattiva l'animazione per
-       i prossimi clienti.
-    */
-
-    fill.style.transition =
-        "width 0.35s ease-out";
-
-}
-
-
-
-/* ==================================================
-   AGGIUNGI EXP
-================================================== */
-
-function addEXP(
-    amount
-) {
-
-
-    if (
-        currentLevel >= MAX_LEVEL
-    ) {
-
-        return;
-
-    }
-
-
-    currentEXP +=
-        amount;
-
-
-    const requiredEXP =
-        EXP_REQUIREMENTS[
-            currentLevel - 1
-        ];
-
-
-    /*
-       Se non abbiamo ancora
-       raggiunto il livello successivo,
-       aggiorniamo normalmente la barra.
-    */
-
-    if (
-        currentEXP <
-        requiredEXP
-    ) {
-
-
-        updateEXPBar();
-
-        return;
-
-    }
-
-
-    /*
-       La barra arriva prima
-       visivamente al 100%.
-    */
-
-    currentEXP =
-        requiredEXP;
-
-
-    const fill =
-        document.getElementById(
-            "exp-fill"
-        );
-
-
-    fill.style.transition =
-        "width 0.35s ease-out";
-
-
-    fill.style.width =
-        "100%";
-
-
-    /*
-       Dopo il completamento della barra:
-       - aumenta il livello
-       - svuota istantaneamente la barra
-       - NON torna indietro lentamente
-    */
-
-    setTimeout(
-        function() {
-
-
-            currentEXP -=
-                requiredEXP;
-
-
-            currentLevel++;
-
-
-            /*
-               Livello massimo.
-            */
-
-            if (
-                currentLevel >=
-                MAX_LEVEL
-            ) {
-
-
-                currentLevel =
-                    MAX_LEVEL;
-
-
-                currentEXP = 0;
-
-
-                fill.style.transition =
-                    "none";
-
-
-                fill.style.width =
-                    "100%";
-
-
-                document
-                .getElementById(
-                    "exp-level"
-                )
-                .textContent =
-                    "LV MAX";
-
-
-                return;
-
-            }
-
-
-            /*
-               Nuovo livello.
-            */
-
-            document
-            .getElementById(
-                "exp-level"
-            )
-            .textContent =
-                "LV " +
-                currentLevel;
-
-
-            /*
-               Svuotamento istantaneo.
-            */
-
-            resetEXPBarInstant();
-
-
-        },
-        380
-    );
-
-}
 
 
 
@@ -1383,19 +835,6 @@ document
         kitchenEnergy = 100;
 
         customers = [];
-
-
-        /*
-           RESET EXP
-        */
-
-        currentLevel = 1;
-
-        currentEXP = 0;
-
-        resetEXPBarInstant();
-
-        updateEXPBar();
 
 
         document
@@ -1628,8 +1067,8 @@ function spawnCustomer(
 
 
     /*
-       6 paste necessarie:
-       30 HP / 5 danni = 6.
+       6 colpi necessari
+       per soddisfare il cliente.
     */
 
     customer.dataset.hp =
@@ -1719,6 +1158,11 @@ function spawnCustomer(
         }
     );
 
+
+    /*
+       Quando arriva in fondo,
+       la cucina lo coprirà visivamente.
+    */
 
     setTimeout(
         function() {
@@ -1958,8 +1402,23 @@ function customerIsVisible(
 
 
 /* ==================================================
-   Z-INDEX
+   Z-INDEX CLIENTI
 ================================================== */
+
+/*
+   Il cliente davanti deve stare
+   SOPRA il cliente dietro.
+
+   Quindi ordiniamo i clienti
+   dal più in alto al più in basso.
+
+   Quello più in basso nello schermo
+   è più vicino alla cucina e riceve
+   lo z-index maggiore.
+
+   La cucina rimane comunque
+   a z-index 50.
+*/
 
 function startZIndexSystem() {
 
@@ -2007,20 +1466,42 @@ function updateZIndexes() {
         );
 
 
+    /*
+       Ordiniamo dal cliente più indietro
+       al cliente più avanti.
+    */
+
+    activeCustomers.sort(
+        function(a, b) {
+
+            const aTop =
+                a
+                .getBoundingClientRect()
+                .top;
+
+
+            const bTop =
+                b
+                .getBoundingClientRect()
+                .top;
+
+
+            return aTop - bTop;
+
+        }
+    );
+
+
+    /*
+       Il cliente davanti riceve
+       lo z-index maggiore.
+    */
+
     activeCustomers.forEach(
-        function(customer) {
-
-
-            const rect =
-                customer
-                .getBoundingClientRect();
-
+        function(customer, index) {
 
             customer.style.zIndex =
-                Math.round(
-                    rect.top
-                ) +
-                10;
+                10 + index;
 
         }
     );
@@ -2927,6 +2408,11 @@ function satisfyCustomer(
         gameRect.left;
 
 
+    /*
+       Blocca definitivamente
+       la camminata.
+    */
+
     customer.style.animation =
         "none";
 
@@ -2959,17 +2445,6 @@ function satisfyCustomer(
 
     customer.dataset.atKitchen =
         "false";
-
-
-    /*
-       ==================================================
-       +5 EXP
-       ==================================================
-    */
-
-    addEXP(
-        EXP_PER_CUSTOMER
-    );
 
 
     const normalFrames =
