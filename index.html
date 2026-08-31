@@ -600,7 +600,7 @@ body {
 
 
 /* ==================================================
-   CONTENITORE POWER UP
+   CONTENITORE
 ================================================== */
 
 #powerup-options {
@@ -617,28 +617,28 @@ body {
 
 
 /* ==================================================
-   CARD POWER UP
+   CARD
 ================================================== */
 
 .powerup-card {
 
     position: absolute;
 
-    top: 25%;
+    top: 24%;
 
-    width: 27%;
+    width: 25%;
 
-    height: 50%;
-
-    padding: 0;
+    height: 52%;
 
     margin: 0;
 
+    padding: 0;
+
     background: transparent;
 
-    border: none;
+    border: 0;
 
-    outline: none;
+    outline: 0;
 
     cursor: pointer;
 
@@ -649,17 +649,17 @@ body {
 }
 
 
-/* POSIZIONE DEI 3 RIQUADRI */
+/* ==================================================
+   POSIZIONE 3 RIQUADRI
+================================================== */
 
 .powerup-card:nth-child(1) {
-    left: 6%;
+    left: 8%;
 }
-
 
 .powerup-card:nth-child(2) {
-    left: 36.5%;
+    left: 37.5%;
 }
-
 
 .powerup-card:nth-child(3) {
     left: 67%;
@@ -667,28 +667,26 @@ body {
 
 
 /* ==================================================
-   IMMAGINE POWER UP
+   IMMAGINE
 ================================================== */
 
 .powerup-image-box {
 
     position: absolute;
 
-    left: 5%;
+    left: 0;
 
     top: 0;
 
-    width: 90%;
+    width: 100%;
 
-    height: 38%;
+    height: 35%;
 
     display: flex;
 
     align-items: center;
 
     justify-content: center;
-
-    overflow: visible;
 
 }
 
@@ -697,9 +695,9 @@ body {
 
     display: block;
 
-    width: 100%;
+    width: 78%;
 
-    height: 100%;
+    height: 78%;
 
     object-fit: contain;
 
@@ -718,15 +716,21 @@ body {
 
     left: 0;
 
-    top: 40%;
+    top: 38%;
 
     width: 100%;
 
-    min-height: 10%;
+    height: 12%;
 
-    padding: 0 2px;
+    padding: 0;
 
     margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
 
     color: #ffd98a;
 
@@ -734,20 +738,18 @@ body {
 
     font-weight: 900;
 
-    line-height: 1.15;
+    line-height: 1.1;
 
     text-align: center;
 
     text-shadow:
         2px 2px 3px #000;
 
-    overflow-wrap: break-word;
-
 }
 
 
 /* ==================================================
-   DESCRIZIONE / EFFETTO
+   DESCRIZIONE
 ================================================== */
 
 .powerup-description {
@@ -756,15 +758,21 @@ body {
 
     left: 0;
 
-    top: 52%;
+    top: 51%;
 
     width: 100%;
 
-    min-height: 10%;
+    height: 18%;
 
-    padding: 0 2px;
+    padding: 0 3px;
 
     margin: 0;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: center;
 
     color: white;
 
@@ -794,15 +802,21 @@ body {
 
     left: 0;
 
-    top: 68%;
+    top: 72%;
 
     width: 100%;
 
-    min-height: 10%;
+    height: 12%;
 
     padding: 0;
 
     margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
 
     color: #ffe477;
 
@@ -810,7 +824,7 @@ body {
 
     font-weight: 900;
 
-    line-height: 1.15;
+    line-height: 1;
 
     text-align: center;
 
@@ -821,16 +835,16 @@ body {
 
 
 /* ==================================================
-   PRESSIONE CARD
+   PRESSIONE
 ================================================== */
 
 .powerup-card:active {
 
     transform:
-        translateY(4px)
+        translateY(3px)
         scale(0.98);
 
-    filter: brightness(1.2);
+    filter: brightness(1.15);
 
 }
 
@@ -858,37 +872,56 @@ body {
 
         max-width: 500px;
 
-        aspect-ratio: 500 / 1400;
-
     }
 
 
     .powerup-card {
 
-        top: 25%;
+        top: 24%;
 
-        height: 50%;
+        width: 25%;
 
+        height: 52%;
+
+    }
+
+
+    .powerup-card:nth-child(1) {
+        left: 8%;
+    }
+
+
+    .powerup-card:nth-child(2) {
+        left: 37.5%;
+    }
+
+
+    .powerup-card:nth-child(3) {
+        left: 67%;
     }
 
 
     .powerup-image-box {
 
-        height: 38%;
+        height: 35%;
 
     }
 
 
     .powerup-image-box img {
 
-        width: 100%;
+        width: 78%;
 
-        height: 100%;
+        height: 78%;
 
     }
 
 
     .powerup-name {
+
+        top: 38%;
+
+        height: 12%;
 
         font-size: 10px;
 
@@ -897,6 +930,10 @@ body {
 
     .powerup-description {
 
+        top: 51%;
+
+        height: 18%;
+
         font-size: 8px;
 
     }
@@ -904,20 +941,15 @@ body {
 
     .powerup-level {
 
+        top: 72%;
+
+        height: 12%;
+
         font-size: 9px;
 
     }
 
 }
-
-</style>
-
-</head>
-
-
-<body>
-
-<div id="phone">
 
 
 <!-- ==================================================
