@@ -302,18 +302,6 @@ body {
    ZONE PERSONAGGI
 ================================================== */
 
-/*
-   4 zone uguali:
-
-   ZONA 1 = 12.5%
-   ZONA 2 = 37.5%
-   ZONA 3 = 62.5%
-   ZONA 4 = 87.5%
-
-   Cuoco    = zona 2
-   Cameriera = zona 3
-*/
-
 #cook,
 #waitress {
     position: absolute;
@@ -355,8 +343,6 @@ body {
     display: none;
 }
 
-/* La cameriera normalmente è ferma */
-
 #waitress img {
     position: absolute;
     top: 0;
@@ -365,6 +351,18 @@ body {
     height: 100%;
     object-fit: contain;
     display: none;
+
+    /*
+       Gli sprite originali della cameriera hanno
+       un disegno visivamente più piccolo rispetto
+       agli sprite del cuoco.
+
+       La cornice/area del personaggio rimane
+       identica a quella del cuoco; viene aumentata
+       solamente la dimensione visiva dello sprite.
+    */
+    transform: scale(1.18);
+    transform-origin: center bottom;
 }
 
 #waitress img.active {
@@ -407,6 +405,8 @@ body {
     transform: translate(-50%, -50%);
     z-index: 90;
     pointer-events: none;
+
+    /* HITBOX FUNZIONANTE MA COMPLETAMENTE INVISIBILE */
     opacity: 0;
 }
 
@@ -509,11 +509,17 @@ body {
     height: 78%;
 }
 
-/* Power-up speciale cameriera */
+/*
+   POWER-UP CAMERIERA
 
+   Ridotto rispetto alle altre immagini in modo
+   che rimanga completamente dentro la propria
+   cornice.
+*/
 .powerup-slot[data-type="waitress"] img {
-    width: 82%;
-    height: 82%;
+    width: 68%;
+    height: 68%;
+    object-fit: contain;
 }
 
 /* ==================================================
@@ -728,7 +734,7 @@ body {
 
     <!-- ==================================================
          CUOCO - ZONA 2
-    ================================================== -->
+================================================== -->
 
     <div id="cook">
 
@@ -762,7 +768,7 @@ body {
 
     <!-- ==================================================
          CAMERIERA - ZONA 3
-    ================================================== -->
+================================================== -->
 
     <div id="waitress">
 
@@ -799,7 +805,7 @@ body {
 
     <!-- ==================================================
          BARRA ESPERIENZA
-    ================================================== -->
+================================================== -->
 
     <div id="exp-bar">
 
@@ -813,7 +819,7 @@ body {
 
     <!-- ==================================================
          POWER UP SCREEN
-    ================================================== -->
+================================================== -->
 
     <div id="powerup-overlay">
 
@@ -846,11 +852,11 @@ const HIT_POSITION_Y = 0.45;
 ================================================== */
 
 /*
-   Questi valori indicano il punto da cui parte
-   il drink durante il FRAME 3.
+   Il drink viene creato durante il FRAME 3,
+   cioè il frame con la mano alzata.
 
-   X = posizione orizzontale della mano
-   Y = posizione verticale della mano
+   Questi valori determinano il punto preciso
+   da cui il drink viene visualizzato.
 */
 
 const WAITRESS_HAND_X = 0.70;
@@ -1016,7 +1022,7 @@ function showPowerUpScreen() {
 
     /* ==================================================
        POWER UP CAMERIERA OBBLIGATORIO
-    ================================================== */
+================================================== */
 
     if (!powerUps.waitress) {
 
@@ -1029,7 +1035,7 @@ function showPowerUpScreen() {
 
     /* ==================================================
        AGGIUNGI GLI ALTRI POWER UP
-    ================================================== */
+================================================== */
 
     normalPowerUps.forEach(
         function(powerUp) {
@@ -1050,7 +1056,7 @@ function showPowerUpScreen() {
 
     /* ==================================================
        SHUFFLE DELLE 3 POSIZIONI
-    ================================================== */
+================================================== */
 
     for (
         let i = selectedPowerUps.length - 1;
@@ -1167,7 +1173,7 @@ function selectPowerUp(type) {
 
     /* ==================================================
        CAMERIERA
-    ================================================== */
+================================================== */
 
     if (type === "waitress") {
 
@@ -1183,7 +1189,7 @@ function selectPowerUp(type) {
 
     /* ==================================================
        POWER UP NORMALI
-    ================================================== */
+================================================== */
 
     else {
 
@@ -1251,9 +1257,9 @@ function startWaitressAnimation() {
     }
 
     /*
-       La cameriera è ferma.
-       L'animazione viene gestita
-       esclusivamente durante il lancio.
+       La cameriera resta ferma.
+       L'animazione viene utilizzata
+       esclusivamente durante l'attacco.
     */
 
     setWaitressFrame(0);
@@ -1539,11 +1545,6 @@ function createWave1() {
         }
     );
 
-    /*
-       Tiene traccia dell'ultimo spawn
-       per ogni corsia.
-    */
-
     const lastLaneSpawn = [];
 
     for (
@@ -1578,12 +1579,6 @@ function createWave1() {
 
                             attempts++;
 
-                            /*
-                               Se possibile scegliamo una
-                               corsia che non ha avuto un
-                               cliente negli ultimi 1.5 secondi.
-                            */
-
                         } while (
                             attempts < 50 &&
                             (
@@ -1594,11 +1589,6 @@ function createWave1() {
                             ) <
                             SAME_LANE_MIN_DELAY
                         );
-
-                        /*
-                           Se tutte le corsie sono occupate
-                           scegliamo comunque una corsia.
-                        */
 
                         lastLaneSpawn[laneIndex] =
                             second * 1000;
@@ -2388,7 +2378,7 @@ function getCookAttackInterval() {
    La cameriera lancia il 33% più frequentemente
    rispetto al cuoco.
 
-   Non cambia la velocità del drink.
+   NON cambia la velocità del drink.
 */
 
 function getWaitressAttackInterval() {
@@ -2803,7 +2793,7 @@ function playWaitressAttack() {
     /*
        FRAME 3
        MANO ALZATA
-       QUI PARTE IL DRINK
+       IL DRINK PARTE ESATTAMENTE QUI
     */
 
     setTimeout(
@@ -2812,6 +2802,12 @@ function playWaitressAttack() {
             if (!powerUpPaused) {
 
                 setWaitressFrame(2);
+
+                /*
+                   Il drink viene creato nello
+                   stesso momento in cui viene
+                   mostrato il FRAME 3.
+                */
 
                 throwDrink(
                     target
@@ -2956,13 +2952,11 @@ function throwDrink(target) {
         waitress.getBoundingClientRect();
 
     /*
-       Il punto di partenza viene calcolato
-       sul FRAME 3, cioè quello con la mano alzata.
+       Il drink viene lanciato durante il FRAME 3,
+       quello con la mano alzata.
 
-       Questi due valori sono facilmente
-       regolabili se durante il test vediamo
-       che il drink deve essere spostato
-       di qualche pixel.
+       Il punto di partenza è regolato attraverso
+       WAITRESS_HAND_X e WAITRESS_HAND_Y.
     */
 
     const startX =
@@ -3019,10 +3013,10 @@ function throwDrink(target) {
         ) + "px";
 
     /*
-       La velocità del drink NON viene
-       modificata dalla velocità di attacco.
+       VELOCITÀ DRINK INDIPENDENTE
 
-       Rimane indipendente.
+       Il power-up Speed modifica la frequenza
+       di attacco, ma NON la velocità del drink.
     */
 
     const speed = 350;
