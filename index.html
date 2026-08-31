@@ -604,83 +604,102 @@ body {
 }
 
 
+/*
+   Il pannello usa direttamente
+   il riquadro grafico fornito.
+*/
+
 #powerup-panel {
 
-    width: 92%;
+    position: relative;
+
+    width: 94%;
 
     max-width: 430px;
 
-    padding: 18px 12px 20px;
+    aspect-ratio: 348 / 260;
 
-    border-radius: 20px;
+    padding: 0;
+
+    border: none;
+
+    border-radius: 0;
 
     background:
-        linear-gradient(
-            180deg,
-            #8d4a25,
-            #4b2413
-        );
+        url("https://i.ibb.co/60d5SFdx/1788123346934-removebg-preview.png")
+        center center /
+        100% 100%
+        no-repeat;
 
-    border: 4px solid #d99a50;
+    box-shadow: none;
 
-    box-shadow:
-        0 8px 0 #211008,
-        0 12px 25px rgba(0,0,0,0.8),
-        inset 0 2px 4px rgba(255,255,255,0.2);
+    overflow: hidden;
 
 }
 
+
+/* ==================================================
+   TITOLO
+================================================== */
+
+/*
+   Il titolo grafico è contenuto
+   direttamente nel riquadro.
+*/
 
 #powerup-title {
 
-    text-align: center;
-
-    color: #ffe7a0;
-
-    font-size: 25px;
-
-    font-weight: 900;
-
-    margin-bottom: 15px;
-
-    text-shadow:
-        2px 2px 3px #000;
+    display: none;
 
 }
 
+
+/* ==================================================
+   CONTENITORE 3 POWER UP
+================================================== */
 
 #powerup-options {
 
+    position: absolute;
+
+    inset: 0;
+
     display: flex;
 
-    gap: 8px;
+    justify-content: flex-start;
 
-    justify-content: center;
+    align-items: flex-start;
+
+    gap: 0;
+
+    z-index: 2;
 
 }
 
 
+/* ==================================================
+   CARD POWER UP
+================================================== */
+
 .powerup-card {
 
-    flex: 1;
+    position: absolute;
 
-    min-width: 0;
+    top: 24%;
 
-    padding: 7px;
+    width: 27%;
 
-    border-radius: 12px;
+    height: 72%;
 
-    border: 3px solid #e6ad61;
+    padding: 0;
 
-    background:
-        linear-gradient(
-            180deg,
-            #6c351c,
-            #32170c
-        );
+    border: none;
 
-    box-shadow:
-        0 4px 0 #1b0b06;
+    border-radius: 0;
+
+    background: transparent;
+
+    box-shadow: none;
 
     cursor: pointer;
 
@@ -689,6 +708,27 @@ body {
     transition:
         transform 0.12s ease,
         filter 0.12s ease;
+
+}
+
+
+.powerup-card:nth-child(1) {
+
+    left: 7%;
+
+}
+
+
+.powerup-card:nth-child(2) {
+
+    left: 36.5%;
+
+}
+
+
+.powerup-card:nth-child(3) {
+
+    left: 66%;
 
 }
 
@@ -703,18 +743,29 @@ body {
 }
 
 
+/* ==================================================
+   IMMAGINE POWER UP
+================================================== */
+
 .powerup-image-box {
 
-    width: 100%;
+    position: absolute;
 
-    aspect-ratio: 1 / 1;
+    left: 5%;
 
-    border-radius: 9px;
+    top: 4%;
 
-    background:
-        #21110a;
+    width: 90%;
 
-    border: 2px solid #a96a35;
+    height: 57%;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 0;
+
+    background: transparent;
 
     display: flex;
 
@@ -729,18 +780,30 @@ body {
 
 .powerup-image-box img {
 
-    width: 100%;
+    width: 82%;
 
-    height: 100%;
+    height: 82%;
 
     object-fit: contain;
 
 }
 
 
+/* ==================================================
+   NOME
+================================================== */
+
 .powerup-name {
 
-    margin-top: 5px;
+    position: absolute;
+
+    left: 5%;
+
+    width: 90%;
+
+    top: 63%;
+
+    margin: 0;
 
     color: #ffd98a;
 
@@ -750,14 +813,29 @@ body {
 
     line-height: 1.1;
 
+    text-shadow:
+        1px 1px 2px #000;
+
 }
 
 
+/* ==================================================
+   DESCRIZIONE
+================================================== */
+
 .powerup-description {
 
-    margin-top: 3px;
+    position: absolute;
 
-    min-height: 27px;
+    left: 5%;
+
+    width: 90%;
+
+    top: 70%;
+
+    min-height: 0;
+
+    margin: 0;
 
     color: white;
 
@@ -767,18 +845,36 @@ body {
 
     line-height: 1.15;
 
+    text-shadow:
+        1px 1px 2px #000;
+
 }
 
 
+/* ==================================================
+   LIVELLO
+================================================== */
+
 .powerup-level {
 
-    margin-top: 4px;
+    position: absolute;
+
+    left: 5%;
+
+    width: 90%;
+
+    top: 83%;
+
+    margin: 0;
 
     color: #ffe477;
 
     font-size: 10px;
 
     font-weight: 900;
+
+    text-shadow:
+        1px 1px 2px #000;
 
 }
 
@@ -841,24 +937,35 @@ body {
 
         width: 94%;
 
-        padding:
-            14px 8px 16px;
-
-    }
-
-
-    #powerup-title {
-
-        font-size: 21px;
-
-        margin-bottom: 11px;
+        padding: 0;
 
     }
 
 
     .powerup-card {
 
-        padding: 5px;
+        padding: 0;
+
+    }
+
+
+    .powerup-name {
+
+        font-size: 10px;
+
+    }
+
+
+    .powerup-description {
+
+        font-size: 8px;
+
+    }
+
+
+    .powerup-level {
+
+        font-size: 9px;
 
     }
 
@@ -1169,25 +1276,6 @@ const MAX_LEVEL = 12;
    POWER UP
 ================================================== */
 
-/*
-   Ogni potenziamento parte da LV 0.
-
-   Pasta:
-   LV1 = 2 paste
-   LV2 = 3 paste
-   LV3 = 4 paste
-
-   Speed:
-   LV1 = +33%
-   LV2 = +66%
-   LV3 = +99%
-
-   Sauce:
-   LV1 = +1 danno
-   LV2 = +2 danno
-   LV3 = +3 danno
-*/
-
 let powerUps = {
 
     pasta: 0,
@@ -1353,11 +1441,6 @@ function showPowerUpScreen() {
 
     }
 
-
-    /*
-       Se rimangono meno di 3 potenziamenti
-       disponibili, mostra quelli rimasti.
-    */
 
     const shuffled =
         available.sort(
@@ -1570,11 +1653,6 @@ function selectPowerUp(
     );
 
 
-    /*
-       Se la barra aveva appena raggiunto
-       il livello successivo, la azzeriamo.
-    */
-
     updateEXPBar();
 
 }
@@ -1608,12 +1686,6 @@ function addEXP(
         ];
 
 
-    /*
-       ==================================================
-       POWER UP
-       ==================================================
-    */
-
     if (
         currentEXP >=
         requiredEXP
@@ -1624,11 +1696,6 @@ function addEXP(
 
         currentLevel++;
 
-
-        /*
-           Aggiorniamo subito la barra
-           prima di mostrare il Power Up.
-        */
 
         updateEXPBar();
 
@@ -1643,7 +1710,7 @@ function addEXP(
 
     updateEXPBar();
 
-}
+ }
 
 
 
@@ -1698,10 +1765,6 @@ document
 
         currentEXP = 0;
 
-
-        /*
-           RESET POWER UP
-        */
 
         powerUps.pasta = 0;
 
@@ -2834,15 +2897,6 @@ function startCookAnimation() {
 
 function getCookAttackInterval() {
 
-    /*
-       LV0 = 3000 ms
-       LV1 = 2260 ms
-       LV2 = 1807 ms
-       LV3 = 1507 ms
-
-       Circa +33% velocità per livello.
-    */
-
     return Math.round(
         3000 /
         (
@@ -3111,11 +3165,6 @@ function throwPasta(
         }
 
 
-        /*
-           Durante la schermata Power Up
-           la pasta rimane ferma.
-        */
-
         if (powerUpPaused) {
 
             lastTime =
@@ -3341,13 +3390,6 @@ function hitCustomer(
             "30"
         );
 
-
-    /*
-       DANNO BASE = 5
-       SAUCE LV1 = +1
-       SAUCE LV2 = +2
-       SAUCE LV3 = +3
-    */
 
     const damage =
         5 +
