@@ -207,14 +207,17 @@ body {
     position: absolute;
     width: 100px;
     height: 135px;
-    top: -130px;
+
+    /* PARTE COMPLETAMENTE DA FUORI SCHERMO */
+    top: -140px;
+
     z-index: 10;
 }
 
 .customer.walking {
     animation:
         walkDown
-        60s
+        70s
         linear
         forwards;
 }
@@ -286,10 +289,14 @@ body {
 
 }
 
+/* ==================================================
+   ENTRATA CLIENTI
+================================================== */
+
 @keyframes walkDown {
 
     0% {
-        top: -130px;
+        top: -140px;
     }
 
     100% {
@@ -558,7 +565,6 @@ body {
 
 <div id="game">
 
-    <!-- NUOVO BACKGROUND -->
     <img
         id="background"
         src="https://cdn.imgchest.com/files/25a5041a8483.jpg"
@@ -753,6 +759,10 @@ const LAST_SPAWN_SECOND = 60;
 
 const CUSTOMER_WALK_TIME = 70;
 
+/* ==================================================
+   5 COLONNE
+================================================== */
+
 const LANES = [
     29,
     36.4,
@@ -760,6 +770,16 @@ const LANES = [
     51.2,
     58.6
 ];
+
+/* ==================================================
+   DISTANZA MINIMA TRA CLIENTI
+   NELLA STESSA COLONNA
+================================================== */
+
+const MIN_SAME_LANE_DISTANCE = 1500;
+
+const lastLaneSpawnTime =
+    new Array(LANES.length).fill(-Infinity);
 
 /* ==================================================
    SISTEMA EXP
@@ -1103,6 +1123,18 @@ document
 
         customers = [];
 
+        /* RESET TEMPI DELLE COLONNE */
+        for (
+            let i = 0;
+            i < lastLaneSpawnTime.length;
+            i++
+        ) {
+
+            lastLaneSpawnTime[i] =
+                -Infinity;
+
+        }
+
         currentLevel = 1;
 
         currentEXP = 0;
@@ -1239,6 +1271,82 @@ function createWave1() {
 }
 
 /* ==================================================
+   ESCOLTA UNA COLONNA DISPONIBILE
+================================================== */
+
+function getAvailableLane() {
+
+    const now =
+        performance.now();
+
+    const availableLanes = [];
+
+    for (
+        let i = 0;
+        i < LANES.length;
+        i++
+    ) {
+
+        if (
+            now -
+            lastLaneSpawnTime[i] >=
+            MIN_SAME_LANE_DISTANCE
+        ) {
+
+            availableLanes.push(i);
+
+        }
+
+    }
+
+    if (
+        availableLanes.length > 0
+    ) {
+
+        return availableLanes[
+            Math.floor(
+                Math.random() *
+                availableLanes.length
+            )
+        ];
+
+    }
+
+    /* ==================================================
+       SE NESSUNA COLONNA È DISPONIBILE,
+       USA QUELLA CHE SI LIBERA PRIMA
+    ================================================== */
+
+    let bestLane = 0;
+
+    let earliestTime =
+        lastLaneSpawnTime[0];
+
+    for (
+        let i = 1;
+        i < LANES.length;
+        i++
+    ) {
+
+        if (
+            lastLaneSpawnTime[i] <
+            earliestTime
+        ) {
+
+            earliestTime =
+                lastLaneSpawnTime[i];
+
+            bestLane = i;
+
+        }
+
+    }
+
+    return bestLane;
+
+}
+
+/* ==================================================
    CREA SINGOLO CLIENTE
 ================================================== */
 
@@ -1282,13 +1390,42 @@ function spawnCustomer(index) {
         "satisfied"
     );
 
-    customer.style.top = "-130px";
+    customer.style.top = "-140px";
+
+    /* ==================================================
+       SCELTA DELLA COLONNA
+    ================================================== */
 
     const laneIndex =
-        Math.floor(
-            Math.random() *
-            LANES.length
-        );
+        getAvailableLane();
+
+    const now =
+        performance.now();
+
+    const timeSinceLastSpawn =
+        now -
+        lastLaneSpawnTime[laneIndex];
+
+    /* ==================================================
+       SE LA COLONNA È ANCORA BLOCCATA,
+       RITARDA QUESTO CLIENTE
+    ================================================== */
+
+    let laneDelay = 0;
+
+    if (
+        timeSinceLastSpawn <
+        MIN_SAME_LANE_DISTANCE
+    ) {
+
+        laneDelay =
+            MIN_SAME_LANE_DISTANCE -
+            timeSinceLastSpawn;
+
+    }
+
+    lastLaneSpawnTime[laneIndex] =
+        now + laneDelay;
 
     customer.dataset.lane =
         laneIndex;
@@ -1346,19 +1483,40 @@ function spawnCustomer(index) {
 
     customers.push(customer);
 
-    requestAnimationFrame(
+    /* ==================================================
+       ENTRATA DA FUORI SCHERMO
+    ================================================== */
+
+    setTimeout(
         function() {
 
-            customer.style.animation =
-                "walkDown " +
-                CUSTOMER_WALK_TIME +
-                "s linear forwards";
+            if (
+                !customer ||
+                customer.dataset.satisfied ===
+                    "true"
+            ) {
 
-            customer.classList.add(
-                "walking"
+                return;
+
+            }
+
+            requestAnimationFrame(
+                function() {
+
+                    customer.style.animation =
+                        "walkDown " +
+                        CUSTOMER_WALK_TIME +
+                        "s linear forwards";
+
+                    customer.classList.add(
+                        "walking"
+                    );
+
+                }
             );
 
-        }
+        },
+        laneDelay
     );
 
     setTimeout(
@@ -1377,7 +1535,10 @@ function spawnCustomer(index) {
             }
 
         },
-        CUSTOMER_WALK_TIME * 1000
+        (
+            CUSTOMER_WALK_TIME * 1000
+        ) +
+        laneDelay
     );
 
 }
@@ -2558,4 +2719,4 @@ function satisfyCustomer2() {
 </script>
 
 </body>
-</html>
+    </html>
