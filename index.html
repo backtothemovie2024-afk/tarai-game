@@ -370,8 +370,7 @@ body {
 
 
 /* ==================================================
-   POWER UP
-   SOLO PANNELLO NUOVO
+   POWER UP OVERLAY
 ================================================== */
 
 #powerup-overlay {
@@ -394,16 +393,9 @@ body {
 }
 
 
-/*
+/* ==================================================
    NUOVO PANNELLO
-
-   L'immagine viene usata esclusivamente
-   come pannello di sfondo.
-
-   Nessuna vecchia card,
-   nessuna vecchia immagine,
-   nessuna vecchia scritta.
-*/
+================================================== */
 
 #powerup-panel {
 
@@ -435,14 +427,129 @@ body {
 }
 
 
-/*
-   Il contenitore delle opzioni rimane completamente
-   vuoto: non vengono più create immagini o scritte.
-*/
+/* ==================================================
+   TRE RIQUADRI POWER UP
+================================================== */
 
 #powerup-options {
 
-    display: none;
+    position: absolute;
+
+    left: 8%;
+
+    right: 8%;
+
+    top: 27%;
+
+    height: 42%;
+
+    display: flex;
+
+    flex-direction: row;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 3%;
+
+}
+
+
+/* ==================================================
+   SINGOLO RIQUADRO
+================================================== */
+
+.powerup-option {
+
+    flex: 1;
+
+    height: 100%;
+
+    min-width: 0;
+
+    border: none;
+
+    padding: 0;
+
+    margin: 0;
+
+    background: transparent;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    position: relative;
+
+    -webkit-tap-highlight-color: transparent;
+
+}
+
+
+.powerup-option:active {
+
+    transform: scale(0.92);
+
+}
+
+
+/* ==================================================
+   IMMAGINE POWER UP
+================================================== */
+
+.powerup-option img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+}
+
+
+/* ==================================================
+   LIVELLO
+================================================== */
+
+.powerup-level {
+
+    position: absolute;
+
+    bottom: 4%;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 900;
+
+    text-shadow:
+        2px 2px 3px #000;
+
+    pointer-events: none;
+
+}
+
+
+/* ==================================================
+   RIQUADRO VUOTO
+================================================== */
+
+.powerup-option.empty {
+
+    pointer-events: none;
 
 }
 
@@ -452,7 +559,10 @@ body {
 ================================================== */
 
 #game.powerup-paused * {
-    animation-play-state: paused !important;
+
+    animation-play-state:
+        paused !important;
+
 }
 
 
@@ -504,6 +614,24 @@ body {
         width: 94%;
 
         height: 560px;
+
+    }
+
+
+    #powerup-options {
+
+        left: 7%;
+
+        right: 7%;
+
+        gap: 2%;
+
+    }
+
+
+    .powerup-level {
+
+        font-size: 12px;
 
     }
 
@@ -805,8 +933,62 @@ const MAX_LEVEL = 12;
 
 
 /* ==================================================
-   POWER UP
+   SISTEMA POWER UP
+==================================================
+
+   3 CATEGORIE
+
+   pasta   = numero di proiettili/bersagli
+   speed   = velocità attacco
+   sauce   = danno
+
+   Ogni categoria ha 3 livelli.
+
 ================================================== */
+
+const POWER_UP_DATA = {
+
+    pasta: {
+
+        image:
+            "https://i.ibb.co/zwM5xNK/1788123621728-removebg-preview.png",
+
+        name:
+            "PASTA"
+
+    },
+
+    speed: {
+
+        image:
+            "https://i.ibb.co/tP1rgx4D/1788123653567-removebg-preview.png",
+
+        name:
+            "VELOCITÀ"
+
+    },
+
+    sauce: {
+
+        image:
+            "https://i.ibb.co/pB62NXDf/1788123663443-removebg-preview.png",
+
+        name:
+            "DANNO"
+
+    }
+
+};
+
+
+/*
+   Livello attuale di ogni power-up.
+
+   0 = mai scelto
+   1 = scelto una volta
+   2 = scelto due volte
+   3 = completato
+*/
 
 let powerUps = {
 
@@ -824,7 +1006,7 @@ let powerUpPaused = false;
 
 
 /* ==================================================
-   MOSTRA POWER UP
+   GENERA LE 3 OPZIONI
 ================================================== */
 
 function showPowerUpScreen() {
@@ -836,15 +1018,6 @@ function showPowerUpScreen() {
     }
 
 
-    /*
-       Il pannello ora è soltanto l'immagine.
-       Non vengono più generate:
-       - immagini dei power-up
-       - nomi
-       - descrizioni
-       - livelli
-    */
-
     const options =
         document.getElementById(
             "powerup-options"
@@ -852,6 +1025,177 @@ function showPowerUpScreen() {
 
 
     options.innerHTML = "";
+
+
+    /*
+       Creiamo una lista dei power-up
+       che non sono ancora arrivati a LV3.
+    */
+
+    const availableTypes = Object.keys(
+        POWER_UP_DATA
+    ).filter(
+        function(type) {
+
+            return powerUps[type] < 3;
+
+        }
+    );
+
+
+    /*
+       Mescoliamo casualmente l'ordine.
+    */
+
+    for (
+        let i = availableTypes.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() *
+                (i + 1)
+            );
+
+
+        [
+            availableTypes[i],
+            availableTypes[j]
+        ] =
+        [
+            availableTypes[j],
+            availableTypes[i]
+        ];
+
+    }
+
+
+    /*
+       Massimo 3 opzioni.
+    */
+
+    const selectedTypes =
+        availableTypes.slice(
+            0,
+            3
+        );
+
+
+    /*
+       Creiamo i 3 riquadri.
+       Se ci sono meno di 3 power-up disponibili,
+       gli altri rimangono vuoti.
+    */
+
+    for (
+        let slot = 0;
+        slot < 3;
+        slot++
+    ) {
+
+        const type =
+            selectedTypes[slot];
+
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+
+        button.className =
+            "powerup-option";
+
+
+        /*
+           Riquadro vuoto.
+        */
+
+        if (!type) {
+
+            button.classList
+            .add(
+                "empty"
+            );
+
+            options.appendChild(
+                button
+            );
+
+            continue;
+
+        }
+
+
+        const image =
+            document.createElement(
+                "img"
+            );
+
+
+        image.src =
+            POWER_UP_DATA[type].image;
+
+
+        image.alt =
+            POWER_UP_DATA[type].name;
+
+
+        button.appendChild(
+            image
+        );
+
+
+        /*
+           Il livello mostrato è il prossimo
+           livello che verrà ottenuto.
+        */
+
+        const level =
+            document.createElement(
+                "div"
+            );
+
+
+        level.className =
+            "powerup-level";
+
+
+        level.textContent =
+            "LV " +
+            (
+                powerUps[type] + 1
+            );
+
+
+        button.appendChild(
+            level
+        );
+
+
+        button.dataset.type =
+            type;
+
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                selectPowerUp(
+                    type
+                );
+
+            }
+        );
+
+
+        options.appendChild(
+            button
+        );
+
+    }
 
 
     powerUpPaused = true;
@@ -882,19 +1226,23 @@ function selectPowerUp(
     type
 ) {
 
-    /*
-       Questa funzione rimane per compatibilità
-       con il sistema precedente.
-    */
-
-    if (
-        !powerUpPaused
-    ) {
+    if (!powerUpPaused) {
 
         return;
 
     }
 
+
+    if (!POWER_UP_DATA[type]) {
+
+        return;
+
+    }
+
+
+    /*
+       Non permettere di superare LV3.
+    */
 
     if (
         powerUps[type] >= 3
@@ -905,8 +1253,16 @@ function selectPowerUp(
     }
 
 
+    /*
+       Aumentiamo il livello del power-up scelto.
+    */
+
     powerUps[type]++;
 
+
+    /*
+       Chiudiamo il pannello.
+    */
 
     document
     .getElementById("powerup-overlay")
@@ -930,6 +1286,10 @@ function selectPowerUp(
         "powerup-paused"
     );
 
+
+    /*
+       Aggiorniamo la barra EXP.
+    */
 
     updateEXPBar();
 
@@ -1043,6 +1403,10 @@ function addEXP(
         updateEXPBar();
 
 
+        /*
+           Mostra la scelta dei power-up.
+        */
+
         showPowerUpScreen();
 
 
@@ -1108,6 +1472,10 @@ document
 
         currentEXP = 0;
 
+
+        /*
+           Reset completo dei 9 power-up.
+        */
 
         powerUps.pasta = 0;
 
@@ -2169,6 +2537,16 @@ function getAttackTargets() {
     );
 
 
+    /*
+       Ogni livello di Pasta aggiunge
+       un bersaglio.
+
+       LV0 = 1
+       LV1 = 2
+       LV2 = 3
+       LV3 = 4
+    */
+
     let numberOfPasta =
         1 +
         powerUps.pasta;
@@ -2739,6 +3117,16 @@ function hitCustomer(
             "30"
         );
 
+
+    /*
+       Ogni livello di Danno aggiunge
+       +1 danno.
+
+       LV0 = 5
+       LV1 = 6
+       LV2 = 7
+       LV3 = 8
+    */
 
     const damage =
         5 +
