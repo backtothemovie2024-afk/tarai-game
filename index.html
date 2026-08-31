@@ -238,12 +238,81 @@ body {
 
     margin-left: auto;
 
-    overflow: hidden;
+    overflow: visible;
 }
 
 
 /*
-   Immagine originale della barra.
+   RIEMPIMENTO INTERNO
+
+   Il colore viene disegnato SOLO
+   dentro la parte interna della barra.
+
+   Non colora la cornice esterna.
+*/
+
+#exp-fill {
+
+    position: absolute;
+
+    left: 18%;
+
+    top: 40%;
+
+    width: 0%;
+
+    height: 29%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #19c8ff,
+            #39f3ff
+        );
+
+    border-radius: 5px;
+
+    z-index: 4;
+
+    transition:
+        width 0.35s ease-out;
+
+    pointer-events: none;
+
+}
+
+
+/*
+   Effetto luminoso sul riempimento.
+*/
+
+#exp-fill::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: 10%;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 28%;
+
+    background:
+        rgba(255,255,255,0.4);
+
+    border-radius: 5px;
+
+}
+
+
+/*
+   IMMAGINE DELLA BARRA
+
+   Rimane sopra il riempimento
+   per mantenere la cornice originale.
 */
 
 #exp-bar-image {
@@ -261,77 +330,58 @@ body {
     z-index: 3;
 
     pointer-events: none;
+
 }
 
 
 /*
-   Riempimento colorato.
-   La larghezza viene modificata
-   dinamicamente tramite JavaScript.
+   PIAZZETTA SCURA SULLA SCRITTA
+   LV.1 presente nell'immagine originale.
+
+   Serve per nascondere solamente
+   il vecchio LV.1 incorporato
+   nell'immagine.
 */
 
-#exp-fill {
+#exp-level-cover {
 
     position: absolute;
 
-    left: 0;
+    left: 37%;
 
-    top: 0;
+    top: 27%;
 
-    width: 0%;
+    width: 26%;
 
-    height: 100%;
+    height: 23%;
 
     background:
-        linear-gradient(
-            90deg,
-            #19c8ff,
-            #39f3ff
-        );
+        #5b4634;
 
-    z-index: 1;
+    border-radius: 3px;
 
-    transition:
-        width 0.35s ease-out;
+    z-index: 5;
+
+    pointer-events: none;
 
 }
 
 
 /*
-   Leggera luminosità del riempimento.
-*/
-
-#exp-fill::after {
-
-    content: "";
-
-    position: absolute;
-
-    top: 15%;
-
-    left: 0;
-
-    width: 100%;
-
-    height: 25%;
-
-    background:
-        rgba(255,255,255,0.35);
-
-    border-radius: 10px;
-
-}
-
-
-/*
-   Scritta LV.
+   SCRITTA LIVELLO
 */
 
 #exp-level {
 
     position: absolute;
 
-    inset: 0;
+    left: 37%;
+
+    top: 24%;
+
+    width: 26%;
+
+    height: 30%;
 
     display: flex;
 
@@ -339,11 +389,11 @@ body {
 
     justify-content: center;
 
-    z-index: 5;
+    z-index: 6;
 
-    color: white;
+    color: #f4dfb0;
 
-    font-size: 15px;
+    font-size: 12px;
 
     font-weight: 900;
 
@@ -680,7 +730,7 @@ body {
 
     #exp-level {
 
-        font-size: 13px;
+        font-size: 10px;
 
     }
 
@@ -773,13 +823,26 @@ body {
 
         <div id="exp-container">
 
+            <!-- RIEMPIMENTO INTERNO -->
+
             <div id="exp-fill"></div>
+
+
+            <!-- CORNICE ORIGINALE -->
 
             <img
                 id="exp-bar-image"
                 src="https://i.ibb.co/Zz31ms0Y/1788138130825-removebg-preview.png"
                 alt=""
             >
+
+
+            <!-- COPERTURA DEL VECCHIO LV.1 -->
+
+            <div id="exp-level-cover"></div>
+
+
+            <!-- LIVELLO DINAMICO -->
 
             <div id="exp-level">
                 LV 1
@@ -934,9 +997,6 @@ const CUSTOMER_WALK_TIME = 70;
 
 /*
    CINQUE CORSIE
-
-   Manteniamo l'impostazione
-   attuale del codice.
 */
 
 const LANES = [
@@ -955,37 +1015,26 @@ const LANES = [
    SISTEMA EXP
 ================================================== */
 
-
-/*
-   Livello iniziale.
-*/
-
 let currentLevel = 1;
-
-
-/*
-   EXP attuale del livello.
-*/
 
 let currentEXP = 0;
 
 
 /*
-   EXP ottenuta da ogni cliente
-   soddisfatto.
+   Ogni cliente soddisfatto
+   dà 5 EXP.
 */
 
 const EXP_PER_CUSTOMER = 5;
 
 
 /*
-   EXP necessaria per ogni passaggio
+   EXP necessaria per salire
    di livello.
 
    LV1 -> LV2 = 15
-   LV2 -> LV3 = 20
-   LV3 -> LV4 = 25
-   ecc.
+
+   Poi aumenta gradualmente.
 */
 
 const EXP_REQUIREMENTS = [
@@ -1005,12 +1054,7 @@ const EXP_REQUIREMENTS = [
 ];
 
 
-/*
-   Livello massimo.
-*/
-
 const MAX_LEVEL = 12;
-
 
 
 /* ==================================================
@@ -1032,10 +1076,6 @@ function updateEXPBar() {
         );
 
 
-    /*
-       Livello massimo.
-    */
-
     if (
         currentLevel >= MAX_LEVEL
     ) {
@@ -1046,6 +1086,10 @@ function updateEXPBar() {
 
 
         currentEXP = 0;
+
+
+        fill.style.transition =
+            "none";
 
 
         fill.style.width =
@@ -1061,20 +1105,11 @@ function updateEXPBar() {
     }
 
 
-    /*
-       EXP necessaria per il
-       livello corrente.
-    */
-
     const requiredEXP =
         EXP_REQUIREMENTS[
             currentLevel - 1
         ];
 
-
-    /*
-       Percentuale riempimento.
-    */
 
     const percentage =
         Math.min(
@@ -1084,6 +1119,10 @@ function updateEXPBar() {
                 requiredEXP
             ) * 100
         );
+
+
+    fill.style.transition =
+        "width 0.35s ease-out";
 
 
     fill.style.width =
@@ -1099,6 +1138,52 @@ function updateEXPBar() {
 
 
 /* ==================================================
+   RESET IMMEDIATO DELLA BARRA
+================================================== */
+
+function resetEXPBarInstant() {
+
+
+    const fill =
+        document.getElementById(
+            "exp-fill"
+        );
+
+
+    /*
+       Nessuna animazione
+       quando la barra torna a zero.
+    */
+
+    fill.style.transition =
+        "none";
+
+
+    fill.style.width =
+        "0%";
+
+
+    /*
+       Forza il browser ad applicare
+       immediatamente il nuovo valore.
+    */
+
+    void fill.offsetWidth;
+
+
+    /*
+       Riattiva l'animazione per
+       i prossimi clienti.
+    */
+
+    fill.style.transition =
+        "width 0.35s ease-out";
+
+}
+
+
+
+/* ==================================================
    AGGIUNGI EXP
 ================================================== */
 
@@ -1106,11 +1191,6 @@ function addEXP(
     amount
 ) {
 
-
-    /*
-       Se siamo già a LV MAX
-       non guadagniamo più EXP.
-    */
 
     if (
         currentLevel >= MAX_LEVEL
@@ -1125,56 +1205,133 @@ function addEXP(
         amount;
 
 
-    /*
-       Controlliamo se abbiamo
-       raggiunto il livello successivo.
-    */
-
     const requiredEXP =
         EXP_REQUIREMENTS[
             currentLevel - 1
         ];
 
 
+    /*
+       Se non abbiamo ancora
+       raggiunto il livello successivo,
+       aggiorniamo normalmente la barra.
+    */
+
     if (
-        currentEXP >=
+        currentEXP <
         requiredEXP
     ) {
 
 
-        /*
-           Passaggio di livello.
-        */
+        updateEXPBar();
 
-        currentEXP -=
-            requiredEXP;
-
-
-        currentLevel++;
-
-
-        /*
-           Se siamo arrivati al
-           livello massimo.
-        */
-
-        if (
-            currentLevel >= MAX_LEVEL
-        ) {
-
-
-            currentLevel =
-                MAX_LEVEL;
-
-
-            currentEXP = 0;
-
-        }
+        return;
 
     }
 
 
-    updateEXPBar();
+    /*
+       La barra arriva prima
+       visivamente al 100%.
+    */
+
+    currentEXP =
+        requiredEXP;
+
+
+    const fill =
+        document.getElementById(
+            "exp-fill"
+        );
+
+
+    fill.style.transition =
+        "width 0.35s ease-out";
+
+
+    fill.style.width =
+        "100%";
+
+
+    /*
+       Dopo il completamento della barra:
+       - aumenta il livello
+       - svuota istantaneamente la barra
+       - NON torna indietro lentamente
+    */
+
+    setTimeout(
+        function() {
+
+
+            currentEXP -=
+                requiredEXP;
+
+
+            currentLevel++;
+
+
+            /*
+               Livello massimo.
+            */
+
+            if (
+                currentLevel >=
+                MAX_LEVEL
+            ) {
+
+
+                currentLevel =
+                    MAX_LEVEL;
+
+
+                currentEXP = 0;
+
+
+                fill.style.transition =
+                    "none";
+
+
+                fill.style.width =
+                    "100%";
+
+
+                document
+                .getElementById(
+                    "exp-level"
+                )
+                .textContent =
+                    "LV MAX";
+
+
+                return;
+
+            }
+
+
+            /*
+               Nuovo livello.
+            */
+
+            document
+            .getElementById(
+                "exp-level"
+            )
+            .textContent =
+                "LV " +
+                currentLevel;
+
+
+            /*
+               Svuotamento istantaneo.
+            */
+
+            resetEXPBarInstant();
+
+
+        },
+        380
+    );
 
 }
 
@@ -1235,6 +1392,8 @@ document
         currentLevel = 1;
 
         currentEXP = 0;
+
+        resetEXPBarInstant();
 
         updateEXPBar();
 
@@ -1561,11 +1720,6 @@ function spawnCustomer(
     );
 
 
-    /*
-       Quando arriva in fondo,
-       la cucina lo coprirà.
-    */
-
     setTimeout(
         function() {
 
@@ -1856,17 +2010,6 @@ function updateZIndexes() {
     activeCustomers.forEach(
         function(customer) {
 
-
-            /*
-               Tutti sotto la cucina.
-
-               Il cliente più avanti
-               deve stare sopra quello
-               dietro.
-
-               Più grande è TOP,
-               maggiore è lo z-index.
-            */
 
             const rect =
                 customer
@@ -2784,11 +2927,6 @@ function satisfyCustomer(
         gameRect.left;
 
 
-    /*
-       Blocca definitivamente
-       la camminata.
-    */
-
     customer.style.animation =
         "none";
 
@@ -2825,7 +2963,7 @@ function satisfyCustomer(
 
     /*
        ==================================================
-       AGGIUNGI 5 EXP
+       +5 EXP
        ==================================================
     */
 
@@ -2962,4 +3100,4 @@ function satisfyCustomer2() {
 </script>
 
 </body>
-</html>
+    </html>
