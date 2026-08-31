@@ -416,29 +416,35 @@ body {
 
 /* ==================================================
    PANNELLO POWER UP
-   INGREANDITO AL MASSIMO POSSIBILE
-   MANTENENDO LE PROPORZIONI ORIGINALI
 ================================================== */
 
+/*
+   PANNELLO INGANDITO
+
+   Mantiene esattamente il rapporto originale:
+   430 : 560
+
+   Viene utilizzata la dimensione massima possibile
+   compatibile contemporaneamente con larghezza
+   e altezza dello schermo.
+
+   Tutto ciò che si trova dentro il pannello
+   continua ad utilizzare percentuali, quindi
+   cresce insieme al pannello mantenendo
+   le stesse posizioni relative.
+*/
+
 #powerup-panel {
-    /*
-       Il pannello originale è 430 x 560.
+    position: relative;
 
-       Manteniamo esattamente questo rapporto
-       e lo facciamo occupare quasi tutta la
-       larghezza disponibile dello schermo.
-
-       94% = grande ma con un piccolo margine
-       laterale per evitare qualsiasi taglio.
-    */
     width: 94%;
+    max-width: 430px;
 
     aspect-ratio: 430 / 560;
 
     height: auto;
 
-    max-width: none;
-    max-height: 94%;
+    max-height: 92%;
 
     background-image:
         url("https://i.ibb.co/60d5SFdx/1788123346934-removebg-preview.png");
@@ -451,10 +457,6 @@ body {
     border-radius: 0;
     box-shadow: none;
     padding: 0;
-
-    position: relative;
-
-    flex-shrink: 1;
 }
 
 /* ==================================================
@@ -469,21 +471,12 @@ body {
 
 .powerup-slot {
     position: absolute;
-
-    /*
-       Le dimensioni rimangono proporzionali
-       al nuovo pannello perché sono espresse
-       in percentuale.
-    */
     width: 27%;
     height: 22%;
-
     transform: translate(-50%, -50%);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
 }
@@ -608,19 +601,16 @@ body {
     }
 
     /*
-       IMPORTANTE:
-       nessun height fisso qui.
-
-       Il pannello mantiene sempre
-       il rapporto 430:560 e si adatta
-       alla dimensione dello schermo.
+       Il pannello mantiene il rapporto originale
+       anche su schermi piccoli.
     */
 
     #powerup-panel {
         width: 94%;
+        max-width: none;
         height: auto;
         aspect-ratio: 430 / 560;
-        max-height: 94%;
+        max-height: 92%;
     }
 
 }
