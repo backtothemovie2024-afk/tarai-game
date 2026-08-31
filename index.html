@@ -147,7 +147,6 @@ body {
 
 /* ==================================================
    CUCINA
-   SEMPRE SOPRA I CLIENTI
 ================================================== */
 
 #kitchen,
@@ -223,7 +222,7 @@ body {
 
 
 /* ==================================================
-   NUOVA BARRA EXP
+   BARRA EXP
 ================================================== */
 
 #exp-bar {
@@ -255,10 +254,6 @@ body {
 }
 
 
-/* ==================================================
-   RIEMPIMENTO EXP
-================================================== */
-
 #exp-fill {
 
     position: absolute;
@@ -287,10 +282,6 @@ body {
         width 0.35s ease-out;
 }
 
-
-/* ==================================================
-   TESTO LIVELLO
-================================================== */
 
 #exp-level {
 
@@ -359,10 +350,6 @@ body {
 }
 
 
-/* ==================================================
-   SPRITE NORMALI
-================================================== */
-
 .customer .frame {
 
     position: absolute;
@@ -389,10 +376,6 @@ body {
 }
 
 
-/* ==================================================
-   SPRITE FELICE
-================================================== */
-
 .customer .happy-frame {
 
     position: absolute;
@@ -413,10 +396,6 @@ body {
 
 }
 
-
-/* ==================================================
-   CUORICINO
-================================================== */
 
 .heart {
 
@@ -475,10 +454,6 @@ body {
 
 }
 
-
-/* ==================================================
-   MOVIMENTO CLIENTI
-================================================== */
 
 @keyframes walkDown {
 
@@ -569,8 +544,7 @@ body {
 
 
 /* ==================================================
-   PUNTO ROSSO
-   INVISIBILE MA FUNZIONANTE
+   HITBOX INVISIBILE
 ================================================== */
 
 .hit-marker {
@@ -605,75 +579,220 @@ body {
 
 }
 
-    <!-- ==================================================
-     POWER UP SCREEN
-================================================== -->
 
-<div id="powerup-screen">
+/* ==================================================
+   POWER UP
+================================================== */
 
-    <div id="powerup-panel">
+#powerup-overlay {
 
-        <img
-            src="https://i.ibb.co/60d5SFdx/1788123346934-removebg-preview.png"
-            alt="Power Up"
-        >
+    position: absolute;
 
-        <!-- RIQUADRO 1 -->
+    inset: 0;
 
-        <div
-            class="powerup-choice"
-            data-choice="0"
-        >
+    background:
+        rgba(18, 8, 3, 0.82);
 
-            <img
-                class="powerup-icon"
-                src=""
-                alt=""
-            >
+    display: none;
 
-            <div class="powerup-effect"></div>
+    align-items: center;
 
-        </div>
+    justify-content: center;
+
+    z-index: 500;
+
+}
 
 
-        <!-- RIQUADRO 2 -->
+#powerup-panel {
 
-        <div
-            class="powerup-choice"
-            data-choice="1"
-        >
+    width: 92%;
 
-            <img
-                class="powerup-icon"
-                src=""
-                alt=""
-            >
+    max-width: 430px;
 
-            <div class="powerup-effect"></div>
+    padding: 18px 12px 20px;
 
-        </div>
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #8d4a25,
+            #4b2413
+        );
+
+    border: 4px solid #d99a50;
+
+    box-shadow:
+        0 8px 0 #211008,
+        0 12px 25px rgba(0,0,0,0.8),
+        inset 0 2px 4px rgba(255,255,255,0.2);
+
+}
 
 
-        <!-- RIQUADRO 3 -->
+#powerup-title {
 
-        <div
-            class="powerup-choice"
-            data-choice="2"
-        >
+    text-align: center;
 
-            <img
-                class="powerup-icon"
-                src=""
-                alt=""
-            >
+    color: #ffe7a0;
 
-            <div class="powerup-effect"></div>
+    font-size: 25px;
 
-        </div>
+    font-weight: 900;
 
-    </div>
+    margin-bottom: 15px;
 
-</div>
+    text-shadow:
+        2px 2px 3px #000;
+
+}
+
+
+#powerup-options {
+
+    display: flex;
+
+    gap: 8px;
+
+    justify-content: center;
+
+}
+
+
+.powerup-card {
+
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 7px;
+
+    border-radius: 12px;
+
+    border: 3px solid #e6ad61;
+
+    background:
+        linear-gradient(
+            180deg,
+            #6c351c,
+            #32170c
+        );
+
+    box-shadow:
+        0 4px 0 #1b0b06;
+
+    cursor: pointer;
+
+    text-align: center;
+
+    transition:
+        transform 0.12s ease,
+        filter 0.12s ease;
+
+}
+
+
+.powerup-card:active {
+
+    transform:
+        translateY(3px);
+
+    filter: brightness(1.2);
+
+}
+
+
+.powerup-image-box {
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    border-radius: 9px;
+
+    background:
+        #21110a;
+
+    border: 2px solid #a96a35;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+}
+
+
+.powerup-image-box img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+}
+
+
+.powerup-name {
+
+    margin-top: 5px;
+
+    color: #ffd98a;
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    line-height: 1.1;
+
+}
+
+
+.powerup-description {
+
+    margin-top: 3px;
+
+    min-height: 27px;
+
+    color: white;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    line-height: 1.15;
+
+}
+
+
+.powerup-level {
+
+    margin-top: 4px;
+
+    color: #ffe477;
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+}
+
+
+/* ==================================================
+   PAUSA ANIMAZIONI
+================================================== */
+
+#game.powerup-paused * {
+
+    animation-play-state: paused !important;
+
+}
+
 
 /* ==================================================
    RESPONSIVE
@@ -714,6 +833,32 @@ body {
     #exp-level {
 
         font-size: 13px;
+
+    }
+
+
+    #powerup-panel {
+
+        width: 94%;
+
+        padding:
+            14px 8px 16px;
+
+    }
+
+
+    #powerup-title {
+
+        font-size: 21px;
+
+        margin-bottom: 11px;
+
+    }
+
+
+    .powerup-card {
+
+        padding: 5px;
 
     }
 
@@ -766,8 +911,6 @@ body {
     >
 
 
-    <!-- CUCINA NORMALE -->
-
     <img
         id="kitchen"
         src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png"
@@ -775,16 +918,12 @@ body {
     >
 
 
-    <!-- CUCINA DANNEGGIATA -->
-
     <img
         id="kitchenDamaged"
         src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"
         alt=""
     >
 
-
-    <!-- CUCINA DISTRUTTA -->
 
     <img
         id="kitchenDestroyed"
@@ -930,6 +1069,26 @@ body {
     </div>
 
 
+
+    <!-- ==================================================
+         POWER UP SCREEN
+    ================================================== -->
+
+    <div id="powerup-overlay">
+
+        <div id="powerup-panel">
+
+            <div id="powerup-title">
+                CHOOSE YOUR POWER UP
+            </div>
+
+            <div id="powerup-options"></div>
+
+        </div>
+
+    </div>
+
+
 </div>
 
 </div>
@@ -964,19 +1123,13 @@ const LAST_SPAWN_SECOND = 60;
 const CUSTOMER_WALK_TIME = 70;
 
 
-/*
-   SETTE CORSIE
-*/
-
 const LANES = [
 
-    17,
-    25,
-    33,
-    41,
+    28,
+    39,
     50,
-    57,
-    66
+    61,
+    72
 
 ];
 
@@ -990,17 +1143,7 @@ let currentLevel = 1;
 
 let currentEXP = 0;
 
-
-/*
-   EXP ottenuta per cliente soddisfatto.
-*/
-
 const EXP_PER_CUSTOMER = 5;
-
-
-/*
-   EXP necessaria per ogni livello.
-*/
 
 const EXP_REQUIREMENTS = [
 
@@ -1018,8 +1161,92 @@ const EXP_REQUIREMENTS = [
 
 ];
 
-
 const MAX_LEVEL = 12;
+
+
+
+/* ==================================================
+   POWER UP
+================================================== */
+
+/*
+   Ogni potenziamento parte da LV 0.
+
+   Pasta:
+   LV1 = 2 paste
+   LV2 = 3 paste
+   LV3 = 4 paste
+
+   Speed:
+   LV1 = +33%
+   LV2 = +66%
+   LV3 = +99%
+
+   Sauce:
+   LV1 = +1 danno
+   LV2 = +2 danno
+   LV3 = +3 danno
+*/
+
+let powerUps = {
+
+    pasta: 0,
+
+    speed: 0,
+
+    sauce: 0
+
+};
+
+
+let powerUpPaused = false;
+
+
+/* ==================================================
+   IMMAGINI POWER UP
+================================================== */
+
+const POWERUP_DATA = {
+
+    pasta: {
+
+        name: "PASTA",
+
+        image:
+            "https://i.ibb.co/zwM5xNK/1788123621728-removebg-preview.png",
+
+        description:
+            "More pasta",
+
+    },
+
+
+    speed: {
+
+        name: "SPEED",
+
+        image:
+            "https://i.ibb.co/tP1rgx4D/1788123653567-removebg-preview.png",
+
+        description:
+            "Faster throw",
+
+    },
+
+
+    sauce: {
+
+        name: "SAUCE",
+
+        image:
+            "https://i.ibb.co/pB62NXDf/1788123663443-removebg-preview.png",
+
+        description:
+            "More damage",
+
+    }
+
+};
 
 
 
@@ -1089,6 +1316,272 @@ function updateEXPBar() {
 
 
 /* ==================================================
+   MOSTRA POWER UP
+================================================== */
+
+function showPowerUpScreen() {
+
+    if (powerUpPaused) {
+
+        return;
+
+    }
+
+
+    const available = [
+
+        "pasta",
+        "speed",
+        "sauce"
+
+    ].filter(
+        function(type) {
+
+            return powerUps[type] < 3;
+
+        }
+    );
+
+
+    if (
+        available.length === 0
+    ) {
+
+        powerUpPaused = false;
+
+        return;
+
+    }
+
+
+    /*
+       Se rimangono meno di 3 potenziamenti
+       disponibili, mostra quelli rimasti.
+    */
+
+    const shuffled =
+        available.sort(
+            function() {
+
+                return Math.random() - 0.5;
+
+            }
+        );
+
+
+    const selected =
+        shuffled.slice(
+            0,
+            Math.min(
+                3,
+                shuffled.length
+            )
+        );
+
+
+    const options =
+        document.getElementById(
+            "powerup-options"
+        );
+
+
+    options.innerHTML = "";
+
+
+    selected.forEach(
+        function(type) {
+
+            const data =
+                POWERUP_DATA[type];
+
+
+            const nextLevel =
+                powerUps[type] + 1;
+
+
+            let effectText = "";
+
+
+            if (
+                type === "pasta"
+            ) {
+
+                effectText =
+                    nextLevel === 1
+                        ? "2 PASTA"
+                        : nextLevel === 2
+                            ? "3 PASTA"
+                            : "4 PASTA";
+
+            }
+
+
+            if (
+                type === "speed"
+            ) {
+
+                effectText =
+                    "+" +
+                    (
+                        nextLevel * 33
+                    ) +
+                    "% SPEED";
+
+            }
+
+
+            if (
+                type === "sauce"
+            ) {
+
+                effectText =
+                    "+" +
+                    nextLevel +
+                    " DAMAGE";
+
+            }
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "powerup-card";
+
+
+            card.innerHTML = `
+
+                <div class="powerup-image-box">
+
+                    <img
+                        src="${data.image}"
+                        alt=""
+                    >
+
+                </div>
+
+                <div class="powerup-name">
+                    ${data.name}
+                </div>
+
+                <div class="powerup-description">
+                    ${effectText}
+                </div>
+
+                <div class="powerup-level">
+                    LV ${nextLevel}
+                </div>
+
+            `;
+
+
+            card.addEventListener(
+                "click",
+                function() {
+
+                    selectPowerUp(
+                        type
+                    );
+
+                }
+            );
+
+
+            options.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    powerUpPaused = true;
+
+
+    document
+    .getElementById("game")
+    .classList
+    .add(
+        "powerup-paused"
+    );
+
+
+    document
+    .getElementById("powerup-overlay")
+    .style.display =
+        "flex";
+
+}
+
+
+
+/* ==================================================
+   SCELTA POWER UP
+================================================== */
+
+function selectPowerUp(
+    type
+) {
+
+    if (
+        !powerUpPaused
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        powerUps[type] >= 3
+    ) {
+
+        return;
+
+    }
+
+
+    powerUps[type]++;
+
+
+    document
+    .getElementById("powerup-overlay")
+    .style.display =
+        "none";
+
+
+    document
+    .getElementById("powerup-options")
+    .innerHTML =
+        "";
+
+
+    powerUpPaused = false;
+
+
+    document
+    .getElementById("game")
+    .classList
+    .remove(
+        "powerup-paused"
+    );
+
+
+    /*
+       Se la barra aveva appena raggiunto
+       il livello successivo, la azzeriamo.
+    */
+
+    updateEXPBar();
+
+}
+
+
+
+/* ==================================================
    AGGIUNGI EXP
 ================================================== */
 
@@ -1115,6 +1608,12 @@ function addEXP(
         ];
 
 
+    /*
+       ==================================================
+       POWER UP
+       ==================================================
+    */
+
     if (
         currentEXP >=
         requiredEXP
@@ -1126,16 +1625,18 @@ function addEXP(
         currentLevel++;
 
 
-        if (
-            currentLevel >= MAX_LEVEL
-        ) {
+        /*
+           Aggiorniamo subito la barra
+           prima di mostrare il Power Up.
+        */
 
-            currentLevel =
-                MAX_LEVEL;
+        updateEXPBar();
 
-            currentEXP = 0;
 
-        }
+        showPowerUpScreen();
+
+
+        return;
 
     }
 
@@ -1193,13 +1694,37 @@ document
         customers = [];
 
 
-        /*
-           RESET EXP
-        */
-
         currentLevel = 1;
 
         currentEXP = 0;
+
+
+        /*
+           RESET POWER UP
+        */
+
+        powerUps.pasta = 0;
+
+        powerUps.speed = 0;
+
+        powerUps.sauce = 0;
+
+        powerUpPaused = false;
+
+
+        document
+        .getElementById("powerup-overlay")
+        .style.display =
+            "none";
+
+
+        document
+        .getElementById("game")
+        .classList
+        .remove(
+            "powerup-paused"
+        );
+
 
         updateEXPBar();
 
@@ -1320,9 +1845,15 @@ function createWave1() {
             setTimeout(
                 function() {
 
-                    spawnCustomer(
-                        index
-                    );
+                    if (
+                        !powerUpPaused
+                    ) {
+
+                        spawnCustomer(
+                            index
+                        );
+
+                    }
 
                 },
                 second * 1000
@@ -1637,6 +2168,13 @@ function startKitchenEnergySystem() {
     setInterval(
         function() {
 
+            if (powerUpPaused) {
+
+                return;
+
+            }
+
+
             let damage = 0;
 
 
@@ -1759,6 +2297,13 @@ function startZIndexSystem() {
     setInterval(
         function() {
 
+            if (powerUpPaused) {
+
+                return;
+
+            }
+
+
             updateZIndexes();
 
         },
@@ -1841,6 +2386,13 @@ function startFirstAttackDetection() {
     setInterval(
         function() {
 
+            if (powerUpPaused) {
+
+                return;
+
+            }
+
+
             const target =
                 getNearestVisibleCustomer();
 
@@ -1886,6 +2438,13 @@ function startCustomerAnimation() {
     customerTimer =
     setInterval(
         function() {
+
+            if (powerUpPaused) {
+
+                return;
+
+            }
+
 
             customers.forEach(
                 function(customer) {
@@ -2020,12 +2579,19 @@ function setCookFrame(
 
 function playCookAttack() {
 
-    const target =
-        getNearestVisibleCustomer();
+    if (powerUpPaused) {
+
+        return;
+
+    }
+
+
+    const targets =
+        getAttackTargets();
 
 
     if (
-        target === null
+        targets.length === 0
     ) {
 
         setCookFrame(0);
@@ -2041,7 +2607,11 @@ function playCookAttack() {
     setTimeout(
         function() {
 
-            setCookFrame(1);
+            if (!powerUpPaused) {
+
+                setCookFrame(1);
+
+            }
 
         },
         120
@@ -2051,7 +2621,11 @@ function playCookAttack() {
     setTimeout(
         function() {
 
-            setCookFrame(2);
+            if (!powerUpPaused) {
+
+                setCookFrame(2);
+
+            }
 
         },
         240
@@ -2062,15 +2636,28 @@ function playCookAttack() {
         function() {
 
             if (
-                target.dataset.satisfied !==
-                "true"
+                !powerUpPaused
             ) {
 
                 setCookFrame(3);
 
 
-                throwPasta(
-                    target
+                targets.forEach(
+                    function(target) {
+
+                        if (
+                            target &&
+                            target.dataset.satisfied !==
+                                "true"
+                        ) {
+
+                            throwPasta(
+                                target
+                            );
+
+                        }
+
+                    }
                 );
 
             }
@@ -2083,7 +2670,11 @@ function playCookAttack() {
     setTimeout(
         function() {
 
-            setCookFrame(4);
+            if (!powerUpPaused) {
+
+                setCookFrame(4);
+
+            }
 
         },
         480
@@ -2093,7 +2684,11 @@ function playCookAttack() {
     setTimeout(
         function() {
 
-            setCookFrame(0);
+            if (!powerUpPaused) {
+
+                setCookFrame(0);
+
+            }
 
         },
         600
@@ -2104,7 +2699,80 @@ function playCookAttack() {
 
 
 /* ==================================================
-   ATTACCO OGNI 3 SECONDI
+   CLIENTI DA COLPIRE
+================================================== */
+
+function getAttackTargets() {
+
+    const activeCustomers =
+        customers.filter(
+            function(customer) {
+
+                if (
+                    !customer
+                ) {
+
+                    return false;
+
+                }
+
+
+                if (
+                    customer.style.display ===
+                    "none"
+                ) {
+
+                    return false;
+
+                }
+
+
+                if (
+                    customer.dataset.satisfied ===
+                    "true"
+                ) {
+
+                    return false;
+
+                }
+
+
+                return customerIsVisible(
+                    customer
+                );
+
+            }
+        );
+
+
+    activeCustomers.sort(
+        function(a, b) {
+
+            return (
+                b.getBoundingClientRect().top -
+                a.getBoundingClientRect().top
+            );
+
+        }
+    );
+
+
+    let numberOfPasta =
+        1 +
+        powerUps.pasta;
+
+
+    return activeCustomers.slice(
+        0,
+        numberOfPasta
+    );
+
+}
+
+
+
+/* ==================================================
+   ATTACCO
 ================================================== */
 
 function startCookAnimation() {
@@ -2127,6 +2795,13 @@ function startCookAnimation() {
     setInterval(
         function() {
 
+            if (powerUpPaused) {
+
+                return;
+
+            }
+
+
             const target =
                 getNearestVisibleCustomer();
 
@@ -2146,7 +2821,7 @@ function startCookAnimation() {
             }
 
         },
-        3000
+        getCookAttackInterval()
     );
 
 }
@@ -2154,7 +2829,34 @@ function startCookAnimation() {
 
 
 /* ==================================================
-   CLIENTE PIÙ VICINO ALLA CUCINA
+   VELOCITÀ ATTACCO
+================================================== */
+
+function getCookAttackInterval() {
+
+    /*
+       LV0 = 3000 ms
+       LV1 = 2260 ms
+       LV2 = 1807 ms
+       LV3 = 1507 ms
+
+       Circa +33% velocità per livello.
+    */
+
+    return Math.round(
+        3000 /
+        (
+            1 +
+            powerUps.speed * 0.33
+        )
+    );
+
+}
+
+
+
+/* ==================================================
+   CLIENTE PIÙ VICINO
 ================================================== */
 
 function getNearestVisibleCustomer() {
@@ -2363,7 +3065,12 @@ function throwPasta(
         ) + "px";
 
 
-    const speed = 350;
+    const speed =
+        350 *
+        (
+            1 +
+            powerUps.speed * 0.33
+        );
 
 
     let lastTime =
@@ -2398,6 +3105,25 @@ function throwPasta(
 
             }
 
+
+            return;
+
+        }
+
+
+        /*
+           Durante la schermata Power Up
+           la pasta rimane ferma.
+        */
+
+        if (powerUpPaused) {
+
+            lastTime =
+                currentTime;
+
+            requestAnimationFrame(
+                movePasta
+            );
 
             return;
 
@@ -2616,7 +3342,20 @@ function hitCustomer(
         );
 
 
-    hp -= 5;
+    /*
+       DANNO BASE = 5
+       SAUCE LV1 = +1
+       SAUCE LV2 = +2
+       SAUCE LV3 = +3
+    */
+
+    const damage =
+        5 +
+        powerUps.sauce;
+
+
+    hp -=
+        damage;
 
 
     customer.dataset.hp =
@@ -2716,12 +3455,6 @@ function satisfyCustomer(
     customer.dataset.atKitchen =
         "false";
 
-
-    /*
-       ==================================================
-       AGGIUNTA EXP
-       ==================================================
-    */
 
     addEXP(
         EXP_PER_CUSTOMER
@@ -2852,4 +3585,4 @@ function satisfyCustomer2() {
 </script>
 
 </body>
-    </html>
+</html>
