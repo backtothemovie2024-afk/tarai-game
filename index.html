@@ -26,10 +26,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* ==================================================
-   TELEFONO
-================================================== */
-
 #phone {
     position: relative;
     width: min(100vw, 56.25vh);
@@ -39,10 +35,6 @@ body {
     overflow: hidden;
     background: black;
 }
-
-/* ==================================================
-   MENU
-================================================== */
 
 #menu {
     position: absolute;
@@ -77,10 +69,6 @@ body {
     z-index: 30;
 }
 
-/* ==================================================
-   GIOCO
-================================================== */
-
 #game {
     display: none;
     position: absolute;
@@ -98,10 +86,6 @@ body {
     image-rendering: auto;
     z-index: 0;
 }
-
-/* ==================================================
-   CUCINA
-================================================== */
 
 #kitchen,
 #kitchenDamaged,
@@ -128,10 +112,6 @@ body {
     display: none;
 }
 
-/* ==================================================
-   HUD
-================================================== */
-
 #hud {
     position: absolute;
     top: 15px;
@@ -144,10 +124,6 @@ body {
     font-weight: bold;
     z-index: 80;
 }
-
-/* ==================================================
-   BARRA EXP
-================================================== */
 
 #exp-bar {
     position: absolute;
@@ -201,6 +177,7 @@ body {
 
 /* ==================================================
    CLIENTI
+   PARTENZA DALLA PORTA NERA
 ================================================== */
 
 .customer {
@@ -208,8 +185,13 @@ body {
     width: 100px;
     height: 135px;
 
-    /* PARTE COMPLETAMENTE DA FUORI SCHERMO */
-    top: -140px;
+    /*
+       La parte nera della porta inizia circa al 4%
+       dell'altezza del gioco.
+       I clienti quindi partono DA QUI,
+       non da fuori dallo schermo.
+    */
+    top: 4%;
 
     z-index: 10;
 }
@@ -289,14 +271,14 @@ body {
 
 }
 
-/* ==================================================
-   ENTRATA CLIENTI
-================================================== */
-
+/*
+   I clienti partono dalla porta nera
+   e scendono verso la posizione finale.
+*/
 @keyframes walkDown {
 
     0% {
-        top: -140px;
+        top: 4%;
     }
 
     100% {
@@ -304,10 +286,6 @@ body {
     }
 
 }
-
-/* ==================================================
-   CUOCO
-================================================== */
 
 #cook {
     position: absolute;
@@ -333,10 +311,6 @@ body {
     display: block;
 }
 
-/* ==================================================
-   PASTA
-================================================== */
-
 .pasta {
     position: absolute;
     width: 84px;
@@ -345,10 +319,6 @@ body {
     z-index: 70;
     pointer-events: none;
 }
-
-/* ==================================================
-   HITBOX INVISIBILE
-================================================== */
 
 .hit-marker {
     position: absolute;
@@ -366,10 +336,6 @@ body {
     opacity: 0;
 }
 
-/* ==================================================
-   POWER UP OVERLAY
-================================================== */
-
 #powerup-overlay {
     position: absolute;
     inset: 0;
@@ -380,10 +346,6 @@ body {
     justify-content: center;
     z-index: 500;
 }
-
-/* ==================================================
-   PANNELLO
-================================================== */
 
 #powerup-panel {
     width: 92%;
@@ -400,10 +362,6 @@ body {
     padding: 0;
     position: relative;
 }
-
-/* ==================================================
-   POWER UP OPTIONS
-================================================== */
 
 #powerup-options {
     position: absolute;
@@ -438,10 +396,6 @@ body {
     top: 50%;
 }
 
-/* ==================================================
-   IMMAGINE POWER UP
-================================================== */
-
 .powerup-slot img {
     width: 82%;
     height: 82%;
@@ -465,10 +419,6 @@ body {
     height: 78%;
 }
 
-/* ==================================================
-   LIVELLO POWER UP
-================================================== */
-
 .powerup-level {
     position: absolute;
     right: 4%;
@@ -491,17 +441,9 @@ body {
         0 2px 5px rgba(0,0,0,0.5);
 }
 
-/* ==================================================
-   PAUSA
-================================================== */
-
 #game.powerup-paused * {
     animation-play-state: paused !important;
 }
-
-/* ==================================================
-   RESPONSIVE
-================================================== */
 
 @media (max-width: 500px) {
 
@@ -541,10 +483,6 @@ body {
 
 <div id="phone">
 
-<!-- ==================================================
-     MENU
-================================================== -->
-
 <div id="menu">
 
     <img
@@ -558,10 +496,6 @@ body {
     </button>
 
 </div>
-
-<!-- ==================================================
-     GIOCO
-================================================== -->
 
 <div id="game">
 
@@ -589,10 +523,6 @@ body {
         alt=""
     >
 
-    <!-- ==================================================
-         HUD
-    ================================================== -->
-
     <div id="hud">
 
         <span>❤️ 3</span>
@@ -600,10 +530,6 @@ body {
         <span>⭐ 0</span>
 
     </div>
-
-    <!-- ==================================================
-         CLIENTE 1
-    ================================================== -->
 
     <div
         id="customer1Template"
@@ -635,10 +561,6 @@ body {
 
     </div>
 
-    <!-- ==================================================
-         CLIENTE 2
-    ================================================== -->
-
     <div
         id="customer2Template"
         class="customer customer-template"
@@ -668,10 +590,6 @@ body {
         </div>
 
     </div>
-
-    <!-- ==================================================
-         CUOCO
-    ================================================== -->
 
     <div id="cook">
 
@@ -703,10 +621,6 @@ body {
 
     </div>
 
-    <!-- ==================================================
-         BARRA ESPERIENZA
-    ================================================== -->
-
     <div id="exp-bar">
 
         <div id="exp-fill"></div>
@@ -716,10 +630,6 @@ body {
         </div>
 
     </div>
-
-    <!-- ==================================================
-         POWER UP SCREEN
-    ================================================== -->
 
     <div id="powerup-overlay">
 
@@ -737,18 +647,15 @@ body {
 
 <script>
 
-/* ==================================================
-   REGOLAZIONE HITBOX
-================================================== */
-
 const HIT_X = 5;
 
 const HIT_Y = 0;
 
 const HIT_POSITION_Y = 0.45;
 
+
 /* ==================================================
-   IMPOSTAZIONI WAVE 1
+   WAVE 1
 ================================================== */
 
 const TOTAL_CUSTOMERS = 10;
@@ -759,30 +666,45 @@ const LAST_SPAWN_SECOND = 60;
 
 const CUSTOMER_WALK_TIME = 70;
 
-/* ==================================================
-   5 COLONNE
-================================================== */
 
+/*
+   5 CORSIE EQUADISTANTI
+   Tutte comprese nella larghezza della porta nera.
+
+   Le percentuali rappresentano il CENTRO
+   della corsia.
+*/
 const LANES = [
-    29,
-    36.4,
-    43.8,
-    51.2,
-    58.6
+    28,
+    39,
+    50,
+    61,
+    72
 ];
 
+
+/*
+   Distanza minima tra due clienti
+   nella stessa corsia.
+*/
+const SAME_LANE_MIN_DELAY = 1.5;
+
+
+/*
+   Ultimo momento in cui è stato programmato
+   un cliente per ogni corsia.
+*/
+let lastLaneSpawnTimes = [
+    -Infinity,
+    -Infinity,
+    -Infinity,
+    -Infinity,
+    -Infinity
+];
+
+
 /* ==================================================
-   DISTANZA MINIMA TRA CLIENTI
-   NELLA STESSA COLONNA
-================================================== */
-
-const MIN_SAME_LANE_DISTANCE = 1500;
-
-const lastLaneSpawnTime =
-    new Array(LANES.length).fill(-Infinity);
-
-/* ==================================================
-   SISTEMA EXP
+   EXP
 ================================================== */
 
 let currentLevel = 1;
@@ -807,6 +729,7 @@ const EXP_REQUIREMENTS = [
 
 const MAX_LEVEL = 12;
 
+
 /* ==================================================
    POWER UP
 ================================================== */
@@ -818,6 +741,7 @@ let powerUps = {
 };
 
 let powerUpPaused = false;
+
 
 /* ==================================================
    IMMAGINI POWER UP
@@ -835,6 +759,7 @@ const POWER_UP_IMAGES = {
         "https://i.ibb.co/pB62NXDf/1788123663443-removebg-preview.png"
 
 };
+
 
 /* ==================================================
    MOSTRA POWER UP
@@ -964,6 +889,7 @@ function showPowerUpScreen() {
 
 }
 
+
 /* ==================================================
    SCELTA POWER UP
 ================================================== */
@@ -999,8 +925,9 @@ function selectPowerUp(type) {
 
 }
 
+
 /* ==================================================
-   AGGIORNA BARRA EXP
+   EXP BAR
 ================================================== */
 
 function updateEXPBar() {
@@ -1048,6 +975,7 @@ function updateEXPBar() {
 
 }
 
+
 /* ==================================================
    AGGIUNGI EXP
 ================================================== */
@@ -1083,6 +1011,7 @@ function addEXP(amount) {
 
 }
 
+
 /* ==================================================
    VARIABILI
 ================================================== */
@@ -1100,6 +1029,7 @@ let zIndexTimer = null;
 let kitchenEnergy = 100;
 
 let customers = [];
+
 
 /* ==================================================
    PLAY
@@ -1123,18 +1053,6 @@ document
 
         customers = [];
 
-        /* RESET TEMPI DELLE COLONNE */
-        for (
-            let i = 0;
-            i < lastLaneSpawnTime.length;
-            i++
-        ) {
-
-            lastLaneSpawnTime[i] =
-                -Infinity;
-
-        }
-
         currentLevel = 1;
 
         currentEXP = 0;
@@ -1146,6 +1064,18 @@ document
         powerUps.sauce = 0;
 
         powerUpPaused = false;
+
+        /*
+           Reset delle ultime apparizioni
+           per ogni corsia.
+        */
+        lastLaneSpawnTimes = [
+            -Infinity,
+            -Infinity,
+            -Infinity,
+            -Infinity,
+            -Infinity
+        ];
 
         document
         .getElementById("powerup-overlay")
@@ -1199,6 +1129,7 @@ document
     }
 );
 
+
 /* ==================================================
    CREA WAVE 1
 ================================================== */
@@ -1249,20 +1180,141 @@ function createWave1() {
         }
     );
 
+
+    /*
+       Assegna ogni cliente a una corsia
+       controllando che nella stessa corsia
+       ci siano almeno 1.5 secondi di distanza.
+    */
+
+    const scheduledCustomers = [];
+
     spawnTimes.forEach(
         function(second, index) {
+
+            const availableLanes =
+                [];
+
+            LANES.forEach(
+                function(lane, laneIndex) {
+
+                    if (
+                        second -
+                        lastLaneSpawnTimes[laneIndex]
+                        >=
+                        SAME_LANE_MIN_DELAY
+                    ) {
+
+                        availableLanes.push(
+                            laneIndex
+                        );
+
+                    }
+
+                }
+            );
+
+
+            let selectedLane;
+
+
+            /*
+               Se ci sono corsie disponibili,
+               ne scegliamo una casualmente.
+            */
+
+            if (
+                availableLanes.length > 0
+            ) {
+
+                selectedLane =
+                    availableLanes[
+                        Math.floor(
+                            Math.random() *
+                            availableLanes.length
+                        )
+                    ];
+
+            }
+
+
+            /*
+               Sicurezza:
+               se per qualsiasi motivo nessuna corsia
+               è disponibile, scegliamo quella che
+               è libera da più tempo.
+            */
+
+            else {
+
+                selectedLane = 0;
+
+                for (
+                    let i = 1;
+                    i < LANES.length;
+                    i++
+                ) {
+
+                    if (
+                        lastLaneSpawnTimes[i] <
+                        lastLaneSpawnTimes[selectedLane]
+                    ) {
+
+                        selectedLane = i;
+
+                    }
+
+                }
+
+            }
+
+
+            lastLaneSpawnTimes[
+                selectedLane
+            ] = second;
+
+
+            scheduledCustomers.push({
+                index: index,
+                second: second,
+                lane: selectedLane
+            });
+
+        }
+    );
+
+
+    /*
+       Reset perché lastLaneSpawnTimes
+       serve solamente per creare la wave.
+    */
+
+    lastLaneSpawnTimes = [
+        -Infinity,
+        -Infinity,
+        -Infinity,
+        -Infinity,
+        -Infinity
+    ];
+
+
+    scheduledCustomers.forEach(
+        function(schedule) {
 
             setTimeout(
                 function() {
 
                     if (!powerUpPaused) {
 
-                        spawnCustomer(index);
+                        spawnCustomer(
+                            schedule.index,
+                            schedule.lane
+                        );
 
                     }
 
                 },
-                second * 1000
+                schedule.second * 1000
             );
 
         }
@@ -1270,87 +1322,15 @@ function createWave1() {
 
 }
 
-/* ==================================================
-   ESCOLTA UNA COLONNA DISPONIBILE
-================================================== */
-
-function getAvailableLane() {
-
-    const now =
-        performance.now();
-
-    const availableLanes = [];
-
-    for (
-        let i = 0;
-        i < LANES.length;
-        i++
-    ) {
-
-        if (
-            now -
-            lastLaneSpawnTime[i] >=
-            MIN_SAME_LANE_DISTANCE
-        ) {
-
-            availableLanes.push(i);
-
-        }
-
-    }
-
-    if (
-        availableLanes.length > 0
-    ) {
-
-        return availableLanes[
-            Math.floor(
-                Math.random() *
-                availableLanes.length
-            )
-        ];
-
-    }
-
-    /* ==================================================
-       SE NESSUNA COLONNA È DISPONIBILE,
-       USA QUELLA CHE SI LIBERA PRIMA
-    ================================================== */
-
-    let bestLane = 0;
-
-    let earliestTime =
-        lastLaneSpawnTime[0];
-
-    for (
-        let i = 1;
-        i < LANES.length;
-        i++
-    ) {
-
-        if (
-            lastLaneSpawnTime[i] <
-            earliestTime
-        ) {
-
-            earliestTime =
-                lastLaneSpawnTime[i];
-
-            bestLane = i;
-
-        }
-
-    }
-
-    return bestLane;
-
-}
 
 /* ==================================================
    CREA SINGOLO CLIENTE
 ================================================== */
 
-function spawnCustomer(index) {
+function spawnCustomer(
+    index,
+    laneIndex
+) {
 
     const game =
         document.getElementById("game");
@@ -1390,48 +1370,34 @@ function spawnCustomer(index) {
         "satisfied"
     );
 
-    customer.style.top = "-140px";
 
-    /* ==================================================
-       SCELTA DELLA COLONNA
-    ================================================== */
+    /*
+       IMPORTANTE:
+       il cliente parte dalla parte nera
+       della porta, non da fuori schermo.
+    */
 
-    const laneIndex =
-        getAvailableLane();
+    customer.style.top = "4%";
 
-    const now =
-        performance.now();
 
-    const timeSinceLastSpawn =
-        now -
-        lastLaneSpawnTime[laneIndex];
-
-    /* ==================================================
-       SE LA COLONNA È ANCORA BLOCCATA,
-       RITARDA QUESTO CLIENTE
-    ================================================== */
-
-    let laneDelay = 0;
-
-    if (
-        timeSinceLastSpawn <
-        MIN_SAME_LANE_DISTANCE
-    ) {
-
-        laneDelay =
-            MIN_SAME_LANE_DISTANCE -
-            timeSinceLastSpawn;
-
-    }
-
-    lastLaneSpawnTime[laneIndex] =
-        now + laneDelay;
+    /*
+       Usa la corsia già assegnata
+       durante la creazione della wave.
+    */
 
     customer.dataset.lane =
         laneIndex;
 
+    /*
+       LANES indica il CENTRO della corsia,
+       quindi centriamo lo sprite.
+    */
+
     customer.style.left =
         LANES[laneIndex] + "%";
+
+    customer.style.transform =
+        "translateX(-50%)";
 
     customer.dataset.type =
         type;
@@ -1483,40 +1449,24 @@ function spawnCustomer(index) {
 
     customers.push(customer);
 
-    /* ==================================================
-       ENTRATA DA FUORI SCHERMO
-    ================================================== */
-
-    setTimeout(
+    requestAnimationFrame(
         function() {
 
-            if (
-                !customer ||
-                customer.dataset.satisfied ===
-                    "true"
-            ) {
+            /*
+               Parte dalla porta nera
+               e scende verso il basso.
+            */
 
-                return;
+            customer.style.animation =
+                "walkDown " +
+                CUSTOMER_WALK_TIME +
+                "s linear forwards";
 
-            }
-
-            requestAnimationFrame(
-                function() {
-
-                    customer.style.animation =
-                        "walkDown " +
-                        CUSTOMER_WALK_TIME +
-                        "s linear forwards";
-
-                    customer.classList.add(
-                        "walking"
-                    );
-
-                }
+            customer.classList.add(
+                "walking"
             );
 
-        },
-        laneDelay
+        }
     );
 
     setTimeout(
@@ -1535,13 +1485,11 @@ function spawnCustomer(index) {
             }
 
         },
-        (
-            CUSTOMER_WALK_TIME * 1000
-        ) +
-        laneDelay
+        CUSTOMER_WALK_TIME * 1000
     );
 
 }
+
 
 /* ==================================================
    CUCINA
@@ -1598,6 +1546,7 @@ function updateKitchenEnergy() {
     }
 
 }
+
 
 /* ==================================================
    ENERGIA
@@ -1659,6 +1608,7 @@ function startKitchenEnergySystem() {
 
 }
 
+
 /* ==================================================
    CLIENTE VISIBILE
 ================================================== */
@@ -1689,6 +1639,7 @@ function customerIsVisible(customer) {
     );
 
 }
+
 
 /* ==================================================
    Z-INDEX
@@ -1723,17 +1674,17 @@ function startZIndexSystem() {
 function updateZIndexes() {
 
     const activeCustomers =
-        customers.filter(
-            function(customer) {
+    customers.filter(
+        function(customer) {
 
-                return (
-                    customer &&
-                    customer.style.display !==
-                        "none"
-                );
+            return (
+                customer &&
+                customer.style.display !==
+                    "none"
+            );
 
-            }
-        );
+        }
+    );
 
     activeCustomers.sort(
         function(a, b) {
@@ -1763,6 +1714,7 @@ function updateZIndexes() {
     );
 
 }
+
 
 /* ==================================================
    PRIMO ATTACCO
@@ -1804,6 +1756,7 @@ function startFirstAttackDetection() {
     );
 
 }
+
 
 /* ==================================================
    ANIMAZIONE CLIENTI
@@ -1894,6 +1847,7 @@ function startCustomerAnimation() {
 
 }
 
+
 /* ==================================================
    FRAME CUOCO
 ================================================== */
@@ -1924,6 +1878,7 @@ function setCookFrame(frameNumber) {
     }
 
 }
+
 
 /* ==================================================
    ATTACCO
@@ -2023,6 +1978,7 @@ function playCookAttack() {
 
 }
 
+
 /* ==================================================
    CLIENTI DA COLPIRE
 ================================================== */
@@ -2080,6 +2036,7 @@ function getAttackTargets() {
 
 }
 
+
 /* ==================================================
    ATTACCO AUTOMATICO
 ================================================== */
@@ -2125,6 +2082,7 @@ function startCookAnimation() {
 
 }
 
+
 /* ==================================================
    VELOCITÀ ATTACCO
 ================================================== */
@@ -2140,6 +2098,7 @@ function getCookAttackInterval() {
     );
 
 }
+
 
 /* ==================================================
    CLIENTE PIÙ VICINO
@@ -2220,6 +2179,7 @@ function getNearestVisibleCustomer() {
     return nearest;
 
 }
+
 
 /* ==================================================
    LANCIO PASTA
@@ -2493,6 +2453,7 @@ function throwPasta(target) {
 
 }
 
+
 /* ==================================================
    COLPITO
 ================================================== */
@@ -2548,6 +2509,7 @@ function hitCustomer(
     }
 
 }
+
 
 /* ==================================================
    CLIENTE SODDISFATTO
@@ -2662,6 +2624,7 @@ function satisfyCustomer(
 
 }
 
+
 /* ==================================================
    COMPATIBILITÀ
 ================================================== */
@@ -2719,4 +2682,4 @@ function satisfyCustomer2() {
 </script>
 
 </body>
-    </html>
+</html>
