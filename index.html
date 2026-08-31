@@ -108,6 +108,7 @@ body {
     font-weight: bold;
 
     z-index: 30;
+
 }
 
 
@@ -172,17 +173,23 @@ body {
 
 
 #kitchen {
+
     display: block;
+
 }
 
 
 #kitchenDamaged {
+
     display: none;
+
 }
 
 
 #kitchenDestroyed {
+
     display: none;
+
 }
 
 
@@ -324,10 +331,15 @@ body {
 .customer.walking {
 
     animation:
+
         walkDown
+
         60s
+
         linear
+
         forwards;
+
 }
 
 
@@ -358,7 +370,9 @@ body {
 
 
 .customer .frame.active {
+
     display: block;
+
 }
 
 
@@ -379,6 +393,7 @@ body {
     display: none;
 
     z-index: 2;
+
 }
 
 
@@ -411,24 +426,30 @@ body {
 
 
 .customer.satisfied .heart {
+
     display: block;
+
 }
 
 
 @keyframes heartFloat {
 
     0% {
+
         transform:
             translateX(-50%)
             translateY(0)
             scale(1);
+
     }
 
     100% {
+
         transform:
             translateX(-50%)
             translateY(-7px)
             scale(1.12);
+
     }
 
 }
@@ -437,11 +458,15 @@ body {
 @keyframes walkDown {
 
     0% {
+
         top: -130px;
+
     }
 
     100% {
+
         top: 69%;
+
     }
 
 }
@@ -467,6 +492,7 @@ body {
         translateX(-50%);
 
     z-index: 60;
+
 }
 
 
@@ -485,11 +511,14 @@ body {
     object-fit: contain;
 
     display: none;
+
 }
 
 
 #cook img.active {
+
     display: block;
+
 }
 
 
@@ -510,6 +539,7 @@ body {
     z-index: 70;
 
     pointer-events: none;
+
 }
 
 
@@ -532,8 +562,11 @@ body {
     border: 3px solid white;
 
     box-shadow:
+
         0 0 8px red,
-        0 0 15px rgba(255,0,0,0.8);
+
+        0 0 15px
+        rgba(255,0,0,0.8);
 
     transform:
         translate(-50%, -50%);
@@ -543,11 +576,12 @@ body {
     pointer-events: none;
 
     opacity: 0;
+
 }
 
 
 /* ==================================================
-   POWER UP OVERLAY
+   POWER UP
 ================================================== */
 
 #powerup-overlay {
@@ -556,148 +590,131 @@ body {
 
     inset: 0;
 
+    background:
+        rgba(18, 8, 3, 0.82);
+
     display: none;
 
     align-items: center;
 
     justify-content: center;
 
-    background:
-        rgba(18, 8, 3, 0.82);
-
     z-index: 500;
+
 }
 
-
-/* ==================================================
-   PANNELLO POWER UP
-================================================== */
 
 #powerup-panel {
 
-    position: relative;
+    width: 92%;
 
-    width: 96%;
+    max-width: 430px;
 
-    max-width: 500px;
+    padding: 18px 12px 20px;
 
-    aspect-ratio: 500 / 1400;
+    border-radius: 20px;
 
-    flex-shrink: 0;
+    background:
+        linear-gradient(
+            180deg,
+            #8d4a25,
+            #4b2413
+        );
 
-    background-image:
-        url("https://i.ibb.co/60d5SFdx/1788123346934-removebg-preview.png");
+    border: 4px solid #d99a50;
 
-    background-repeat: no-repeat;
+    box-shadow:
+        0 8px 0 #211008,
+        0 12px 25px rgba(0,0,0,0.8),
+        inset 0 2px 4px rgba(255,255,255,0.2);
 
-    background-position: center;
-
-    background-size: 100% 100%;
-
-    overflow: hidden;
 }
 
 
-/* ==================================================
-   CONTENITORE POWER UP
-================================================== */
+#powerup-title {
+
+    text-align: center;
+
+    color: #ffe7a0;
+
+    font-size: 25px;
+
+    font-weight: 900;
+
+    margin-bottom: 15px;
+
+    text-shadow:
+        2px 2px 3px #000;
+
+}
+
 
 #powerup-options {
 
-    position: absolute;
+    display: flex;
 
-    inset: 0;
+    gap: 8px;
 
-    width: 100%;
+    justify-content: center;
 
-    height: 100%;
 }
 
 
-/* ==================================================
-   CARD POWER UP
-================================================== */
-
 .powerup-card {
 
-    position: absolute;
+    flex: 1;
 
-    top: 24%;
+    min-width: 0;
 
-    width: 25%;
+    padding: 7px;
 
-    height: 52%;
+    border-radius: 12px;
 
-    margin: 0;
+    border: 3px solid #e6ad61;
 
-    padding: 0;
+    background:
+        linear-gradient(
+            180deg,
+            #6c351c,
+            #32170c
+        );
 
-    background: transparent;
-
-    border: none;
-
-    outline: none;
+    box-shadow:
+        0 4px 0 #1b0b06;
 
     cursor: pointer;
 
     text-align: center;
 
-    color: white;
-
     transition:
         transform 0.12s ease,
         filter 0.12s ease;
+
 }
 
-
-/* ==================================================
-   POSIZIONE DEI 3 RIQUADRI
-================================================== */
-
-.powerup-card:nth-child(1) {
-    left: 8%;
-}
-
-
-.powerup-card:nth-child(2) {
-    left: 37.5%;
-}
-
-
-.powerup-card:nth-child(3) {
-    left: 67%;
-}
-
-
-/* ==================================================
-   PRESSIONE CARD
-================================================== */
 
 .powerup-card:active {
 
     transform:
-        translateY(3px)
-        scale(0.98);
+        translateY(3px);
 
-    filter: brightness(1.15);
+    filter: brightness(1.2);
+
 }
 
 
-/* ==================================================
-   IMMAGINE POWER UP
-================================================== */
-
 .powerup-image-box {
-
-    position: absolute;
-
-    left: 0;
-
-    top: 0;
 
     width: 100%;
 
-    height: 35%;
+    aspect-ratio: 1 / 1;
+
+    border-radius: 9px;
+
+    background:
+        #21110a;
+
+    border: 2px solid #a96a35;
 
     display: flex;
 
@@ -705,53 +722,25 @@ body {
 
     justify-content: center;
 
-    overflow: visible;
+    overflow: hidden;
+
 }
 
 
 .powerup-image-box img {
 
-    display: block;
+    width: 100%;
 
-    width: 78%;
-
-    height: 78%;
+    height: 100%;
 
     object-fit: contain;
 
-    object-position: center;
-
-    margin: 0;
-
-    padding: 0;
 }
 
 
-/* ==================================================
-   NOME POWER UP
-================================================== */
-
 .powerup-name {
 
-    position: absolute;
-
-    left: 0;
-
-    top: 38%;
-
-    width: 100%;
-
-    height: 12%;
-
-    padding: 0;
-
-    margin: 0;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
+    margin-top: 5px;
 
     color: #ffd98a;
 
@@ -761,39 +750,14 @@ body {
 
     line-height: 1.1;
 
-    text-align: center;
-
-    text-shadow:
-        2px 2px 3px #000;
-
 }
 
 
-/* ==================================================
-   DESCRIZIONE
-================================================== */
-
 .powerup-description {
 
-    position: absolute;
+    margin-top: 3px;
 
-    left: 0;
-
-    top: 51%;
-
-    width: 100%;
-
-    height: 18%;
-
-    padding: 0 3px;
-
-    margin: 0;
-
-    display: flex;
-
-    align-items: flex-start;
-
-    justify-content: center;
+    min-height: 27px;
 
     color: white;
 
@@ -801,43 +765,14 @@ body {
 
     font-weight: bold;
 
-    line-height: 1.2;
-
-    text-align: center;
-
-    text-shadow:
-        2px 2px 3px #000;
-
-    overflow-wrap: break-word;
+    line-height: 1.15;
 
 }
 
 
-/* ==================================================
-   LIVELLO
-================================================== */
-
 .powerup-level {
 
-    position: absolute;
-
-    left: 0;
-
-    top: 72%;
-
-    width: 100%;
-
-    height: 12%;
-
-    padding: 0;
-
-    margin: 0;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
+    margin-top: 4px;
 
     color: #ffe477;
 
@@ -845,114 +780,25 @@ body {
 
     font-weight: 900;
 
-    line-height: 1;
-
-    text-align: center;
-
-    text-shadow:
-        2px 2px 3px #000;
 }
 
 
 /* ==================================================
-   PAUSA
+   PAUSA ANIMAZIONI
 ================================================== */
 
 #game.powerup-paused * {
 
     animation-play-state: paused !important;
+
 }
 
 
 /* ==================================================
-   MOBILE
+   RESPONSIVE
 ================================================== */
 
 @media (max-width: 500px) {
-
-    #powerup-panel {
-
-        width: 96%;
-
-        max-width: 500px;
-
-    }
-
-
-    .powerup-card {
-
-        top: 24%;
-
-        width: 25%;
-
-        height: 52%;
-
-    }
-
-
-    .powerup-card:nth-child(1) {
-        left: 8%;
-    }
-
-
-    .powerup-card:nth-child(2) {
-        left: 37.5%;
-    }
-
-
-    .powerup-card:nth-child(3) {
-        left: 67%;
-    }
-
-
-    .powerup-image-box {
-
-        height: 35%;
-
-    }
-
-
-    .powerup-image-box img {
-
-        width: 78%;
-
-        height: 78%;
-
-    }
-
-
-    .powerup-name {
-
-        top: 38%;
-
-        height: 12%;
-
-        font-size: 10px;
-
-    }
-
-
-    .powerup-description {
-
-        top: 51%;
-
-        height: 18%;
-
-        font-size: 8px;
-
-    }
-
-
-    .powerup-level {
-
-        top: 72%;
-
-        height: 12%;
-
-        font-size: 9px;
-
-    }
-
 
     .customer,
     #cook {
@@ -990,6 +836,32 @@ body {
 
     }
 
+
+    #powerup-panel {
+
+        width: 94%;
+
+        padding:
+            14px 8px 16px;
+
+    }
+
+
+    #powerup-title {
+
+        font-size: 21px;
+
+        margin-bottom: 11px;
+
+    }
+
+
+    .powerup-card {
+
+        padding: 5px;
+
+    }
+
 }
 
 </style>
@@ -998,6 +870,7 @@ body {
 
 
 <body>
+
 
 <div id="phone">
 
@@ -1015,17 +888,21 @@ body {
     >
 
     <button id="playButton">
+
         PLAY
+
     </button>
 
 </div>
 
 
+
 <!-- ==================================================
-     GIOCO
+   GIOCO
 ================================================== -->
 
 <div id="game">
+
 
     <img
         id="background"
@@ -1055,7 +932,9 @@ body {
     >
 
 
-    <!-- HUD -->
+    <!-- ==================================================
+         HUD
+    ================================================== -->
 
     <div id="hud">
 
@@ -1066,8 +945,9 @@ body {
     </div>
 
 
+
     <!-- ==================================================
-         CLIENTE 1
+         TEMPLATE CLIENTE 1
     ================================================== -->
 
     <div
@@ -1101,8 +981,9 @@ body {
     </div>
 
 
+
     <!-- ==================================================
-         CLIENTE 2
+         TEMPLATE CLIENTE 2
     ================================================== -->
 
     <div
@@ -1134,6 +1015,7 @@ body {
         </div>
 
     </div>
+
 
 
     <!-- ==================================================
@@ -1171,6 +1053,7 @@ body {
     </div>
 
 
+
     <!-- ==================================================
          BARRA ESPERIENZA
     ================================================== -->
@@ -1186,13 +1069,18 @@ body {
     </div>
 
 
+
     <!-- ==================================================
-         POWER UP
+         POWER UP SCREEN
     ================================================== -->
 
     <div id="powerup-overlay">
 
         <div id="powerup-panel">
+
+            <div id="powerup-title">
+                CHOOSE YOUR POWER UP
+            </div>
 
             <div id="powerup-options"></div>
 
@@ -1200,15 +1088,18 @@ body {
 
     </div>
 
+
 </div>
 
 </div>
+
 
 
 <script>
 
+
 /* ==================================================
-   HITBOX
+   REGOLAZIONE HITBOX
 ================================================== */
 
 const HIT_X = 5;
@@ -1218,8 +1109,9 @@ const HIT_Y = 0;
 const HIT_POSITION_Y = 0.45;
 
 
+
 /* ==================================================
-   WAVE 1
+   IMPOSTAZIONI WAVE 1
 ================================================== */
 
 const TOTAL_CUSTOMERS = 10;
@@ -1232,16 +1124,19 @@ const CUSTOMER_WALK_TIME = 70;
 
 
 const LANES = [
+
     28,
     39,
     50,
     61,
     72
+
 ];
 
 
+
 /* ==================================================
-   EXP
+   SISTEMA EXP
 ================================================== */
 
 let currentLevel = 1;
@@ -1251,6 +1146,7 @@ let currentEXP = 0;
 const EXP_PER_CUSTOMER = 5;
 
 const EXP_REQUIREMENTS = [
+
     15,
     20,
     25,
@@ -1262,14 +1158,35 @@ const EXP_REQUIREMENTS = [
     55,
     60,
     65
+
 ];
 
 const MAX_LEVEL = 12;
 
 
+
 /* ==================================================
    POWER UP
 ================================================== */
+
+/*
+   Ogni potenziamento parte da LV 0.
+
+   Pasta:
+   LV1 = 2 paste
+   LV2 = 3 paste
+   LV3 = 4 paste
+
+   Speed:
+   LV1 = +33%
+   LV2 = +66%
+   LV3 = +99%
+
+   Sauce:
+   LV1 = +1 danno
+   LV2 = +2 danno
+   LV3 = +3 danno
+*/
 
 let powerUps = {
 
@@ -1286,7 +1203,7 @@ let powerUpPaused = false;
 
 
 /* ==================================================
-   DATI POWER UP
+   IMMAGINI POWER UP
 ================================================== */
 
 const POWERUP_DATA = {
@@ -1296,55 +1213,74 @@ const POWERUP_DATA = {
         name: "PASTA",
 
         image:
-            "https://i.ibb.co/zwM5xNK/1788123621728-removebg-preview.png"
+            "https://i.ibb.co/zwM5xNK/1788123621728-removebg-preview.png",
+
+        description:
+            "More pasta",
 
     },
 
 
     speed: {
 
-        name: "TIMER",
+        name: "SPEED",
 
         image:
-            "https://i.ibb.co/tP1rgx4D/1788123653567-removebg-preview.png"
+            "https://i.ibb.co/tP1rgx4D/1788123653567-removebg-preview.png",
+
+        description:
+            "Faster throw",
 
     },
 
 
     sauce: {
 
-        name: "PEPERONCINO",
+        name: "SAUCE",
 
         image:
-            "https://i.ibb.co/pB62NXDf/1788123663443-removebg-preview.png"
+            "https://i.ibb.co/pB62NXDf/1788123663443-removebg-preview.png",
+
+        description:
+            "More damage",
 
     }
 
 };
 
 
+
 /* ==================================================
-   EXP BAR
+   AGGIORNA BARRA EXP
 ================================================== */
 
 function updateEXPBar() {
 
     const fill =
-        document.getElementById("exp-fill");
+        document.getElementById(
+            "exp-fill"
+        );
 
     const levelText =
-        document.getElementById("exp-level");
+        document.getElementById(
+            "exp-level"
+        );
 
 
-    if (currentLevel >= MAX_LEVEL) {
+    if (
+        currentLevel >= MAX_LEVEL
+    ) {
 
-        currentLevel = MAX_LEVEL;
+        currentLevel =
+            MAX_LEVEL;
 
         currentEXP = 0;
 
-        fill.style.width = "100%";
+        fill.style.width =
+            "100%";
 
-        levelText.textContent = "LV MAX";
+        levelText.textContent =
+            "LV MAX";
 
         return;
 
@@ -1352,13 +1288,18 @@ function updateEXPBar() {
 
 
     const requiredEXP =
-        EXP_REQUIREMENTS[currentLevel - 1];
+        EXP_REQUIREMENTS[
+            currentLevel - 1
+        ];
 
 
     const percentage =
         Math.min(
             100,
-            (currentEXP / requiredEXP) * 100
+            (
+                currentEXP /
+                requiredEXP
+            ) * 100
         );
 
 
@@ -1367,9 +1308,11 @@ function updateEXPBar() {
 
 
     levelText.textContent =
-        "LV " + currentLevel;
+        "LV " +
+        currentLevel;
 
 }
+
 
 
 /* ==================================================
@@ -1379,7 +1322,9 @@ function updateEXPBar() {
 function showPowerUpScreen() {
 
     if (powerUpPaused) {
+
         return;
+
     }
 
 
@@ -1398,15 +1343,24 @@ function showPowerUpScreen() {
     );
 
 
-    if (available.length === 0) {
+    if (
+        available.length === 0
+    ) {
+
+        powerUpPaused = false;
 
         return;
 
     }
 
 
+    /*
+       Se rimangono meno di 3 potenziamenti
+       disponibili, mostra quelli rimasti.
+    */
+
     const shuffled =
-        available.slice().sort(
+        available.sort(
             function() {
 
                 return Math.random() - 0.5;
@@ -1416,7 +1370,13 @@ function showPowerUpScreen() {
 
 
     const selected =
-        shuffled.slice(0, 3);
+        shuffled.slice(
+            0,
+            Math.min(
+                3,
+                shuffled.length
+            )
+        );
 
 
     const options =
@@ -1439,10 +1399,12 @@ function showPowerUpScreen() {
                 powerUps[type] + 1;
 
 
-            let effectText;
+            let effectText = "";
 
 
-            if (type === "pasta") {
+            if (
+                type === "pasta"
+            ) {
 
                 effectText =
                     nextLevel === 1
@@ -1454,17 +1416,23 @@ function showPowerUpScreen() {
             }
 
 
-            else if (type === "speed") {
+            if (
+                type === "speed"
+            ) {
 
                 effectText =
                     "+" +
-                    (nextLevel * 33) +
+                    (
+                        nextLevel * 33
+                    ) +
                     "% SPEED";
 
             }
 
 
-            else {
+            if (
+                type === "sauce"
+            ) {
 
                 effectText =
                     "+" +
@@ -1475,7 +1443,9 @@ function showPowerUpScreen() {
 
 
             const card =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
 
             card.className =
@@ -1494,21 +1464,15 @@ function showPowerUpScreen() {
                 </div>
 
                 <div class="powerup-name">
-
                     ${data.name}
-
                 </div>
 
                 <div class="powerup-description">
-
                     ${effectText}
-
                 </div>
 
                 <div class="powerup-level">
-
                     LV ${nextLevel}
-
                 </div>
 
             `;
@@ -1518,13 +1482,17 @@ function showPowerUpScreen() {
                 "click",
                 function() {
 
-                    selectPowerUp(type);
+                    selectPowerUp(
+                        type
+                    );
 
                 }
             );
 
 
-            options.appendChild(card);
+            options.appendChild(
+                card
+            );
 
         }
     );
@@ -1536,30 +1504,43 @@ function showPowerUpScreen() {
     document
     .getElementById("game")
     .classList
-    .add("powerup-paused");
+    .add(
+        "powerup-paused"
+    );
 
 
     document
     .getElementById("powerup-overlay")
-    .style
-    .display = "flex";
+    .style.display =
+        "flex";
 
 }
+
 
 
 /* ==================================================
    SCELTA POWER UP
 ================================================== */
 
-function selectPowerUp(type) {
+function selectPowerUp(
+    type
+) {
 
-    if (!powerUpPaused) {
+    if (
+        !powerUpPaused
+    ) {
+
         return;
+
     }
 
 
-    if (powerUps[type] >= 3) {
+    if (
+        powerUps[type] >= 3
+    ) {
+
         return;
+
     }
 
 
@@ -1568,13 +1549,14 @@ function selectPowerUp(type) {
 
     document
     .getElementById("powerup-overlay")
-    .style
-    .display = "none";
+    .style.display =
+        "none";
 
 
     document
     .getElementById("powerup-options")
-    .innerHTML = "";
+    .innerHTML =
+        "";
 
 
     powerUpPaused = false;
@@ -1583,42 +1565,76 @@ function selectPowerUp(type) {
     document
     .getElementById("game")
     .classList
-    .remove("powerup-paused");
+    .remove(
+        "powerup-paused"
+    );
 
+
+    /*
+       Se la barra aveva appena raggiunto
+       il livello successivo, la azzeriamo.
+    */
 
     updateEXPBar();
 
 }
+
 
 
 /* ==================================================
    AGGIUNGI EXP
 ================================================== */
 
-function addEXP(amount) {
+function addEXP(
+    amount
+) {
 
-    if (currentLevel >= MAX_LEVEL) {
+    if (
+        currentLevel >= MAX_LEVEL
+    ) {
+
         return;
+
     }
 
 
-    currentEXP += amount;
+    currentEXP +=
+        amount;
 
 
     const requiredEXP =
-        EXP_REQUIREMENTS[currentLevel - 1];
+        EXP_REQUIREMENTS[
+            currentLevel - 1
+        ];
 
 
-    if (currentEXP >= requiredEXP) {
+    /*
+       ==================================================
+       POWER UP
+       ==================================================
+    */
 
-        currentEXP -= requiredEXP;
+    if (
+        currentEXP >=
+        requiredEXP
+    ) {
+
+        currentEXP -=
+            requiredEXP;
 
         currentLevel++;
 
 
+        /*
+           Aggiorniamo subito la barra
+           prima di mostrare il Power Up.
+        */
+
         updateEXPBar();
 
+
         showPowerUpScreen();
+
 
         return;
 
@@ -1628,6 +1644,7 @@ function addEXP(amount) {
     updateEXPBar();
 
 }
+
 
 
 /* ==================================================
@@ -1649,6 +1666,7 @@ let kitchenEnergy = 100;
 let customers = [];
 
 
+
 /* ==================================================
    PLAY
 ================================================== */
@@ -1661,14 +1679,14 @@ document
 
         document
         .getElementById("menu")
-        .style
-        .display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("game")
-        .style
-        .display = "block";
+        .style.display =
+            "block";
 
 
         kitchenEnergy = 100;
@@ -1681,6 +1699,10 @@ document
         currentEXP = 0;
 
 
+        /*
+           RESET POWER UP
+        */
+
         powerUps.pasta = 0;
 
         powerUps.speed = 0;
@@ -1692,21 +1714,25 @@ document
 
         document
         .getElementById("powerup-overlay")
-        .style
-        .display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("game")
         .classList
-        .remove("powerup-paused");
+        .remove(
+            "powerup-paused"
+        );
 
 
         updateEXPBar();
 
 
         document
-        .querySelectorAll(".spawned-customer")
+        .querySelectorAll(
+            ".spawned-customer"
+        )
         .forEach(
             function(customer) {
 
@@ -1718,23 +1744,24 @@ document
 
         document
         .getElementById("kitchen")
-        .style
-        .display = "block";
+        .style.display =
+            "block";
 
 
         document
         .getElementById("kitchenDamaged")
-        .style
-        .display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("kitchenDestroyed")
-        .style
-        .display = "none";
+        .style.display =
+            "none";
 
 
         updateKitchenEnergy();
+
 
         createWave1();
 
@@ -1752,14 +1779,17 @@ document
 );
 
 
+
 /* ==================================================
-   CREA WAVE
+   CREA WAVE 1
 ================================================== */
 
 function createWave1() {
 
     const spawnTimes = [
+
         FIRST_SPAWN_SECOND
+
     ];
 
 
@@ -1815,9 +1845,13 @@ function createWave1() {
             setTimeout(
                 function() {
 
-                    if (!powerUpPaused) {
+                    if (
+                        !powerUpPaused
+                    ) {
 
-                        spawnCustomer(index);
+                        spawnCustomer(
+                            index
+                        );
 
                     }
 
@@ -1831,14 +1865,20 @@ function createWave1() {
 }
 
 
+
 /* ==================================================
-   SPAWN CUSTOMER
+   CREA SINGOLO CLIENTE
 ================================================== */
 
-function spawnCustomer(index) {
+function spawnCustomer(
+    index
+) {
 
     const game =
-        document.getElementById("game");
+        document
+        .getElementById(
+            "game"
+        );
 
 
     const type =
@@ -1848,7 +1888,8 @@ function spawnCustomer(index) {
 
 
     const template =
-        document.getElementById(
+        document
+        .getElementById(
             type === 1
                 ? "customer1Template"
                 : "customer2Template"
@@ -1856,20 +1897,26 @@ function spawnCustomer(index) {
 
 
     const customer =
-        template.cloneNode(true);
+        template.cloneNode(
+            true
+        );
 
 
     customer.id =
         "customer-" +
-        (index + 1);
+        (
+            index + 1
+        );
 
 
-    customer.classList.remove(
+    customer.classList
+    .remove(
         "customer-template"
     );
 
 
-    customer.classList.add(
+    customer.classList
+    .add(
         "spawned-customer"
     );
 
@@ -1882,7 +1929,8 @@ function spawnCustomer(index) {
         "none";
 
 
-    customer.classList.remove(
+    customer.classList
+    .remove(
         "satisfied"
     );
 
@@ -1928,7 +1976,8 @@ function spawnCustomer(index) {
 
 
     const frames =
-        customer.querySelectorAll(
+        customer
+        .querySelectorAll(
             ".frame"
         );
 
@@ -1936,7 +1985,8 @@ function spawnCustomer(index) {
     frames.forEach(
         function(frame) {
 
-            frame.classList.remove(
+            frame.classList
+            .remove(
                 "active"
             );
 
@@ -1944,17 +1994,22 @@ function spawnCustomer(index) {
     );
 
 
-    if (frames.length > 0) {
+    if (
+        frames.length > 0
+    ) {
 
         frames[0]
         .classList
-        .add("active");
+        .add(
+            "active"
+        );
 
     }
 
 
     const happyFrame =
-        customer.querySelector(
+        customer
+        .querySelector(
             ".happy-frame"
         );
 
@@ -1982,7 +2037,8 @@ function spawnCustomer(index) {
                 "s linear forwards";
 
 
-            customer.classList.add(
+            customer.classList
+            .add(
                 "walking"
             );
 
@@ -2001,6 +2057,7 @@ function spawnCustomer(index) {
                 customer.dataset.atKitchen =
                     "true";
 
+
                 updateZIndexes();
 
             }
@@ -2012,51 +2069,56 @@ function spawnCustomer(index) {
 }
 
 
+
 /* ==================================================
    CUCINA
 ================================================== */
 
 function updateKitchenEnergy() {
 
-    if (kitchenEnergy > 50) {
+    if (
+        kitchenEnergy > 50
+    ) {
 
         document
         .getElementById("kitchen")
-        .style
-        .display = "block";
+        .style.display =
+            "block";
 
 
         document
         .getElementById("kitchenDamaged")
-        .style
-        .display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("kitchenDestroyed")
-        .style
-        .display = "none";
+        .style.display =
+            "none";
 
     }
 
-    else if (kitchenEnergy > 20) {
+    else if (
+        kitchenEnergy > 20
+    ) {
 
         document
         .getElementById("kitchen")
-        .style
-        .display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("kitchenDamaged")
-        .style
-        .display = "block";
+        .style.display =
+            "block";
 
 
         document
         .getElementById("kitchenDestroyed")
-        .style
-        .display = "none";
+        .style.display =
+            "none";
 
     }
 
@@ -2064,24 +2126,25 @@ function updateKitchenEnergy() {
 
         document
         .getElementById("kitchen")
-        .style
-        .display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("kitchenDamaged")
-        .style
-        .display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("kitchenDestroyed")
-        .style
-        .display = "block";
+        .style.display =
+            "block";
 
     }
 
 }
+
 
 
 /* ==================================================
@@ -2090,7 +2153,9 @@ function updateKitchenEnergy() {
 
 function startKitchenEnergySystem() {
 
-    if (kitchenDamageTimer !== null) {
+    if (
+        kitchenDamageTimer !== null
+    ) {
 
         clearInterval(
             kitchenDamageTimer
@@ -2104,7 +2169,9 @@ function startKitchenEnergySystem() {
         function() {
 
             if (powerUpPaused) {
+
                 return;
+
             }
 
 
@@ -2130,7 +2197,9 @@ function startKitchenEnergySystem() {
             );
 
 
-            if (damage > 0) {
+            if (
+                damage > 0
+            ) {
 
                 kitchenEnergy -=
                     damage;
@@ -2156,8 +2225,9 @@ function startKitchenEnergySystem() {
 }
 
 
+
 /* ==================================================
-   VISIBILITÀ
+   CLIENTE VISIBILE
 ================================================== */
 
 function customerIsVisible(
@@ -2176,34 +2246,45 @@ function customerIsVisible(
 
 
     const rect =
-        customer.getBoundingClientRect();
+        customer
+        .getBoundingClientRect();
 
 
     const game =
-        document.getElementById(
+        document
+        .getElementById(
             "game"
         );
 
 
     const gameRect =
-        game.getBoundingClientRect();
+        game
+        .getBoundingClientRect();
 
 
     return (
-        rect.bottom > gameRect.top &&
-        rect.top < gameRect.bottom
+
+        rect.bottom >
+            gameRect.top &&
+
+        rect.top <
+            gameRect.bottom
+
     );
 
 }
 
 
+
 /* ==================================================
-   Z INDEX
+   Z-INDEX CLIENTI
 ================================================== */
 
 function startZIndexSystem() {
 
-    if (zIndexTimer !== null) {
+    if (
+        zIndexTimer !== null
+    ) {
 
         clearInterval(
             zIndexTimer
@@ -2217,7 +2298,9 @@ function startZIndexSystem() {
         function() {
 
             if (powerUpPaused) {
+
                 return;
+
             }
 
 
@@ -2237,9 +2320,11 @@ function updateZIndexes() {
             function(customer) {
 
                 return (
+
                     customer &&
                     customer.style.display !==
                         "none"
+
                 );
 
             }
@@ -2250,12 +2335,14 @@ function updateZIndexes() {
         function(a, b) {
 
             const aTop =
-                a.getBoundingClientRect()
+                a
+                .getBoundingClientRect()
                 .top;
 
 
             const bTop =
-                b.getBoundingClientRect()
+                b
+                .getBoundingClientRect()
                 .top;
 
 
@@ -2277,13 +2364,16 @@ function updateZIndexes() {
 }
 
 
+
 /* ==================================================
    PRIMO ATTACCO
 ================================================== */
 
 function startFirstAttackDetection() {
 
-    if (firstAttackTimer !== null) {
+    if (
+        firstAttackTimer !== null
+    ) {
 
         clearInterval(
             firstAttackTimer
@@ -2297,7 +2387,9 @@ function startFirstAttackDetection() {
         function() {
 
             if (powerUpPaused) {
+
                 return;
+
             }
 
 
@@ -2305,9 +2397,12 @@ function startFirstAttackDetection() {
                 getNearestVisibleCustomer();
 
 
-            if (target) {
+            if (
+                target
+            ) {
 
                 playCookAttack();
+
 
                 clearInterval(
                     firstAttackTimer
@@ -2322,13 +2417,16 @@ function startFirstAttackDetection() {
 }
 
 
+
 /* ==================================================
    ANIMAZIONE CLIENTI
 ================================================== */
 
 function startCustomerAnimation() {
 
-    if (customerTimer !== null) {
+    if (
+        customerTimer !== null
+    ) {
 
         clearInterval(
             customerTimer
@@ -2342,7 +2440,9 @@ function startCustomerAnimation() {
         function() {
 
             if (powerUpPaused) {
+
                 return;
+
             }
 
 
@@ -2363,7 +2463,8 @@ function startCustomerAnimation() {
 
 
                     const frames =
-                        customer.querySelectorAll(
+                        customer
+                        .querySelectorAll(
                             ".frame"
                         );
 
@@ -2387,7 +2488,8 @@ function startCustomerAnimation() {
                     frames.forEach(
                         function(image) {
 
-                            image.classList.remove(
+                            image.classList
+                            .remove(
                                 "active"
                             );
 
@@ -2397,7 +2499,9 @@ function startCustomerAnimation() {
 
                     frames[frame]
                     .classList
-                    .add("active");
+                    .add(
+                        "active"
+                    );
 
 
                     frame++;
@@ -2426,6 +2530,7 @@ function startCustomerAnimation() {
 }
 
 
+
 /* ==================================================
    FRAME CUOCO
 ================================================== */
@@ -2443,7 +2548,8 @@ function setCookFrame(
     frames.forEach(
         function(frame) {
 
-            frame.classList.remove(
+            frame.classList
+            .remove(
                 "active"
             );
 
@@ -2457,11 +2563,14 @@ function setCookFrame(
 
         frames[frameNumber]
         .classList
-        .add("active");
+        .add(
+            "active"
+        );
 
     }
 
 }
+
 
 
 /* ==================================================
@@ -2471,7 +2580,9 @@ function setCookFrame(
 function playCookAttack() {
 
     if (powerUpPaused) {
+
         return;
+
     }
 
 
@@ -2524,7 +2635,9 @@ function playCookAttack() {
     setTimeout(
         function() {
 
-            if (!powerUpPaused) {
+            if (
+                !powerUpPaused
+            ) {
 
                 setCookFrame(3);
 
@@ -2584,8 +2697,9 @@ function playCookAttack() {
 }
 
 
+
 /* ==================================================
-   TARGET
+   CLIENTI DA COLPIRE
 ================================================== */
 
 function getAttackTargets() {
@@ -2594,8 +2708,12 @@ function getAttackTargets() {
         customers.filter(
             function(customer) {
 
-                if (!customer) {
+                if (
+                    !customer
+                ) {
+
                     return false;
+
                 }
 
 
@@ -2631,18 +2749,17 @@ function getAttackTargets() {
         function(a, b) {
 
             return (
-                b.getBoundingClientRect()
-                .top -
-                a.getBoundingClientRect()
-                .top
+                b.getBoundingClientRect().top -
+                a.getBoundingClientRect().top
             );
 
         }
     );
 
 
-    const numberOfPasta =
-        1 + powerUps.pasta;
+    let numberOfPasta =
+        1 +
+        powerUps.pasta;
 
 
     return activeCustomers.slice(
@@ -2653,13 +2770,16 @@ function getAttackTargets() {
 }
 
 
+
 /* ==================================================
-   ATTACCO AUTOMATICO
+   ATTACCO
 ================================================== */
 
 function startCookAnimation() {
 
-    if (cookTimer !== null) {
+    if (
+        cookTimer !== null
+    ) {
 
         clearInterval(
             cookTimer
@@ -2676,7 +2796,9 @@ function startCookAnimation() {
         function() {
 
             if (powerUpPaused) {
+
                 return;
+
             }
 
 
@@ -2705,11 +2827,21 @@ function startCookAnimation() {
 }
 
 
+
 /* ==================================================
-   VELOCITÀ
+   VELOCITÀ ATTACCO
 ================================================== */
 
 function getCookAttackInterval() {
+
+    /*
+       LV0 = 3000 ms
+       LV1 = 2260 ms
+       LV2 = 1807 ms
+       LV3 = 1507 ms
+
+       Circa +33% velocità per livello.
+    */
 
     return Math.round(
         3000 /
@@ -2722,6 +2854,7 @@ function getCookAttackInterval() {
 }
 
 
+
 /* ==================================================
    CLIENTE PIÙ VICINO
 ================================================== */
@@ -2732,8 +2865,12 @@ function getNearestVisibleCustomer() {
         customers.filter(
             function(customer) {
 
-                if (!customer) {
+                if (
+                    !customer
+                ) {
+
                     return false;
+
                 }
 
 
@@ -2766,7 +2903,8 @@ function getNearestVisibleCustomer() {
 
 
     if (
-        activeCustomers.length === 0
+        activeCustomers.length ===
+        0
     ) {
 
         return null;
@@ -2794,7 +2932,8 @@ function getNearestVisibleCustomer() {
 
 
             if (
-                top > nearestTop
+                top >
+                nearestTop
             ) {
 
                 nearest =
@@ -2814,6 +2953,7 @@ function getNearestVisibleCustomer() {
 }
 
 
+
 /* ==================================================
    LANCIO PASTA
 ================================================== */
@@ -2823,7 +2963,9 @@ function throwPasta(
 ) {
 
     if (!target) {
+
         return;
+
     }
 
 
@@ -2838,15 +2980,13 @@ function throwPasta(
 
 
     const cook =
-        document.getElementById(
-            "cook"
-        );
+        document
+        .getElementById("cook");
 
 
     const game =
-        document.getElementById(
-            "game"
-        );
+        document
+        .getElementById("game");
 
 
     const gameRect =
@@ -2859,14 +2999,12 @@ function throwPasta(
 
     const startX =
         cookRect.left +
-        cookRect.width *
-        0.72;
+        cookRect.width * 0.72;
 
 
     const startY =
         cookRect.top +
-        cookRect.height *
-        0.32;
+        cookRect.height * 0.32;
 
 
     const hitMarker =
@@ -2916,8 +3054,7 @@ function throwPasta(
             currentX -
             gameRect.left -
             42
-        ) +
-        "px";
+        ) + "px";
 
 
     pasta.style.top =
@@ -2925,21 +3062,20 @@ function throwPasta(
             currentY -
             gameRect.top -
             42
-        ) +
-        "px";
+        ) + "px";
 
 
     const speed =
         350 *
         (
             1 +
-            powerUps.speed *
-            0.33
+            powerUps.speed * 0.33
         );
 
 
     let lastTime =
         performance.now();
+
 
 
     function movePasta(
@@ -2949,7 +3085,7 @@ function throwPasta(
         if (
             !target ||
             target.dataset.satisfied ===
-                "true"
+            "true"
         ) {
 
             if (
@@ -2975,11 +3111,15 @@ function throwPasta(
         }
 
 
+        /*
+           Durante la schermata Power Up
+           la pasta rimane ferma.
+        */
+
         if (powerUpPaused) {
 
             lastTime =
                 currentTime;
-
 
             requestAnimationFrame(
                 movePasta
@@ -2996,8 +3136,7 @@ function throwPasta(
 
         const endX =
             targetRect.left +
-            targetRect.width /
-            2 +
+            targetRect.width / 2 +
             HIT_X;
 
 
@@ -3012,16 +3151,14 @@ function throwPasta(
             (
                 endX -
                 gameRect.left
-            ) +
-            "px";
+            ) + "px";
 
 
         hitMarker.style.top =
             (
                 endY -
                 gameRect.top
-            ) +
-            "px";
+            ) + "px";
 
 
         const deltaTime =
@@ -3061,7 +3198,8 @@ function throwPasta(
 
 
         if (
-            distance <= movement
+            distance <=
+            movement
         ) {
 
             currentX =
@@ -3097,8 +3235,7 @@ function throwPasta(
                 currentX -
                 gameRect.left -
                 42
-            ) +
-            "px";
+            ) + "px";
 
 
         pasta.style.top =
@@ -3106,8 +3243,7 @@ function throwPasta(
                 currentY -
                 gameRect.top -
                 42
-            ) +
-            "px";
+            ) + "px";
 
 
         const remainingX =
@@ -3130,7 +3266,8 @@ function throwPasta(
 
 
         if (
-            remainingDistance <= 3
+            remainingDistance <=
+            3
         ) {
 
             hitCustomer(
@@ -3167,6 +3304,7 @@ function throwPasta(
 }
 
 
+
 /* ==================================================
    COLPITO
 ================================================== */
@@ -3189,7 +3327,7 @@ function hitCustomer(
     if (
         !customer ||
         customer.dataset.satisfied ===
-            "true"
+        "true"
     ) {
 
         return;
@@ -3203,6 +3341,13 @@ function hitCustomer(
             "30"
         );
 
+
+    /*
+       DANNO BASE = 5
+       SAUCE LV1 = +1
+       SAUCE LV2 = +2
+       SAUCE LV3 = +3
+    */
 
     const damage =
         5 +
@@ -3230,6 +3375,7 @@ function hitCustomer(
 }
 
 
+
 /* ==================================================
    CLIENTE SODDISFATTO
 ================================================== */
@@ -3241,7 +3387,7 @@ function satisfyCustomer(
     if (
         !customer ||
         customer.dataset.satisfied ===
-            "true"
+        "true"
     ) {
 
         return;
@@ -3250,17 +3396,20 @@ function satisfyCustomer(
 
 
     const rect =
-        customer.getBoundingClientRect();
+        customer
+        .getBoundingClientRect();
 
 
     const game =
-        document.getElementById(
+        document
+        .getElementById(
             "game"
         );
 
 
     const gameRect =
-        game.getBoundingClientRect();
+        game
+        .getBoundingClientRect();
 
 
     const currentTop =
@@ -3277,12 +3426,14 @@ function satisfyCustomer(
         "none";
 
 
-    customer.classList.remove(
+    customer.classList
+    .remove(
         "walking"
     );
 
 
-    customer.classList.add(
+    customer.classList
+    .add(
         "satisfied"
     );
 
@@ -3311,7 +3462,8 @@ function satisfyCustomer(
 
 
     const normalFrames =
-        customer.querySelectorAll(
+        customer
+        .querySelectorAll(
             ".frame"
         );
 
@@ -3319,7 +3471,8 @@ function satisfyCustomer(
     normalFrames.forEach(
         function(frame) {
 
-            frame.classList.remove(
+            frame.classList
+            .remove(
                 "active"
             );
 
@@ -3328,7 +3481,8 @@ function satisfyCustomer(
 
 
     const happyFrame =
-        customer.querySelector(
+        customer
+        .querySelector(
             ".happy-frame"
         );
 
@@ -3351,7 +3505,8 @@ function satisfyCustomer(
                 "none";
 
 
-            customer.classList.remove(
+            customer.classList
+            .remove(
                 "satisfied"
             );
 
@@ -3365,6 +3520,7 @@ function satisfyCustomer(
 }
 
 
+
 /* ==================================================
    COMPATIBILITÀ
 ================================================== */
@@ -3376,17 +3532,17 @@ function satisfyCustomer1() {
             function(c) {
 
                 return (
-                    c.dataset.type ===
-                        "1" &&
-                    c.dataset.satisfied !==
-                        "true"
+                    c.dataset.type === "1" &&
+                    c.dataset.satisfied !== "true"
                 );
 
             }
         );
 
 
-    if (customer) {
+    if (
+        customer
+    ) {
 
         satisfyCustomer(
             customer
@@ -3395,6 +3551,7 @@ function satisfyCustomer1() {
     }
 
 }
+
 
 
 function satisfyCustomer2() {
@@ -3404,17 +3561,17 @@ function satisfyCustomer2() {
             function(c) {
 
                 return (
-                    c.dataset.type ===
-                        "2" &&
-                    c.dataset.satisfied !==
-                        "true"
+                    c.dataset.type === "2" &&
+                    c.dataset.satisfied !== "true"
                 );
 
             }
         );
 
 
-    if (customer) {
+    if (
+        customer
+    ) {
 
         satisfyCustomer(
             customer
@@ -3424,7 +3581,8 @@ function satisfyCustomer2() {
 
 }
 
+
 </script>
 
 </body>
-    </html>
+</html>
