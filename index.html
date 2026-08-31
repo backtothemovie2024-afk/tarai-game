@@ -468,9 +468,9 @@ body {
 }
 
 
-/* ==================================================
-   POSIZIONE SLOT
-================================================== */
+/*
+   POSIZIONAMENTO DEI TRE SLOT
+*/
 
 .powerup-slot:nth-child(1) {
     left: 25%;
@@ -492,7 +492,7 @@ body {
    IMMAGINE POWER UP
 ================================================== */
 
-.powerup-slot img {
+.powerup-slot > img.powerup-main-image {
 
     width: 82%;
 
@@ -507,7 +507,11 @@ body {
 }
 
 
-.powerup-slot[data-type="pasta"] img {
+/*
+   DIMENSIONI SPECIFICHE
+*/
+
+.powerup-slot[data-type="pasta"] > img.powerup-main-image {
 
     width: 68%;
 
@@ -515,7 +519,7 @@ body {
 
 }
 
-.powerup-slot[data-type="speed"] img {
+.powerup-slot[data-type="speed"] > img.powerup-main-image {
 
     width: 68%;
 
@@ -523,7 +527,7 @@ body {
 
 }
 
-.powerup-slot[data-type="sauce"] img {
+.powerup-slot[data-type="sauce"] > img.powerup-main-image {
 
     width: 78%;
 
@@ -533,8 +537,45 @@ body {
 
 
 /* ==================================================
-   CERCHIO LIVELLO
-   NON MODIFICATO
+   I TRE RETTANGOLI ORIGINALI FORNITI
+   DALL'UTENTE
+
+   Ogni rettangolo appartiene direttamente
+   al proprio slot/power-up.
+
+   Non viene ricreato con CSS:
+   viene usata l'immagine originale.
+================================================== */
+
+.powerup-description {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 108%;
+
+    transform: translateX(-50%);
+
+    width: 100%;
+
+    height: auto;
+
+    display: block;
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+    z-index: 1;
+
+}
+
+
+/* ==================================================
+   LIVELLO POWER UP
+
+   QUESTO CERCHIO RESTA INVARIATO.
 ================================================== */
 
 .powerup-level {
@@ -575,80 +616,7 @@ body {
     box-shadow:
         0 2px 5px rgba(0,0,0,0.5);
 
-}
-
-
-/* ==================================================
-   NUOVI RETTANGOLI DESCRITTIVI
-
-   Ogni rettangolo appartiene allo stesso
-   slot del relativo power-up.
-
-   Quindi si sposta automaticamente insieme
-   al power-up quando l'ordine cambia.
-================================================== */
-
-.powerup-description {
-
-    position: absolute;
-
-    left: 50%;
-
-    top: 100%;
-
-    width: 100%;
-
-    height: 30%;
-
-    transform: translateX(-50%);
-
-    background: #321b10;
-
-    border: 2px solid #321b10;
-
-    border-radius: 8px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 4px 25px 4px 6px;
-
-    color: #ef6428;
-
-    font-size: 11px;
-
-    line-height: 1.05;
-
-    font-weight: 900;
-
-    text-align: center;
-
-    text-transform: uppercase;
-
-    text-shadow:
-        1px 1px 1px rgba(0,0,0,0.25);
-
-    overflow: hidden;
-
-    pointer-events: none;
-
-}
-
-
-/* ==================================================
-   TESTO POWER UP
-================================================== */
-
-.powerup-description span {
-
-    display: block;
-
-    width: 100%;
-
-    white-space: normal;
+    z-index: 5;
 
 }
 
@@ -710,15 +678,6 @@ body {
         width: 94%;
 
         height: 560px;
-
-    }
-
-
-    .powerup-description {
-
-        font-size: 9px;
-
-        padding: 3px 22px 3px 4px;
 
     }
 
@@ -1037,7 +996,6 @@ let powerUps = {
 let powerUpPaused = false;
 
 
-
 /* ==================================================
    IMMAGINI POWER UP
 ================================================== */
@@ -1056,18 +1014,20 @@ const POWER_UP_IMAGES = {
 };
 
 
-
 /* ==================================================
-   DESCRIZIONI POWER UP
+   RETTANGOLI DESCRITTIVI ORIGINALI
 ================================================== */
 
-const POWER_UP_DESCRIPTIONS = {
+const POWER_UP_DESCRIPTION_IMAGES = {
 
-    pasta: "+1 PASTA",
+    pasta:
+        "https://i.ibb.co/cKvdJzsm/1788169554975-removebg-preview.png",
 
-    speed: "+33% SPEED",
+    speed:
+        "https://i.ibb.co/0R62Tzmt/1788169896799-removebg-preview.png",
 
-    sauce: "+1 DAMAGE"
+    sauce:
+        "https://i.ibb.co/hR9dQSSM/1788169672064-removebg-preview.png"
 
 };
 
@@ -1122,7 +1082,7 @@ function showPowerUpScreen() {
 
 
     /*
-       Mescola casualmente i power-up.
+       Mescola casualmente la lista.
     */
 
     for (
@@ -1152,6 +1112,10 @@ function showPowerUpScreen() {
     }
 
 
+    /*
+       Massimo 3 power-up mostrati.
+    */
+
     const selectedPowerUps =
         availablePowerUps.slice(
             0,
@@ -1160,15 +1124,7 @@ function showPowerUpScreen() {
 
 
     /*
-       CREA GLI SLOT.
-
-       IMPORTANTE:
-       immagine, cerchio LV e descrizione
-       vengono creati dentro LO STESSO SLOT.
-
-       In questo modo quando lo slot cambia
-       posizione, tutto ciò che gli appartiene
-       lo segue automaticamente.
+       Crea i tre slot.
     */
 
     selectedPowerUps.forEach(
@@ -1192,15 +1148,18 @@ function showPowerUpScreen() {
                 powerUp.level;
 
 
-
-            /* ==============================
-               IMMAGINE
-            ============================== */
+            /*
+               IMMAGINE POWER UP
+            */
 
             const image =
                 document.createElement(
                     "img"
                 );
+
+
+            image.className =
+                "powerup-main-image";
 
 
             image.src =
@@ -1218,13 +1177,44 @@ function showPowerUpScreen() {
             );
 
 
+            /*
+               RETTANGOLO DESCRITTIVO
+               ORIGINALE FORNITO DALL'UTENTE.
 
-            /* ==============================
+               È dentro lo stesso slot:
+               quindi segue automaticamente
+               il power-up quando cambia posizione.
+            */
+
+            const description =
+                document.createElement(
+                    "img"
+                );
+
+
+            description.className =
+                "powerup-description";
+
+
+            description.src =
+                POWER_UP_DESCRIPTION_IMAGES[
+                    powerUp.type
+                ];
+
+
+            description.alt =
+                "";
+
+
+            slot.appendChild(
+                description
+            );
+
+
+            /*
                CERCHIO LIVELLO
-
-               LASCIATO IDENTICO
-               AL CODICE ORIGINALE
-            ============================== */
+               LASCIATO INVARIATO.
+            */
 
             const level =
                 document.createElement(
@@ -1246,47 +1236,9 @@ function showPowerUpScreen() {
             );
 
 
-
-            /* ==============================
-               NUOVO RETTANGOLO DESCRIZIONE
-            ============================== */
-
-            const description =
-                document.createElement(
-                    "div"
-                );
-
-
-            description.className =
-                "powerup-description";
-
-
-            const descriptionText =
-                document.createElement(
-                    "span"
-                );
-
-
-            descriptionText.textContent =
-                POWER_UP_DESCRIPTIONS[
-                    powerUp.type
-                ];
-
-
-            description.appendChild(
-                descriptionText
-            );
-
-
-            slot.appendChild(
-                description
-            );
-
-
-
-            /* ==============================
-               CLICK
-            ============================== */
+            /*
+               Click sul riquadro.
+            */
 
             slot.addEventListener(
                 "click",
@@ -3186,6 +3138,16 @@ function hitCustomer(
             "30"
         );
 
+
+    /*
+       Ogni livello del peperoncino
+       aumenta il danno.
+
+       LV 0 = 5
+       LV 1 = 6
+       LV 2 = 7
+       LV 3 = 8
+    */
 
     const damage =
         5 +
