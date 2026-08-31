@@ -26,6 +26,10 @@ body {
     font-family: Arial, sans-serif;
 }
 
+/* ==================================================
+   TELEFONO
+================================================== */
+
 #phone {
     position: relative;
     width: min(100vw, 56.25vh);
@@ -35,6 +39,10 @@ body {
     overflow: hidden;
     background: black;
 }
+
+/* ==================================================
+   MENU
+================================================== */
 
 #menu {
     position: absolute;
@@ -69,6 +77,10 @@ body {
     z-index: 30;
 }
 
+/* ==================================================
+   GIOCO
+================================================== */
+
 #game {
     display: none;
     position: absolute;
@@ -86,6 +98,10 @@ body {
     image-rendering: auto;
     z-index: 0;
 }
+
+/* ==================================================
+   CUCINA
+================================================== */
 
 #kitchen,
 #kitchenDamaged,
@@ -112,6 +128,10 @@ body {
     display: none;
 }
 
+/* ==================================================
+   HUD
+================================================== */
+
 #hud {
     position: absolute;
     top: 15px;
@@ -124,6 +144,10 @@ body {
     font-weight: bold;
     z-index: 80;
 }
+
+/* ==================================================
+   BARRA EXP
+================================================== */
 
 #exp-bar {
     position: absolute;
@@ -177,29 +201,20 @@ body {
 
 /* ==================================================
    CLIENTI
-   PARTENZA DALLA PORTA NERA
 ================================================== */
 
 .customer {
     position: absolute;
     width: 100px;
     height: 135px;
-
-    /*
-       La parte nera della porta inizia circa al 4%
-       dell'altezza del gioco.
-       I clienti quindi partono DA QUI,
-       non da fuori dallo schermo.
-    */
-    top: 4%;
-
+    top: -130px;
     z-index: 10;
 }
 
 .customer.walking {
     animation:
         walkDown
-        70s
+        60s
         linear
         forwards;
 }
@@ -271,14 +286,10 @@ body {
 
 }
 
-/*
-   I clienti partono dalla porta nera
-   e scendono verso la posizione finale.
-*/
 @keyframes walkDown {
 
     0% {
-        top: 4%;
+        top: -130px;
     }
 
     100% {
@@ -287,14 +298,38 @@ body {
 
 }
 
-#cook {
+/* ==================================================
+   ZONE PERSONAGGI
+================================================== */
+
+/*
+   4 zone uguali:
+
+   ZONA 1 = 12.5%
+   ZONA 2 = 37.5%
+   ZONA 3 = 62.5%
+   ZONA 4 = 87.5%
+
+   Cuoco    = zona 2
+   Cameriera = zona 3
+*/
+
+#cook,
+#waitress {
     position: absolute;
-    left: 43%;
     bottom: 7%;
     width: 100px;
     height: 135px;
     transform: translateX(-50%);
     z-index: 60;
+}
+
+/* ==================================================
+   CUOCO
+================================================== */
+
+#cook {
+    left: 37.5%;
 }
 
 #cook img {
@@ -311,7 +346,37 @@ body {
     display: block;
 }
 
-.pasta {
+/* ==================================================
+   CAMERIERA
+================================================== */
+
+#waitress {
+    left: 62.5%;
+    display: none;
+}
+
+/* La cameriera normalmente è ferma */
+
+#waitress img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: none;
+}
+
+#waitress img.active {
+    display: block;
+}
+
+/* ==================================================
+   PASTA / PROIETTILE CAMERIERA
+================================================== */
+
+.pasta,
+.drink {
     position: absolute;
     width: 84px;
     height: 84px;
@@ -319,6 +384,15 @@ body {
     z-index: 70;
     pointer-events: none;
 }
+
+.drink {
+    width: 70px;
+    height: 70px;
+}
+
+/* ==================================================
+   HITBOX INVISIBILE
+================================================== */
 
 .hit-marker {
     position: absolute;
@@ -336,6 +410,10 @@ body {
     opacity: 0;
 }
 
+/* ==================================================
+   POWER UP OVERLAY
+================================================== */
+
 #powerup-overlay {
     position: absolute;
     inset: 0;
@@ -346,6 +424,10 @@ body {
     justify-content: center;
     z-index: 500;
 }
+
+/* ==================================================
+   PANNELLO
+================================================== */
 
 #powerup-panel {
     width: 92%;
@@ -362,6 +444,10 @@ body {
     padding: 0;
     position: relative;
 }
+
+/* ==================================================
+   POWER UP OPTIONS
+================================================== */
 
 #powerup-options {
     position: absolute;
@@ -396,6 +482,10 @@ body {
     top: 50%;
 }
 
+/* ==================================================
+   IMMAGINE POWER UP
+================================================== */
+
 .powerup-slot img {
     width: 82%;
     height: 82%;
@@ -419,6 +509,17 @@ body {
     height: 78%;
 }
 
+/* Power-up speciale cameriera */
+
+.powerup-slot[data-type="waitress"] img {
+    width: 82%;
+    height: 82%;
+}
+
+/* ==================================================
+   LIVELLO POWER UP
+================================================== */
+
 .powerup-level {
     position: absolute;
     right: 4%;
@@ -441,14 +542,23 @@ body {
         0 2px 5px rgba(0,0,0,0.5);
 }
 
+/* ==================================================
+   PAUSA
+================================================== */
+
 #game.powerup-paused * {
     animation-play-state: paused !important;
 }
 
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
 @media (max-width: 500px) {
 
     .customer,
-    #cook {
+    #cook,
+    #waitress {
         width: 65px;
         height: 88px;
     }
@@ -456,6 +566,11 @@ body {
     .pasta {
         width: 60px;
         height: 60px;
+    }
+
+    .drink {
+        width: 52px;
+        height: 52px;
     }
 
     #exp-bar {
@@ -483,6 +598,10 @@ body {
 
 <div id="phone">
 
+<!-- ==================================================
+     MENU
+================================================== -->
+
 <div id="menu">
 
     <img
@@ -496,6 +615,10 @@ body {
     </button>
 
 </div>
+
+<!-- ==================================================
+     GIOCO
+================================================== -->
 
 <div id="game">
 
@@ -523,6 +646,10 @@ body {
         alt=""
     >
 
+    <!-- ==================================================
+         HUD
+    ================================================== -->
+
     <div id="hud">
 
         <span>❤️ 3</span>
@@ -530,6 +657,10 @@ body {
         <span>⭐ 0</span>
 
     </div>
+
+    <!-- ==================================================
+         CLIENTE 1
+    ================================================== -->
 
     <div
         id="customer1Template"
@@ -561,6 +692,10 @@ body {
 
     </div>
 
+    <!-- ==================================================
+         CLIENTE 2
+    ================================================== -->
+
     <div
         id="customer2Template"
         class="customer customer-template"
@@ -590,6 +725,10 @@ body {
         </div>
 
     </div>
+
+    <!-- ==================================================
+         CUOCO - ZONA 2
+    ================================================== -->
 
     <div id="cook">
 
@@ -621,6 +760,47 @@ body {
 
     </div>
 
+    <!-- ==================================================
+         CAMERIERA - ZONA 3
+    ================================================== -->
+
+    <div id="waitress">
+
+        <!-- FRAME 1 -->
+
+        <img
+            class="active"
+            src="https://i.ibb.co/7x5t6Krk/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
+            alt=""
+        >
+
+        <!-- FRAME 2 -->
+
+        <img
+            src="https://i.ibb.co/2L0bgr3/Screenshot-20260830-195703-Grok-3-removebg-preview.png"
+            alt=""
+        >
+
+        <!-- FRAME 3 - MANO ALZATA / LANCIO -->
+
+        <img
+            src="https://i.ibb.co/8Ln3LmCm/1788087630930-removebg-preview.png"
+            alt=""
+        >
+
+        <!-- FRAME 4 -->
+
+        <img
+            src="https://i.ibb.co/7x5t6Krk/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
+            alt=""
+        >
+
+    </div>
+
+    <!-- ==================================================
+         BARRA ESPERIENZA
+    ================================================== -->
+
     <div id="exp-bar">
 
         <div id="exp-fill"></div>
@@ -630,6 +810,10 @@ body {
         </div>
 
     </div>
+
+    <!-- ==================================================
+         POWER UP SCREEN
+    ================================================== -->
 
     <div id="powerup-overlay">
 
@@ -647,15 +831,34 @@ body {
 
 <script>
 
+/* ==================================================
+   REGOLAZIONE HITBOX
+================================================== */
+
 const HIT_X = 5;
 
 const HIT_Y = 0;
 
 const HIT_POSITION_Y = 0.45;
 
+/* ==================================================
+   POSIZIONE MANO CAMERIERA
+================================================== */
+
+/*
+   Questi valori indicano il punto da cui parte
+   il drink durante il FRAME 3.
+
+   X = posizione orizzontale della mano
+   Y = posizione verticale della mano
+*/
+
+const WAITRESS_HAND_X = 0.70;
+
+const WAITRESS_HAND_Y = 0.30;
 
 /* ==================================================
-   WAVE 1
+   IMPOSTAZIONI WAVE 1
 ================================================== */
 
 const TOTAL_CUSTOMERS = 10;
@@ -666,45 +869,22 @@ const LAST_SPAWN_SECOND = 60;
 
 const CUSTOMER_WALK_TIME = 70;
 
-
-/*
-   5 CORSIE EQUADISTANTI
-   Tutte comprese nella larghezza della porta nera.
-
-   Le percentuali rappresentano il CENTRO
-   della corsia.
-*/
 const LANES = [
-    28,
-    39,
-    50,
-    61,
-    72
+    29,
+    36.4,
+    43.8,
+    51.2,
+    58.6
 ];
-
-
-/*
-   Distanza minima tra due clienti
-   nella stessa corsia.
-*/
-const SAME_LANE_MIN_DELAY = 1.5;
-
-
-/*
-   Ultimo momento in cui è stato programmato
-   un cliente per ogni corsia.
-*/
-let lastLaneSpawnTimes = [
-    -Infinity,
-    -Infinity,
-    -Infinity,
-    -Infinity,
-    -Infinity
-];
-
 
 /* ==================================================
-   EXP
+   DISTANZA MINIMA CLIENTI STESSA CORSIA
+================================================== */
+
+const SAME_LANE_MIN_DELAY = 1500;
+
+/* ==================================================
+   SISTEMA EXP
 ================================================== */
 
 let currentLevel = 1;
@@ -729,19 +909,23 @@ const EXP_REQUIREMENTS = [
 
 const MAX_LEVEL = 12;
 
-
 /* ==================================================
    POWER UP
 ================================================== */
 
 let powerUps = {
+
     pasta: 0,
+
     speed: 0,
-    sauce: 0
+
+    sauce: 0,
+
+    waitress: false
+
 };
 
 let powerUpPaused = false;
-
 
 /* ==================================================
    IMMAGINI POWER UP
@@ -756,10 +940,12 @@ const POWER_UP_IMAGES = {
         "https://i.ibb.co/tP1rgx4D/1788123653567-removebg-preview.png",
 
     sauce:
-        "https://i.ibb.co/pB62NXDf/1788123663443-removebg-preview.png"
+        "https://i.ibb.co/pB62NXDf/1788123663443-removebg-preview.png",
+
+    waitress:
+        "https://i.ibb.co/k2brGmM0/1787717800004.jpg"
 
 };
-
 
 /* ==================================================
    MOSTRA POWER UP
@@ -778,14 +964,18 @@ function showPowerUpScreen() {
 
     options.innerHTML = "";
 
-    let availablePowerUps = [];
+    let normalPowerUps = [];
 
     Object.keys(powerUps).forEach(
         function(type) {
 
+            if (type === "waitress") {
+                return;
+            }
+
             if (powerUps[type] < 3) {
 
-                availablePowerUps.push({
+                normalPowerUps.push({
                     type: type,
                     level: powerUps[type] + 1
                 });
@@ -795,8 +985,12 @@ function showPowerUpScreen() {
         }
     );
 
+    /* ==================================================
+       SHUFFLE POWER UP NORMALI
+    ================================================== */
+
     for (
-        let i = availablePowerUps.length - 1;
+        let i = normalPowerUps.length - 1;
         i > 0;
         i--
     ) {
@@ -808,18 +1002,78 @@ function showPowerUpScreen() {
             );
 
         const temp =
-            availablePowerUps[i];
+            normalPowerUps[i];
 
-        availablePowerUps[i] =
-            availablePowerUps[j];
+        normalPowerUps[i] =
+            normalPowerUps[j];
 
-        availablePowerUps[j] =
+        normalPowerUps[j] =
             temp;
 
     }
 
-    const selectedPowerUps =
-        availablePowerUps.slice(0, 3);
+    let selectedPowerUps = [];
+
+    /* ==================================================
+       POWER UP CAMERIERA OBBLIGATORIO
+    ================================================== */
+
+    if (!powerUps.waitress) {
+
+        selectedPowerUps.push({
+            type: "waitress",
+            level: 1
+        });
+
+    }
+
+    /* ==================================================
+       AGGIUNGI GLI ALTRI POWER UP
+    ================================================== */
+
+    normalPowerUps.forEach(
+        function(powerUp) {
+
+            if (
+                selectedPowerUps.length <
+                3
+            ) {
+
+                selectedPowerUps.push(
+                    powerUp
+                );
+
+            }
+
+        }
+    );
+
+    /* ==================================================
+       SHUFFLE DELLE 3 POSIZIONI
+    ================================================== */
+
+    for (
+        let i = selectedPowerUps.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() *
+                (i + 1)
+            );
+
+        const temp =
+            selectedPowerUps[i];
+
+        selectedPowerUps[i] =
+            selectedPowerUps[j];
+
+        selectedPowerUps[j] =
+            temp;
+
+    }
 
     selectedPowerUps.forEach(
         function(powerUp) {
@@ -848,17 +1102,29 @@ function showPowerUpScreen() {
 
             slot.appendChild(image);
 
-            const level =
-                document.createElement("div");
+            /*
+               La cameriera è un power-up unico,
+               quindi non mostra LV 1/2/3.
+            */
 
-            level.className =
-                "powerup-level";
+            if (
+                powerUp.type !==
+                "waitress"
+            ) {
 
-            level.textContent =
-                "LV " +
-                powerUp.level;
+                const level =
+                    document.createElement("div");
 
-            slot.appendChild(level);
+                level.className =
+                    "powerup-level";
+
+                level.textContent =
+                    "LV " +
+                    powerUp.level;
+
+                slot.appendChild(level);
+
+            }
 
             slot.addEventListener(
                 "click",
@@ -889,7 +1155,6 @@ function showPowerUpScreen() {
 
 }
 
-
 /* ==================================================
    SCELTA POWER UP
 ================================================== */
@@ -900,11 +1165,35 @@ function selectPowerUp(type) {
         return;
     }
 
-    if (powerUps[type] >= 3) {
-        return;
+    /* ==================================================
+       CAMERIERA
+    ================================================== */
+
+    if (type === "waitress") {
+
+        if (powerUps.waitress) {
+            return;
+        }
+
+        powerUps.waitress = true;
+
+        summonWaitress();
+
     }
 
-    powerUps[type]++;
+    /* ==================================================
+       POWER UP NORMALI
+    ================================================== */
+
+    else {
+
+        if (powerUps[type] >= 3) {
+            return;
+        }
+
+        powerUps[type]++;
+
+    }
 
     document
     .getElementById("powerup-overlay")
@@ -925,9 +1214,85 @@ function selectPowerUp(type) {
 
 }
 
+/* ==================================================
+   EVOCA CAMERIERA
+================================================== */
+
+function summonWaitress() {
+
+    const waitress =
+        document.getElementById(
+            "waitress"
+        );
+
+    waitress.style.display =
+        "block";
+
+    setWaitressFrame(0);
+
+    startWaitressAnimation();
+
+}
 
 /* ==================================================
-   EXP BAR
+   ANIMAZIONE CAMERIERA
+================================================== */
+
+let waitressTimer = null;
+
+function startWaitressAnimation() {
+
+    if (waitressTimer !== null) {
+
+        clearInterval(
+            waitressTimer
+        );
+
+    }
+
+    /*
+       La cameriera è ferma.
+       L'animazione viene gestita
+       esclusivamente durante il lancio.
+    */
+
+    setWaitressFrame(0);
+
+}
+
+/* ==================================================
+   FRAME CAMERIERA
+================================================== */
+
+function setWaitressFrame(frameNumber) {
+
+    const frames =
+        document
+        .getElementById("waitress")
+        .querySelectorAll("img");
+
+    frames.forEach(
+        function(frame) {
+
+            frame.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+    if (frames[frameNumber]) {
+
+        frames[frameNumber]
+        .classList
+        .add("active");
+
+    }
+
+}
+
+/* ==================================================
+   AGGIORNA BARRA EXP
 ================================================== */
 
 function updateEXPBar() {
@@ -975,7 +1340,6 @@ function updateEXPBar() {
 
 }
 
-
 /* ==================================================
    AGGIUNGI EXP
 ================================================== */
@@ -1011,7 +1375,6 @@ function addEXP(amount) {
 
 }
 
-
 /* ==================================================
    VARIABILI
 ================================================== */
@@ -1019,6 +1382,8 @@ function addEXP(amount) {
 let customerTimer = null;
 
 let cookTimer = null;
+
+let waitressAttackTimer = null;
 
 let firstAttackTimer = null;
 
@@ -1029,7 +1394,6 @@ let zIndexTimer = null;
 let kitchenEnergy = 100;
 
 let customers = [];
-
 
 /* ==================================================
    PLAY
@@ -1063,19 +1427,13 @@ document
 
         powerUps.sauce = 0;
 
+        powerUps.waitress = false;
+
         powerUpPaused = false;
 
-        /*
-           Reset delle ultime apparizioni
-           per ogni corsia.
-        */
-        lastLaneSpawnTimes = [
-            -Infinity,
-            -Infinity,
-            -Infinity,
-            -Infinity,
-            -Infinity
-        ];
+        document
+        .getElementById("waitress")
+        .style.display = "none";
 
         document
         .getElementById("powerup-overlay")
@@ -1120,6 +1478,8 @@ document
 
         startCookAnimation();
 
+        startWaitressAttack();
+
         startKitchenEnergySystem();
 
         startFirstAttackDetection();
@@ -1128,7 +1488,6 @@ document
 
     }
 );
-
 
 /* ==================================================
    CREA WAVE 1
@@ -1180,141 +1539,79 @@ function createWave1() {
         }
     );
 
-
     /*
-       Assegna ogni cliente a una corsia
-       controllando che nella stessa corsia
-       ci siano almeno 1.5 secondi di distanza.
+       Tiene traccia dell'ultimo spawn
+       per ogni corsia.
     */
 
-    const scheduledCustomers = [];
+    const lastLaneSpawn = [];
+
+    for (
+        let i = 0;
+        i < LANES.length;
+        i++
+    ) {
+
+        lastLaneSpawn[i] = -Infinity;
+
+    }
 
     spawnTimes.forEach(
         function(second, index) {
-
-            const availableLanes =
-                [];
-
-            LANES.forEach(
-                function(lane, laneIndex) {
-
-                    if (
-                        second -
-                        lastLaneSpawnTimes[laneIndex]
-                        >=
-                        SAME_LANE_MIN_DELAY
-                    ) {
-
-                        availableLanes.push(
-                            laneIndex
-                        );
-
-                    }
-
-                }
-            );
-
-
-            let selectedLane;
-
-
-            /*
-               Se ci sono corsie disponibili,
-               ne scegliamo una casualmente.
-            */
-
-            if (
-                availableLanes.length > 0
-            ) {
-
-                selectedLane =
-                    availableLanes[
-                        Math.floor(
-                            Math.random() *
-                            availableLanes.length
-                        )
-                    ];
-
-            }
-
-
-            /*
-               Sicurezza:
-               se per qualsiasi motivo nessuna corsia
-               è disponibile, scegliamo quella che
-               è libera da più tempo.
-            */
-
-            else {
-
-                selectedLane = 0;
-
-                for (
-                    let i = 1;
-                    i < LANES.length;
-                    i++
-                ) {
-
-                    if (
-                        lastLaneSpawnTimes[i] <
-                        lastLaneSpawnTimes[selectedLane]
-                    ) {
-
-                        selectedLane = i;
-
-                    }
-
-                }
-
-            }
-
-
-            lastLaneSpawnTimes[
-                selectedLane
-            ] = second;
-
-
-            scheduledCustomers.push({
-                index: index,
-                second: second,
-                lane: selectedLane
-            });
-
-        }
-    );
-
-
-    /*
-       Reset perché lastLaneSpawnTimes
-       serve solamente per creare la wave.
-    */
-
-    lastLaneSpawnTimes = [
-        -Infinity,
-        -Infinity,
-        -Infinity,
-        -Infinity,
-        -Infinity
-    ];
-
-
-    scheduledCustomers.forEach(
-        function(schedule) {
 
             setTimeout(
                 function() {
 
                     if (!powerUpPaused) {
 
+                        let attempts = 0;
+
+                        let laneIndex;
+
+                        do {
+
+                            laneIndex =
+                                Math.floor(
+                                    Math.random() *
+                                    LANES.length
+                                );
+
+                            attempts++;
+
+                            /*
+                               Se possibile scegliamo una
+                               corsia che non ha avuto un
+                               cliente negli ultimi 1.5 secondi.
+                            */
+
+                        } while (
+                            attempts < 50 &&
+                            (
+                                (
+                                    second * 1000
+                                ) -
+                                lastLaneSpawn[laneIndex]
+                            ) <
+                            SAME_LANE_MIN_DELAY
+                        );
+
+                        /*
+                           Se tutte le corsie sono occupate
+                           scegliamo comunque una corsia.
+                        */
+
+                        lastLaneSpawn[laneIndex] =
+                            second * 1000;
+
                         spawnCustomer(
-                            schedule.index,
-                            schedule.lane
+                            index,
+                            laneIndex
                         );
 
                     }
 
                 },
-                schedule.second * 1000
+                second * 1000
             );
 
         }
@@ -1322,14 +1619,13 @@ function createWave1() {
 
 }
 
-
 /* ==================================================
    CREA SINGOLO CLIENTE
 ================================================== */
 
 function spawnCustomer(
     index,
-    laneIndex
+    forcedLaneIndex = null
 ) {
 
     const game =
@@ -1370,34 +1666,35 @@ function spawnCustomer(
         "satisfied"
     );
 
+    customer.style.top = "-130px";
 
-    /*
-       IMPORTANTE:
-       il cliente parte dalla parte nera
-       della porta, non da fuori schermo.
-    */
+    let laneIndex;
 
-    customer.style.top = "4%";
+    if (
+        forcedLaneIndex !== null &&
+        forcedLaneIndex !== undefined
+    ) {
 
+        laneIndex =
+            forcedLaneIndex;
 
-    /*
-       Usa la corsia già assegnata
-       durante la creazione della wave.
-    */
+    }
+
+    else {
+
+        laneIndex =
+            Math.floor(
+                Math.random() *
+                LANES.length
+            );
+
+    }
 
     customer.dataset.lane =
         laneIndex;
 
-    /*
-       LANES indica il CENTRO della corsia,
-       quindi centriamo lo sprite.
-    */
-
     customer.style.left =
         LANES[laneIndex] + "%";
-
-    customer.style.transform =
-        "translateX(-50%)";
 
     customer.dataset.type =
         type;
@@ -1452,11 +1749,6 @@ function spawnCustomer(
     requestAnimationFrame(
         function() {
 
-            /*
-               Parte dalla porta nera
-               e scende verso il basso.
-            */
-
             customer.style.animation =
                 "walkDown " +
                 CUSTOMER_WALK_TIME +
@@ -1489,7 +1781,6 @@ function spawnCustomer(
     );
 
 }
-
 
 /* ==================================================
    CUCINA
@@ -1546,7 +1837,6 @@ function updateKitchenEnergy() {
     }
 
 }
-
 
 /* ==================================================
    ENERGIA
@@ -1608,7 +1898,6 @@ function startKitchenEnergySystem() {
 
 }
 
-
 /* ==================================================
    CLIENTE VISIBILE
 ================================================== */
@@ -1639,7 +1928,6 @@ function customerIsVisible(customer) {
     );
 
 }
-
 
 /* ==================================================
    Z-INDEX
@@ -1674,17 +1962,17 @@ function startZIndexSystem() {
 function updateZIndexes() {
 
     const activeCustomers =
-    customers.filter(
-        function(customer) {
+        customers.filter(
+            function(customer) {
 
-            return (
-                customer &&
-                customer.style.display !==
-                    "none"
-            );
+                return (
+                    customer &&
+                    customer.style.display !==
+                        "none"
+                );
 
-        }
-    );
+            }
+        );
 
     activeCustomers.sort(
         function(a, b) {
@@ -1714,7 +2002,6 @@ function updateZIndexes() {
     );
 
 }
-
 
 /* ==================================================
    PRIMO ATTACCO
@@ -1756,7 +2043,6 @@ function startFirstAttackDetection() {
     );
 
 }
-
 
 /* ==================================================
    ANIMAZIONE CLIENTI
@@ -1847,7 +2133,6 @@ function startCustomerAnimation() {
 
 }
 
-
 /* ==================================================
    FRAME CUOCO
 ================================================== */
@@ -1879,9 +2164,8 @@ function setCookFrame(frameNumber) {
 
 }
 
-
 /* ==================================================
-   ATTACCO
+   ATTACCO CUOCO
 ================================================== */
 
 function playCookAttack() {
@@ -1978,7 +2262,6 @@ function playCookAttack() {
 
 }
 
-
 /* ==================================================
    CLIENTI DA COLPIRE
 ================================================== */
@@ -2036,9 +2319,8 @@ function getAttackTargets() {
 
 }
 
-
 /* ==================================================
-   ATTACCO AUTOMATICO
+   ATTACCO AUTOMATICO CUOCO
 ================================================== */
 
 function startCookAnimation() {
@@ -2082,9 +2364,8 @@ function startCookAnimation() {
 
 }
 
-
 /* ==================================================
-   VELOCITÀ ATTACCO
+   VELOCITÀ ATTACCO CUOCO
 ================================================== */
 
 function getCookAttackInterval() {
@@ -2099,6 +2380,25 @@ function getCookAttackInterval() {
 
 }
 
+/* ==================================================
+   VELOCITÀ ATTACCO CAMERIERA
+================================================== */
+
+/*
+   La cameriera lancia il 33% più frequentemente
+   rispetto al cuoco.
+
+   Non cambia la velocità del drink.
+*/
+
+function getWaitressAttackInterval() {
+
+    return Math.round(
+        getCookAttackInterval() *
+        0.67
+    );
+
+}
 
 /* ==================================================
    CLIENTE PIÙ VICINO
@@ -2179,7 +2479,6 @@ function getNearestVisibleCustomer() {
     return nearest;
 
 }
-
 
 /* ==================================================
    LANCIO PASTA
@@ -2453,6 +2752,521 @@ function throwPasta(target) {
 
 }
 
+/* ==================================================
+   ATTACCO CAMERIERA
+================================================== */
+
+function playWaitressAttack() {
+
+    if (powerUpPaused) {
+        return;
+    }
+
+    if (!powerUps.waitress) {
+        return;
+    }
+
+    const target =
+        getNearestVisibleCustomer();
+
+    if (!target) {
+
+        setWaitressFrame(0);
+
+        return;
+
+    }
+
+    /*
+       FRAME 1
+    */
+
+    setWaitressFrame(0);
+
+    /*
+       FRAME 2
+    */
+
+    setTimeout(
+        function() {
+
+            if (!powerUpPaused) {
+
+                setWaitressFrame(1);
+
+            }
+
+        },
+        120
+    );
+
+    /*
+       FRAME 3
+       MANO ALZATA
+       QUI PARTE IL DRINK
+    */
+
+    setTimeout(
+        function() {
+
+            if (!powerUpPaused) {
+
+                setWaitressFrame(2);
+
+                throwDrink(
+                    target
+                );
+
+            }
+
+        },
+        240
+    );
+
+    /*
+       FRAME 4
+    */
+
+    setTimeout(
+        function() {
+
+            if (!powerUpPaused) {
+
+                setWaitressFrame(3);
+
+            }
+
+        },
+        360
+    );
+
+    /*
+       RITORNO ALLA POSA FERMA
+    */
+
+    setTimeout(
+        function() {
+
+            if (!powerUpPaused) {
+
+                setWaitressFrame(0);
+
+            }
+
+        },
+        600
+    );
+
+}
+
+/* ==================================================
+   ATTACCO AUTOMATICO CAMERIERA
+================================================== */
+
+function startWaitressAttack() {
+
+    if (waitressAttackTimer !== null) {
+
+        clearInterval(
+            waitressAttackTimer
+        );
+
+    }
+
+    waitressAttackTimer =
+    setInterval(
+        function() {
+
+            if (powerUpPaused) {
+                return;
+            }
+
+            if (!powerUps.waitress) {
+                return;
+            }
+
+            const waitress =
+                document.getElementById(
+                    "waitress"
+                );
+
+            if (
+                waitress.style.display ===
+                "none"
+            ) {
+
+                return;
+
+            }
+
+            const target =
+                getNearestVisibleCustomer();
+
+            if (target) {
+
+                playWaitressAttack();
+
+            }
+
+            else {
+
+                setWaitressFrame(0);
+
+            }
+
+        },
+        getWaitressAttackInterval()
+    );
+
+}
+
+/* ==================================================
+   LANCIO DRINK
+================================================== */
+
+function throwDrink(target) {
+
+    if (!target) {
+        return;
+    }
+
+    if (
+        target.dataset.satisfied ===
+        "true"
+    ) {
+
+        return;
+
+    }
+
+    const waitress =
+        document.getElementById(
+            "waitress"
+        );
+
+    const game =
+        document.getElementById(
+            "game"
+        );
+
+    const gameRect =
+        game.getBoundingClientRect();
+
+    const waitressRect =
+        waitress.getBoundingClientRect();
+
+    /*
+       Il punto di partenza viene calcolato
+       sul FRAME 3, cioè quello con la mano alzata.
+
+       Questi due valori sono facilmente
+       regolabili se durante il test vediamo
+       che il drink deve essere spostato
+       di qualche pixel.
+    */
+
+    const startX =
+        waitressRect.left +
+        waitressRect.width *
+        WAITRESS_HAND_X;
+
+    const startY =
+        waitressRect.top +
+        waitressRect.height *
+        WAITRESS_HAND_Y;
+
+    const hitMarker =
+        document.createElement("div");
+
+    hitMarker.className =
+        "hit-marker";
+
+    game.appendChild(
+        hitMarker
+    );
+
+    const drink =
+        document.createElement("img");
+
+    drink.className =
+        "drink";
+
+    drink.src =
+        "https://i.ibb.co/nqJ8Lh8w/Screenshot-20260830-210005-Grok-removebg-preview.png";
+
+    game.appendChild(
+        drink
+    );
+
+    let currentX =
+        startX;
+
+    let currentY =
+        startY;
+
+    drink.style.left =
+        (
+            currentX -
+            gameRect.left -
+            35
+        ) + "px";
+
+    drink.style.top =
+        (
+            currentY -
+            gameRect.top -
+            35
+        ) + "px";
+
+    /*
+       La velocità del drink NON viene
+       modificata dalla velocità di attacco.
+
+       Rimane indipendente.
+    */
+
+    const speed = 350;
+
+    let lastTime =
+        performance.now();
+
+    function moveDrink(currentTime) {
+
+        if (
+            !target ||
+            target.dataset.satisfied ===
+            "true"
+        ) {
+
+            if (drink.parentNode) {
+                drink.remove();
+            }
+
+            if (hitMarker.parentNode) {
+                hitMarker.remove();
+            }
+
+            return;
+
+        }
+
+        if (powerUpPaused) {
+
+            lastTime =
+                currentTime;
+
+            requestAnimationFrame(
+                moveDrink
+            );
+
+            return;
+
+        }
+
+        const targetRect =
+            target.getBoundingClientRect();
+
+        const endX =
+            targetRect.left +
+            targetRect.width / 2 +
+            HIT_X;
+
+        const endY =
+            targetRect.top +
+            targetRect.height *
+            HIT_POSITION_Y +
+            HIT_Y;
+
+        hitMarker.style.left =
+            (
+                endX -
+                gameRect.left
+            ) + "px";
+
+        hitMarker.style.top =
+            (
+                endY -
+                gameRect.top
+            ) + "px";
+
+        const deltaTime =
+            Math.min(
+                (
+                    currentTime -
+                    lastTime
+                ) / 1000,
+                0.05
+            );
+
+        lastTime =
+            currentTime;
+
+        const dx =
+            endX -
+            currentX;
+
+        const dy =
+            endY -
+            currentY;
+
+        const distance =
+            Math.sqrt(
+                dx * dx +
+                dy * dy
+            );
+
+        const movement =
+            speed *
+            deltaTime;
+
+        if (
+            distance <=
+            movement
+        ) {
+
+            currentX =
+                endX;
+
+            currentY =
+                endY;
+
+        }
+
+        else {
+
+            currentX +=
+                (
+                    dx /
+                    distance
+                ) *
+                movement;
+
+            currentY +=
+                (
+                    dy /
+                    distance
+                ) *
+                movement;
+
+        }
+
+        drink.style.left =
+            (
+                currentX -
+                gameRect.left -
+                35
+            ) + "px";
+
+        drink.style.top =
+            (
+                currentY -
+                gameRect.top -
+                35
+            ) + "px";
+
+        const remainingX =
+            endX -
+            currentX;
+
+        const remainingY =
+            endY -
+            currentY;
+
+        const remainingDistance =
+            Math.sqrt(
+                remainingX *
+                remainingX +
+                remainingY *
+                remainingY
+            );
+
+        if (
+            remainingDistance <=
+            3
+        ) {
+
+            hitCustomerWithDrink(
+                target,
+                drink
+            );
+
+            if (hitMarker.parentNode) {
+                hitMarker.remove();
+            }
+
+            return;
+
+        }
+
+        requestAnimationFrame(
+            moveDrink
+        );
+
+    }
+
+    requestAnimationFrame(
+        moveDrink
+    );
+
+}
+
+/* ==================================================
+   COLPITO DAL DRINK
+================================================== */
+
+function hitCustomerWithDrink(
+    customer,
+    drink
+) {
+
+    if (
+        drink &&
+        drink.parentNode
+    ) {
+
+        drink.remove();
+
+    }
+
+    if (
+        !customer ||
+        customer.dataset.satisfied ===
+        "true"
+    ) {
+
+        return;
+
+    }
+
+    let hp =
+        parseInt(
+            customer.dataset.hp ||
+            "30"
+        );
+
+    /*
+       Cameriera = 3 danni
+    */
+
+    const damage = 3;
+
+    hp -=
+        damage;
+
+    customer.dataset.hp =
+        hp;
+
+    if (
+        hp <= 0
+    ) {
+
+        satisfyCustomer(
+            customer
+        );
+
+    }
+
+}
 
 /* ==================================================
    COLPITO
@@ -2510,7 +3324,6 @@ function hitCustomer(
 
 }
 
-
 /* ==================================================
    CLIENTE SODDISFATTO
 ================================================== */
@@ -2545,8 +3358,9 @@ function satisfyCustomer(
         rect.top -
         gameRect.top;
 
-
-
+    const currentLeft =
+        rect.left -
+        gameRect.left;
 
     customer.style.animation =
         "none";
@@ -2562,7 +3376,8 @@ function satisfyCustomer(
     customer.style.top =
         currentTop + "px";
 
-    
+    customer.style.left =
+        currentLeft + "px";
 
     customer.dataset.satisfied =
         "true";
@@ -2621,7 +3436,6 @@ function satisfyCustomer(
     );
 
 }
-
 
 /* ==================================================
    COMPATIBILITÀ
