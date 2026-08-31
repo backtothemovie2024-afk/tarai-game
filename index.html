@@ -176,11 +176,9 @@ body {
     display: block;
 }
 
-
 #kitchenDamaged {
     display: none;
 }
-
 
 #kitchenDestroyed {
     display: none;
@@ -359,7 +357,9 @@ body {
 
 
 .customer .frame.active {
+
     display: block;
+
 }
 
 
@@ -380,6 +380,7 @@ body {
     display: none;
 
     z-index: 2;
+
 }
 
 
@@ -412,7 +413,9 @@ body {
 
 
 .customer.satisfied .heart {
+
     display: block;
+
 }
 
 
@@ -486,11 +489,14 @@ body {
     object-fit: contain;
 
     display: none;
+
 }
 
 
 #cook img.active {
+
     display: block;
+
 }
 
 
@@ -511,6 +517,7 @@ body {
     z-index: 70;
 
     pointer-events: none;
+
 }
 
 
@@ -570,20 +577,32 @@ body {
 }
 
 
-/*
+/* ==================================================
    PANNELLO POWER UP
-   RESO MOLTO PIÙ ALTO
-*/
+   CORNICE MOLTO PIÙ ALTA
+================================================== */
 
 #powerup-panel {
 
     position: relative;
 
-    width: 98%;
+    width: 94%;
 
-    max-width: 500px;
+    max-width: 430px;
 
-    height: 700px;
+    /*
+       Prima:
+       aspect-ratio: 348 / 260
+
+       Ora il pannello è circa
+       il doppio dell'altezza.
+    */
+
+    height: 520px;
+
+    max-height: 82vh;
+
+    aspect-ratio: auto;
 
     padding: 0;
 
@@ -600,6 +619,7 @@ body {
     box-shadow: none;
 
     overflow: hidden;
+
 }
 
 
@@ -608,29 +628,38 @@ body {
 ================================================== */
 
 #powerup-title {
+
     display: none;
+
 }
 
 
 /* ==================================================
-   CONTENITORE 3 POWER UP
+   CONTENITORE
 ================================================== */
 
 #powerup-options {
 
     position: absolute;
 
-    inset: 0;
+    left: 6%;
+
+    right: 6%;
+
+    top: 13%;
+
+    bottom: 8%;
 
     display: flex;
 
-    justify-content: flex-start;
+    justify-content: space-between;
 
-    align-items: flex-start;
+    align-items: stretch;
 
-    gap: 0;
+    gap: 2%;
 
     z-index: 2;
+
 }
 
 
@@ -640,13 +669,13 @@ body {
 
 .powerup-card {
 
-    position: absolute;
+    position: relative;
 
-    top: 24%;
+    flex: 1;
 
-    width: 27%;
+    height: 100%;
 
-    height: 72%;
+    min-width: 0;
 
     padding: 0;
 
@@ -665,30 +694,7 @@ body {
     transition:
         transform 0.12s ease,
         filter 0.12s ease;
-}
 
-
-.powerup-card:nth-child(1) {
-    left: 7%;
-}
-
-
-.powerup-card:nth-child(2) {
-    left: 36.5%;
-}
-
-
-.powerup-card:nth-child(3) {
-    left: 66%;
-}
-
-
-.powerup-card:active {
-
-    transform:
-        translateY(3px);
-
-    filter: brightness(1.2);
 }
 
 
@@ -702,11 +708,11 @@ body {
 
     left: 5%;
 
-    top: 4%;
+    top: 2%;
 
     width: 90%;
 
-    height: 57%;
+    height: 46%;
 
     padding: 0;
 
@@ -722,17 +728,28 @@ body {
 
     justify-content: center;
 
-    overflow: hidden;
+    overflow: visible;
+
 }
 
 
+/*
+   L'immagine rimane centrata
+   nel proprio riquadro.
+*/
+
 .powerup-image-box img {
 
-    width: 82%;
+    display: block;
 
-    height: 82%;
+    width: 88%;
+
+    height: 88%;
 
     object-fit: contain;
+
+    object-position: center center;
+
 }
 
 
@@ -748,20 +765,23 @@ body {
 
     width: 90%;
 
-    top: 63%;
+    top: 49%;
 
     margin: 0;
 
     color: #ffd98a;
 
-    font-size: 11px;
+    font-size: 12px;
 
     font-weight: 900;
 
-    line-height: 1.1;
+    line-height: 1.15;
+
+    text-align: center;
 
     text-shadow:
         1px 1px 2px #000;
+
 }
 
 
@@ -777,7 +797,7 @@ body {
 
     width: 90%;
 
-    top: 70%;
+    top: 57%;
 
     min-height: 0;
 
@@ -785,14 +805,17 @@ body {
 
     color: white;
 
-    font-size: 9px;
+    font-size: 10px;
 
     font-weight: bold;
 
-    line-height: 1.15;
+    line-height: 1.2;
+
+    text-align: center;
 
     text-shadow:
         1px 1px 2px #000;
+
 }
 
 
@@ -808,18 +831,35 @@ body {
 
     width: 90%;
 
-    top: 83%;
+    top: 68%;
 
     margin: 0;
 
     color: #ffe477;
 
-    font-size: 10px;
+    font-size: 11px;
 
     font-weight: 900;
 
+    text-align: center;
+
     text-shadow:
         1px 1px 2px #000;
+
+}
+
+
+/* ==================================================
+   CLICK POWER UP
+================================================== */
+
+.powerup-card:active {
+
+    transform:
+        translateY(3px);
+
+    filter: brightness(1.2);
+
 }
 
 
@@ -829,7 +869,9 @@ body {
 
 #game.powerup-paused * {
 
-    animation-play-state: paused !important;
+    animation-play-state:
+        paused !important;
+
 }
 
 
@@ -845,6 +887,7 @@ body {
         width: 65px;
 
         height: 88px;
+
     }
 
 
@@ -853,6 +896,7 @@ body {
         width: 60px;
 
         height: 60px;
+
     }
 
 
@@ -863,49 +907,59 @@ body {
         left: 2.5%;
 
         width: 95%;
+
     }
 
 
     #exp-level {
+
         font-size: 13px;
+
     }
 
-
-    /*
-       IMPORTANTE:
-       manteniamo anche su telefono
-       il pannello molto alto
-    */
 
     #powerup-panel {
 
-        width: 98%;
+        width: 94%;
 
-        max-width: 500px;
+        height: 520px;
 
-        height: 700px;
+        max-height: 82vh;
 
-        padding: 0;
     }
 
 
-    .powerup-card {
-        padding: 0;
+    #powerup-options {
+
+        left: 6%;
+
+        right: 6%;
+
+        top: 13%;
+
+        bottom: 8%;
+
     }
 
 
     .powerup-name {
+
         font-size: 10px;
+
     }
 
 
     .powerup-description {
+
         font-size: 8px;
+
     }
 
 
     .powerup-level {
+
         font-size: 9px;
+
     }
 
 }
@@ -916,6 +970,7 @@ body {
 
 
 <body>
+
 
 <div id="phone">
 
@@ -933,10 +988,13 @@ body {
     >
 
     <button id="playButton">
+
         PLAY
+
     </button>
 
 </div>
+
 
 
 <!-- ==================================================
@@ -944,6 +1002,7 @@ body {
 ================================================== -->
 
 <div id="game">
+
 
     <img
         id="background"
@@ -973,7 +1032,9 @@ body {
     >
 
 
-    <!-- HUD -->
+    <!-- ==================================================
+         HUD
+    ================================================== -->
 
     <div id="hud">
 
@@ -984,7 +1045,10 @@ body {
     </div>
 
 
-    <!-- CLIENTE 1 -->
+
+    <!-- ==================================================
+         TEMPLATE CLIENTE 1
+    ================================================== -->
 
     <div
         id="customer1Template"
@@ -1017,7 +1081,10 @@ body {
     </div>
 
 
-    <!-- CLIENTE 2 -->
+
+    <!-- ==================================================
+         TEMPLATE CLIENTE 2
+    ================================================== -->
 
     <div
         id="customer2Template"
@@ -1050,7 +1117,10 @@ body {
     </div>
 
 
-    <!-- CUOCO -->
+
+    <!-- ==================================================
+         CUOCO
+    ================================================== -->
 
     <div id="cook">
 
@@ -1083,7 +1153,10 @@ body {
     </div>
 
 
-    <!-- BARRA ESPERIENZA -->
+
+    <!-- ==================================================
+         BARRA ESPERIENZA
+    ================================================== -->
 
     <div id="exp-bar">
 
@@ -1096,7 +1169,10 @@ body {
     </div>
 
 
-    <!-- POWER UP SCREEN -->
+
+    <!-- ==================================================
+         POWER UP SCREEN
+    ================================================== -->
 
     <div id="powerup-overlay">
 
@@ -1112,9 +1188,11 @@ body {
 
     </div>
 
+
 </div>
 
 </div>
+
 
 
 <script>
@@ -1131,6 +1209,7 @@ const HIT_Y = 0;
 const HIT_POSITION_Y = 0.45;
 
 
+
 /* ==================================================
    IMPOSTAZIONI WAVE 1
 ================================================== */
@@ -1145,12 +1224,15 @@ const CUSTOMER_WALK_TIME = 70;
 
 
 const LANES = [
+
     28,
     39,
     50,
     61,
     72
+
 ];
+
 
 
 /* ==================================================
@@ -1164,6 +1246,7 @@ let currentEXP = 0;
 const EXP_PER_CUSTOMER = 5;
 
 const EXP_REQUIREMENTS = [
+
     15,
     20,
     25,
@@ -1175,9 +1258,11 @@ const EXP_REQUIREMENTS = [
     55,
     60,
     65
+
 ];
 
 const MAX_LEVEL = 12;
+
 
 
 /* ==================================================
@@ -1245,6 +1330,7 @@ const POWERUP_DATA = {
 };
 
 
+
 /* ==================================================
    AGGIORNA BARRA EXP
 ================================================== */
@@ -1252,21 +1338,30 @@ const POWERUP_DATA = {
 function updateEXPBar() {
 
     const fill =
-        document.getElementById("exp-fill");
+        document.getElementById(
+            "exp-fill"
+        );
 
     const levelText =
-        document.getElementById("exp-level");
+        document.getElementById(
+            "exp-level"
+        );
 
 
-    if (currentLevel >= MAX_LEVEL) {
+    if (
+        currentLevel >= MAX_LEVEL
+    ) {
 
-        currentLevel = MAX_LEVEL;
+        currentLevel =
+            MAX_LEVEL;
 
         currentEXP = 0;
 
-        fill.style.width = "100%";
+        fill.style.width =
+            "100%";
 
-        levelText.textContent = "LV MAX";
+        levelText.textContent =
+            "LV MAX";
 
         return;
 
@@ -1274,13 +1369,18 @@ function updateEXPBar() {
 
 
     const requiredEXP =
-        EXP_REQUIREMENTS[currentLevel - 1];
+        EXP_REQUIREMENTS[
+            currentLevel - 1
+        ];
 
 
     const percentage =
         Math.min(
             100,
-            (currentEXP / requiredEXP) * 100
+            (
+                currentEXP /
+                requiredEXP
+            ) * 100
         );
 
 
@@ -1289,9 +1389,11 @@ function updateEXPBar() {
 
 
     levelText.textContent =
-        "LV " + currentLevel;
+        "LV " +
+        currentLevel;
 
 }
+
 
 
 /* ==================================================
@@ -1301,7 +1403,9 @@ function updateEXPBar() {
 function showPowerUpScreen() {
 
     if (powerUpPaused) {
+
         return;
+
     }
 
 
@@ -1320,7 +1424,9 @@ function showPowerUpScreen() {
     );
 
 
-    if (available.length === 0) {
+    if (
+        available.length === 0
+    ) {
 
         powerUpPaused = false;
 
@@ -1342,7 +1448,10 @@ function showPowerUpScreen() {
     const selected =
         shuffled.slice(
             0,
-            Math.min(3, shuffled.length)
+            Math.min(
+                3,
+                shuffled.length
+            )
         );
 
 
@@ -1369,7 +1478,9 @@ function showPowerUpScreen() {
             let effectText = "";
 
 
-            if (type === "pasta") {
+            if (
+                type === "pasta"
+            ) {
 
                 effectText =
                     nextLevel === 1
@@ -1381,17 +1492,23 @@ function showPowerUpScreen() {
             }
 
 
-            if (type === "speed") {
+            if (
+                type === "speed"
+            ) {
 
                 effectText =
                     "+" +
-                    (nextLevel * 33) +
+                    (
+                        nextLevel * 33
+                    ) +
                     "% SPEED";
 
             }
 
 
-            if (type === "sauce") {
+            if (
+                type === "sauce"
+            ) {
 
                 effectText =
                     "+" +
@@ -1402,7 +1519,9 @@ function showPowerUpScreen() {
 
 
             const card =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
 
             card.className =
@@ -1439,13 +1558,17 @@ function showPowerUpScreen() {
                 "click",
                 function() {
 
-                    selectPowerUp(type);
+                    selectPowerUp(
+                        type
+                    );
 
                 }
             );
 
 
-            options.appendChild(card);
+            options.appendChild(
+                card
+            );
 
         }
     );
@@ -1457,29 +1580,43 @@ function showPowerUpScreen() {
     document
     .getElementById("game")
     .classList
-    .add("powerup-paused");
+    .add(
+        "powerup-paused"
+    );
 
 
     document
     .getElementById("powerup-overlay")
-    .style.display = "flex";
+    .style.display =
+        "flex";
 
 }
+
 
 
 /* ==================================================
    SCELTA POWER UP
 ================================================== */
 
-function selectPowerUp(type) {
+function selectPowerUp(
+    type
+) {
 
-    if (!powerUpPaused) {
+    if (
+        !powerUpPaused
+    ) {
+
         return;
+
     }
 
 
-    if (powerUps[type] >= 3) {
+    if (
+        powerUps[type] >= 3
+    ) {
+
         return;
+
     }
 
 
@@ -1488,12 +1625,14 @@ function selectPowerUp(type) {
 
     document
     .getElementById("powerup-overlay")
-    .style.display = "none";
+    .style.display =
+        "none";
 
 
     document
     .getElementById("powerup-options")
-    .innerHTML = "";
+    .innerHTML =
+        "";
 
 
     powerUpPaused = false;
@@ -1502,42 +1641,60 @@ function selectPowerUp(type) {
     document
     .getElementById("game")
     .classList
-    .remove("powerup-paused");
+    .remove(
+        "powerup-paused"
+    );
 
 
     updateEXPBar();
 
 }
+
 
 
 /* ==================================================
    AGGIUNGI EXP
 ================================================== */
 
-function addEXP(amount) {
+function addEXP(
+    amount
+) {
 
-    if (currentLevel >= MAX_LEVEL) {
+    if (
+        currentLevel >= MAX_LEVEL
+    ) {
+
         return;
+
     }
 
 
-    currentEXP += amount;
+    currentEXP +=
+        amount;
 
 
     const requiredEXP =
-        EXP_REQUIREMENTS[currentLevel - 1];
+        EXP_REQUIREMENTS[
+            currentLevel - 1
+        ];
 
 
-    if (currentEXP >= requiredEXP) {
+    if (
+        currentEXP >=
+        requiredEXP
+    ) {
 
-        currentEXP -= requiredEXP;
+        currentEXP -=
+            requiredEXP;
 
         currentLevel++;
 
 
         updateEXPBar();
 
+
         showPowerUpScreen();
+
 
         return;
 
@@ -1546,7 +1703,8 @@ function addEXP(amount) {
 
     updateEXPBar();
 
-}
+ }
+
 
 
 /* ==================================================
@@ -1568,6 +1726,7 @@ let kitchenEnergy = 100;
 let customers = [];
 
 
+
 /* ==================================================
    PLAY
 ================================================== */
@@ -1580,12 +1739,14 @@ document
 
         document
         .getElementById("menu")
-        .style.display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("game")
-        .style.display = "block";
+        .style.display =
+            "block";
 
 
         kitchenEnergy = 100;
@@ -1609,20 +1770,25 @@ document
 
         document
         .getElementById("powerup-overlay")
-        .style.display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("game")
         .classList
-        .remove("powerup-paused");
+        .remove(
+            "powerup-paused"
+        );
 
 
         updateEXPBar();
 
 
         document
-        .querySelectorAll(".spawned-customer")
+        .querySelectorAll(
+            ".spawned-customer"
+        )
         .forEach(
             function(customer) {
 
@@ -1634,20 +1800,24 @@ document
 
         document
         .getElementById("kitchen")
-        .style.display = "block";
+        .style.display =
+            "block";
 
 
         document
         .getElementById("kitchenDamaged")
-        .style.display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("kitchenDestroyed")
-        .style.display = "none";
+        .style.display =
+            "none";
 
 
         updateKitchenEnergy();
+
 
         createWave1();
 
@@ -1665,6 +1835,7 @@ document
 );
 
 
+
 /* ==================================================
    CREA WAVE 1
 ================================================== */
@@ -1672,7 +1843,9 @@ document
 function createWave1() {
 
     const spawnTimes = [
+
         FIRST_SPAWN_SECOND
+
     ];
 
 
@@ -1715,7 +1888,9 @@ function createWave1() {
 
     spawnTimes.sort(
         function(a, b) {
+
             return a - b;
+
         }
     );
 
@@ -1726,9 +1901,13 @@ function createWave1() {
             setTimeout(
                 function() {
 
-                    if (!powerUpPaused) {
+                    if (
+                        !powerUpPaused
+                    ) {
 
-                        spawnCustomer(index);
+                        spawnCustomer(
+                            index
+                        );
 
                     }
 
@@ -1742,14 +1921,20 @@ function createWave1() {
 }
 
 
+
 /* ==================================================
    CREA SINGOLO CLIENTE
 ================================================== */
 
-function spawnCustomer(index) {
+function spawnCustomer(
+    index
+) {
 
     const game =
-        document.getElementById("game");
+        document
+        .getElementById(
+            "game"
+        );
 
 
     const type =
@@ -1759,7 +1944,8 @@ function spawnCustomer(index) {
 
 
     const template =
-        document.getElementById(
+        document
+        .getElementById(
             type === 1
                 ? "customer1Template"
                 : "customer2Template"
@@ -1767,35 +1953,52 @@ function spawnCustomer(index) {
 
 
     const customer =
-        template.cloneNode(true);
+        template.cloneNode(
+            true
+        );
 
 
     customer.id =
-        "customer-" + (index + 1);
+        "customer-" +
+        (
+            index + 1
+        );
 
 
-    customer.classList.remove(
+    customer.classList
+    .remove(
         "customer-template"
     );
 
 
-    customer.classList.add(
+    customer.classList
+    .add(
         "spawned-customer"
     );
 
 
-    customer.style.display = "block";
+    customer.style.display =
+        "block";
 
-    customer.style.animation = "none";
 
-    customer.classList.remove("satisfied");
+    customer.style.animation =
+        "none";
 
-    customer.style.top = "-130px";
+
+    customer.classList
+    .remove(
+        "satisfied"
+    );
+
+
+    customer.style.top =
+        "-130px";
 
 
     const laneIndex =
         Math.floor(
-            Math.random() * LANES.length
+            Math.random() *
+            LANES.length
         );
 
 
@@ -1804,52 +2007,81 @@ function spawnCustomer(index) {
 
 
     customer.style.left =
-        LANES[laneIndex] + "%";
+        LANES[laneIndex] +
+        "%";
 
 
-    customer.dataset.type = type;
+    customer.dataset.type =
+        type;
 
-    customer.dataset.hp = "30";
 
-    customer.dataset.satisfied = "false";
+    customer.dataset.hp =
+        "30";
 
-    customer.dataset.atKitchen = "false";
 
-    customer.dataset.frame = "0";
+    customer.dataset.satisfied =
+        "false";
+
+
+    customer.dataset.atKitchen =
+        "false";
+
+
+    customer.dataset.frame =
+        "0";
 
 
     const frames =
-        customer.querySelectorAll(".frame");
+        customer
+        .querySelectorAll(
+            ".frame"
+        );
 
 
     frames.forEach(
         function(frame) {
 
-            frame.classList.remove("active");
+            frame.classList
+            .remove(
+                "active"
+            );
 
         }
     );
 
 
-    if (frames.length > 0) {
+    if (
+        frames.length > 0
+    ) {
 
         frames[0]
         .classList
-        .add("active");
+        .add(
+            "active"
+        );
 
     }
 
 
     const happyFrame =
-        customer.querySelector(".happy-frame");
+        customer
+        .querySelector(
+            ".happy-frame"
+        );
 
 
-    happyFrame.style.display = "none";
+    happyFrame.style.display =
+        "none";
 
 
-    game.appendChild(customer);
+    game.appendChild(
+        customer
+    );
 
-    customers.push(customer);
+
+    customers.push(
+        customer
+    );
 
 
     requestAnimationFrame(
@@ -1861,7 +2093,10 @@ function spawnCustomer(index) {
                 "s linear forwards";
 
 
-            customer.classList.add("walking");
+            customer.classList
+            .add(
+                "walking"
+            );
 
         }
     );
@@ -1878,6 +2113,7 @@ function spawnCustomer(index) {
                 customer.dataset.atKitchen =
                     "true";
 
+
                 updateZIndexes();
 
             }
@@ -1889,45 +2125,56 @@ function spawnCustomer(index) {
 }
 
 
+
 /* ==================================================
    CUCINA
 ================================================== */
 
 function updateKitchenEnergy() {
 
-    if (kitchenEnergy > 50) {
+    if (
+        kitchenEnergy > 50
+    ) {
 
         document
         .getElementById("kitchen")
-        .style.display = "block";
+        .style.display =
+            "block";
 
 
         document
         .getElementById("kitchenDamaged")
-        .style.display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("kitchenDestroyed")
-        .style.display = "none";
+        .style.display =
+            "none";
 
     }
 
-    else if (kitchenEnergy > 20) {
+    else if (
+        kitchenEnergy > 20
+    ) {
 
         document
         .getElementById("kitchen")
-        .style.display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("kitchenDamaged")
-        .style.display = "block";
+        .style.display =
+            "block";
 
 
         document
         .getElementById("kitchenDestroyed")
-        .style.display = "none";
+        .style.display =
+            "none";
 
     }
 
@@ -1935,21 +2182,25 @@ function updateKitchenEnergy() {
 
         document
         .getElementById("kitchen")
-        .style.display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("kitchenDamaged")
-        .style.display = "none";
+        .style.display =
+            "none";
 
 
         document
         .getElementById("kitchenDestroyed")
-        .style.display = "block";
+        .style.display =
+            "block";
 
     }
 
 }
+
 
 
 /* ==================================================
@@ -1958,9 +2209,13 @@ function updateKitchenEnergy() {
 
 function startKitchenEnergySystem() {
 
-    if (kitchenDamageTimer !== null) {
+    if (
+        kitchenDamageTimer !== null
+    ) {
 
-        clearInterval(kitchenDamageTimer);
+        clearInterval(
+            kitchenDamageTimer
+        );
 
     }
 
@@ -1970,7 +2225,9 @@ function startKitchenEnergySystem() {
         function() {
 
             if (powerUpPaused) {
+
                 return;
+
             }
 
 
@@ -1996,12 +2253,17 @@ function startKitchenEnergySystem() {
             );
 
 
-            if (damage > 0) {
+            if (
+                damage > 0
+            ) {
 
-                kitchenEnergy -= damage;
+                kitchenEnergy -=
+                    damage;
 
 
-                if (kitchenEnergy < 0) {
+                if (
+                    kitchenEnergy < 0
+                ) {
 
                     kitchenEnergy = 0;
 
@@ -2019,15 +2281,19 @@ function startKitchenEnergySystem() {
 }
 
 
+
 /* ==================================================
    CLIENTE VISIBILE
 ================================================== */
 
-function customerIsVisible(customer) {
+function customerIsVisible(
+    customer
+) {
 
     if (
         !customer ||
-        customer.style.display === "none"
+        customer.style.display ===
+            "none"
     ) {
 
         return false;
@@ -2036,23 +2302,34 @@ function customerIsVisible(customer) {
 
 
     const rect =
-        customer.getBoundingClientRect();
+        customer
+        .getBoundingClientRect();
 
 
     const game =
-        document.getElementById("game");
+        document
+        .getElementById(
+            "game"
+        );
 
 
     const gameRect =
-        game.getBoundingClientRect();
+        game
+        .getBoundingClientRect();
 
 
     return (
-        rect.bottom > gameRect.top &&
-        rect.top < gameRect.bottom
+
+        rect.bottom >
+            gameRect.top &&
+
+        rect.top <
+            gameRect.bottom
+
     );
 
 }
+
 
 
 /* ==================================================
@@ -2061,9 +2338,13 @@ function customerIsVisible(customer) {
 
 function startZIndexSystem() {
 
-    if (zIndexTimer !== null) {
+    if (
+        zIndexTimer !== null
+    ) {
 
-        clearInterval(zIndexTimer);
+        clearInterval(
+            zIndexTimer
+        );
 
     }
 
@@ -2073,7 +2354,9 @@ function startZIndexSystem() {
         function() {
 
             if (powerUpPaused) {
+
                 return;
+
             }
 
 
@@ -2093,9 +2376,11 @@ function updateZIndexes() {
             function(customer) {
 
                 return (
+
                     customer &&
                     customer.style.display !==
                         "none"
+
                 );
 
             }
@@ -2106,11 +2391,15 @@ function updateZIndexes() {
         function(a, b) {
 
             const aTop =
-                a.getBoundingClientRect().top;
+                a
+                .getBoundingClientRect()
+                .top;
 
 
             const bTop =
-                b.getBoundingClientRect().top;
+                b
+                .getBoundingClientRect()
+                .top;
 
 
             return aTop - bTop;
@@ -2131,15 +2420,20 @@ function updateZIndexes() {
 }
 
 
+
 /* ==================================================
    PRIMO ATTACCO
 ================================================== */
 
 function startFirstAttackDetection() {
 
-    if (firstAttackTimer !== null) {
+    if (
+        firstAttackTimer !== null
+    ) {
 
-        clearInterval(firstAttackTimer);
+        clearInterval(
+            firstAttackTimer
+        );
 
     }
 
@@ -2149,7 +2443,9 @@ function startFirstAttackDetection() {
         function() {
 
             if (powerUpPaused) {
+
                 return;
+
             }
 
 
@@ -2157,9 +2453,12 @@ function startFirstAttackDetection() {
                 getNearestVisibleCustomer();
 
 
-            if (target) {
+            if (
+                target
+            ) {
 
                 playCookAttack();
+
 
                 clearInterval(
                     firstAttackTimer
@@ -2174,15 +2473,20 @@ function startFirstAttackDetection() {
 }
 
 
+
 /* ==================================================
    ANIMAZIONE CLIENTI
 ================================================== */
 
 function startCustomerAnimation() {
 
-    if (customerTimer !== null) {
+    if (
+        customerTimer !== null
+    ) {
 
-        clearInterval(customerTimer);
+        clearInterval(
+            customerTimer
+        );
 
     }
 
@@ -2192,7 +2496,9 @@ function startCustomerAnimation() {
         function() {
 
             if (powerUpPaused) {
+
                 return;
+
             }
 
 
@@ -2213,13 +2519,18 @@ function startCustomerAnimation() {
 
 
                     const frames =
-                        customer.querySelectorAll(
+                        customer
+                        .querySelectorAll(
                             ".frame"
                         );
 
 
-                    if (frames.length === 0) {
+                    if (
+                        frames.length === 0
+                    ) {
+
                         return;
+
                     }
 
 
@@ -2233,7 +2544,8 @@ function startCustomerAnimation() {
                     frames.forEach(
                         function(image) {
 
-                            image.classList.remove(
+                            image.classList
+                            .remove(
                                 "active"
                             );
 
@@ -2243,7 +2555,9 @@ function startCustomerAnimation() {
 
                     frames[frame]
                     .classList
-                    .add("active");
+                    .add(
+                        "active"
+                    );
 
 
                     frame++;
@@ -2272,11 +2586,14 @@ function startCustomerAnimation() {
 }
 
 
+
 /* ==================================================
    FRAME CUOCO
 ================================================== */
 
-function setCookFrame(frameNumber) {
+function setCookFrame(
+    frameNumber
+) {
 
     const frames =
         document
@@ -2287,21 +2604,29 @@ function setCookFrame(frameNumber) {
     frames.forEach(
         function(frame) {
 
-            frame.classList.remove("active");
+            frame.classList
+            .remove(
+                "active"
+            );
 
         }
     );
 
 
-    if (frames[frameNumber]) {
+    if (
+        frames[frameNumber]
+    ) {
 
         frames[frameNumber]
         .classList
-        .add("active");
+        .add(
+            "active"
+        );
 
     }
 
 }
+
 
 
 /* ==================================================
@@ -2311,7 +2636,9 @@ function setCookFrame(frameNumber) {
 function playCookAttack() {
 
     if (powerUpPaused) {
+
         return;
+
     }
 
 
@@ -2319,7 +2646,9 @@ function playCookAttack() {
         getAttackTargets();
 
 
-    if (targets.length === 0) {
+    if (
+        targets.length === 0
+    ) {
 
         setCookFrame(0);
 
@@ -2335,7 +2664,9 @@ function playCookAttack() {
         function() {
 
             if (!powerUpPaused) {
+
                 setCookFrame(1);
+
             }
 
         },
@@ -2347,7 +2678,9 @@ function playCookAttack() {
         function() {
 
             if (!powerUpPaused) {
+
                 setCookFrame(2);
+
             }
 
         },
@@ -2358,7 +2691,9 @@ function playCookAttack() {
     setTimeout(
         function() {
 
-            if (!powerUpPaused) {
+            if (
+                !powerUpPaused
+            ) {
 
                 setCookFrame(3);
 
@@ -2372,7 +2707,9 @@ function playCookAttack() {
                                 "true"
                         ) {
 
-                            throwPasta(target);
+                            throwPasta(
+                                target
+                            );
 
                         }
 
@@ -2390,7 +2727,9 @@ function playCookAttack() {
         function() {
 
             if (!powerUpPaused) {
+
                 setCookFrame(4);
+
             }
 
         },
@@ -2402,7 +2741,9 @@ function playCookAttack() {
         function() {
 
             if (!powerUpPaused) {
+
                 setCookFrame(0);
+
             }
 
         },
@@ -2410,6 +2751,7 @@ function playCookAttack() {
     );
 
 }
+
 
 
 /* ==================================================
@@ -2422,8 +2764,12 @@ function getAttackTargets() {
         customers.filter(
             function(customer) {
 
-                if (!customer) {
+                if (
+                    !customer
+                ) {
+
                     return false;
+
                 }
 
 
@@ -2431,7 +2777,9 @@ function getAttackTargets() {
                     customer.style.display ===
                     "none"
                 ) {
+
                     return false;
+
                 }
 
 
@@ -2439,11 +2787,15 @@ function getAttackTargets() {
                     customer.dataset.satisfied ===
                     "true"
                 ) {
+
                     return false;
+
                 }
 
 
-                return customerIsVisible(customer);
+                return customerIsVisible(
+                    customer
+                );
 
             }
         );
@@ -2462,7 +2814,8 @@ function getAttackTargets() {
 
 
     let numberOfPasta =
-        1 + powerUps.pasta;
+        1 +
+        powerUps.pasta;
 
 
     return activeCustomers.slice(
@@ -2473,15 +2826,20 @@ function getAttackTargets() {
 }
 
 
+
 /* ==================================================
    ATTACCO
 ================================================== */
 
 function startCookAnimation() {
 
-    if (cookTimer !== null) {
+    if (
+        cookTimer !== null
+    ) {
 
-        clearInterval(cookTimer);
+        clearInterval(
+            cookTimer
+        );
 
     }
 
@@ -2494,7 +2852,9 @@ function startCookAnimation() {
         function() {
 
             if (powerUpPaused) {
+
                 return;
+
             }
 
 
@@ -2502,7 +2862,9 @@ function startCookAnimation() {
                 getNearestVisibleCustomer();
 
 
-            if (target !== null) {
+            if (
+                target !== null
+            ) {
 
                 playCookAttack();
 
@@ -2519,6 +2881,7 @@ function startCookAnimation() {
     );
 
 }
+
 
 
 /* ==================================================
@@ -2538,6 +2901,7 @@ function getCookAttackInterval() {
 }
 
 
+
 /* ==================================================
    CLIENTE PIÙ VICINO
 ================================================== */
@@ -2548,8 +2912,12 @@ function getNearestVisibleCustomer() {
         customers.filter(
             function(customer) {
 
-                if (!customer) {
+                if (
+                    !customer
+                ) {
+
                     return false;
+
                 }
 
 
@@ -2557,7 +2925,9 @@ function getNearestVisibleCustomer() {
                     customer.style.display ===
                     "none"
                 ) {
+
                     return false;
+
                 }
 
 
@@ -2565,18 +2935,27 @@ function getNearestVisibleCustomer() {
                     customer.dataset.satisfied ===
                     "true"
                 ) {
+
                     return false;
+
                 }
 
 
-                return customerIsVisible(customer);
+                return customerIsVisible(
+                    customer
+                );
 
             }
         );
 
 
-    if (activeCustomers.length === 0) {
+    if (
+        activeCustomers.length ===
+        0
+    ) {
+
         return null;
+
     }
 
 
@@ -2599,11 +2978,16 @@ function getNearestVisibleCustomer() {
                 .top;
 
 
-            if (top > nearestTop) {
+            if (
+                top >
+                nearestTop
+            ) {
 
-                nearest = customer;
+                nearest =
+                    customer;
 
-                nearestTop = top;
+                nearestTop =
+                    top;
 
             }
 
@@ -2616,14 +3000,19 @@ function getNearestVisibleCustomer() {
 }
 
 
+
 /* ==================================================
    LANCIO PASTA
 ================================================== */
 
-function throwPasta(target) {
+function throwPasta(
+    target
+) {
 
     if (!target) {
+
         return;
+
     }
 
 
@@ -2631,16 +3020,20 @@ function throwPasta(target) {
         target.dataset.satisfied ===
         "true"
     ) {
+
         return;
+
     }
 
 
     const cook =
-        document.getElementById("cook");
+        document
+        .getElementById("cook");
 
 
     const game =
-        document.getElementById("game");
+        document
+        .getElementById("game");
 
 
     const gameRect =
@@ -2662,18 +3055,24 @@ function throwPasta(target) {
 
 
     const hitMarker =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     hitMarker.className =
         "hit-marker";
 
 
-    game.appendChild(hitMarker);
+    game.appendChild(
+        hitMarker
+    );
 
 
     const pasta =
-        document.createElement("img");
+        document.createElement(
+            "img"
+        );
 
 
     pasta.className =
@@ -2684,12 +3083,17 @@ function throwPasta(target) {
         "https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png";
 
 
-    game.appendChild(pasta);
+    game.appendChild(
+        pasta
+    );
 
 
-    let currentX = startX;
+    let currentX =
+        startX;
 
-    let currentY = startY;
+
+    let currentY =
+        startY;
 
 
     pasta.style.left =
@@ -2720,7 +3124,10 @@ function throwPasta(target) {
         performance.now();
 
 
-    function movePasta(currentTime) {
+
+    function movePasta(
+        currentTime
+    ) {
 
         if (
             !target ||
@@ -2728,13 +3135,21 @@ function throwPasta(target) {
             "true"
         ) {
 
-            if (pasta.parentNode) {
+            if (
+                pasta.parentNode
+            ) {
+
                 pasta.remove();
+
             }
 
 
-            if (hitMarker.parentNode) {
+            if (
+                hitMarker.parentNode
+            ) {
+
                 hitMarker.remove();
+
             }
 
 
@@ -2745,7 +3160,8 @@ function throwPasta(target) {
 
         if (powerUpPaused) {
 
-            lastTime = currentTime;
+            lastTime =
+                currentTime;
 
             requestAnimationFrame(
                 movePasta
@@ -2797,15 +3213,18 @@ function throwPasta(target) {
             );
 
 
-        lastTime = currentTime;
+        lastTime =
+            currentTime;
 
 
         const dx =
-            endX - currentX;
+            endX -
+            currentX;
 
 
         const dy =
-            endY - currentY;
+            endY -
+            currentY;
 
 
         const distance =
@@ -2816,14 +3235,20 @@ function throwPasta(target) {
 
 
         const movement =
-            speed * deltaTime;
+            speed *
+            deltaTime;
 
 
-        if (distance <= movement) {
+        if (
+            distance <=
+            movement
+        ) {
 
-            currentX = endX;
+            currentX =
+                endX;
 
-            currentY = endY;
+            currentY =
+                endY;
 
         }
 
@@ -2864,11 +3289,13 @@ function throwPasta(target) {
 
 
         const remainingX =
-            endX - currentX;
+            endX -
+            currentX;
 
 
         const remainingY =
-            endY - currentY;
+            endY -
+            currentY;
 
 
         const remainingDistance =
@@ -2880,7 +3307,10 @@ function throwPasta(target) {
             );
 
 
-        if (remainingDistance <= 3) {
+        if (
+            remainingDistance <=
+            3
+        ) {
 
             hitCustomer(
                 target,
@@ -2888,8 +3318,12 @@ function throwPasta(target) {
             );
 
 
-            if (hitMarker.parentNode) {
+            if (
+                hitMarker.parentNode
+            ) {
+
                 hitMarker.remove();
+
             }
 
 
@@ -2910,6 +3344,7 @@ function throwPasta(target) {
     );
 
 }
+
 
 
 /* ==================================================
@@ -2954,13 +3389,17 @@ function hitCustomer(
         powerUps.sauce;
 
 
-    hp -= damage;
+    hp -=
+        damage;
 
 
-    customer.dataset.hp = hp;
+    customer.dataset.hp =
+        hp;
 
 
-    if (hp <= 0) {
+    if (
+        hp <= 0
+    ) {
 
         satisfyCustomer(
             customer
@@ -2971,11 +3410,14 @@ function hitCustomer(
 }
 
 
+
 /* ==================================================
    CLIENTE SODDISFATTO
 ================================================== */
 
-function satisfyCustomer(customer) {
+function satisfyCustomer(
+    customer
+) {
 
     if (
         !customer ||
@@ -2989,15 +3431,20 @@ function satisfyCustomer(customer) {
 
 
     const rect =
-        customer.getBoundingClientRect();
+        customer
+        .getBoundingClientRect();
 
 
     const game =
-        document.getElementById("game");
+        document
+        .getElementById(
+            "game"
+        );
 
 
     const gameRect =
-        game.getBoundingClientRect();
+        game
+        .getBoundingClientRect();
 
 
     const currentTop =
@@ -3014,22 +3461,26 @@ function satisfyCustomer(customer) {
         "none";
 
 
-    customer.classList.remove(
+    customer.classList
+    .remove(
         "walking"
     );
 
 
-    customer.classList.add(
+    customer.classList
+    .add(
         "satisfied"
     );
 
 
     customer.style.top =
-        currentTop + "px";
+        currentTop +
+        "px";
 
 
     customer.style.left =
-        currentLeft + "px";
+        currentLeft +
+        "px";
 
 
     customer.dataset.satisfied =
@@ -3046,7 +3497,8 @@ function satisfyCustomer(customer) {
 
 
     const normalFrames =
-        customer.querySelectorAll(
+        customer
+        .querySelectorAll(
             ".frame"
         );
 
@@ -3054,7 +3506,8 @@ function satisfyCustomer(customer) {
     normalFrames.forEach(
         function(frame) {
 
-            frame.classList.remove(
+            frame.classList
+            .remove(
                 "active"
             );
 
@@ -3063,7 +3516,8 @@ function satisfyCustomer(customer) {
 
 
     const happyFrame =
-        customer.querySelector(
+        customer
+        .querySelector(
             ".happy-frame"
         );
 
@@ -3086,7 +3540,8 @@ function satisfyCustomer(customer) {
                 "none";
 
 
-            customer.classList.remove(
+            customer.classList
+            .remove(
                 "satisfied"
             );
 
@@ -3098,6 +3553,7 @@ function satisfyCustomer(customer) {
     );
 
 }
+
 
 
 /* ==================================================
@@ -3112,21 +3568,25 @@ function satisfyCustomer1() {
 
                 return (
                     c.dataset.type === "1" &&
-                    c.dataset.satisfied !==
-                        "true"
+                    c.dataset.satisfied !== "true"
                 );
 
             }
         );
 
 
-    if (customer) {
+    if (
+        customer
+    ) {
 
-        satisfyCustomer(customer);
+        satisfyCustomer(
+            customer
+        );
 
     }
 
 }
+
 
 
 function satisfyCustomer2() {
@@ -3137,21 +3597,25 @@ function satisfyCustomer2() {
 
                 return (
                     c.dataset.type === "2" &&
-                    c.dataset.satisfied !==
-                        "true"
+                    c.dataset.satisfied !== "true"
                 );
 
             }
         );
 
 
-    if (customer) {
+    if (
+        customer
+    ) {
 
-        satisfyCustomer(customer);
+        satisfyCustomer(
+            customer
+        );
 
     }
 
 }
+
 
 </script>
 
