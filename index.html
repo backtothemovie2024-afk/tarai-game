@@ -26,7 +26,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-
 /* ==================================================
    TELEFONO
 ================================================== */
@@ -40,7 +39,6 @@ body {
     overflow: hidden;
     background: black;
 }
-
 
 /* ==================================================
    MENU
@@ -79,7 +77,6 @@ body {
     z-index: 30;
 }
 
-
 /* ==================================================
    GIOCO
 ================================================== */
@@ -100,7 +97,6 @@ body {
     object-fit: cover;
     z-index: 0;
 }
-
 
 /* ==================================================
    CUCINA
@@ -131,7 +127,6 @@ body {
     display: none;
 }
 
-
 /* ==================================================
    HUD
 ================================================== */
@@ -148,7 +143,6 @@ body {
     font-weight: bold;
     z-index: 80;
 }
-
 
 /* ==================================================
    BARRA EXP
@@ -203,7 +197,6 @@ body {
     z-index: 2;
     pointer-events: none;
 }
-
 
 /* ==================================================
    CLIENTI
@@ -304,7 +297,6 @@ body {
 
 }
 
-
 /* ==================================================
    CUOCO
 ================================================== */
@@ -333,7 +325,6 @@ body {
     display: block;
 }
 
-
 /* ==================================================
    PASTA
 ================================================== */
@@ -346,7 +337,6 @@ body {
     z-index: 70;
     pointer-events: none;
 }
-
 
 /* ==================================================
    HITBOX INVISIBILE
@@ -368,117 +358,62 @@ body {
     opacity: 0;
 }
 
-
 /* ==================================================
    POWER UP OVERLAY
 ================================================== */
 
 #powerup-overlay {
-
     position: absolute;
-
     inset: 0;
-
     background:
         rgba(18, 8, 3, 0.82);
-
     display: none;
-
     align-items: center;
-
     justify-content: center;
-
     z-index: 500;
 }
 
-
 /* ==================================================
-   NUOVO PANNELLO
+   PANNELLO
 ================================================== */
 
 #powerup-panel {
-
     width: 92%;
-
     max-width: 430px;
-
     height: 560px;
-
     background-image:
         url("https://i.ibb.co/60d5SFdx/1788123346934-removebg-preview.png");
-
     background-repeat: no-repeat;
-
     background-position: center;
-
     background-size: 100% 100%;
-
     border: none;
-
     border-radius: 0;
-
     box-shadow: none;
-
     padding: 0;
-
     position: relative;
-
 }
 
-
 /* ==================================================
-   TRE SLOT POWER UP
-
-   Gli slot sono posizionati sopra i tre
-   punti interrogativi già presenti
-   nell'immagine del pannello.
+   POWER UP OPTIONS
 ================================================== */
 
 #powerup-options {
-
     position: absolute;
-
     inset: 0;
-
     display: block;
-
 }
-
-
-/* ==================================================
-   SINGOLO SLOT
-================================================== */
 
 .powerup-slot {
-
     position: absolute;
-
     width: 27%;
-
     height: 22%;
-
     transform: translate(-50%, -50%);
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     cursor: pointer;
-
     -webkit-tap-highlight-color: transparent;
-
 }
-
-
-/*
-   POSIZIONAMENTO DEI TRE SLOT
-
-   Sinistra
-   Centro
-   Destra
-*/
 
 .powerup-slot:nth-child(1) {
     left: 25%;
@@ -495,114 +430,66 @@ body {
     top: 50%;
 }
 
-
 /* ==================================================
    IMMAGINE POWER UP
 ================================================== */
 
 .powerup-slot img {
-
     width: 82%;
-
     height: 82%;
-
     object-fit: contain;
-
     display: block;
-
     pointer-events: none;
-
 }
 
-
-/*
-   DIMENSIONI SPECIFICHE
-
-   Pasta e timer leggermente più piccoli
-   per rimanere perfettamente dentro
-   i rispettivi riquadri.
-*/
-
 .powerup-slot[data-type="pasta"] img {
-
     width: 68%;
-
     height: 68%;
-
 }
 
 .powerup-slot[data-type="speed"] img {
-
     width: 68%;
-
     height: 68%;
-
 }
 
 .powerup-slot[data-type="sauce"] img {
-
     width: 78%;
-
     height: 78%;
-
 }
-
 
 /* ==================================================
    LIVELLO POWER UP
-
-   Piccolo indicatore discreto.
 ================================================== */
 
 .powerup-level {
-
     position: absolute;
-
     right: 4%;
-
     bottom: 4%;
-
     min-width: 24px;
-
     height: 24px;
-
     padding: 0 5px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     border-radius: 50%;
-
     background: #ef6428;
-
     border: 2px solid white;
-
     color: white;
-
     font-size: 12px;
-
     font-weight: 900;
-
     text-shadow:
         1px 1px 2px #000;
-
     box-shadow:
         0 2px 5px rgba(0,0,0,0.5);
-
 }
 
-
 /* ==================================================
-   PAUSA ANIMAZIONI
+   PAUSA
 ================================================== */
 
 #game.powerup-paused * {
     animation-play-state: paused !important;
 }
-
 
 /* ==================================================
    RESPONSIVE
@@ -612,47 +499,28 @@ body {
 
     .customer,
     #cook {
-
         width: 65px;
-
         height: 88px;
-
     }
-
 
     .pasta {
-
         width: 60px;
-
         height: 60px;
-
     }
-
 
     #exp-bar {
-
         height: 27px;
-
         left: 2.5%;
-
         width: 95%;
-
     }
-
 
     #exp-level {
-
         font-size: 13px;
-
     }
 
-
     #powerup-panel {
-
         width: 94%;
-
         height: 560px;
-
     }
 
 }
@@ -661,12 +529,9 @@ body {
 
 </head>
 
-
 <body>
 
-
 <div id="phone">
-
 
 <!-- ==================================================
      MENU
@@ -686,21 +551,18 @@ body {
 
 </div>
 
-
-
 <!-- ==================================================
-   GIOCO
+     GIOCO
 ================================================== -->
 
 <div id="game">
 
-
+    <!-- NUOVO BACKGROUND -->
     <img
         id="background"
-        src=src="https://i.ibb.co/G3J6fXZt/IMG-20260831-WA0003.jpg"
+        src="https://i.ibb.co/G3J6fXZt/IMG-20260831-WA0003.jpg"
         alt=""
     >
-
 
     <img
         id="kitchen"
@@ -708,20 +570,17 @@ body {
         alt=""
     >
 
-
     <img
         id="kitchenDamaged"
         src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"
         alt=""
     >
 
-
     <img
         id="kitchenDestroyed"
         src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"
         alt=""
     >
-
 
     <!-- ==================================================
          HUD
@@ -735,10 +594,8 @@ body {
 
     </div>
 
-
-
     <!-- ==================================================
-         TEMPLATE CLIENTE 1
+         CLIENTE 1
     ================================================== -->
 
     <div
@@ -771,10 +628,8 @@ body {
 
     </div>
 
-
-
     <!-- ==================================================
-         TEMPLATE CLIENTE 2
+         CLIENTE 2
     ================================================== -->
 
     <div
@@ -806,8 +661,6 @@ body {
         </div>
 
     </div>
-
-
 
     <!-- ==================================================
          CUOCO
@@ -843,8 +696,6 @@ body {
 
     </div>
 
-
-
     <!-- ==================================================
          BARRA ESPERIENZA
     ================================================== -->
@@ -858,8 +709,6 @@ body {
         </div>
 
     </div>
-
-
 
     <!-- ==================================================
          POWER UP SCREEN
@@ -875,15 +724,11 @@ body {
 
     </div>
 
-
 </div>
 
 </div>
-
-
 
 <script>
-
 
 /* ==================================================
    REGOLAZIONE HITBOX
@@ -894,8 +739,6 @@ const HIT_X = 5;
 const HIT_Y = 0;
 
 const HIT_POSITION_Y = 0.45;
-
-
 
 /* ==================================================
    IMPOSTAZIONI WAVE 1
@@ -909,18 +752,13 @@ const LAST_SPAWN_SECOND = 60;
 
 const CUSTOMER_WALK_TIME = 70;
 
-
 const LANES = [
-
     28,
     39,
     50,
     61,
     72
-
 ];
-
-
 
 /* ==================================================
    SISTEMA EXP
@@ -933,7 +771,6 @@ let currentEXP = 0;
 const EXP_PER_CUSTOMER = 5;
 
 const EXP_REQUIREMENTS = [
-
     15,
     20,
     25,
@@ -945,47 +782,25 @@ const EXP_REQUIREMENTS = [
     55,
     60,
     65
-
 ];
 
 const MAX_LEVEL = 12;
-
-
 
 /* ==================================================
    POWER UP
 ================================================== */
 
-/*
-   Ogni valore indica il livello già ottenuto.
-
-   0 = nessun livello
-   1 = livello 1 ottenuto
-   2 = livello 2 ottenuto
-   3 = livello 3 ottenuto
-*/
-
 let powerUps = {
-
     pasta: 0,
-
     speed: 0,
-
     sauce: 0
-
 };
-
 
 let powerUpPaused = false;
 
-
-/*
-   Immagini associate ai power-up.
-
-   PASTA  = quantità pasta
-   TIMER  = velocità attacco
-   PEPERONCINO = danno
-*/
+/* ==================================================
+   IMMAGINI POWER UP
+================================================== */
 
 const POWER_UP_IMAGES = {
 
@@ -1000,8 +815,6 @@ const POWER_UP_IMAGES = {
 
 };
 
-
-
 /* ==================================================
    MOSTRA POWER UP
 ================================================== */
@@ -1009,66 +822,32 @@ const POWER_UP_IMAGES = {
 function showPowerUpScreen() {
 
     if (powerUpPaused) {
-
         return;
-
     }
-
 
     const options =
         document.getElementById(
             "powerup-options"
         );
 
-
     options.innerHTML = "";
 
-
-    /*
-       Trova tutti i power-up ancora disponibili.
-
-       Se pasta = 0:
-       può apparire pasta livello 1.
-
-       Se pasta = 1:
-       può apparire pasta livello 2.
-
-       Se pasta = 2:
-       può apparire pasta livello 3.
-
-       Se pasta = 3:
-       è completamente terminata.
-    */
-
     let availablePowerUps = [];
-
 
     Object.keys(powerUps).forEach(
         function(type) {
 
-            if (
-                powerUps[type] < 3
-            ) {
+            if (powerUps[type] < 3) {
 
-                availablePowerUps.push(
-                    {
-                        type:
-                            type,
-
-                        level:
-                            powerUps[type] + 1
-                    }
-                );
+                availablePowerUps.push({
+                    type: type,
+                    level: powerUps[type] + 1
+                });
 
             }
 
         }
     );
-
-
-    /*
-       Mescola casualmente la lista.
-    */
 
     for (
         let i = availablePowerUps.length - 1;
@@ -1082,110 +861,58 @@ function showPowerUpScreen() {
                 (i + 1)
             );
 
-
         const temp =
             availablePowerUps[i];
 
-
         availablePowerUps[i] =
             availablePowerUps[j];
-
 
         availablePowerUps[j] =
             temp;
 
     }
 
-
-    /*
-       Massimo 3 power-up mostrati.
-    */
-
     const selectedPowerUps =
-        availablePowerUps.slice(
-            0,
-            3
-        );
-
-
-    /*
-       Crea i tre slot.
-    */
+        availablePowerUps.slice(0, 3);
 
     selectedPowerUps.forEach(
         function(powerUp) {
 
             const slot =
-                document.createElement(
-                    "div"
-                );
-
+                document.createElement("div");
 
             slot.className =
                 "powerup-slot";
 
-
             slot.dataset.type =
                 powerUp.type;
-
 
             slot.dataset.level =
                 powerUp.level;
 
-
-            /*
-               Immagine associata
-               al tipo di power-up.
-            */
-
             const image =
-                document.createElement(
-                    "img"
-                );
-
+                document.createElement("img");
 
             image.src =
                 POWER_UP_IMAGES[
                     powerUp.type
                 ];
 
+            image.alt = "";
 
-            image.alt =
-                "";
-
-
-            slot.appendChild(
-                image
-            );
-
-
-            /*
-               Indicatore livello.
-            */
+            slot.appendChild(image);
 
             const level =
-                document.createElement(
-                    "div"
-                );
-
+                document.createElement("div");
 
             level.className =
                 "powerup-level";
-
 
             level.textContent =
                 "LV " +
                 powerUp.level;
 
-
-            slot.appendChild(
-                level
-            );
-
-
-            /*
-               Click sul riquadro.
-            */
+            slot.appendChild(level);
 
             slot.addEventListener(
                 "click",
@@ -1198,100 +925,58 @@ function showPowerUpScreen() {
                 }
             );
 
-
-            options.appendChild(
-                slot
-            );
+            options.appendChild(slot);
 
         }
     );
 
-
     powerUpPaused = true;
-
 
     document
     .getElementById("game")
     .classList
-    .add(
-        "powerup-paused"
-    );
-
+    .add("powerup-paused");
 
     document
     .getElementById("powerup-overlay")
-    .style.display =
-        "flex";
+    .style.display = "flex";
 
 }
-
-
 
 /* ==================================================
    SCELTA POWER UP
 ================================================== */
 
-function selectPowerUp(
-    type
-) {
+function selectPowerUp(type) {
 
     if (!powerUpPaused) {
-
         return;
-
     }
 
-
-    /*
-       Sicurezza:
-       non permettere di superare LV 3.
-    */
-
-    if (
-        powerUps[type] >= 3
-    ) {
-
+    if (powerUps[type] >= 3) {
         return;
-
     }
-
-
-    /*
-       Il livello ottenuto è sempre
-       quello immediatamente successivo.
-    */
 
     powerUps[type]++;
 
-
     document
     .getElementById("powerup-overlay")
-    .style.display =
-        "none";
-
+    .style.display = "none";
 
     document
     .getElementById("powerup-options")
-    .innerHTML =
-        "";
-
+    .innerHTML = "";
 
     powerUpPaused = false;
-
 
     document
     .getElementById("game")
     .classList
-    .remove(
-        "powerup-paused"
-    );
-
+    .remove("powerup-paused");
 
     updateEXPBar();
 
 }
-
-
 
 /* ==================================================
    AGGIORNA BARRA EXP
@@ -1300,41 +985,29 @@ function selectPowerUp(
 function updateEXPBar() {
 
     const fill =
-        document.getElementById(
-            "exp-fill"
-        );
+        document.getElementById("exp-fill");
 
     const levelText =
-        document.getElementById(
-            "exp-level"
-        );
+        document.getElementById("exp-level");
 
+    if (currentLevel >= MAX_LEVEL) {
 
-    if (
-        currentLevel >= MAX_LEVEL
-    ) {
-
-        currentLevel =
-            MAX_LEVEL;
+        currentLevel = MAX_LEVEL;
 
         currentEXP = 0;
 
-        fill.style.width =
-            "100%";
+        fill.style.width = "100%";
 
-        levelText.textContent =
-            "LV MAX";
+        levelText.textContent = "LV MAX";
 
         return;
 
     }
 
-
     const requiredEXP =
         EXP_REQUIREMENTS[
             currentLevel - 1
         ];
-
 
     const percentage =
         Math.min(
@@ -1345,10 +1018,8 @@ function updateEXPBar() {
             ) * 100
         );
 
-
     fill.style.width =
         percentage + "%";
-
 
     levelText.textContent =
         "LV " +
@@ -1356,67 +1027,40 @@ function updateEXPBar() {
 
 }
 
-
-
 /* ==================================================
    AGGIUNGI EXP
 ================================================== */
 
-function addEXP(
-    amount
-) {
+function addEXP(amount) {
 
-    if (
-        currentLevel >= MAX_LEVEL
-    ) {
-
+    if (currentLevel >= MAX_LEVEL) {
         return;
-
     }
 
-
-    currentEXP +=
-        amount;
-
+    currentEXP += amount;
 
     const requiredEXP =
         EXP_REQUIREMENTS[
             currentLevel - 1
         ];
 
+    if (currentEXP >= requiredEXP) {
 
-    if (
-        currentEXP >=
-        requiredEXP
-    ) {
-
-        currentEXP -=
-            requiredEXP;
+        currentEXP -= requiredEXP;
 
         currentLevel++;
 
-
         updateEXPBar();
 
-
-        /*
-           Ogni aumento di livello
-           apre il pannello.
-        */
-
         showPowerUpScreen();
-
 
         return;
 
     }
 
-
     updateEXPBar();
 
 }
-
-
 
 /* ==================================================
    VARIABILI
@@ -1436,8 +1080,6 @@ let kitchenEnergy = 100;
 
 let customers = [];
 
-
-
 /* ==================================================
    PLAY
 ================================================== */
@@ -1450,30 +1092,19 @@ document
 
         document
         .getElementById("menu")
-        .style.display =
-            "none";
-
+        .style.display = "none";
 
         document
         .getElementById("game")
-        .style.display =
-            "block";
-
+        .style.display = "block";
 
         kitchenEnergy = 100;
 
         customers = [];
 
-
         currentLevel = 1;
 
         currentEXP = 0;
-
-
-        /*
-           Tutti i power-up iniziano
-           dal livello zero.
-        */
 
         powerUps.pasta = 0;
 
@@ -1483,63 +1114,42 @@ document
 
         powerUpPaused = false;
 
-
         document
         .getElementById("powerup-overlay")
-        .style.display =
-            "none";
-
+        .style.display = "none";
 
         document
         .getElementById("powerup-options")
-        .innerHTML =
-            "";
-
+        .innerHTML = "";
 
         document
         .getElementById("game")
         .classList
-        .remove(
-            "powerup-paused"
-        );
-
+        .remove("powerup-paused");
 
         updateEXPBar();
 
-
         document
-        .querySelectorAll(
-            ".spawned-customer"
-        )
+        .querySelectorAll(".spawned-customer")
         .forEach(
             function(customer) {
-
                 customer.remove();
-
             }
         );
 
-
         document
         .getElementById("kitchen")
-        .style.display =
-            "block";
-
+        .style.display = "block";
 
         document
         .getElementById("kitchenDamaged")
-        .style.display =
-            "none";
-
+        .style.display = "none";
 
         document
         .getElementById("kitchenDestroyed")
-        .style.display =
-            "none";
-
+        .style.display = "none";
 
         updateKitchenEnergy();
-
 
         createWave1();
 
@@ -1556,8 +1166,6 @@ document
     }
 );
 
-
-
 /* ==================================================
    CREA WAVE 1
 ================================================== */
@@ -1565,11 +1173,8 @@ document
 function createWave1() {
 
     const spawnTimes = [
-
         FIRST_SPAWN_SECOND
-
     ];
-
 
     while (
         spawnTimes.length <
@@ -1587,7 +1192,6 @@ function createWave1() {
             ) +
             FIRST_SPAWN_SECOND;
 
-
         if (
             !spawnTimes.includes(
                 randomSecond
@@ -1602,20 +1206,15 @@ function createWave1() {
 
     }
 
-
     spawnTimes.push(
         LAST_SPAWN_SECOND
     );
 
-
     spawnTimes.sort(
         function(a, b) {
-
             return a - b;
-
         }
     );
-
 
     spawnTimes.forEach(
         function(second, index) {
@@ -1623,13 +1222,9 @@ function createWave1() {
             setTimeout(
                 function() {
 
-                    if (
-                        !powerUpPaused
-                    ) {
+                    if (!powerUpPaused) {
 
-                        spawnCustomer(
-                            index
-                        );
+                        spawnCustomer(index);
 
                     }
 
@@ -1642,80 +1237,51 @@ function createWave1() {
 
 }
 
-
-
 /* ==================================================
    CREA SINGOLO CLIENTE
 ================================================== */
 
-function spawnCustomer(
-    index
-) {
+function spawnCustomer(index) {
 
     const game =
-        document
-        .getElementById(
-            "game"
-        );
-
+        document.getElementById("game");
 
     const type =
         Math.random() < 0.5
             ? 1
             : 2;
 
-
     const template =
-        document
-        .getElementById(
+        document.getElementById(
             type === 1
                 ? "customer1Template"
                 : "customer2Template"
         );
 
-
     const customer =
-        template.cloneNode(
-            true
-        );
-
+        template.cloneNode(true);
 
     customer.id =
         "customer-" +
-        (
-            index + 1
-        );
+        (index + 1);
 
-
-    customer.classList
-    .remove(
+    customer.classList.remove(
         "customer-template"
     );
 
-
-    customer.classList
-    .add(
+    customer.classList.add(
         "spawned-customer"
     );
 
+    customer.style.display = "block";
 
-    customer.style.display =
-        "block";
+    customer.style.animation = "none";
 
-
-    customer.style.animation =
-        "none";
-
-
-    customer.classList
-    .remove(
+    customer.classList.remove(
         "satisfied"
     );
 
-
-    customer.style.top =
-        "-130px";
-
+    customer.style.top = "-130px";
 
     const laneIndex =
         Math.floor(
@@ -1723,88 +1289,61 @@ function spawnCustomer(
             LANES.length
         );
 
-
     customer.dataset.lane =
         laneIndex;
 
-
     customer.style.left =
-        LANES[laneIndex] +
-        "%";
-
+        LANES[laneIndex] + "%";
 
     customer.dataset.type =
         type;
 
-
     customer.dataset.hp =
         "30";
-
 
     customer.dataset.satisfied =
         "false";
 
-
     customer.dataset.atKitchen =
         "false";
-
 
     customer.dataset.frame =
         "0";
 
-
     const frames =
-        customer
-        .querySelectorAll(
+        customer.querySelectorAll(
             ".frame"
         );
-
 
     frames.forEach(
         function(frame) {
 
-            frame.classList
-            .remove(
+            frame.classList.remove(
                 "active"
             );
 
         }
     );
 
-
-    if (
-        frames.length > 0
-    ) {
+    if (frames.length > 0) {
 
         frames[0]
         .classList
-        .add(
-            "active"
-        );
+        .add("active");
 
     }
 
-
     const happyFrame =
-        customer
-        .querySelector(
+        customer.querySelector(
             ".happy-frame"
         );
-
 
     happyFrame.style.display =
         "none";
 
+    game.appendChild(customer);
 
-    game.appendChild(
-        customer
-    );
-
-
-    customers.push(
-        customer
-    );
-
+    customers.push(customer);
 
     requestAnimationFrame(
         function() {
@@ -1814,15 +1353,12 @@ function spawnCustomer(
                 CUSTOMER_WALK_TIME +
                 "s linear forwards";
 
-
-            customer.classList
-            .add(
+            customer.classList.add(
                 "walking"
             );
 
         }
     );
-
 
     setTimeout(
         function() {
@@ -1835,7 +1371,6 @@ function spawnCustomer(
                 customer.dataset.atKitchen =
                     "true";
 
-
                 updateZIndexes();
 
             }
@@ -1846,57 +1381,41 @@ function spawnCustomer(
 
 }
 
-
-
 /* ==================================================
    CUCINA
 ================================================== */
 
 function updateKitchenEnergy() {
 
-    if (
-        kitchenEnergy > 50
-    ) {
+    if (kitchenEnergy > 50) {
 
         document
         .getElementById("kitchen")
-        .style.display =
-            "block";
-
+        .style.display = "block";
 
         document
         .getElementById("kitchenDamaged")
-        .style.display =
-            "none";
-
+        .style.display = "none";
 
         document
         .getElementById("kitchenDestroyed")
-        .style.display =
-            "none";
+        .style.display = "none";
 
     }
 
-    else if (
-        kitchenEnergy > 20
-    ) {
+    else if (kitchenEnergy > 20) {
 
         document
         .getElementById("kitchen")
-        .style.display =
-            "none";
-
+        .style.display = "none";
 
         document
         .getElementById("kitchenDamaged")
-        .style.display =
-            "block";
-
+        .style.display = "block";
 
         document
         .getElementById("kitchenDestroyed")
-        .style.display =
-            "none";
+        .style.display = "none";
 
     }
 
@@ -1904,26 +1423,19 @@ function updateKitchenEnergy() {
 
         document
         .getElementById("kitchen")
-        .style.display =
-            "none";
-
+        .style.display = "none";
 
         document
         .getElementById("kitchenDamaged")
-        .style.display =
-            "none";
-
+        .style.display = "none";
 
         document
         .getElementById("kitchenDestroyed")
-        .style.display =
-            "block";
+        .style.display = "block";
 
     }
 
 }
-
-
 
 /* ==================================================
    ENERGIA
@@ -1931,9 +1443,7 @@ function updateKitchenEnergy() {
 
 function startKitchenEnergySystem() {
 
-    if (
-        kitchenDamageTimer !== null
-    ) {
+    if (kitchenDamageTimer !== null) {
 
         clearInterval(
             kitchenDamageTimer
@@ -1941,20 +1451,15 @@ function startKitchenEnergySystem() {
 
     }
 
-
     kitchenDamageTimer =
     setInterval(
         function() {
 
             if (powerUpPaused) {
-
                 return;
-
             }
 
-
             let damage = 0;
-
 
             customers.forEach(
                 function(customer) {
@@ -1974,23 +1479,13 @@ function startKitchenEnergySystem() {
                 }
             );
 
+            if (damage > 0) {
 
-            if (
-                damage > 0
-            ) {
+                kitchenEnergy -= damage;
 
-                kitchenEnergy -=
-                    damage;
-
-
-                if (
-                    kitchenEnergy < 0
-                ) {
-
+                if (kitchenEnergy < 0) {
                     kitchenEnergy = 0;
-
                 }
-
 
                 updateKitchenEnergy();
 
@@ -2002,67 +1497,44 @@ function startKitchenEnergySystem() {
 
 }
 
-
-
 /* ==================================================
    CLIENTE VISIBILE
 ================================================== */
 
-function customerIsVisible(
-    customer
-) {
+function customerIsVisible(customer) {
 
     if (
         !customer ||
-        customer.style.display ===
-            "none"
+        customer.style.display === "none"
     ) {
 
         return false;
 
     }
 
-
     const rect =
-        customer
-        .getBoundingClientRect();
-
+        customer.getBoundingClientRect();
 
     const game =
-        document
-        .getElementById(
-            "game"
-        );
-
+        document.getElementById("game");
 
     const gameRect =
-        game
-        .getBoundingClientRect();
-
+        game.getBoundingClientRect();
 
     return (
-
-        rect.bottom >
-            gameRect.top &&
-
-        rect.top <
-            gameRect.bottom
-
+        rect.bottom > gameRect.top &&
+        rect.top < gameRect.bottom
     );
 
 }
 
-
-
 /* ==================================================
-   Z-INDEX CLIENTI
+   Z-INDEX
 ================================================== */
 
 function startZIndexSystem() {
 
-    if (
-        zIndexTimer !== null
-    ) {
+    if (zIndexTimer !== null) {
 
         clearInterval(
             zIndexTimer
@@ -2070,17 +1542,13 @@ function startZIndexSystem() {
 
     }
 
-
     zIndexTimer =
     setInterval(
         function() {
 
             if (powerUpPaused) {
-
                 return;
-
             }
-
 
             updateZIndexes();
 
@@ -2090,7 +1558,6 @@ function startZIndexSystem() {
 
 }
 
-
 function updateZIndexes() {
 
     const activeCustomers =
@@ -2098,16 +1565,13 @@ function updateZIndexes() {
             function(customer) {
 
                 return (
-
                     customer &&
                     customer.style.display !==
                         "none"
-
                 );
 
             }
         );
-
 
     activeCustomers.sort(
         function(a, b) {
@@ -2117,18 +1581,15 @@ function updateZIndexes() {
                 .getBoundingClientRect()
                 .top;
 
-
             const bTop =
                 b
                 .getBoundingClientRect()
                 .top;
 
-
             return aTop - bTop;
 
         }
     );
-
 
     activeCustomers.forEach(
         function(customer, index) {
@@ -2141,17 +1602,13 @@ function updateZIndexes() {
 
 }
 
-
-
 /* ==================================================
    PRIMO ATTACCO
 ================================================== */
 
 function startFirstAttackDetection() {
 
-    if (
-        firstAttackTimer !== null
-    ) {
+    if (firstAttackTimer !== null) {
 
         clearInterval(
             firstAttackTimer
@@ -2159,28 +1616,20 @@ function startFirstAttackDetection() {
 
     }
 
-
     firstAttackTimer =
     setInterval(
         function() {
 
             if (powerUpPaused) {
-
                 return;
-
             }
-
 
             const target =
                 getNearestVisibleCustomer();
 
-
-            if (
-                target
-            ) {
+            if (target) {
 
                 playCookAttack();
-
 
                 clearInterval(
                     firstAttackTimer
@@ -2194,17 +1643,13 @@ function startFirstAttackDetection() {
 
 }
 
-
-
 /* ==================================================
    ANIMAZIONE CLIENTI
 ================================================== */
 
 function startCustomerAnimation() {
 
-    if (
-        customerTimer !== null
-    ) {
+    if (customerTimer !== null) {
 
         clearInterval(
             customerTimer
@@ -2212,17 +1657,13 @@ function startCustomerAnimation() {
 
     }
 
-
     customerTimer =
     setInterval(
         function() {
 
             if (powerUpPaused) {
-
                 return;
-
             }
-
 
             customers.forEach(
                 function(customer) {
@@ -2239,22 +1680,14 @@ function startCustomerAnimation() {
 
                     }
 
-
                     const frames =
-                        customer
-                        .querySelectorAll(
+                        customer.querySelectorAll(
                             ".frame"
                         );
 
-
-                    if (
-                        frames.length === 0
-                    ) {
-
+                    if (frames.length === 0) {
                         return;
-
                     }
-
 
                     let frame =
                         parseInt(
@@ -2262,28 +1695,21 @@ function startCustomerAnimation() {
                             "0"
                         );
 
-
                     frames.forEach(
                         function(image) {
 
-                            image.classList
-                            .remove(
+                            image.classList.remove(
                                 "active"
                             );
 
                         }
                     );
 
-
                     frames[frame]
                     .classList
-                    .add(
-                        "active"
-                    );
-
+                    .add("active");
 
                     frame++;
-
 
                     if (
                         frame >=
@@ -2293,7 +1719,6 @@ function startCustomerAnimation() {
                         frame = 0;
 
                     }
-
 
                     customer.dataset.frame =
                         frame;
@@ -2307,49 +1732,36 @@ function startCustomerAnimation() {
 
 }
 
-
-
 /* ==================================================
    FRAME CUOCO
 ================================================== */
 
-function setCookFrame(
-    frameNumber
-) {
+function setCookFrame(frameNumber) {
 
     const frames =
         document
         .getElementById("cook")
         .querySelectorAll("img");
 
-
     frames.forEach(
         function(frame) {
 
-            frame.classList
-            .remove(
+            frame.classList.remove(
                 "active"
             );
 
         }
     );
 
-
-    if (
-        frames[frameNumber]
-    ) {
+    if (frames[frameNumber]) {
 
         frames[frameNumber]
         .classList
-        .add(
-            "active"
-        );
+        .add("active");
 
     }
 
 }
-
-
 
 /* ==================================================
    ATTACCO
@@ -2358,19 +1770,13 @@ function setCookFrame(
 function playCookAttack() {
 
     if (powerUpPaused) {
-
         return;
-
     }
-
 
     const targets =
         getAttackTargets();
 
-
-    if (
-        targets.length === 0
-    ) {
+    if (targets.length === 0) {
 
         setCookFrame(0);
 
@@ -2378,47 +1784,36 @@ function playCookAttack() {
 
     }
 
-
     setCookFrame(0);
-
 
     setTimeout(
         function() {
 
             if (!powerUpPaused) {
-
                 setCookFrame(1);
-
             }
 
         },
         120
     );
 
-
     setTimeout(
         function() {
 
             if (!powerUpPaused) {
-
                 setCookFrame(2);
-
             }
 
         },
         240
     );
 
-
     setTimeout(
         function() {
 
-            if (
-                !powerUpPaused
-            ) {
+            if (!powerUpPaused) {
 
                 setCookFrame(3);
-
 
                 targets.forEach(
                     function(target) {
@@ -2429,9 +1824,7 @@ function playCookAttack() {
                                 "true"
                         ) {
 
-                            throwPasta(
-                                target
-                            );
+                            throwPasta(target);
 
                         }
 
@@ -2444,28 +1837,22 @@ function playCookAttack() {
         360
     );
 
-
     setTimeout(
         function() {
 
             if (!powerUpPaused) {
-
                 setCookFrame(4);
-
             }
 
         },
         480
     );
 
-
     setTimeout(
         function() {
 
             if (!powerUpPaused) {
-
                 setCookFrame(0);
-
             }
 
         },
@@ -2473,8 +1860,6 @@ function playCookAttack() {
     );
 
 }
-
-
 
 /* ==================================================
    CLIENTI DA COLPIRE
@@ -2486,34 +1871,23 @@ function getAttackTargets() {
         customers.filter(
             function(customer) {
 
-                if (
-                    !customer
-                ) {
-
+                if (!customer) {
                     return false;
-
                 }
-
 
                 if (
                     customer.style.display ===
                     "none"
                 ) {
-
                     return false;
-
                 }
-
 
                 if (
                     customer.dataset.satisfied ===
                     "true"
                 ) {
-
                     return false;
-
                 }
-
 
                 return customerIsVisible(
                     customer
@@ -2521,7 +1895,6 @@ function getAttackTargets() {
 
             }
         );
-
 
     activeCustomers.sort(
         function(a, b) {
@@ -2534,21 +1907,9 @@ function getAttackTargets() {
         }
     );
 
-
-    /*
-       Ogni livello di pasta aggiunge
-       un bersaglio.
-
-       LV 0 = 1 pasta
-       LV 1 = 2 paste
-       LV 2 = 3 paste
-       LV 3 = 4 paste
-    */
-
     let numberOfPasta =
         1 +
         powerUps.pasta;
-
 
     return activeCustomers.slice(
         0,
@@ -2557,17 +1918,13 @@ function getAttackTargets() {
 
 }
 
-
-
 /* ==================================================
-   ATTACCO
+   ATTACCO AUTOMATICO
 ================================================== */
 
 function startCookAnimation() {
 
-    if (
-        cookTimer !== null
-    ) {
+    if (cookTimer !== null) {
 
         clearInterval(
             cookTimer
@@ -2575,28 +1932,20 @@ function startCookAnimation() {
 
     }
 
-
     setCookFrame(0);
-
 
     cookTimer =
     setInterval(
         function() {
 
             if (powerUpPaused) {
-
                 return;
-
             }
-
 
             const target =
                 getNearestVisibleCustomer();
 
-
-            if (
-                target !== null
-            ) {
+            if (target !== null) {
 
                 playCookAttack();
 
@@ -2614,8 +1963,6 @@ function startCookAnimation() {
 
 }
 
-
-
 /* ==================================================
    VELOCITÀ ATTACCO
 ================================================== */
@@ -2632,8 +1979,6 @@ function getCookAttackInterval() {
 
 }
 
-
-
 /* ==================================================
    CLIENTE PIÙ VICINO
 ================================================== */
@@ -2644,34 +1989,23 @@ function getNearestVisibleCustomer() {
         customers.filter(
             function(customer) {
 
-                if (
-                    !customer
-                ) {
-
+                if (!customer) {
                     return false;
-
                 }
-
 
                 if (
                     customer.style.display ===
                     "none"
                 ) {
-
                     return false;
-
                 }
-
 
                 if (
                     customer.dataset.satisfied ===
                     "true"
                 ) {
-
                     return false;
-
                 }
-
 
                 return customerIsVisible(
                     customer
@@ -2679,7 +2013,6 @@ function getNearestVisibleCustomer() {
 
             }
         );
-
 
     if (
         activeCustomers.length ===
@@ -2690,16 +2023,13 @@ function getNearestVisibleCustomer() {
 
     }
 
-
     let nearest =
         activeCustomers[0];
-
 
     let nearestTop =
         nearest
         .getBoundingClientRect()
         .top;
-
 
     activeCustomers.forEach(
         function(customer) {
@@ -2708,7 +2038,6 @@ function getNearestVisibleCustomer() {
                 customer
                 .getBoundingClientRect()
                 .top;
-
 
             if (
                 top >
@@ -2726,27 +2055,19 @@ function getNearestVisibleCustomer() {
         }
     );
 
-
     return nearest;
 
 }
-
-
 
 /* ==================================================
    LANCIO PASTA
 ================================================== */
 
-function throwPasta(
-    target
-) {
+function throwPasta(target) {
 
     if (!target) {
-
         return;
-
     }
-
 
     if (
         target.dataset.satisfied ===
@@ -2757,76 +2078,54 @@ function throwPasta(
 
     }
 
-
     const cook =
-        document
-        .getElementById("cook");
-
+        document.getElementById("cook");
 
     const game =
-        document
-        .getElementById("game");
-
+        document.getElementById("game");
 
     const gameRect =
         game.getBoundingClientRect();
 
-
     const cookRect =
         cook.getBoundingClientRect();
-
 
     const startX =
         cookRect.left +
         cookRect.width * 0.72;
 
-
     const startY =
         cookRect.top +
         cookRect.height * 0.32;
 
-
     const hitMarker =
-        document.createElement(
-            "div"
-        );
-
+        document.createElement("div");
 
     hitMarker.className =
         "hit-marker";
-
 
     game.appendChild(
         hitMarker
     );
 
-
     const pasta =
-        document.createElement(
-            "img"
-        );
-
+        document.createElement("img");
 
     pasta.className =
         "pasta";
 
-
     pasta.src =
         "https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png";
-
 
     game.appendChild(
         pasta
     );
 
-
     let currentX =
         startX;
 
-
     let currentY =
         startY;
-
 
     pasta.style.left =
         (
@@ -2835,14 +2134,12 @@ function throwPasta(
             42
         ) + "px";
 
-
     pasta.style.top =
         (
             currentY -
             gameRect.top -
             42
         ) + "px";
-
 
     const speed =
         350 *
@@ -2851,15 +2148,10 @@ function throwPasta(
             powerUps.speed * 0.33
         );
 
-
     let lastTime =
         performance.now();
 
-
-
-    function movePasta(
-        currentTime
-    ) {
+    function movePasta(currentTime) {
 
         if (
             !target ||
@@ -2867,28 +2159,17 @@ function throwPasta(
             "true"
         ) {
 
-            if (
-                pasta.parentNode
-            ) {
-
+            if (pasta.parentNode) {
                 pasta.remove();
-
             }
 
-
-            if (
-                hitMarker.parentNode
-            ) {
-
+            if (hitMarker.parentNode) {
                 hitMarker.remove();
-
             }
-
 
             return;
 
         }
-
 
         if (powerUpPaused) {
 
@@ -2903,16 +2184,13 @@ function throwPasta(
 
         }
 
-
         const targetRect =
             target.getBoundingClientRect();
-
 
         const endX =
             targetRect.left +
             targetRect.width / 2 +
             HIT_X;
-
 
         const endY =
             targetRect.top +
@@ -2920,20 +2198,17 @@ function throwPasta(
             HIT_POSITION_Y +
             HIT_Y;
 
-
         hitMarker.style.left =
             (
                 endX -
                 gameRect.left
             ) + "px";
 
-
         hitMarker.style.top =
             (
                 endY -
                 gameRect.top
             ) + "px";
-
 
         const deltaTime =
             Math.min(
@@ -2944,20 +2219,16 @@ function throwPasta(
                 0.05
             );
 
-
         lastTime =
             currentTime;
-
 
         const dx =
             endX -
             currentX;
 
-
         const dy =
             endY -
             currentY;
-
 
         const distance =
             Math.sqrt(
@@ -2965,11 +2236,9 @@ function throwPasta(
                 dy * dy
             );
 
-
         const movement =
             speed *
             deltaTime;
-
 
         if (
             distance <=
@@ -2993,7 +2262,6 @@ function throwPasta(
                 ) *
                 movement;
 
-
             currentY +=
                 (
                     dy /
@@ -3003,14 +2271,12 @@ function throwPasta(
 
         }
 
-
         pasta.style.left =
             (
                 currentX -
                 gameRect.left -
                 42
             ) + "px";
-
 
         pasta.style.top =
             (
@@ -3019,16 +2285,13 @@ function throwPasta(
                 42
             ) + "px";
 
-
         const remainingX =
             endX -
             currentX;
 
-
         const remainingY =
             endY -
             currentY;
-
 
         const remainingDistance =
             Math.sqrt(
@@ -3037,7 +2300,6 @@ function throwPasta(
                 remainingY *
                 remainingY
             );
-
 
         if (
             remainingDistance <=
@@ -3049,20 +2311,13 @@ function throwPasta(
                 pasta
             );
 
-
-            if (
-                hitMarker.parentNode
-            ) {
-
+            if (hitMarker.parentNode) {
                 hitMarker.remove();
-
             }
-
 
             return;
 
         }
-
 
         requestAnimationFrame(
             movePasta
@@ -3070,14 +2325,11 @@ function throwPasta(
 
     }
 
-
     requestAnimationFrame(
         movePasta
     );
 
 }
-
-
 
 /* ==================================================
    COLPITO
@@ -3097,7 +2349,6 @@ function hitCustomer(
 
     }
 
-
     if (
         !customer ||
         customer.dataset.satisfied ===
@@ -3108,36 +2359,21 @@ function hitCustomer(
 
     }
 
-
     let hp =
         parseInt(
             customer.dataset.hp ||
             "30"
         );
 
-
-    /*
-       Ogni livello del peperoncino
-       aumenta il danno.
-
-       LV 0 = 5
-       LV 1 = 6
-       LV 2 = 7
-       LV 3 = 8
-    */
-
     const damage =
         5 +
         powerUps.sauce;
 
-
     hp -=
         damage;
 
-
     customer.dataset.hp =
         hp;
-
 
     if (
         hp <= 0
@@ -3150,8 +2386,6 @@ function hitCustomer(
     }
 
 }
-
-
 
 /* ==================================================
    CLIENTE SODDISFATTO
@@ -3171,72 +2405,52 @@ function satisfyCustomer(
 
     }
 
-
     const rect =
         customer
         .getBoundingClientRect();
 
-
     const game =
         document
-        .getElementById(
-            "game"
-        );
-
+        .getElementById("game");
 
     const gameRect =
         game
         .getBoundingClientRect();
 
-
     const currentTop =
         rect.top -
         gameRect.top;
-
 
     const currentLeft =
         rect.left -
         gameRect.left;
 
-
     customer.style.animation =
         "none";
 
-
-    customer.classList
-    .remove(
+    customer.classList.remove(
         "walking"
     );
 
-
-    customer.classList
-    .add(
+    customer.classList.add(
         "satisfied"
     );
 
-
     customer.style.top =
-        currentTop +
-        "px";
-
+        currentTop + "px";
 
     customer.style.left =
-        currentLeft +
-        "px";
-
+        currentLeft + "px";
 
     customer.dataset.satisfied =
         "true";
 
-
     customer.dataset.atKitchen =
         "false";
-
 
     addEXP(
         EXP_PER_CUSTOMER
     );
-
 
     const normalFrames =
         customer
@@ -3244,18 +2458,15 @@ function satisfyCustomer(
             ".frame"
         );
 
-
     normalFrames.forEach(
         function(frame) {
 
-            frame.classList
-            .remove(
+            frame.classList.remove(
                 "active"
             );
 
         }
     );
-
 
     const happyFrame =
         customer
@@ -3263,13 +2474,10 @@ function satisfyCustomer(
             ".happy-frame"
         );
 
-
     happyFrame.style.display =
         "block";
 
-
     updateZIndexes();
-
 
     setTimeout(
         function() {
@@ -3277,16 +2485,12 @@ function satisfyCustomer(
             customer.style.display =
                 "none";
 
-
             happyFrame.style.display =
                 "none";
 
-
-            customer.classList
-            .remove(
+            customer.classList.remove(
                 "satisfied"
             );
-
 
             updateZIndexes();
 
@@ -3295,8 +2499,6 @@ function satisfyCustomer(
     );
 
 }
-
-
 
 /* ==================================================
    COMPATIBILITÀ
@@ -3310,16 +2512,14 @@ function satisfyCustomer1() {
 
                 return (
                     c.dataset.type === "1" &&
-                    c.dataset.satisfied !== "true"
+                    c.dataset.satisfied !==
+                        "true"
                 );
 
             }
         );
 
-
-    if (
-        customer
-    ) {
+    if (customer) {
 
         satisfyCustomer(
             customer
@@ -3328,8 +2528,6 @@ function satisfyCustomer1() {
     }
 
 }
-
-
 
 function satisfyCustomer2() {
 
@@ -3339,16 +2537,14 @@ function satisfyCustomer2() {
 
                 return (
                     c.dataset.type === "2" &&
-                    c.dataset.satisfied !== "true"
+                    c.dataset.satisfied !==
+                        "true"
                 );
 
             }
         );
 
-
-    if (
-        customer
-    ) {
+    if (customer) {
 
         satisfyCustomer(
             customer
@@ -3357,7 +2553,6 @@ function satisfyCustomer2() {
     }
 
 }
-
 
 </script>
 
