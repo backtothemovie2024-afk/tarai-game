@@ -352,15 +352,6 @@ body {
     object-fit: contain;
     display: none;
 
-    /*
-       Gli sprite originali della cameriera hanno
-       un disegno visivamente più piccolo rispetto
-       agli sprite del cuoco.
-
-       La cornice/area del personaggio rimane
-       identica a quella del cuoco; viene aumentata
-       solamente la dimensione visiva dello sprite.
-    */
     transform: scale(1.18);
     transform-origin: center bottom;
 }
@@ -405,8 +396,6 @@ body {
     transform: translate(-50%, -50%);
     z-index: 90;
     pointer-events: none;
-
-    /* HITBOX FUNZIONANTE MA COMPLETAMENTE INVISIBILE */
     opacity: 0;
 }
 
@@ -426,23 +415,46 @@ body {
 }
 
 /* ==================================================
-   PANNELLO
+   PANNELLO POWER UP
+   INGREANDITO AL MASSIMO POSSIBILE
+   MANTENENDO LE PROPORZIONI ORIGINALI
 ================================================== */
 
 #powerup-panel {
-    width: 92%;
-    max-width: 430px;
-    height: 560px;
+    /*
+       Il pannello originale è 430 x 560.
+
+       Manteniamo esattamente questo rapporto
+       e lo facciamo occupare quasi tutta la
+       larghezza disponibile dello schermo.
+
+       94% = grande ma con un piccolo margine
+       laterale per evitare qualsiasi taglio.
+    */
+    width: 94%;
+
+    aspect-ratio: 430 / 560;
+
+    height: auto;
+
+    max-width: none;
+    max-height: 94%;
+
     background-image:
         url("https://i.ibb.co/60d5SFdx/1788123346934-removebg-preview.png");
+
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
+
     border: none;
     border-radius: 0;
     box-shadow: none;
     padding: 0;
+
     position: relative;
+
+    flex-shrink: 1;
 }
 
 /* ==================================================
@@ -457,12 +469,21 @@ body {
 
 .powerup-slot {
     position: absolute;
+
+    /*
+       Le dimensioni rimangono proporzionali
+       al nuovo pannello perché sono espresse
+       in percentuale.
+    */
     width: 27%;
     height: 22%;
+
     transform: translate(-50%, -50%);
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
 }
@@ -509,13 +530,10 @@ body {
     height: 78%;
 }
 
-/*
+/* ==================================================
    POWER-UP CAMERIERA
+================================================== */
 
-   Ridotto rispetto alle altre immagini in modo
-   che rimanga completamente dentro la propria
-   cornice.
-*/
 .powerup-slot[data-type="waitress"] img {
     width: 68%;
     height: 68%;
@@ -589,9 +607,20 @@ body {
         font-size: 13px;
     }
 
+    /*
+       IMPORTANTE:
+       nessun height fisso qui.
+
+       Il pannello mantiene sempre
+       il rapporto 430:560 e si adatta
+       alla dimensione dello schermo.
+    */
+
     #powerup-panel {
         width: 94%;
-        height: 560px;
+        height: auto;
+        aspect-ratio: 430 / 560;
+        max-height: 94%;
     }
 
 }
@@ -734,7 +763,7 @@ body {
 
     <!-- ==================================================
          CUOCO - ZONA 2
-================================================== -->
+    ================================================== -->
 
     <div id="cook">
 
@@ -768,11 +797,9 @@ body {
 
     <!-- ==================================================
          CAMERIERA - ZONA 3
-================================================== -->
+    ================================================== -->
 
     <div id="waitress">
-
-        <!-- FRAME 1 -->
 
         <img
             class="active"
@@ -780,21 +807,15 @@ body {
             alt=""
         >
 
-        <!-- FRAME 2 -->
-
         <img
             src="https://i.ibb.co/2L0bgr3/Screenshot-20260830-195703-Grok-3-removebg-preview.png"
             alt=""
         >
 
-        <!-- FRAME 3 - MANO ALZATA / LANCIO -->
-
         <img
             src="https://i.ibb.co/8Ln3LmCm/1788087630930-removebg-preview.png"
             alt=""
         >
-
-        <!-- FRAME 4 -->
 
         <img
             src="https://i.ibb.co/7x5t6Krk/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
@@ -805,7 +826,7 @@ body {
 
     <!-- ==================================================
          BARRA ESPERIENZA
-================================================== -->
+    ================================================== -->
 
     <div id="exp-bar">
 
@@ -819,7 +840,7 @@ body {
 
     <!-- ==================================================
          POWER UP SCREEN
-================================================== -->
+    ================================================== -->
 
     <div id="powerup-overlay">
 
@@ -850,14 +871,6 @@ const HIT_POSITION_Y = 0.45;
 /* ==================================================
    POSIZIONE MANO CAMERIERA
 ================================================== */
-
-/*
-   Il drink viene creato durante il FRAME 3,
-   cioè il frame con la mano alzata.
-
-   Questi valori determinano il punto preciso
-   da cui il drink viene visualizzato.
-*/
 
 const WAITRESS_HAND_X = 0.70;
 
@@ -991,10 +1004,6 @@ function showPowerUpScreen() {
         }
     );
 
-    /* ==================================================
-       SHUFFLE POWER UP NORMALI
-    ================================================== */
-
     for (
         let i = normalPowerUps.length - 1;
         i > 0;
@@ -1020,10 +1029,6 @@ function showPowerUpScreen() {
 
     let selectedPowerUps = [];
 
-    /* ==================================================
-       POWER UP CAMERIERA OBBLIGATORIO
-================================================== */
-
     if (!powerUps.waitress) {
 
         selectedPowerUps.push({
@@ -1032,10 +1037,6 @@ function showPowerUpScreen() {
         });
 
     }
-
-    /* ==================================================
-       AGGIUNGI GLI ALTRI POWER UP
-================================================== */
 
     normalPowerUps.forEach(
         function(powerUp) {
@@ -1053,10 +1054,6 @@ function showPowerUpScreen() {
 
         }
     );
-
-    /* ==================================================
-       SHUFFLE DELLE 3 POSIZIONI
-================================================== */
 
     for (
         let i = selectedPowerUps.length - 1;
@@ -1107,11 +1104,6 @@ function showPowerUpScreen() {
             image.alt = "";
 
             slot.appendChild(image);
-
-            /*
-               La cameriera è un power-up unico,
-               quindi non mostra LV 1/2/3.
-            */
 
             if (
                 powerUp.type !==
@@ -1171,10 +1163,6 @@ function selectPowerUp(type) {
         return;
     }
 
-    /* ==================================================
-       CAMERIERA
-================================================== */
-
     if (type === "waitress") {
 
         if (powerUps.waitress) {
@@ -1186,10 +1174,6 @@ function selectPowerUp(type) {
         summonWaitress();
 
     }
-
-    /* ==================================================
-       POWER UP NORMALI
-================================================== */
 
     else {
 
@@ -1255,12 +1239,6 @@ function startWaitressAnimation() {
         );
 
     }
-
-    /*
-       La cameriera resta ferma.
-       L'animazione viene utilizzata
-       esclusivamente durante l'attacco.
-    */
 
     setWaitressFrame(0);
 
@@ -2374,13 +2352,6 @@ function getCookAttackInterval() {
    VELOCITÀ ATTACCO CAMERIERA
 ================================================== */
 
-/*
-   La cameriera lancia il 33% più frequentemente
-   rispetto al cuoco.
-
-   NON cambia la velocità del drink.
-*/
-
 function getWaitressAttackInterval() {
 
     return Math.round(
@@ -2767,15 +2738,7 @@ function playWaitressAttack() {
 
     }
 
-    /*
-       FRAME 1
-    */
-
     setWaitressFrame(0);
-
-    /*
-       FRAME 2
-    */
 
     setTimeout(
         function() {
@@ -2790,24 +2753,12 @@ function playWaitressAttack() {
         120
     );
 
-    /*
-       FRAME 3
-       MANO ALZATA
-       IL DRINK PARTE ESATTAMENTE QUI
-    */
-
     setTimeout(
         function() {
 
             if (!powerUpPaused) {
 
                 setWaitressFrame(2);
-
-                /*
-                   Il drink viene creato nello
-                   stesso momento in cui viene
-                   mostrato il FRAME 3.
-                */
 
                 throwDrink(
                     target
@@ -2818,10 +2769,6 @@ function playWaitressAttack() {
         },
         240
     );
-
-    /*
-       FRAME 4
-    */
 
     setTimeout(
         function() {
@@ -2835,10 +2782,6 @@ function playWaitressAttack() {
         },
         360
     );
-
-    /*
-       RITORNO ALLA POSA FERMA
-    */
 
     setTimeout(
         function() {
@@ -2951,14 +2894,6 @@ function throwDrink(target) {
     const waitressRect =
         waitress.getBoundingClientRect();
 
-    /*
-       Il drink viene lanciato durante il FRAME 3,
-       quello con la mano alzata.
-
-       Il punto di partenza è regolato attraverso
-       WAITRESS_HAND_X e WAITRESS_HAND_Y.
-    */
-
     const startX =
         waitressRect.left +
         waitressRect.width *
@@ -3011,13 +2946,6 @@ function throwDrink(target) {
             gameRect.top -
             35
         ) + "px";
-
-    /*
-       VELOCITÀ DRINK INDIPENDENTE
-
-       Il power-up Speed modifica la frequenza
-       di attacco, ma NON la velocità del drink.
-    */
 
     const speed = 350;
 
@@ -3237,10 +3165,6 @@ function hitCustomerWithDrink(
             customer.dataset.hp ||
             "30"
         );
-
-    /*
-       Cameriera = 3 danni
-    */
 
     const damage = 3;
 
