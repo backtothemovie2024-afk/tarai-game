@@ -562,10 +562,10 @@ body {
 
     justify-content: center;
 
-    background: rgba(18, 8, 3, 0.82);
+    background:
+        rgba(18, 8, 3, 0.82);
 
     z-index: 500;
-
 }
 
 
@@ -595,12 +595,11 @@ body {
     background-size: 100% 100%;
 
     overflow: hidden;
-
 }
 
 
 /* ==================================================
-   CONTENITORE
+   CONTENITORE POWER UP
 ================================================== */
 
 #powerup-options {
@@ -612,12 +611,11 @@ body {
     width: 100%;
 
     height: 100%;
-
 }
 
 
 /* ==================================================
-   CARD
+   CARD POWER UP
 ================================================== */
 
 .powerup-card {
@@ -636,9 +634,9 @@ body {
 
     background: transparent;
 
-    border: 0;
+    border: none;
 
-    outline: 0;
+    outline: none;
 
     cursor: pointer;
 
@@ -646,20 +644,25 @@ body {
 
     color: white;
 
+    transition:
+        transform 0.12s ease,
+        filter 0.12s ease;
 }
 
 
 /* ==================================================
-   POSIZIONE 3 RIQUADRI
+   POSIZIONE DEI 3 RIQUADRI
 ================================================== */
 
 .powerup-card:nth-child(1) {
     left: 8%;
 }
 
+
 .powerup-card:nth-child(2) {
     left: 37.5%;
 }
+
 
 .powerup-card:nth-child(3) {
     left: 67%;
@@ -667,7 +670,21 @@ body {
 
 
 /* ==================================================
-   IMMAGINE
+   PRESSIONE CARD
+================================================== */
+
+.powerup-card:active {
+
+    transform:
+        translateY(3px)
+        scale(0.98);
+
+    filter: brightness(1.15);
+}
+
+
+/* ==================================================
+   IMMAGINE POWER UP
 ================================================== */
 
 .powerup-image-box {
@@ -688,6 +705,7 @@ body {
 
     justify-content: center;
 
+    overflow: visible;
 }
 
 
@@ -703,11 +721,14 @@ body {
 
     object-position: center;
 
+    margin: 0;
+
+    padding: 0;
 }
 
 
 /* ==================================================
-   NOME
+   NOME POWER UP
 ================================================== */
 
 .powerup-name {
@@ -830,22 +851,6 @@ body {
 
     text-shadow:
         2px 2px 3px #000;
-
-}
-
-
-/* ==================================================
-   PRESSIONE
-================================================== */
-
-.powerup-card:active {
-
-    transform:
-        translateY(3px)
-        scale(0.98);
-
-    filter: brightness(1.15);
-
 }
 
 
@@ -856,7 +861,6 @@ body {
 #game.powerup-paused * {
 
     animation-play-state: paused !important;
-
 }
 
 
@@ -949,7 +953,53 @@ body {
 
     }
 
+
+    .customer,
+    #cook {
+
+        width: 65px;
+
+        height: 88px;
+
+    }
+
+
+    .pasta {
+
+        width: 60px;
+
+        height: 60px;
+
+    }
+
+
+    #exp-bar {
+
+        height: 27px;
+
+        left: 2.5%;
+
+        width: 95%;
+
+    }
+
+
+    #exp-level {
+
+        font-size: 13px;
+
+    }
+
 }
+
+</style>
+
+</head>
+
+
+<body>
+
+<div id="phone">
 
 
 <!-- ==================================================
@@ -3377,4 +3427,4 @@ function satisfyCustomer2() {
 </script>
 
 </body>
-</html>
+    </html>
