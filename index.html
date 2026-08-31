@@ -238,30 +238,51 @@ body {
 
     margin-left: auto;
 
-    overflow: visible;
+    /*
+       La barra viene considerata come
+       una singola immagine.
+    */
+
+    overflow: hidden;
+
 }
 
 
 /*
-   RIEMPIMENTO INTERNO
+   RIEMPIMENTO EXP
 
-   Il colore viene disegnato SOLO
-   dentro la parte interna della barra.
+   IMPORTANTE:
 
-   Non colora la cornice esterna.
+   Il riempimento non occupa più
+   tutto il rettangolo dell'immagine.
+
+   Viene posizionato esattamente
+   nella barra interna dell'immagine.
 */
 
 #exp-fill {
 
     position: absolute;
 
-    left: 18%;
+    /*
+       Inizio della vera barra interna
+       dell'immagine.
+    */
 
-    top: 40%;
+    left: 17.7%;
+
+    top: 39%;
+
+
+    /*
+       La larghezza disponibile è
+       quella della vera barra interna.
+    */
 
     width: 0%;
 
-    height: 29%;
+    height: 31%;
+
 
     background:
         linear-gradient(
@@ -270,20 +291,40 @@ body {
             #39f3ff
         );
 
-    border-radius: 5px;
 
-    z-index: 4;
+    /*
+       Arrotondamento uguale
+       alla barra interna.
+    */
+
+    border-radius: 7px;
+
+
+    /*
+       Il riempimento sta sotto
+       alla cornice dell'immagine.
+    */
+
+    z-index: 1;
+
+
+    /*
+       Evita qualsiasi fuoriuscita.
+    */
+
+    max-width: 64.6%;
+
+    overflow: hidden;
+
 
     transition:
         width 0.35s ease-out;
-
-    pointer-events: none;
 
 }
 
 
 /*
-   Effetto luminoso sul riempimento.
+   Piccola luminosità sul colore EXP.
 */
 
 #exp-fill::after {
@@ -292,18 +333,18 @@ body {
 
     position: absolute;
 
-    top: 10%;
-
     left: 0;
+
+    top: 0;
 
     width: 100%;
 
-    height: 28%;
+    height: 35%;
 
     background:
-        rgba(255,255,255,0.4);
+        rgba(255,255,255,0.30);
 
-    border-radius: 5px;
+    border-radius: 7px;
 
 }
 
@@ -311,8 +352,9 @@ body {
 /*
    IMMAGINE DELLA BARRA
 
-   Rimane sopra il riempimento
-   per mantenere la cornice originale.
+   Rimane SOPRA al riempimento,
+   quindi la cornice e la grafica
+   originale non vengono mai colorate.
 */
 
 #exp-bar-image {
@@ -335,39 +377,6 @@ body {
 
 
 /*
-   PIAZZETTA SCURA SULLA SCRITTA
-   LV.1 presente nell'immagine originale.
-
-   Serve per nascondere solamente
-   il vecchio LV.1 incorporato
-   nell'immagine.
-*/
-
-#exp-level-cover {
-
-    position: absolute;
-
-    left: 37%;
-
-    top: 27%;
-
-    width: 26%;
-
-    height: 23%;
-
-    background:
-        #5b4634;
-
-    border-radius: 3px;
-
-    z-index: 5;
-
-    pointer-events: none;
-
-}
-
-
-/*
    SCRITTA LIVELLO
 */
 
@@ -375,13 +384,7 @@ body {
 
     position: absolute;
 
-    left: 37%;
-
-    top: 24%;
-
-    width: 26%;
-
-    height: 30%;
+    inset: 0;
 
     display: flex;
 
@@ -389,11 +392,11 @@ body {
 
     justify-content: center;
 
-    z-index: 6;
+    z-index: 5;
 
-    color: #f4dfb0;
+    color: white;
 
-    font-size: 12px;
+    font-size: 15px;
 
     font-weight: 900;
 
@@ -404,6 +407,12 @@ body {
         -1px 1px 2px #000;
 
     pointer-events: none;
+
+}
+
+    
+
+    
 
 }
 
