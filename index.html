@@ -2545,9 +2545,8 @@ function satisfyCustomer(
         rect.top -
         gameRect.top;
 
-    const currentLeft =
-        rect.left -
-        gameRect.left;
+
+
 
     customer.style.animation =
         "none";
@@ -2563,8 +2562,7 @@ function satisfyCustomer(
     customer.style.top =
         currentTop + "px";
 
-    customer.style.left =
-        currentLeft + "px";
+    
 
     customer.dataset.satisfied =
         "true";
