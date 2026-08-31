@@ -169,11 +169,6 @@ body {
 
     pointer-events: none;
 
-    /*
-       La cucina deve sempre essere
-       disegnata sopra i clienti.
-    */
-
     z-index: 50;
 }
 
@@ -226,8 +221,9 @@ body {
     z-index: 80;
 }
 
+
 /* ==================================================
-   BARRA EXP SOTTO IL CUOCO
+   NUOVA BARRA EXP
 ================================================== */
 
 #exp-bar {
@@ -235,60 +231,66 @@ body {
     position: absolute;
 
     left: 2.5%;
+
     bottom: 1.5%;
 
     width: 95%;
-    height: 24px;
 
-    background: #3a2115;
+    height: 30px;
 
-    border: 3px solid #6b3b20;
+    background: #321b10;
 
-    border-radius: 12px;
+    border: 3px solid #8a512d;
+
+    border-radius: 15px;
 
     box-shadow:
-        0 4px 0 #1c100b,
-        0 5px 10px rgba(0,0,0,0.45),
-        inset 0 2px 3px rgba(255,255,255,0.15);
+        0 4px 0 #160b07,
+        0 6px 12px rgba(0,0,0,0.6),
+        inset 0 2px 3px rgba(255,255,255,0.18);
 
     overflow: hidden;
 
-    z-index: 75;
+    z-index: 200;
 }
 
 
-/* Riempimento EXP */
+/* ==================================================
+   RIEMPIMENTO EXP
+================================================== */
 
 #exp-fill {
 
     position: absolute;
 
     left: 0;
+
     top: 0;
 
     width: 0%;
+
     height: 100%;
 
     background:
         linear-gradient(
             180deg,
-            #ffd15c 0%,
-            #f59b25 45%,
-            #d96b16 100%
+            #ffe477,
+            #f5a623 50%,
+            #d96b16
         );
 
-    border-radius: 8px;
+    border-radius: 10px;
 
-    box-shadow:
-        inset 0 2px 2px rgba(255,255,255,0.35),
-        0 0 6px rgba(255,170,40,0.5);
+    z-index: 1;
 
-    transition: width 0.3s ease-out;
-
+    transition:
+        width 0.35s ease-out;
 }
 
 
-/* Testo livello */
+/* ==================================================
+   TESTO LIVELLO
+================================================== */
 
 #exp-level {
 
@@ -299,21 +301,24 @@ body {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     color: white;
 
     font-size: 14px;
+
     font-weight: 900;
 
     text-shadow:
-        1px 1px 2px #000,
-        -1px -1px 2px #000;
+        2px 2px 3px #000;
 
     z-index: 2;
 
     pointer-events: none;
 }
+
+
 /* ==================================================
    CLIENTI
 ================================================== */
@@ -327,11 +332,6 @@ body {
     height: 135px;
 
     top: -130px;
-
-    /*
-       I clienti rimangono sempre
-       sotto la cucina.
-    */
 
     z-index: 10;
 }
@@ -630,6 +630,24 @@ body {
 
     }
 
+
+    #exp-bar {
+
+        height: 27px;
+
+        left: 2.5%;
+
+        width: 95%;
+
+    }
+
+
+    #exp-level {
+
+        font-size: 13px;
+
+    }
+
 }
 
 </style>
@@ -705,6 +723,10 @@ body {
         alt=""
     >
 
+
+    <!-- ==================================================
+         HUD
+    ================================================== -->
 
     <div id="hud">
 
@@ -823,6 +845,22 @@ body {
     </div>
 
 
+
+    <!-- ==================================================
+         BARRA ESPERIENZA
+    ================================================== -->
+
+    <div id="exp-bar">
+
+        <div id="exp-fill"></div>
+
+        <div id="exp-level">
+            LV 1
+        </div>
+
+    </div>
+
+
 </div>
 
 </div>
@@ -859,9 +897,6 @@ const CUSTOMER_WALK_TIME = 70;
 
 /*
    CINQUE CORSIE
-
-   Tutte comprese nel corridoio
-   centrale tra le due file di tavoli.
 */
 
 const LANES = [
@@ -873,6 +908,170 @@ const LANES = [
     72
 
 ];
+
+
+
+/* ==================================================
+   SISTEMA EXP
+================================================== */
+
+let currentLevel = 1;
+
+let currentEXP = 0;
+
+
+/*
+   EXP ottenuta per cliente soddisfatto.
+*/
+
+const EXP_PER_CUSTOMER = 5;
+
+
+/*
+   EXP necessaria per ogni livello.
+*/
+
+const EXP_REQUIREMENTS = [
+
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    55,
+    60,
+    65
+
+];
+
+
+const MAX_LEVEL = 12;
+
+
+
+/* ==================================================
+   AGGIORNA BARRA EXP
+================================================== */
+
+function updateEXPBar() {
+
+    const fill =
+        document.getElementById(
+            "exp-fill"
+        );
+
+    const levelText =
+        document.getElementById(
+            "exp-level"
+        );
+
+
+    if (
+        currentLevel >= MAX_LEVEL
+    ) {
+
+        currentLevel =
+            MAX_LEVEL;
+
+        currentEXP = 0;
+
+        fill.style.width =
+            "100%";
+
+        levelText.textContent =
+            "LV MAX";
+
+        return;
+
+    }
+
+
+    const requiredEXP =
+        EXP_REQUIREMENTS[
+            currentLevel - 1
+        ];
+
+
+    const percentage =
+        Math.min(
+            100,
+            (
+                currentEXP /
+                requiredEXP
+            ) * 100
+        );
+
+
+    fill.style.width =
+        percentage + "%";
+
+
+    levelText.textContent =
+        "LV " +
+        currentLevel;
+
+}
+
+
+
+/* ==================================================
+   AGGIUNGI EXP
+================================================== */
+
+function addEXP(
+    amount
+) {
+
+    if (
+        currentLevel >= MAX_LEVEL
+    ) {
+
+        return;
+
+    }
+
+
+    currentEXP +=
+        amount;
+
+
+    const requiredEXP =
+        EXP_REQUIREMENTS[
+            currentLevel - 1
+        ];
+
+
+    if (
+        currentEXP >=
+        requiredEXP
+    ) {
+
+        currentEXP -=
+            requiredEXP;
+
+        currentLevel++;
+
+
+        if (
+            currentLevel >= MAX_LEVEL
+        ) {
+
+            currentLevel =
+                MAX_LEVEL;
+
+            currentEXP = 0;
+
+        }
+
+    }
+
+
+    updateEXPBar();
+
+}
 
 
 
@@ -906,7 +1105,6 @@ document
     "click",
     function() {
 
-
         document
         .getElementById("menu")
         .style.display =
@@ -922,6 +1120,17 @@ document
         kitchenEnergy = 100;
 
         customers = [];
+
+
+        /*
+           RESET EXP
+        */
+
+        currentLevel = 1;
+
+        currentEXP = 0;
+
+        updateEXPBar();
 
 
         document
@@ -960,7 +1169,6 @@ document
 
         createWave1();
 
-
         startCustomerAnimation();
 
         startCookAnimation();
@@ -982,7 +1190,6 @@ document
 
 function createWave1() {
 
-
     const spawnTimes = [
 
         FIRST_SPAWN_SECOND
@@ -994,7 +1201,6 @@ function createWave1() {
         spawnTimes.length <
         TOTAL_CUSTOMERS - 1
     ) {
-
 
         const randomSecond =
             Math.floor(
@@ -1040,7 +1246,6 @@ function createWave1() {
     spawnTimes.forEach(
         function(second, index) {
 
-
             setTimeout(
                 function() {
 
@@ -1066,7 +1271,6 @@ function createWave1() {
 function spawnCustomer(
     index
 ) {
-
 
     const game =
         document
@@ -1153,11 +1357,6 @@ function spawnCustomer(
         type;
 
 
-    /*
-       6 colpi necessari
-       per soddisfare il cliente.
-    */
-
     customer.dataset.hp =
         "30";
 
@@ -1230,7 +1429,6 @@ function spawnCustomer(
     requestAnimationFrame(
         function() {
 
-
             customer.style.animation =
                 "walkDown " +
                 CUSTOMER_WALK_TIME +
@@ -1246,20 +1444,13 @@ function spawnCustomer(
     );
 
 
-    /*
-       Quando arriva in fondo,
-       la cucina lo coprirà visivamente.
-    */
-
     setTimeout(
         function() {
-
 
             if (
                 customer.dataset.satisfied !==
                 "true"
             ) {
-
 
                 customer.dataset.atKitchen =
                     "true";
@@ -1283,11 +1474,9 @@ function spawnCustomer(
 
 function updateKitchenEnergy() {
 
-
     if (
         kitchenEnergy > 50
     ) {
-
 
         document
         .getElementById("kitchen")
@@ -1305,7 +1494,6 @@ function updateKitchenEnergy() {
         .getElementById("kitchenDestroyed")
         .style.display =
             "none";
-
 
     }
 
@@ -1313,7 +1501,6 @@ function updateKitchenEnergy() {
         kitchenEnergy > 20
     ) {
 
-
         document
         .getElementById("kitchen")
         .style.display =
@@ -1331,11 +1518,9 @@ function updateKitchenEnergy() {
         .style.display =
             "none";
 
-
     }
 
     else {
-
 
         document
         .getElementById("kitchen")
@@ -1366,7 +1551,6 @@ function updateKitchenEnergy() {
 
 function startKitchenEnergySystem() {
 
-
     if (
         kitchenDamageTimer !== null
     ) {
@@ -1382,13 +1566,11 @@ function startKitchenEnergySystem() {
     setInterval(
         function() {
 
-
             let damage = 0;
 
 
             customers.forEach(
                 function(customer) {
-
 
                     if (
                         customer &&
@@ -1410,7 +1592,6 @@ function startKitchenEnergySystem() {
                 damage > 0
             ) {
 
-
                 kitchenEnergy -=
                     damage;
 
@@ -1428,7 +1609,6 @@ function startKitchenEnergySystem() {
 
             }
 
-
         },
         5000
     );
@@ -1444,7 +1624,6 @@ function startKitchenEnergySystem() {
 function customerIsVisible(
     customer
 ) {
-
 
     if (
         !customer ||
@@ -1492,23 +1671,7 @@ function customerIsVisible(
    Z-INDEX CLIENTI
 ================================================== */
 
-/*
-   Il cliente davanti deve stare
-   SOPRA il cliente dietro.
-
-   Quindi ordiniamo i clienti
-   dal più in alto al più in basso.
-
-   Quello più in basso nello schermo
-   è più vicino alla cucina e riceve
-   lo z-index maggiore.
-
-   La cucina rimane comunque
-   a z-index 50.
-*/
-
 function startZIndexSystem() {
-
 
     if (
         zIndexTimer !== null
@@ -1536,7 +1699,6 @@ function startZIndexSystem() {
 
 function updateZIndexes() {
 
-
     const activeCustomers =
         customers.filter(
             function(customer) {
@@ -1552,11 +1714,6 @@ function updateZIndexes() {
             }
         );
 
-
-    /*
-       Ordiniamo dal cliente più indietro
-       al cliente più avanti.
-    */
 
     activeCustomers.sort(
         function(a, b) {
@@ -1579,11 +1736,6 @@ function updateZIndexes() {
     );
 
 
-    /*
-       Il cliente davanti riceve
-       lo z-index maggiore.
-    */
-
     activeCustomers.forEach(
         function(customer, index) {
 
@@ -1603,7 +1755,6 @@ function updateZIndexes() {
 
 function startFirstAttackDetection() {
 
-
     if (
         firstAttackTimer !== null
     ) {
@@ -1619,7 +1770,6 @@ function startFirstAttackDetection() {
     setInterval(
         function() {
 
-
             const target =
                 getNearestVisibleCustomer();
 
@@ -1627,7 +1777,6 @@ function startFirstAttackDetection() {
             if (
                 target
             ) {
-
 
                 playCookAttack();
 
@@ -1637,7 +1786,6 @@ function startFirstAttackDetection() {
                 );
 
             }
-
 
         },
         100
@@ -1652,7 +1800,6 @@ function startFirstAttackDetection() {
 ================================================== */
 
 function startCustomerAnimation() {
-
 
     if (
         customerTimer !== null
@@ -1669,10 +1816,8 @@ function startCustomerAnimation() {
     setInterval(
         function() {
 
-
             customers.forEach(
                 function(customer) {
-
 
                     if (
                         !customer ||
@@ -1748,7 +1893,6 @@ function startCustomerAnimation() {
                 }
             );
 
-
         },
         300
     );
@@ -1764,7 +1908,6 @@ function startCustomerAnimation() {
 function setCookFrame(
     frameNumber
 ) {
-
 
     const frames =
         document
@@ -1805,7 +1948,6 @@ function setCookFrame(
 ================================================== */
 
 function playCookAttack() {
-
 
     const target =
         getNearestVisibleCustomer();
@@ -1848,12 +1990,10 @@ function playCookAttack() {
     setTimeout(
         function() {
 
-
             if (
                 target.dataset.satisfied !==
                 "true"
             ) {
-
 
                 setCookFrame(3);
 
@@ -1863,7 +2003,6 @@ function playCookAttack() {
                 );
 
             }
-
 
         },
         360
@@ -1899,7 +2038,6 @@ function playCookAttack() {
 
 function startCookAnimation() {
 
-
     if (
         cookTimer !== null
     ) {
@@ -1917,7 +2055,6 @@ function startCookAnimation() {
     cookTimer =
     setInterval(
         function() {
-
 
             const target =
                 getNearestVisibleCustomer();
@@ -1937,7 +2074,6 @@ function startCookAnimation() {
 
             }
 
-
         },
         3000
     );
@@ -1952,11 +2088,9 @@ function startCookAnimation() {
 
 function getNearestVisibleCustomer() {
 
-
     const activeCustomers =
         customers.filter(
             function(customer) {
-
 
                 if (
                     !customer
@@ -2018,7 +2152,6 @@ function getNearestVisibleCustomer() {
     activeCustomers.forEach(
         function(customer) {
 
-
             const top =
                 customer
                 .getBoundingClientRect()
@@ -2030,10 +2163,8 @@ function getNearestVisibleCustomer() {
                 nearestTop
             ) {
 
-
                 nearest =
                     customer;
-
 
                 nearestTop =
                     top;
@@ -2057,7 +2188,6 @@ function getNearestVisibleCustomer() {
 function throwPasta(
     target
 ) {
-
 
     if (!target) {
 
@@ -2174,13 +2304,11 @@ function throwPasta(
         currentTime
     ) {
 
-
         if (
             !target ||
             target.dataset.satisfied ===
             "true"
         ) {
-
 
             if (
                 pasta.parentNode
@@ -2277,19 +2405,15 @@ function throwPasta(
             movement
         ) {
 
-
             currentX =
                 endX;
-
 
             currentY =
                 endY;
 
-
         }
 
         else {
-
 
             currentX +=
                 (
@@ -2349,7 +2473,6 @@ function throwPasta(
             3
         ) {
 
-
             hitCustomer(
                 target,
                 pasta
@@ -2394,7 +2517,6 @@ function hitCustomer(
     pasta
 ) {
 
-
     if (
         pasta &&
         pasta.parentNode
@@ -2430,10 +2552,6 @@ function hitCustomer(
         hp;
 
 
-    /*
-       30 HP / 5 danni = 6 paste.
-    */
-
     if (
         hp <= 0
     ) {
@@ -2455,7 +2573,6 @@ function hitCustomer(
 function satisfyCustomer(
     customer
 ) {
-
 
     if (
         !customer ||
@@ -2495,11 +2612,6 @@ function satisfyCustomer(
         gameRect.left;
 
 
-    /*
-       Blocca definitivamente
-       la camminata.
-    */
-
     customer.style.animation =
         "none";
 
@@ -2532,6 +2644,17 @@ function satisfyCustomer(
 
     customer.dataset.atKitchen =
         "false";
+
+
+    /*
+       ==================================================
+       AGGIUNTA EXP
+       ==================================================
+    */
+
+    addEXP(
+        EXP_PER_CUSTOMER
+    );
 
 
     const normalFrames =
@@ -2570,7 +2693,6 @@ function satisfyCustomer(
     setTimeout(
         function() {
 
-
             customer.style.display =
                 "none";
 
@@ -2587,7 +2709,6 @@ function satisfyCustomer(
 
             updateZIndexes();
 
-
         },
         1000
     );
@@ -2601,7 +2722,6 @@ function satisfyCustomer(
 ================================================== */
 
 function satisfyCustomer1() {
-
 
     const customer =
         customers.find(
@@ -2632,7 +2752,6 @@ function satisfyCustomer1() {
 
 function satisfyCustomer2() {
 
-
     const customer =
         customers.find(
             function(c) {
@@ -2662,4 +2781,4 @@ function satisfyCustomer2() {
 </script>
 
 </body>
-</html>
+    </html>
