@@ -1,592 +1,231 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tarai Rush</title>
 
 <style>
+*{box-sizing:border-box}
 
-* {
-    box-sizing: border-box;
+html,body{
+margin:0;padding:0;width:100%;height:100%;overflow:hidden;
+background:#111;font-family:Arial,sans-serif;
 }
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: #111;
-    font-family: Arial, sans-serif;
+#phone{
+position:relative;width:min(100vw,56.25vh);height:min(100vh,177.7778vw);
+aspect-ratio:9/16;margin:auto;overflow:hidden;background:#000;
 }
 
-/* ==================================================
-   TELEFONO
-================================================== */
-
-#phone {
-    position: relative;
-    width: min(100vw, 56.25vh);
-    height: min(100vh, 177.7778vw);
-    aspect-ratio: 9 / 16;
-    margin: auto;
-    overflow: hidden;
-    background: black;
+#menu{
+position:absolute;inset:0;background:#000;display:flex;
+justify-content:center;align-items:center;z-index:100;
 }
 
-/* ==================================================
-   MENU
-================================================== */
-
-#menu {
-    position: absolute;
-    inset: 0;
-    background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
+#cover{
+position:absolute;width:100%;height:100%;object-fit:cover;z-index:10;
 }
 
-#cover {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 10;
+#playButton{
+position:absolute;bottom:12%;width:60%;max-width:240px;height:70px;
+border:none;border-radius:18px;background:#ef6428;color:white;
+font-size:28px;font-weight:bold;z-index:30;
 }
 
-#playButton {
-    position: absolute;
-    bottom: 12%;
-    width: 60%;
-    max-width: 240px;
-    height: 70px;
-    border: none;
-    border-radius: 18px;
-    background: #ef6428;
-    color: white;
-    font-size: 28px;
-    font-weight: bold;
-    z-index: 30;
+#game{
+display:none;position:absolute;inset:0;overflow:hidden;background:#000;
 }
 
-/* ==================================================
-   GIOCO
-================================================== */
-
-#game {
-    display: none;
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    background: black;
+#background{
+position:absolute;inset:0;width:100%;height:100%;
+object-fit:cover;image-rendering:auto;z-index:0;
 }
 
-#background {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    image-rendering: auto;
-    z-index: 0;
+#kitchen,#kitchenDamaged,#kitchenDestroyed{
+position:absolute;left:50%;top:83%;width:115%;height:auto;
+transform:translate(-50%,-50%);pointer-events:none;z-index:50;
+}
+#kitchen{display:block}
+#kitchenDamaged,#kitchenDestroyed{display:none}
+
+#hud{
+position:absolute;top:15px;left:20px;right:20px;display:flex;
+justify-content:space-between;color:white;font-size:22px;
+font-weight:bold;z-index:80;
 }
 
-/* ==================================================
-   CUCINA
-================================================== */
-
-#kitchen,
-#kitchenDamaged,
-#kitchenDestroyed {
-    position: absolute;
-    left: 50%;
-    top: 83%;
-    width: 115%;
-    height: auto;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 50;
+#exp-bar{
+position:absolute;left:2.5%;bottom:1.5%;width:95%;height:30px;
+background:#321b10;border:3px solid #8a512d;border-radius:15px;
+box-shadow:0 4px 0 #160b07,0 6px 12px rgba(0,0,0,.6),
+inset 0 2px 3px rgba(255,255,255,.18);
+overflow:hidden;z-index:200;
 }
 
-#kitchen {
-    display: block;
+#exp-fill{
+position:absolute;left:0;top:0;width:0%;height:100%;
+background:linear-gradient(180deg,#ffe477,#f5a623 50%,#d96b16);
+border-radius:10px;z-index:1;transition:width .35s ease-out;
 }
 
-#kitchenDamaged {
-    display: none;
+#exp-level{
+position:absolute;inset:0;display:flex;align-items:center;
+justify-content:center;color:white;font-size:14px;font-weight:900;
+text-shadow:2px 2px 3px #000;z-index:2;pointer-events:none;
 }
 
-#kitchenDestroyed {
-    display: none;
+.customer{
+position:absolute;width:100px;height:135px;top:5%;z-index:10;
 }
 
-/* ==================================================
-   HUD
-================================================== */
-
-#hud {
-    position: absolute;
-    top: 15px;
-    left: 20px;
-    right: 20px;
-    display: flex;
-    justify-content: space-between;
-    color: white;
-    font-size: 22px;
-    font-weight: bold;
-    z-index: 80;
+.customer.walking{
+animation:walkDown 60s linear forwards;
 }
 
-/* ==================================================
-   BARRA EXP
-================================================== */
+.customer.satisfied{animation:none!important}
 
-#exp-bar {
-    position: absolute;
-    left: 2.5%;
-    bottom: 1.5%;
-    width: 95%;
-    height: 30px;
-    background: #321b10;
-    border: 3px solid #8a512d;
-    border-radius: 15px;
-    box-shadow:
-        0 4px 0 #160b07,
-        0 6px 12px rgba(0,0,0,0.6),
-        inset 0 2px 3px rgba(255,255,255,0.18);
-    overflow: hidden;
-    z-index: 200;
+.customer .frame{
+position:absolute;top:0;left:0;width:100%;height:100%;
+object-fit:contain;display:none;
 }
 
-#exp-fill {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 0%;
-    height: 100%;
-    background:
-        linear-gradient(
-            180deg,
-            #ffe477,
-            #f5a623 50%,
-            #d96b16
-        );
-    border-radius: 10px;
-    z-index: 1;
-    transition: width 0.35s ease-out;
+.customer .frame.active{display:block}
+
+.customer .happy-frame{
+position:absolute;top:0;left:0;width:100%;height:100%;
+object-fit:contain;display:none;z-index:2;
 }
 
-#exp-level {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 14px;
-    font-weight: 900;
-    text-shadow:
-        2px 2px 3px #000;
-    z-index: 2;
-    pointer-events: none;
+.heart{
+position:absolute;left:50%;top:-18px;transform:translateX(-50%);
+font-size:24px;line-height:1;z-index:5;display:none;
+animation:heartFloat .8s ease-in-out infinite alternate;
+}
+
+.customer.satisfied .heart{display:block}
+
+@keyframes heartFloat{
+0%{transform:translateX(-50%) translateY(0) scale(1)}
+100%{transform:translateX(-50%) translateY(-7px) scale(1.12)}
+}
+
+@keyframes walkDown{
+0%{top:8%}
+100%{top:69%}
+}
+
+#cook,#waitress{
+position:absolute;bottom:7%;width:100px;height:135px;
+transform:translateX(-50%);z-index:60;
+}
+
+#cook{left:37.5%}
+
+#cook img{
+position:absolute;top:0;left:0;width:100%;height:100%;
+object-fit:contain;display:none;
+}
+
+#cook img.active{display:block}
+
+#waitress{
+left:62.5%;display:none;
+}
+
+#waitress img{
+position:absolute;top:0;left:0;width:100%;height:100%;
+object-fit:contain;display:none;
+transform:scale(1.18);transform-origin:center bottom;
+}
+
+#waitress img.active{display:block}
+
+.pasta,.drink{
+position:absolute;width:84px;height:84px;object-fit:contain;
+z-index:70;pointer-events:none;
+}
+
+.drink{width:140px;height:140px}
+
+.hit-marker{
+position:absolute;width:22px;height:22px;border-radius:50%;
+background:red;border:3px solid white;
+box-shadow:0 0 8px red,0 0 15px rgba(255,0,0,.8);
+transform:translate(-50%,-50%);z-index:90;
+pointer-events:none;opacity:0;
 }
 
 /* ==================================================
-   CLIENTI
+   NUOVO SISTEMA PANNELLI POWER UP
 ================================================== */
 
-.customer {
-    position: absolute;
-    width: 100px;
-    height: 135px;
-
-    /* MODIFICA:
-       il cliente nasce dentro la parte nera
-       visibile del background */
-    top: 5%;
-
-    z-index: 10;
+#powerup-overlay{
+position:absolute;inset:0;background:rgba(18,8,3,.82);
+display:none;align-items:center;justify-content:center;z-index:500;
 }
 
-.customer.walking {
-    animation:
-        walkDown
-        60s
-        linear
-        forwards;
+#powerup-panel{
+width:96%;height:78%;position:relative;
+background:transparent;border:none;border-radius:0;
+box-shadow:none;padding:0;
 }
 
-.customer.satisfied {
-    animation: none !important;
+#powerup-options{
+position:absolute;inset:0;display:flex;
+align-items:center;justify-content:center;
+gap:1.5%;
 }
 
-.customer .frame {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: none;
+.powerup-slot{
+position:relative;width:32%;height:100%;
+display:flex;align-items:center;justify-content:center;
+cursor:pointer;-webkit-tap-highlight-color:transparent;
 }
 
-.customer .frame.active {
-    display: block;
+.powerup-slot img{
+width:100%;height:100%;object-fit:contain;
+display:block;pointer-events:none;
 }
 
-.customer .happy-frame {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: none;
-    z-index: 2;
+#game.powerup-paused *{
+animation-play-state:paused!important;
 }
 
-.heart {
-    position: absolute;
-    left: 50%;
-    top: -18px;
-    transform: translateX(-50%);
-    font-size: 24px;
-    line-height: 1;
-    z-index: 5;
-    display: none;
-    animation:
-        heartFloat
-        0.8s
-        ease-in-out
-        infinite alternate;
+@media(max-width:500px){
+
+.customer,#cook,#waitress{
+width:65px;height:88px;
 }
 
-.customer.satisfied .heart {
-    display: block;
+.pasta{
+width:60px;height:60px;
 }
 
-@keyframes heartFloat {
-
-    0% {
-        transform:
-            translateX(-50%)
-            translateY(0)
-            scale(1);
-    }
-
-    100% {
-        transform:
-            translateX(-50%)
-            translateY(-7px)
-            scale(1.12);
-    }
-
+.drink{
+width:60px;height:60px;
 }
 
-@keyframes walkDown {
-
-    0% {
-        /* MODIFICA:
-           stesso punto di partenza dentro lo schermo */
-        top: 8%;
-    }
-
-    100% {
-        top: 69%;
-    }
-
+#exp-bar{
+height:27px;left:2.5%;width:95%;
 }
 
-/* ==================================================
-   ZONE PERSONAGGI
-================================================== */
+#exp-level{font-size:13px}
 
-#cook,
-#waitress {
-    position: absolute;
-    bottom: 7%;
-    width: 100px;
-    height: 135px;
-    transform: translateX(-50%);
-    z-index: 60;
+#powerup-panel{
+width:98%;height:78%;
 }
 
-/* ==================================================
-   CUOCO
-================================================== */
-
-#cook {
-    left: 37.5%;
+#powerup-options{
+gap:0;
 }
 
-#cook img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: none;
+.powerup-slot{
+width:33.33%;
 }
 
-#cook img.active {
-    display: block;
 }
-
-/* ==================================================
-   CAMERIERA
-================================================== */
-
-#waitress {
-    left: 62.5%;
-    display: none;
-}
-
-#waitress img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: none;
-
-    transform: scale(1.18);
-    transform-origin: center bottom;
-}
-
-#waitress img.active {
-    display: block;
-}
-
-/* ==================================================
-   PASTA / PROIETTILE CAMERIERA
-================================================== */
-
-.pasta,
-.drink {
-    position: absolute;
-    width: 84px;
-    height: 84px;
-    object-fit: contain;
-    z-index: 70;
-    pointer-events: none;
-}
-
-.drink {
-    width: 140px;
-    height: 140px;
-}
-
-/* ==================================================
-   HITBOX INVISIBILE
-================================================== */
-
-.hit-marker {
-    position: absolute;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: red;
-    border: 3px solid white;
-    box-shadow:
-        0 0 8px red,
-        0 0 15px rgba(255,0,0,0.8);
-    transform: translate(-50%, -50%);
-    z-index: 90;
-    pointer-events: none;
-    opacity: 0;
-}
-
-/* ==================================================
-   POWER UP OVERLAY
-================================================== */
-
-#powerup-overlay {
-    position: absolute;
-    inset: 0;
-    background:
-        rgba(18, 8, 3, 0.82);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 500;
-}
-
-/* ==================================================
-   PANNELLO
-================================================== */
-
-#powerup-panel {
-    width: 92%;
-    max-width: 430px;
-    height: 560px;
-    background-image:
-        url("https://i.ibb.co/60d5SFdx/1788123346934-removebg-preview.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% 100%;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    padding: 0;
-    position: relative;
-}
-
-/* ==================================================
-   POWER UP OPTIONS
-================================================== */
-
-#powerup-options {
-    position: absolute;
-    inset: 0;
-    display: block;
-}
-
-.powerup-slot {
-    position: absolute;
-    width: 27%;
-    height: 22%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.powerup-slot:nth-child(1) {
-    left: 25%;
-    top: 50%;
-}
-
-.powerup-slot:nth-child(2) {
-    left: 50%;
-    top: 50%;
-}
-
-.powerup-slot:nth-child(3) {
-    left: 75%;
-    top: 50%;
-}
-
-/* ==================================================
-   IMMAGINE POWER UP
-================================================== */
-
-.powerup-slot img {
-    width: 82%;
-    height: 82%;
-    object-fit: contain;
-    display: block;
-    pointer-events: none;
-}
-
-.powerup-slot[data-type="pasta"] img {
-    width: 68%;
-    height: 68%;
-}
-
-.powerup-slot[data-type="speed"] img {
-    width: 68%;
-    height: 68%;
-}
-
-.powerup-slot[data-type="sauce"] img {
-    width: 78%;
-    height: 78%;
-}
-
-.powerup-slot[data-type="waitress"] img {
-    width: 68%;
-    height: 68%;
-    object-fit: contain;
-}
-
-/* ==================================================
-   LIVELLO POWER UP
-================================================== */
-
-.powerup-level {
-    position: absolute;
-    right: 4%;
-    bottom: 4%;
-    min-width: 24px;
-    height: 24px;
-    padding: 0 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: #ef6428;
-    border: 2px solid white;
-    color: white;
-    font-size: 12px;
-    font-weight: 900;
-    text-shadow:
-        1px 1px 2px #000;
-    box-shadow:
-        0 2px 5px rgba(0,0,0,0.5);
-}
-
-/* ==================================================
-   PAUSA
-================================================== */
-
-#game.powerup-paused * {
-    animation-play-state: paused !important;
-}
-
-/* ==================================================
-   RESPONSIVE
-================================================== */
-
-@media (max-width: 500px) {
-
-    .customer,
-    #cook,
-    #waitress {
-        width: 65px;
-        height: 88px;
-    }
-
-    .pasta {
-        width: 60px;
-        height: 60px;
-    }
-
-    .drink {
-        width: 60px;
-        height: 60px;
-    }
-
-    #exp-bar {
-        height: 27px;
-        left: 2.5%;
-        width: 95%;
-    }
-
-    #exp-level {
-        font-size: 13px;
-    }
-
-    #powerup-panel {
-        width: 94%;
-        height: 560px;
-    }
-
-}
-
 </style>
-
 </head>
 
 <body>
@@ -595,189 +234,135 @@ body {
 
 <div id="menu">
 
-    <img
-        id="cover"
-        src="https://i.ibb.co/qMC7T0bk/1787735382053.png"
-        alt=""
-    >
+<img id="cover"
+src="https://i.ibb.co/qMC7T0bk/1787735382053.png"
+alt="">
 
-    <button id="playButton">
-        PLAY
-    </button>
+<button id="playButton">PLAY</button>
 
 </div>
 
 <div id="game">
 
-    <img
-        id="background"
-        src="https://cdn.imgchest.com/files/25a5041a8483.jpg"
-        alt=""
-    >
+<img id="background"
+src="https://cdn.imgchest.com/files/25a5041a8483.jpg"
+alt="">
 
-    <img
-        id="kitchen"
-        src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png"
-        alt=""
-    >
+<img id="kitchen"
+src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png"
+alt="">
 
-    <img
-        id="kitchenDamaged"
-        src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"
-        alt=""
-    >
+<img id="kitchenDamaged"
+src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"
+alt="">
 
-    <img
-        id="kitchenDestroyed"
-        src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"
-        alt=""
-    >
+<img id="kitchenDestroyed"
+src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"
+alt="">
 
-    <div id="hud">
+<div id="hud">
+<span>❤️ 3</span>
+<span>⭐ 0</span>
+</div>
 
-        <span>❤️ 3</span>
+<div id="customer1Template"
+class="customer customer-template"
+style="display:none;">
 
-        <span>⭐ 0</span>
+<img class="frame active"
+src="https://i.ibb.co/5XMzbb9t/IMG-20260830-WA0000-removebg-preview.png"
+alt="">
 
-    </div>
+<img class="frame"
+src="https://i.ibb.co/zVPnZjZP/IMG-20260830-WA0001-removebg-preview.png"
+alt="">
 
-    <div
-        id="customer1Template"
-        class="customer customer-template"
-        style="display:none;"
-    >
+<img class="happy-frame"
+src="https://i.ibb.co/mV43yWMM/grok-1788037208959-removebg-preview.png"
+alt="">
 
-        <img
-            class="frame active"
-            src="https://i.ibb.co/5XMzbb9t/IMG-20260830-WA0000-removebg-preview.png"
-            alt=""
-        >
-
-        <img
-            class="frame"
-            src="https://i.ibb.co/zVPnZjZP/IMG-20260830-WA0001-removebg-preview.png"
-            alt=""
-        >
-
-        <img
-            class="happy-frame"
-            src="https://i.ibb.co/mV43yWMM/grok-1788037208959-removebg-preview.png"
-            alt=""
-        >
-
-        <div class="heart">
-            ❤️
-        </div>
-
-    </div>
-
-    <div
-        id="customer2Template"
-        class="customer customer-template"
-        style="display:none;"
-    >
-
-        <img
-            class="frame active"
-            src="https://i.ibb.co/jP6QSPFd/1000040572-removebg-preview.png"
-            alt=""
-        >
-
-        <img
-            class="frame"
-            src="https://i.ibb.co/vxJCRK81/1000040573-removebg-preview.png"
-            alt=""
-        >
-
-        <img
-            class="happy-frame"
-            src="https://i.ibb.co/m5xmJrBq/Screenshot-20260830-060945-Grok-removebg-preview.png"
-            alt=""
-        >
-
-        <div class="heart">
-            ❤️
-        </div>
-
-    </div>
-
-    <div id="cook">
-
-        <img
-            class="active"
-            src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-            alt=""
-        >
-
-        <img
-            src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
-            alt=""
-        >
-
-        <img
-            src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
-            alt=""
-        >
-
-        <img
-            src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
-            alt=""
-        >
-
-        <img
-            src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
-            alt=""
-        >
-
-    </div>
-
-    <div id="waitress">
-
-        <img
-            class="active"
-            src="https://i.ibb.co/7x5t6Krk/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
-            alt=""
-        >
-
-        <img
-            src="https://i.ibb.co/2L0bgr3/Screenshot-20260830-195703-Grok-3-removebg-preview.png"
-            alt=""
-        >
-
-        <img
-            src="https://i.ibb.co/8Ln3LmCm/1788087630930-removebg-preview.png"
-            alt=""
-        >
-
-        <img
-            src="https://i.ibb.co/7x5t6Krk/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
-            alt=""
-        >
-
-    </div>
-
-    <div id="exp-bar">
-
-        <div id="exp-fill"></div>
-
-        <div id="exp-level">
-            LV 1
-        </div>
-
-    </div>
-
-    <div id="powerup-overlay">
-
-        <div id="powerup-panel">
-
-            <div id="powerup-options"></div>
-
-        </div>
-
-    </div>
+<div class="heart">❤️</div>
 
 </div>
 
+<div id="customer2Template"
+class="customer customer-template"
+style="display:none;">
+
+<img class="frame active"
+src="https://i.ibb.co/jP6QSPFd/1000040572-removebg-preview.png"
+alt="">
+
+<img class="frame"
+src="https://i.ibb.co/vxJCRK81/1000040573-removebg-preview.png"
+alt="">
+
+<img class="happy-frame"
+src="https://i.ibb.co/m5xmJrBq/Screenshot-20260830-060945-Grok-removebg-preview.png"
+alt="">
+
+<div class="heart">❤️</div>
+
+</div>
+
+<div id="cook">
+
+<img class="active"
+src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
+alt="">
+
+<img
+src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
+alt="">
+
+<img
+src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
+alt="">
+
+<img
+src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
+alt="">
+
+<img
+src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
+alt="">
+
+</div>
+
+<div id="waitress">
+
+<img class="active"
+src="https://i.ibb.co/7x5t6Krk/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
+alt="">
+
+<img
+src="https://i.ibb.co/2L0bgr3/Screenshot-20260830-195703-Grok-3-removebg-preview.png"
+alt="">
+
+<img
+src="https://i.ibb.co/8Ln3LmCm/1788087630930-removebg-preview.png"
+alt="">
+
+<img
+src="https://i.ibb.co/7x5t6Krk/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
+alt="">
+
+</div>
+
+<div id="exp-bar">
+<div id="exp-fill"></div>
+<div id="exp-level">LV 1</div>
+</div>
+
+<div id="powerup-overlay">
+
+<div id="powerup-panel">
+<div id="powerup-options"></div>
+</div>
+
+</div>
+
+</div>
 </div>
 
 <script>
@@ -786,107 +371,88 @@ body {
    REGOLAZIONE HITBOX
 ================================================== */
 
-const HIT_X = 5;
-
-const HIT_Y = 0;
-
-const HIT_POSITION_Y = 0.45;
+const HIT_X=5;
+const HIT_Y=0;
+const HIT_POSITION_Y=.45;
 
 /* ==================================================
    POSIZIONE MANO CAMERIERA
 ================================================== */
 
-const WAITRESS_HAND_X = 0.70;
-
-const WAITRESS_HAND_Y = 0.30;
+const WAITRESS_HAND_X=.70;
+const WAITRESS_HAND_Y=.30;
 
 /* ==================================================
    IMPOSTAZIONI WAVE 1
 ================================================== */
 
-const TOTAL_CUSTOMERS = 10;
+const TOTAL_CUSTOMERS=10;
+const FIRST_SPAWN_SECOND=1;
+const LAST_SPAWN_SECOND=60;
+const CUSTOMER_WALK_TIME=70;
 
-const FIRST_SPAWN_SECOND = 1;
-
-const LAST_SPAWN_SECOND = 60;
-
-const CUSTOMER_WALK_TIME = 70;
-
-const LANES = [
-    29,
-    36.4,
-    43.8,
-    51.2,
-    58.6
-];
+const LANES=[29,36.4,43.8,51.2,58.6];
 
 /* ==================================================
    DISTANZA MINIMA CLIENTI STESSA CORSIA
 ================================================== */
 
-const SAME_LANE_MIN_DELAY = 1500;
+const SAME_LANE_MIN_DELAY=1500;
 
 /* ==================================================
    SISTEMA EXP
 ================================================== */
 
-let currentLevel = 1;
+let currentLevel=1;
+let currentEXP=0;
 
-let currentEXP = 0;
+const EXP_PER_CUSTOMER=5;
 
-const EXP_PER_CUSTOMER = 5;
-
-const EXP_REQUIREMENTS = [
-    15,
-    20,
-    25,
-    30,
-    35,
-    40,
-    45,
-    50,
-    55,
-    60,
-    65
+const EXP_REQUIREMENTS=[
+15,20,25,30,35,40,45,50,55,60,65
 ];
 
-const MAX_LEVEL = 12;
+const MAX_LEVEL=12;
 
 /* ==================================================
    POWER UP
 ================================================== */
 
-let powerUps = {
-
-    pasta: 0,
-
-    speed: 0,
-
-    sauce: 0,
-
-    waitress: false
-
+let powerUps={
+pasta:0,
+speed:0,
+sauce:0,
+waitress:false
 };
 
-let powerUpPaused = false;
+let powerUpPaused=false;
 
 /* ==================================================
-   IMMAGINI POWER UP
+   NUOVI PANNELLI
 ================================================== */
 
-const POWER_UP_IMAGES = {
+const POWER_UP_PANELS={
 
-    pasta:
-        "https://i.ibb.co/zwM5xNK/1788123621728-removebg-preview.png",
+pasta:[
+"https://i.ibb.co/NHmK3wd/file-00000000e20481fa9b76f5fa0d30ba53-removebg-preview-removebg-preview.png",
+"https://i.ibb.co/vvH6kjL2/file-00000000eae481f684cfd2789751d01c-removebg-preview.png",
+"https://i.ibb.co/zHW8b4PM/file-00000000a260821187b48b306fc2fe79-removebg-preview.png"
+],
 
-    speed:
-        "https://i.ibb.co/tP1rgx4D/1788123653567-removebg-preview.png",
+speed:[
+"https://i.ibb.co/MkxGQgrs/file-00000000516481fab57f2c7137dbb936-removebg-preview.png",
+"https://i.ibb.co/zWtzSCgV/file-000000005a8481f693949f689bf265db-removebg-preview.png",
+"https://i.ibb.co/qY9jv9Wh/file-000000008db88211b40fe2988f4f3623-removebg-preview.png"
+],
 
-    sauce:
-        "https://i.ibb.co/pB62NXDf/1788123663443-removebg-preview.png",
+sauce:[
+"https://i.ibb.co/nMD4Xr4K/file-000000005b408211a76255b46c29a71a-removebg-preview.png",
+"https://i.ibb.co/4g33MYbY/file-00000000a9008230bbc9b469a34b2107-removebg-preview.png",
+"https://i.ibb.co/V0x1HBSx/file-00000000925082308307cb91361e8001-removebg-preview.png"
+],
 
-    waitress:
-        "https://i.ibb.co/k2brGmM0/1787717800004.jpg"
+waitress:
+"https://i.ibb.co/xtm6ChZp/file-000000006b8881f590068e56e39361f6.png"
 
 };
 
@@ -894,186 +460,120 @@ const POWER_UP_IMAGES = {
    MOSTRA POWER UP
 ================================================== */
 
-function showPowerUpScreen() {
+function showPowerUpScreen(){
 
-    if (powerUpPaused) {
-        return;
-    }
+if(powerUpPaused)return;
 
-    const options =
-        document.getElementById(
-            "powerup-options"
-        );
+const options=document.getElementById("powerup-options");
+options.innerHTML="";
 
-    options.innerHTML = "";
+let available=[];
 
-    let normalPowerUps = [];
+/*
+   IMPORTANTE:
+   il livello disponibile è sempre
+   quello immediatamente successivo.
 
-    Object.keys(powerUps).forEach(
-        function(type) {
+   LV0 -> LV1
+   LV1 -> LV2
+   LV2 -> LV3
+   LV3 -> niente
+*/
 
-            if (type === "waitress") {
-                return;
-            }
+Object.keys(powerUps).forEach(function(type){
 
-            if (powerUps[type] < 3) {
+if(type==="waitress")return;
 
-                normalPowerUps.push({
-                    type: type,
-                    level: powerUps[type] + 1
-                });
+if(powerUps[type]<3){
 
-            }
+available.push({
+type:type,
+level:powerUps[type]+1
+});
 
-        }
-    );
+}
 
-    for (
-        let i = normalPowerUps.length - 1;
-        i > 0;
-        i--
-    ) {
+});
 
-        const j =
-            Math.floor(
-                Math.random() *
-                (i + 1)
-            );
+/* Mescola i power-up disponibili */
 
-        const temp =
-            normalPowerUps[i];
+for(let i=available.length-1;i>0;i--){
 
-        normalPowerUps[i] =
-            normalPowerUps[j];
+const j=Math.floor(Math.random()*(i+1));
 
-        normalPowerUps[j] =
-            temp;
+[available[i],available[j]]=
+[available[j],available[i]];
 
-    }
+}
 
-    let selectedPowerUps = [];
+/* Seo Yoon disponibile finché non viene sbloccata */
 
-    if (!powerUps.waitress) {
+if(!powerUps.waitress){
 
-        selectedPowerUps.push({
-            type: "waitress",
-            level: 1
-        });
+available.push({
+type:"waitress",
+level:1
+});
 
-    }
+}
 
-    normalPowerUps.forEach(
-        function(powerUp) {
+/* Mescola anche la posizione delle tre scelte */
 
-            if (
-                selectedPowerUps.length <
-                3
-            ) {
+for(let i=available.length-1;i>0;i--){
 
-                selectedPowerUps.push(
-                    powerUp
-                );
+const j=Math.floor(Math.random()*(i+1));
 
-            }
+[available[i],available[j]]=
+[available[j],available[i]];
 
-        }
-    );
+}
 
-    for (
-        let i = selectedPowerUps.length - 1;
-        i > 0;
-        i--
-    ) {
+const selected=available.slice(0,3);
 
-        const j =
-            Math.floor(
-                Math.random() *
-                (i + 1)
-            );
+selected.forEach(function(powerUp){
 
-        const temp =
-            selectedPowerUps[i];
+const slot=document.createElement("div");
 
-        selectedPowerUps[i] =
-            selectedPowerUps[j];
+slot.className="powerup-slot";
+slot.dataset.type=powerUp.type;
+slot.dataset.level=powerUp.level;
 
-        selectedPowerUps[j] =
-            temp;
+const image=document.createElement("img");
 
-    }
+if(powerUp.type==="waitress"){
 
-    selectedPowerUps.forEach(
-        function(powerUp) {
+image.src=POWER_UP_PANELS.waitress;
 
-            const slot =
-                document.createElement("div");
+}else{
 
-            slot.className =
-                "powerup-slot";
+image.src=
+POWER_UP_PANELS[powerUp.type][powerUp.level-1];
 
-            slot.dataset.type =
-                powerUp.type;
+}
 
-            slot.dataset.level =
-                powerUp.level;
+image.alt="";
 
-            const image =
-                document.createElement("img");
+slot.appendChild(image);
 
-            image.src =
-                POWER_UP_IMAGES[
-                    powerUp.type
-                ];
+slot.addEventListener("click",function(){
 
-            image.alt = "";
+selectPowerUp(powerUp.type);
 
-            slot.appendChild(image);
+});
 
-            if (
-                powerUp.type !==
-                "waitress"
-            ) {
+options.appendChild(slot);
 
-                const level =
-                    document.createElement("div");
+});
 
-                level.className =
-                    "powerup-level";
+powerUpPaused=true;
 
-                level.textContent =
-                    "LV " +
-                    powerUp.level;
+document
+.getElementById("game")
+.classList.add("powerup-paused");
 
-                slot.appendChild(level);
-
-            }
-
-            slot.addEventListener(
-                "click",
-                function() {
-
-                    selectPowerUp(
-                        powerUp.type
-                    );
-
-                }
-            );
-
-            options.appendChild(slot);
-
-        }
-    );
-
-    powerUpPaused = true;
-
-    document
-    .getElementById("game")
-    .classList
-    .add("powerup-paused");
-
-    document
-    .getElementById("powerup-overlay")
-    .style.display = "flex";
+document
+.getElementById("powerup-overlay")
+.style.display="flex";
 
 }
 
@@ -1081,50 +581,41 @@ function showPowerUpScreen() {
    SCELTA POWER UP
 ================================================== */
 
-function selectPowerUp(type) {
+function selectPowerUp(type){
 
-    if (!powerUpPaused) {
-        return;
-    }
+if(!powerUpPaused)return;
 
-    if (type === "waitress") {
+if(type==="waitress"){
 
-        if (powerUps.waitress) {
-            return;
-        }
+if(powerUps.waitress)return;
 
-        powerUps.waitress = true;
+powerUps.waitress=true;
 
-        summonWaitress();
+summonWaitress();
 
-    }
+}else{
 
-    else {
+if(powerUps[type]>=3)return;
 
-        if (powerUps[type] >= 3) {
-            return;
-        }
+powerUps[type]++;
 
-        powerUps[type]++;
+}
 
-    }
+document
+.getElementById("powerup-overlay")
+.style.display="none";
 
-    document
-    .getElementById("powerup-overlay")
-    .style.display = "none";
+document
+.getElementById("powerup-options")
+.innerHTML="";
 
-    document
-    .getElementById("powerup-options")
-    .innerHTML = "";
+powerUpPaused=false;
 
-    powerUpPaused = false;
+document
+.getElementById("game")
+.classList.remove("powerup-paused");
 
-    document
-    .getElementById("game")
-    .classList
-    .remove("powerup-paused");
-
-    updateEXPBar();
+updateEXPBar();
 
 }
 
@@ -1132,19 +623,15 @@ function selectPowerUp(type) {
    EVOCA CAMERIERA
 ================================================== */
 
-function summonWaitress() {
+function summonWaitress(){
 
-    const waitress =
-        document.getElementById(
-            "waitress"
-        );
+const waitress=document.getElementById("waitress");
 
-    waitress.style.display =
-        "block";
+waitress.style.display="block";
 
-    setWaitressFrame(0);
+setWaitressFrame(0);
 
-    startWaitressAnimation();
+startWaitressAnimation();
 
 }
 
@@ -1152,19 +639,17 @@ function summonWaitress() {
    ANIMAZIONE CAMERIERA
 ================================================== */
 
-let waitressTimer = null;
+let waitressTimer=null;
 
-function startWaitressAnimation() {
+function startWaitressAnimation(){
 
-    if (waitressTimer !== null) {
+if(waitressTimer!==null){
 
-        clearInterval(
-            waitressTimer
-        );
+clearInterval(waitressTimer);
 
-    }
+}
 
-    setWaitressFrame(0);
+setWaitressFrame(0);
 
 }
 
@@ -1172,30 +657,22 @@ function startWaitressAnimation() {
    FRAME CAMERIERA
 ================================================== */
 
-function setWaitressFrame(frameNumber) {
+function setWaitressFrame(frameNumber){
 
-    const frames =
-        document
-        .getElementById("waitress")
-        .querySelectorAll("img");
+const frames=
+document.getElementById("waitress").querySelectorAll("img");
 
-    frames.forEach(
-        function(frame) {
+frames.forEach(function(frame){
 
-            frame.classList.remove(
-                "active"
-            );
+frame.classList.remove("active");
 
-        }
-    );
+});
 
-    if (frames[frameNumber]) {
+if(frames[frameNumber]){
 
-        frames[frameNumber]
-        .classList
-        .add("active");
+frames[frameNumber].classList.add("active");
 
-    }
+}
 
 }
 
@@ -1203,48 +680,34 @@ function setWaitressFrame(frameNumber) {
    AGGIORNA BARRA EXP
 ================================================== */
 
-function updateEXPBar() {
+function updateEXPBar(){
 
-    const fill =
-        document.getElementById("exp-fill");
+const fill=document.getElementById("exp-fill");
+const levelText=document.getElementById("exp-level");
 
-    const levelText =
-        document.getElementById("exp-level");
+if(currentLevel>=MAX_LEVEL){
 
-    if (currentLevel >= MAX_LEVEL) {
+currentLevel=MAX_LEVEL;
+currentEXP=0;
 
-        currentLevel = MAX_LEVEL;
+fill.style.width="100%";
+levelText.textContent="LV MAX";
 
-        currentEXP = 0;
+return;
 
-        fill.style.width = "100%";
+}
 
-        levelText.textContent = "LV MAX";
+const requiredEXP=
+EXP_REQUIREMENTS[currentLevel-1];
 
-        return;
+const percentage=Math.min(
+100,
+(currentEXP/requiredEXP)*100
+);
 
-    }
+fill.style.width=percentage+"%";
 
-    const requiredEXP =
-        EXP_REQUIREMENTS[
-            currentLevel - 1
-        ];
-
-    const percentage =
-        Math.min(
-            100,
-            (
-                currentEXP /
-                requiredEXP
-            ) * 100
-        );
-
-    fill.style.width =
-        percentage + "%";
-
-    levelText.textContent =
-        "LV " +
-        currentLevel;
+levelText.textContent="LV "+currentLevel;
 
 }
 
@@ -1252,34 +715,28 @@ function updateEXPBar() {
    AGGIUNGI EXP
 ================================================== */
 
-function addEXP(amount) {
+function addEXP(amount){
 
-    if (currentLevel >= MAX_LEVEL) {
-        return;
-    }
+if(currentLevel>=MAX_LEVEL)return;
 
-    currentEXP += amount;
+currentEXP+=amount;
 
-    const requiredEXP =
-        EXP_REQUIREMENTS[
-            currentLevel - 1
-        ];
+const requiredEXP=
+EXP_REQUIREMENTS[currentLevel-1];
 
-    if (currentEXP >= requiredEXP) {
+if(currentEXP>=requiredEXP){
 
-        currentEXP -= requiredEXP;
+currentEXP-=requiredEXP;
+currentLevel++;
 
-        currentLevel++;
+updateEXPBar();
+showPowerUpScreen();
 
-        updateEXPBar();
+return;
 
-        showPowerUpScreen();
+}
 
-        return;
-
-    }
-
-    updateEXPBar();
+updateEXPBar();
 
 }
 
@@ -1287,21 +744,15 @@ function addEXP(amount) {
    VARIABILI
 ================================================== */
 
-let customerTimer = null;
+let customerTimer=null;
+let cookTimer=null;
+let waitressAttackTimer=null;
+let firstAttackTimer=null;
+let kitchenDamageTimer=null;
+let zIndexTimer=null;
 
-let cookTimer = null;
-
-let waitressAttackTimer = null;
-
-let firstAttackTimer = null;
-
-let kitchenDamageTimer = null;
-
-let zIndexTimer = null;
-
-let kitchenEnergy = 100;
-
-let customers = [];
+let kitchenEnergy=100;
+let customers=[];
 
 /* ==================================================
    PLAY
@@ -1309,205 +760,121 @@ let customers = [];
 
 document
 .getElementById("playButton")
-.addEventListener(
-    "click",
-    function() {
+.addEventListener("click",function(){
 
-        document
-        .getElementById("menu")
-        .style.display = "none";
+document.getElementById("menu").style.display="none";
+document.getElementById("game").style.display="block";
 
-        document
-        .getElementById("game")
-        .style.display = "block";
+kitchenEnergy=100;
+customers=[];
 
-        kitchenEnergy = 100;
+currentLevel=1;
+currentEXP=0;
 
-        customers = [];
+powerUps.pasta=0;
+powerUps.speed=0;
+powerUps.sauce=0;
+powerUps.waitress=false;
 
-        currentLevel = 1;
+powerUpPaused=false;
 
-        currentEXP = 0;
+document.getElementById("waitress").style.display="none";
 
-        powerUps.pasta = 0;
+document.getElementById("powerup-overlay").style.display="none";
+document.getElementById("powerup-options").innerHTML="";
 
-        powerUps.speed = 0;
+document
+.getElementById("game")
+.classList.remove("powerup-paused");
 
-        powerUps.sauce = 0;
+updateEXPBar();
 
-        powerUps.waitress = false;
+document.querySelectorAll(".spawned-customer")
+.forEach(function(customer){
+customer.remove();
+});
 
-        powerUpPaused = false;
+document.getElementById("kitchen").style.display="block";
+document.getElementById("kitchenDamaged").style.display="none";
+document.getElementById("kitchenDestroyed").style.display="none";
 
-        document
-        .getElementById("waitress")
-        .style.display = "none";
+updateKitchenEnergy();
 
-        document
-        .getElementById("powerup-overlay")
-        .style.display = "none";
+createWave1();
+startCustomerAnimation();
+startCookAnimation();
+startWaitressAttack();
+startKitchenEnergySystem();
+startFirstAttackDetection();
+startZIndexSystem();
 
-        document
-        .getElementById("powerup-options")
-        .innerHTML = "";
-
-        document
-        .getElementById("game")
-        .classList
-        .remove("powerup-paused");
-
-        updateEXPBar();
-
-        document
-        .querySelectorAll(".spawned-customer")
-        .forEach(
-            function(customer) {
-                customer.remove();
-            }
-        );
-
-        document
-        .getElementById("kitchen")
-        .style.display = "block";
-
-        document
-        .getElementById("kitchenDamaged")
-        .style.display = "none";
-
-        document
-        .getElementById("kitchenDestroyed")
-        .style.display = "none";
-
-        updateKitchenEnergy();
-
-        createWave1();
-
-        startCustomerAnimation();
-
-        startCookAnimation();
-
-        startWaitressAttack();
-
-        startKitchenEnergySystem();
-
-        startFirstAttackDetection();
-
-        startZIndexSystem();
-
-    }
-);
+});
 
 /* ==================================================
    CREA WAVE 1
 ================================================== */
 
-function createWave1() {
+function createWave1(){
 
-    const spawnTimes = [
-        FIRST_SPAWN_SECOND
-    ];
+const spawnTimes=[FIRST_SPAWN_SECOND];
 
-    while (
-        spawnTimes.length <
-        TOTAL_CUSTOMERS - 1
-    ) {
+while(spawnTimes.length<TOTAL_CUSTOMERS-1){
 
-        const randomSecond =
-            Math.floor(
-                Math.random() *
-                (
-                    LAST_SPAWN_SECOND -
-                    FIRST_SPAWN_SECOND +
-                    1
-                )
-            ) +
-            FIRST_SPAWN_SECOND;
+const randomSecond=
+Math.floor(
+Math.random()*
+(LAST_SPAWN_SECOND-FIRST_SPAWN_SECOND+1)
+)+FIRST_SPAWN_SECOND;
 
-        if (
-            !spawnTimes.includes(
-                randomSecond
-            )
-        ) {
+if(!spawnTimes.includes(randomSecond)){
 
-            spawnTimes.push(
-                randomSecond
-            );
+spawnTimes.push(randomSecond);
 
-        }
+}
 
-    }
+}
 
-    spawnTimes.push(
-        LAST_SPAWN_SECOND
-    );
+spawnTimes.push(LAST_SPAWN_SECOND);
 
-    spawnTimes.sort(
-        function(a, b) {
-            return a - b;
-        }
-    );
+spawnTimes.sort(function(a,b){return a-b});
 
-    const lastLaneSpawn = [];
+const lastLaneSpawn=[];
 
-    for (
-        let i = 0;
-        i < LANES.length;
-        i++
-    ) {
+for(let i=0;i<LANES.length;i++){
+lastLaneSpawn[i]=-Infinity;
+}
 
-        lastLaneSpawn[i] = -Infinity;
+spawnTimes.forEach(function(second,index){
 
-    }
+setTimeout(function(){
 
-    spawnTimes.forEach(
-        function(second, index) {
+if(!powerUpPaused){
 
-            setTimeout(
-                function() {
+let attempts=0;
+let laneIndex;
 
-                    if (!powerUpPaused) {
+do{
 
-                        let attempts = 0;
+laneIndex=
+Math.floor(Math.random()*LANES.length);
 
-                        let laneIndex;
+attempts++;
 
-                        do {
+}while(
+attempts<50 &&
+(second*1000-lastLaneSpawn[laneIndex])<
+SAME_LANE_MIN_DELAY
+);
 
-                            laneIndex =
-                                Math.floor(
-                                    Math.random() *
-                                    LANES.length
-                                );
+lastLaneSpawn[laneIndex]=second*1000;
 
-                            attempts++;
+spawnCustomer(index,laneIndex);
 
-                        } while (
-                            attempts < 50 &&
-                            (
-                                (
-                                    second * 1000
-                                ) -
-                                lastLaneSpawn[laneIndex]
-                            ) <
-                            SAME_LANE_MIN_DELAY
-                        );
+}
 
-                        lastLaneSpawn[laneIndex] =
-                            second * 1000;
+},second*1000);
 
-                        spawnCustomer(
-                            index,
-                            laneIndex
-                        );
-
-                    }
-
-                },
-                second * 1000
-            );
-
-        }
-    );
+});
 
 }
 
@@ -1515,165 +882,80 @@ function createWave1() {
    CREA SINGOLO CLIENTE
 ================================================== */
 
-function spawnCustomer(
-    index,
-    forcedLaneIndex = null
-) {
+function spawnCustomer(index,forcedLaneIndex=null){
 
-    const game =
-        document.getElementById("game");
+const game=document.getElementById("game");
 
-    const type =
-        Math.random() < 0.5
-            ? 1
-            : 2;
+const type=Math.random()<.5?1:2;
 
-    const template =
-        document.getElementById(
-            type === 1
-                ? "customer1Template"
-                : "customer2Template"
-        );
+const template=document.getElementById(
+type===1?"customer1Template":"customer2Template"
+);
 
-    const customer =
-        template.cloneNode(true);
+const customer=template.cloneNode(true);
 
-    customer.id =
-        "customer-" +
-        (index + 1);
+customer.id="customer-"+(index+1);
 
-    customer.classList.remove(
-        "customer-template"
-    );
+customer.classList.remove("customer-template");
+customer.classList.add("spawned-customer");
 
-    customer.classList.add(
-        "spawned-customer"
-    );
+customer.style.display="block";
+customer.style.animation="none";
+customer.classList.remove("satisfied");
+customer.style.top="5%";
 
-    customer.style.display = "block";
+let laneIndex;
 
-    customer.style.animation = "none";
+if(forcedLaneIndex!==null&&forcedLaneIndex!==undefined){
+laneIndex=forcedLaneIndex;
+}else{
+laneIndex=Math.floor(Math.random()*LANES.length);
+}
 
-    customer.classList.remove(
-        "satisfied"
-    );
+customer.dataset.lane=laneIndex;
+customer.style.left=LANES[laneIndex]+"%";
 
-    /* MODIFICA:
-       il cliente viene creato dentro
-       la zona nera visibile */
-    customer.style.top = "5%";
+customer.dataset.type=type;
+customer.dataset.hp="30";
+customer.dataset.satisfied="false";
+customer.dataset.atKitchen="false";
+customer.dataset.frame="0";
 
-    let laneIndex;
+const frames=customer.querySelectorAll(".frame");
 
-    if (
-        forcedLaneIndex !== null &&
-        forcedLaneIndex !== undefined
-    ) {
+frames.forEach(function(frame){
+frame.classList.remove("active");
+});
 
-        laneIndex =
-            forcedLaneIndex;
+if(frames.length>0){
+frames[0].classList.add("active");
+}
 
-    }
+const happyFrame=customer.querySelector(".happy-frame");
+happyFrame.style.display="none";
 
-    else {
+game.appendChild(customer);
+customers.push(customer);
 
-        laneIndex =
-            Math.floor(
-                Math.random() *
-                LANES.length
-            );
+requestAnimationFrame(function(){
 
-    }
+customer.style.animation=
+"walkDown "+CUSTOMER_WALK_TIME+"s linear forwards";
 
-    customer.dataset.lane =
-        laneIndex;
+customer.classList.add("walking");
 
-    customer.style.left =
-        LANES[laneIndex] + "%";
+});
 
-    customer.dataset.type =
-        type;
+setTimeout(function(){
 
-    customer.dataset.hp =
-        "30";
+if(customer.dataset.satisfied!=="true"){
 
-    customer.dataset.satisfied =
-        "false";
+customer.dataset.atKitchen="true";
+updateZIndexes();
 
-    customer.dataset.atKitchen =
-        "false";
+}
 
-    customer.dataset.frame =
-        "0";
-
-    const frames =
-        customer.querySelectorAll(
-            ".frame"
-        );
-
-    frames.forEach(
-        function(frame) {
-
-            frame.classList.remove(
-                "active"
-            );
-
-        }
-    );
-
-    if (frames.length > 0) {
-
-        frames[0]
-        .classList
-        .add("active");
-
-    }
-
-    const happyFrame =
-        customer.querySelector(
-            ".happy-frame"
-        );
-
-    happyFrame.style.display =
-        "none";
-
-    game.appendChild(customer);
-
-    customers.push(customer);
-
-    requestAnimationFrame(
-        function() {
-
-            customer.style.animation =
-                "walkDown " +
-                CUSTOMER_WALK_TIME +
-                "s linear forwards";
-
-            customer.classList.add(
-                "walking"
-            );
-
-        }
-    );
-
-    setTimeout(
-        function() {
-
-            if (
-                customer.dataset.satisfied !==
-                "true"
-            ) {
-
-                customer.dataset.atKitchen =
-                    "true";
-
-                updateZIndexes();
-
-            }
-
-        },
-        CUSTOMER_WALK_TIME * 1000
-    );
+},CUSTOMER_WALK_TIME*1000);
 
 }
 
@@ -1681,55 +963,27 @@ function spawnCustomer(
    CUCINA
 ================================================== */
 
-function updateKitchenEnergy() {
+function updateKitchenEnergy(){
 
-    if (kitchenEnergy > 50) {
+if(kitchenEnergy>50){
 
-        document
-        .getElementById("kitchen")
-        .style.display = "block";
+document.getElementById("kitchen").style.display="block";
+document.getElementById("kitchenDamaged").style.display="none";
+document.getElementById("kitchenDestroyed").style.display="none";
 
-        document
-        .getElementById("kitchenDamaged")
-        .style.display = "none";
+}else if(kitchenEnergy>20){
 
-        document
-        .getElementById("kitchenDestroyed")
-        .style.display = "none";
+document.getElementById("kitchen").style.display="none";
+document.getElementById("kitchenDamaged").style.display="block";
+document.getElementById("kitchenDestroyed").style.display="none";
 
-    }
+}else{
 
-    else if (kitchenEnergy > 20) {
+document.getElementById("kitchen").style.display="none";
+document.getElementById("kitchenDamaged").style.display="none";
+document.getElementById("kitchenDestroyed").style.display="block";
 
-        document
-        .getElementById("kitchen")
-        .style.display = "none";
-
-        document
-        .getElementById("kitchenDamaged")
-        .style.display = "block";
-
-        document
-        .getElementById("kitchenDestroyed")
-        .style.display = "none";
-
-    }
-
-    else {
-
-        document
-        .getElementById("kitchen")
-        .style.display = "none";
-
-        document
-        .getElementById("kitchenDamaged")
-        .style.display = "none";
-
-        document
-        .getElementById("kitchenDestroyed")
-        .style.display = "block";
-
-    }
+}
 
 }
 
@@ -1737,59 +991,43 @@ function updateKitchenEnergy() {
    ENERGIA
 ================================================== */
 
-function startKitchenEnergySystem() {
+function startKitchenEnergySystem(){
 
-    if (kitchenDamageTimer !== null) {
+if(kitchenDamageTimer!==null){
+clearInterval(kitchenDamageTimer);
+}
 
-        clearInterval(
-            kitchenDamageTimer
-        );
+kitchenDamageTimer=setInterval(function(){
 
-    }
+if(powerUpPaused)return;
 
-    kitchenDamageTimer =
-    setInterval(
-        function() {
+let damage=0;
 
-            if (powerUpPaused) {
-                return;
-            }
+customers.forEach(function(customer){
 
-            let damage = 0;
+if(
+customer &&
+customer.dataset.atKitchen==="true" &&
+customer.dataset.satisfied!=="true"
+){
 
-            customers.forEach(
-                function(customer) {
+damage++;
 
-                    if (
-                        customer &&
-                        customer.dataset.atKitchen ===
-                            "true" &&
-                        customer.dataset.satisfied !==
-                            "true"
-                    ) {
+}
 
-                        damage++;
+});
 
-                    }
+if(damage>0){
 
-                }
-            );
+kitchenEnergy-=damage;
 
-            if (damage > 0) {
+if(kitchenEnergy<0)kitchenEnergy=0;
 
-                kitchenEnergy -= damage;
+updateKitchenEnergy();
 
-                if (kitchenEnergy < 0) {
-                    kitchenEnergy = 0;
-                }
+}
 
-                updateKitchenEnergy();
-
-            }
-
-        },
-        5000
-    );
+},5000);
 
 }
 
@@ -1797,30 +1035,18 @@ function startKitchenEnergySystem() {
    CLIENTE VISIBILE
 ================================================== */
 
-function customerIsVisible(customer) {
+function customerIsVisible(customer){
 
-    if (
-        !customer ||
-        customer.style.display === "none"
-    ) {
+if(!customer||customer.style.display==="none")return false;
 
-        return false;
+const rect=customer.getBoundingClientRect();
+const game=document.getElementById("game");
+const gameRect=game.getBoundingClientRect();
 
-    }
-
-    const rect =
-        customer.getBoundingClientRect();
-
-    const game =
-        document.getElementById("game");
-
-    const gameRect =
-        game.getBoundingClientRect();
-
-    return (
-        rect.bottom > gameRect.top &&
-        rect.top < gameRect.bottom
-    );
+return(
+rect.bottom>gameRect.top &&
+rect.top<gameRect.bottom
+);
 
 }
 
@@ -1828,73 +1054,47 @@ function customerIsVisible(customer) {
    Z-INDEX
 ================================================== */
 
-function startZIndexSystem() {
+function startZIndexSystem(){
 
-    if (zIndexTimer !== null) {
+if(zIndexTimer!==null){
+clearInterval(zIndexTimer);
+}
 
-        clearInterval(
-            zIndexTimer
-        );
+zIndexTimer=setInterval(function(){
 
-    }
+if(powerUpPaused)return;
 
-    zIndexTimer =
-    setInterval(
-        function() {
+updateZIndexes();
 
-            if (powerUpPaused) {
-                return;
-            }
-
-            updateZIndexes();
-
-        },
-        50
-    );
+},50);
 
 }
 
-function updateZIndexes() {
+function updateZIndexes(){
 
-    const activeCustomers =
-        customers.filter(
-            function(customer) {
+const activeCustomers=customers.filter(function(customer){
 
-                return (
-                    customer &&
-                    customer.style.display !==
-                        "none"
-                );
+return(
+customer &&
+customer.style.display!=="none"
+);
 
-            }
-        );
+});
 
-    activeCustomers.sort(
-        function(a, b) {
+activeCustomers.sort(function(a,b){
 
-            const aTop =
-                a
-                .getBoundingClientRect()
-                .top;
+const aTop=a.getBoundingClientRect().top;
+const bTop=b.getBoundingClientRect().top;
 
-            const bTop =
-                b
-                .getBoundingClientRect()
-                .top;
+return aTop-bTop;
 
-            return aTop - bTop;
+});
 
-        }
-    );
+activeCustomers.forEach(function(customer,index){
 
-    activeCustomers.forEach(
-        function(customer, index) {
+customer.style.zIndex=10+index;
 
-            customer.style.zIndex =
-                10 + index;
-
-        }
-    );
+});
 
 }
 
@@ -1902,40 +1102,27 @@ function updateZIndexes() {
    PRIMO ATTACCO
 ================================================== */
 
-function startFirstAttackDetection() {
+function startFirstAttackDetection(){
 
-    if (firstAttackTimer !== null) {
+if(firstAttackTimer!==null){
+clearInterval(firstAttackTimer);
+}
 
-        clearInterval(
-            firstAttackTimer
-        );
+firstAttackTimer=setInterval(function(){
 
-    }
+if(powerUpPaused)return;
 
-    firstAttackTimer =
-    setInterval(
-        function() {
+const target=getNearestVisibleCustomer();
 
-            if (powerUpPaused) {
-                return;
-            }
+if(target){
 
-            const target =
-                getNearestVisibleCustomer();
+playCookAttack();
 
-            if (target) {
+clearInterval(firstAttackTimer);
 
-                playCookAttack();
+}
 
-                clearInterval(
-                    firstAttackTimer
-                );
-
-            }
-
-        },
-        100
-    );
+},100);
 
 }
 
@@ -1943,88 +1130,45 @@ function startFirstAttackDetection() {
    ANIMAZIONE CLIENTI
 ================================================== */
 
-function startCustomerAnimation() {
+function startCustomerAnimation(){
 
-    if (customerTimer !== null) {
+if(customerTimer!==null){
+clearInterval(customerTimer);
+}
 
-        clearInterval(
-            customerTimer
-        );
+customerTimer=setInterval(function(){
 
-    }
+if(powerUpPaused)return;
 
-    customerTimer =
-    setInterval(
-        function() {
+customers.forEach(function(customer){
 
-            if (powerUpPaused) {
-                return;
-            }
+if(
+!customer ||
+customer.style.display==="none" ||
+customer.dataset.satisfied==="true"
+)return;
 
-            customers.forEach(
-                function(customer) {
+const frames=customer.querySelectorAll(".frame");
 
-                    if (
-                        !customer ||
-                        customer.style.display ===
-                            "none" ||
-                        customer.dataset.satisfied ===
-                            "true"
-                    ) {
+if(frames.length===0)return;
 
-                        return;
+let frame=parseInt(customer.dataset.frame||"0");
 
-                    }
+frames.forEach(function(image){
+image.classList.remove("active");
+});
 
-                    const frames =
-                        customer.querySelectorAll(
-                            ".frame"
-                        );
+frames[frame].classList.add("active");
 
-                    if (frames.length === 0) {
-                        return;
-                    }
+frame++;
 
-                    let frame =
-                        parseInt(
-                            customer.dataset.frame ||
-                            "0"
-                        );
+if(frame>=frames.length)frame=0;
 
-                    frames.forEach(
-                        function(image) {
+customer.dataset.frame=frame;
 
-                            image.classList.remove(
-                                "active"
-                            );
+});
 
-                        }
-                    );
-
-                    frames[frame]
-                    .classList
-                    .add("active");
-
-                    frame++;
-
-                    if (
-                        frame >=
-                        frames.length
-                    ) {
-
-                        frame = 0;
-
-                    }
-
-                    customer.dataset.frame =
-                        frame;
-
-                }
-            );
-
-        },
-        300
-    );
+},300);
 
 }
 
@@ -2032,30 +1176,18 @@ function startCustomerAnimation() {
    FRAME CUOCO
 ================================================== */
 
-function setCookFrame(frameNumber) {
+function setCookFrame(frameNumber){
 
-    const frames =
-        document
-        .getElementById("cook")
-        .querySelectorAll("img");
+const frames=
+document.getElementById("cook").querySelectorAll("img");
 
-    frames.forEach(
-        function(frame) {
+frames.forEach(function(frame){
+frame.classList.remove("active");
+});
 
-            frame.classList.remove(
-                "active"
-            );
-
-        }
-    );
-
-    if (frames[frameNumber]) {
-
-        frames[frameNumber]
-        .classList
-        .add("active");
-
-    }
+if(frames[frameNumber]){
+frames[frameNumber].classList.add("active");
+}
 
 }
 
@@ -2063,97 +1195,67 @@ function setCookFrame(frameNumber) {
    ATTACCO CUOCO
 ================================================== */
 
-function playCookAttack() {
+function playCookAttack(){
 
-    if (powerUpPaused) {
-        return;
-    }
+if(powerUpPaused)return;
 
-    const targets =
-        getAttackTargets();
+const targets=getAttackTargets();
 
-    if (targets.length === 0) {
+if(targets.length===0){
 
-        setCookFrame(0);
+setCookFrame(0);
+return;
 
-        return;
+}
 
-    }
+setCookFrame(0);
 
-    setCookFrame(0);
+setTimeout(function(){
 
-    setTimeout(
-        function() {
+if(!powerUpPaused)setCookFrame(1);
 
-            if (!powerUpPaused) {
-                setCookFrame(1);
-            }
+},120);
 
-        },
-        120
-    );
+setTimeout(function(){
 
-    setTimeout(
-        function() {
+if(!powerUpPaused)setCookFrame(2);
 
-            if (!powerUpPaused) {
-                setCookFrame(2);
-            }
+},240);
 
-        },
-        240
-    );
+setTimeout(function(){
 
-    setTimeout(
-        function() {
+if(!powerUpPaused){
 
-            if (!powerUpPaused) {
+setCookFrame(3);
 
-                setCookFrame(3);
+targets.forEach(function(target){
 
-                targets.forEach(
-                    function(target) {
+if(
+target &&
+target.dataset.satisfied!=="true"
+){
 
-                        if (
-                            target &&
-                            target.dataset.satisfied !==
-                                "true"
-                        ) {
+throwPasta(target);
 
-                            throwPasta(target);
+}
 
-                        }
+});
 
-                    }
-                );
+}
 
-            }
+},360);
 
-        },
-        360
-    );
+setTimeout(function(){
 
-    setTimeout(
-        function() {
+if(!powerUpPaused)setCookFrame(4);
 
-            if (!powerUpPaused) {
-                setCookFrame(4);
-            }
+},480);
 
-        },
-        480
-    );
+setTimeout(function(){
 
-    setTimeout(
-        function() {
+if(!powerUpPaused)setCookFrame(0);
 
-            if (!powerUpPaused) {
-                setCookFrame(0);
-            }
-
-        },
-        600
-    );
+},600);
 
 }
 
@@ -2161,56 +1263,38 @@ function playCookAttack() {
    CLIENTI DA COLPIRE
 ================================================== */
 
-function getAttackTargets() {
+function getAttackTargets(){
 
-    const activeCustomers =
-        customers.filter(
-            function(customer) {
+const activeCustomers=customers.filter(function(customer){
 
-                if (!customer) {
-                    return false;
-                }
+if(!customer)return false;
 
-                if (
-                    customer.style.display ===
-                    "none"
-                ) {
-                    return false;
-                }
+if(customer.style.display==="none")return false;
 
-                if (
-                    customer.dataset.satisfied ===
-                    "true"
-                ) {
-                    return false;
-                }
+if(customer.dataset.satisfied==="true")return false;
 
-                return customerIsVisible(
-                    customer
-                );
+return customerIsVisible(customer);
 
-            }
-        );
+});
 
-    activeCustomers.sort(
-        function(a, b) {
+activeCustomers.sort(function(a,b){
 
-            return (
-                b.getBoundingClientRect().top -
-                a.getBoundingClientRect().top
-            );
+return(
+b.getBoundingClientRect().top-
+a.getBoundingClientRect().top
+);
 
-        }
-    );
+});
 
-    let numberOfPasta =
-        1 +
-        powerUps.pasta;
+/*
+   LV1 pasta = 2
+   LV2 pasta = 3
+   LV3 pasta = 4
+*/
 
-    return activeCustomers.slice(
-        0,
-        numberOfPasta
-    );
+let numberOfPasta=1+powerUps.pasta;
+
+return activeCustomers.slice(0,numberOfPasta);
 
 }
 
@@ -2218,44 +1302,31 @@ function getAttackTargets() {
    ATTACCO AUTOMATICO CUOCO
 ================================================== */
 
-function startCookAnimation() {
+function startCookAnimation(){
 
-    if (cookTimer !== null) {
+if(cookTimer!==null){
+clearInterval(cookTimer);
+}
 
-        clearInterval(
-            cookTimer
-        );
+setCookFrame(0);
 
-    }
+cookTimer=setInterval(function(){
 
-    setCookFrame(0);
+if(powerUpPaused)return;
 
-    cookTimer =
-    setInterval(
-        function() {
+const target=getNearestVisibleCustomer();
 
-            if (powerUpPaused) {
-                return;
-            }
+if(target!==null){
 
-            const target =
-                getNearestVisibleCustomer();
+playCookAttack();
 
-            if (target !== null) {
+}else{
 
-                playCookAttack();
+setCookFrame(0);
 
-            }
+}
 
-            else {
-
-                setCookFrame(0);
-
-            }
-
-        },
-        getCookAttackInterval()
-    );
+},getCookAttackInterval());
 
 }
 
@@ -2263,15 +1334,12 @@ function startCookAnimation() {
    VELOCITÀ ATTACCO CUOCO
 ================================================== */
 
-function getCookAttackInterval() {
+function getCookAttackInterval(){
 
-    return Math.round(
-        3000 /
-        (
-            1 +
-            powerUps.speed * 0.33
-        )
-    );
+return Math.round(
+3000/
+(1+powerUps.speed*.33)
+);
 
 }
 
@@ -2279,12 +1347,11 @@ function getCookAttackInterval() {
    VELOCITÀ ATTACCO CAMERIERA
 ================================================== */
 
-function getWaitressAttackInterval() {
+function getWaitressAttackInterval(){
 
-    return Math.round(
-        getCookAttackInterval() *
-        0.67
-    );
+return Math.round(
+getCookAttackInterval()*.67
+);
 
 }
 
@@ -2292,79 +1359,41 @@ function getWaitressAttackInterval() {
    CLIENTE PIÙ VICINO
 ================================================== */
 
-function getNearestVisibleCustomer() {
+function getNearestVisibleCustomer(){
 
-    const activeCustomers =
-        customers.filter(
-            function(customer) {
+const activeCustomers=customers.filter(function(customer){
 
-                if (!customer) {
-                    return false;
-                }
+if(!customer)return false;
 
-                if (
-                    customer.style.display ===
-                    "none"
-                ) {
-                    return false;
-                }
+if(customer.style.display==="none")return false;
 
-                if (
-                    customer.dataset.satisfied ===
-                    "true"
-                ) {
-                    return false;
-                }
+if(customer.dataset.satisfied==="true")return false;
 
-                return customerIsVisible(
-                    customer
-                );
+return customerIsVisible(customer);
 
-            }
-        );
+});
 
-    if (
-        activeCustomers.length ===
-        0
-    ) {
+if(activeCustomers.length===0)return null;
 
-        return null;
+let nearest=activeCustomers[0];
 
-    }
+let nearestTop=
+nearest.getBoundingClientRect().top;
 
-    let nearest =
-        activeCustomers[0];
+activeCustomers.forEach(function(customer){
 
-    let nearestTop =
-        nearest
-        .getBoundingClientRect()
-        .top;
+const top=customer.getBoundingClientRect().top;
 
-    activeCustomers.forEach(
-        function(customer) {
+if(top>nearestTop){
 
-            const top =
-                customer
-                .getBoundingClientRect()
-                .top;
+nearest=customer;
+nearestTop=top;
 
-            if (
-                top >
-                nearestTop
-            ) {
+}
 
-                nearest =
-                    customer;
+});
 
-                nearestTop =
-                    top;
-
-            }
-
-        }
-    );
-
-    return nearest;
+return nearest;
 
 }
 
@@ -2372,271 +1401,147 @@ function getNearestVisibleCustomer() {
    LANCIO PASTA
 ================================================== */
 
-function throwPasta(target) {
+function throwPasta(target){
 
-    if (!target) {
-        return;
-    }
+if(!target)return;
 
-    if (
-        target.dataset.satisfied ===
-        "true"
-    ) {
+if(target.dataset.satisfied==="true")return;
 
-        return;
+const cook=document.getElementById("cook");
+const game=document.getElementById("game");
 
-    }
+const gameRect=game.getBoundingClientRect();
+const cookRect=cook.getBoundingClientRect();
 
-    const cook =
-        document.getElementById("cook");
+const startX=
+cookRect.left+cookRect.width*.72;
 
-    const game =
-        document.getElementById("game");
+const startY=
+cookRect.top+cookRect.height*.32;
 
-    const gameRect =
-        game.getBoundingClientRect();
+const hitMarker=document.createElement("div");
+hitMarker.className="hit-marker";
+game.appendChild(hitMarker);
 
-    const cookRect =
-        cook.getBoundingClientRect();
+const pasta=document.createElement("img");
 
-    const startX =
-        cookRect.left +
-        cookRect.width * 0.72;
+pasta.className="pasta";
 
-    const startY =
-        cookRect.top +
-        cookRect.height * 0.32;
+pasta.src=
+"https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png";
 
-    const hitMarker =
-        document.createElement("div");
+game.appendChild(pasta);
 
-    hitMarker.className =
-        "hit-marker";
+let currentX=startX;
+let currentY=startY;
 
-    game.appendChild(
-        hitMarker
-    );
+pasta.style.left=
+(currentX-gameRect.left-42)+"px";
 
-    const pasta =
-        document.createElement("img");
+pasta.style.top=
+(currentY-gameRect.top-42)+"px";
 
-    pasta.className =
-        "pasta";
+const speed=
+350*(1+powerUps.speed*.33);
 
-    pasta.src =
-        "https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png";
+let lastTime=performance.now();
 
-    game.appendChild(
-        pasta
-    );
+function movePasta(currentTime){
 
-    let currentX =
-        startX;
+if(
+!target||
+target.dataset.satisfied==="true"
+){
 
-    let currentY =
-        startY;
+if(pasta.parentNode)pasta.remove();
+if(hitMarker.parentNode)hitMarker.remove();
 
-    pasta.style.left =
-        (
-            currentX -
-            gameRect.left -
-            42
-        ) + "px";
+return;
 
-    pasta.style.top =
-        (
-            currentY -
-            gameRect.top -
-            42
-        ) + "px";
+}
 
-    const speed =
-        350 *
-        (
-            1 +
-            powerUps.speed * 0.33
-        );
+if(powerUpPaused){
 
-    let lastTime =
-        performance.now();
+lastTime=currentTime;
+requestAnimationFrame(movePasta);
+return;
 
-    function movePasta(currentTime) {
+}
 
-        if (
-            !target ||
-            target.dataset.satisfied ===
-            "true"
-        ) {
+const targetRect=target.getBoundingClientRect();
 
-            if (pasta.parentNode) {
-                pasta.remove();
-            }
+const endX=
+targetRect.left+
+targetRect.width/2+
+HIT_X;
 
-            if (hitMarker.parentNode) {
-                hitMarker.remove();
-            }
-
-            return;
-
-        }
-
-        if (powerUpPaused) {
-
-            lastTime =
-                currentTime;
-
-            requestAnimationFrame(
-                movePasta
-            );
-
-            return;
-
-        }
-
-        const targetRect =
-            target.getBoundingClientRect();
-
-        const endX =
-            targetRect.left +
-            targetRect.width / 2 +
-            HIT_X;
-
-        const endY =
-            targetRect.top +
-            targetRect.height *
-            HIT_POSITION_Y +
-            HIT_Y;
-
-        hitMarker.style.left =
-            (
-                endX -
-                gameRect.left
-            ) + "px";
-
-        hitMarker.style.top =
-            (
-                endY -
-                gameRect.top
-            ) + "px";
-
-        const deltaTime =
-            Math.min(
-                (
-                    currentTime -
-                    lastTime
-                ) / 1000,
-                0.05
-            );
-
-        lastTime =
-            currentTime;
-
-        const dx =
-            endX -
-            currentX;
-
-        const dy =
-            endY -
-            currentY;
-
-        const distance =
-            Math.sqrt(
-                dx * dx +
-                dy * dy
-            );
-
-        const movement =
-            speed *
-            deltaTime;
-
-        if (
-            distance <=
-            movement
-        ) {
-
-            currentX =
-                endX;
-
-            currentY =
-                endY;
-
-        }
-
-        else {
-
-            currentX +=
-                (
-                    dx /
-                    distance
-                ) *
-                movement;
-
-            currentY +=
-                (
-                    dy /
-                    distance
-                ) *
-                movement;
-
-        }
-
-        pasta.style.left =
-            (
-                currentX -
-                gameRect.left -
-                42
-            ) + "px";
-
-        pasta.style.top =
-            (
-                currentY -
-                gameRect.top -
-                42
-            ) + "px";
-
-        const remainingX =
-            endX -
-            currentX;
-
-        const remainingY =
-            endY -
-            currentY;
-
-        const remainingDistance =
-            Math.sqrt(
-                remainingX *
-                remainingX +
-                remainingY *
-                remainingY
-            );
-
-        if (
-            remainingDistance <=
-            3
-        ) {
-
-            hitCustomer(
-                target,
-                pasta
-            );
-
-            if (hitMarker.parentNode) {
-                hitMarker.remove();
-            }
-
-            return;
-
-        }
-
-        requestAnimationFrame(
-            movePasta
-        );
-
-    }
-
-    requestAnimationFrame(
-        movePasta
-    );
+const endY=
+targetRect.top+
+targetRect.height*HIT_POSITION_Y+
+HIT_Y;
+
+hitMarker.style.left=
+(endX-gameRect.left)+"px";
+
+hitMarker.style.top=
+(endY-gameRect.top)+"px";
+
+const deltaTime=Math.min(
+(currentTime-lastTime)/1000,
+.05
+);
+
+lastTime=currentTime;
+
+const dx=endX-currentX;
+const dy=endY-currentY;
+
+const distance=Math.sqrt(dx*dx+dy*dy);
+
+const movement=speed*deltaTime;
+
+if(distance<=movement){
+
+currentX=endX;
+currentY=endY;
+
+}else{
+
+currentX+=(dx/distance)*movement;
+currentY+=(dy/distance)*movement;
+
+}
+
+pasta.style.left=
+(currentX-gameRect.left-42)+"px";
+
+pasta.style.top=
+(currentY-gameRect.top-42)+"px";
+
+const remainingX=endX-currentX;
+const remainingY=endY-currentY;
+
+const remainingDistance=
+Math.sqrt(
+remainingX*remainingX+
+remainingY*remainingY
+);
+
+if(remainingDistance<=3){
+
+hitCustomer(target,pasta);
+
+if(hitMarker.parentNode)hitMarker.remove();
+
+return;
+
+}
+
+requestAnimationFrame(movePasta);
+
+}
+
+requestAnimationFrame(movePasta);
 
 }
 
@@ -2644,84 +1549,50 @@ function throwPasta(target) {
    ATTACCO CAMERIERA
 ================================================== */
 
-function playWaitressAttack() {
+function playWaitressAttack(){
 
-    if (powerUpPaused) {
-        return;
-    }
+if(powerUpPaused)return;
+if(!powerUps.waitress)return;
 
-    if (!powerUps.waitress) {
-        return;
-    }
+const target=getNearestVisibleCustomer();
 
-    const target =
-        getNearestVisibleCustomer();
+if(!target){
 
-    if (!target) {
+setWaitressFrame(0);
+return;
 
-        setWaitressFrame(0);
+}
 
-        return;
+setWaitressFrame(0);
 
-    }
+setTimeout(function(){
 
-    setWaitressFrame(0);
+if(!powerUpPaused)setWaitressFrame(1);
 
-    setTimeout(
-        function() {
+},120);
 
-            if (!powerUpPaused) {
+setTimeout(function(){
 
-                setWaitressFrame(1);
+if(!powerUpPaused){
 
-            }
+setWaitressFrame(2);
+throwDrink(target);
 
-        },
-        120
-    );
+}
 
-    setTimeout(
-        function() {
+},240);
 
-            if (!powerUpPaused) {
+setTimeout(function(){
 
-                setWaitressFrame(2);
+if(!powerUpPaused)setWaitressFrame(3);
 
-                throwDrink(
-                    target
-                );
+},360);
 
-            }
+setTimeout(function(){
 
-        },
-        240
-    );
+if(!powerUpPaused)setWaitressFrame(0);
 
-    setTimeout(
-        function() {
-
-            if (!powerUpPaused) {
-
-                setWaitressFrame(3);
-
-            }
-
-        },
-        360
-    );
-
-    setTimeout(
-        function() {
-
-            if (!powerUpPaused) {
-
-                setWaitressFrame(0);
-
-            }
-
-        },
-        600
-    );
+},600);
 
 }
 
@@ -2729,60 +1600,34 @@ function playWaitressAttack() {
    ATTACCO AUTOMATICO CAMERIERA
 ================================================== */
 
-function startWaitressAttack() {
+function startWaitressAttack(){
 
-    if (waitressAttackTimer !== null) {
+if(waitressAttackTimer!==null){
+clearInterval(waitressAttackTimer);
+}
 
-        clearInterval(
-            waitressAttackTimer
-        );
+waitressAttackTimer=setInterval(function(){
 
-    }
+if(powerUpPaused)return;
+if(!powerUps.waitress)return;
 
-    waitressAttackTimer =
-    setInterval(
-        function() {
+const waitress=document.getElementById("waitress");
 
-            if (powerUpPaused) {
-                return;
-            }
+if(waitress.style.display==="none")return;
 
-            if (!powerUps.waitress) {
-                return;
-            }
+const target=getNearestVisibleCustomer();
 
-            const waitress =
-                document.getElementById(
-                    "waitress"
-                );
+if(target){
 
-            if (
-                waitress.style.display ===
-                "none"
-            ) {
+playWaitressAttack();
 
-                return;
+}else{
 
-            }
+setWaitressFrame(0);
 
-            const target =
-                getNearestVisibleCustomer();
+}
 
-            if (target) {
-
-                playWaitressAttack();
-
-            }
-
-            else {
-
-                setWaitressFrame(0);
-
-            }
-
-        },
-        getWaitressAttackInterval()
-    );
+},getWaitressAttackInterval());
 
 }
 
@@ -2790,273 +1635,148 @@ function startWaitressAttack() {
    LANCIO DRINK
 ================================================== */
 
-function throwDrink(target) {
+function throwDrink(target){
 
-    if (!target) {
-        return;
-    }
+if(!target)return;
 
-    if (
-        target.dataset.satisfied ===
-        "true"
-    ) {
+if(target.dataset.satisfied==="true")return;
 
-        return;
+const waitress=document.getElementById("waitress");
+const game=document.getElementById("game");
 
-    }
+const gameRect=game.getBoundingClientRect();
+const waitressRect=waitress.getBoundingClientRect();
 
-    const waitress =
-        document.getElementById(
-            "waitress"
-        );
+const startX=
+waitressRect.left+
+waitressRect.width*WAITRESS_HAND_X;
 
-    const game =
-        document.getElementById(
-            "game"
-        );
+const startY=
+waitressRect.top+
+waitressRect.height*WAITRESS_HAND_Y;
 
-    const gameRect =
-        game.getBoundingClientRect();
+const hitMarker=document.createElement("div");
+hitMarker.className="hit-marker";
+game.appendChild(hitMarker);
 
-    const waitressRect =
-        waitress.getBoundingClientRect();
+const drink=document.createElement("img");
 
-    const startX =
-        waitressRect.left +
-        waitressRect.width *
-        WAITRESS_HAND_X;
+drink.className="drink";
 
-    const startY =
-        waitressRect.top +
-        waitressRect.height *
-        WAITRESS_HAND_Y;
+drink.src=
+"https://i.ibb.co/MDk4xzJd/1788234306668-removebg-preview.png";
 
-    const hitMarker =
-        document.createElement("div");
+game.appendChild(drink);
 
-    hitMarker.className =
-        "hit-marker";
+let currentX=startX;
+let currentY=startY;
 
-    game.appendChild(
-        hitMarker
-    );
+drink.style.left=
+(currentX-gameRect.left-84)+"px";
 
-    const drink =
-        document.createElement("img");
+drink.style.top=
+(currentY-gameRect.top-84)+"px";
 
-    drink.className =
-        "drink";
+const speed=350;
 
-    drink.src =
-        drink.src =
-    "https://i.ibb.co/MDk4xzJd/1788234306668-removebg-preview.png";
+let lastTime=performance.now();
 
-    game.appendChild(
-        drink
-    );
+function moveDrink(currentTime){
 
-    let currentX =
-        startX;
+if(
+!target||
+target.dataset.satisfied==="true"
+){
 
-    let currentY =
-        startY;
+if(drink.parentNode)drink.remove();
+if(hitMarker.parentNode)hitMarker.remove();
 
-    drink.style.left =
-        (
-            currentX -
-            gameRect.left -
-            84
-        ) + "px";
+return;
 
-    drink.style.top =
-        (
-            currentY -
-            gameRect.top -
-            84
-        ) + "px";
+}
 
-    const speed = 350;
+if(powerUpPaused){
 
-    let lastTime =
-        performance.now();
+lastTime=currentTime;
+requestAnimationFrame(moveDrink);
+return;
 
-    function moveDrink(currentTime) {
+}
 
-        if (
-            !target ||
-            target.dataset.satisfied ===
-            "true"
-        ) {
+const targetRect=target.getBoundingClientRect();
 
-            if (drink.parentNode) {
-                drink.remove();
-            }
+const endX=
+targetRect.left+
+targetRect.width/2+
+HIT_X;
 
-            if (hitMarker.parentNode) {
-                hitMarker.remove();
-            }
-
-            return;
-
-        }
-
-        if (powerUpPaused) {
+const endY=
+targetRect.top+
+targetRect.height*HIT_POSITION_Y+
+HIT_Y;
 
-            lastTime =
-                currentTime;
-
-            requestAnimationFrame(
-                moveDrink
-            );
-
-            return;
-
-        }
-
-        const targetRect =
-            target.getBoundingClientRect();
-
-        const endX =
-            targetRect.left +
-            targetRect.width / 2 +
-            HIT_X;
-
-        const endY =
-            targetRect.top +
-            targetRect.height *
-            HIT_POSITION_Y +
-            HIT_Y;
-
-        hitMarker.style.left =
-            (
-                endX -
-                gameRect.left
-            ) + "px";
-
-        hitMarker.style.top =
-            (
-                endY -
-                gameRect.top
-            ) + "px";
-
-        const deltaTime =
-            Math.min(
-                (
-                    currentTime -
-                    lastTime
-                ) / 1000,
-                0.05
-            );
-
-        lastTime =
-            currentTime;
-
-        const dx =
-            endX -
-            currentX;
-
-        const dy =
-            endY -
-            currentY;
-
-        const distance =
-            Math.sqrt(
-                dx * dx +
-                dy * dy
-            );
-
-        const movement =
-            speed *
-            deltaTime;
-
-        if (
-            distance <=
-            movement
-        ) {
-
-            currentX =
-                endX;
-
-            currentY =
-                endY;
-
-        }
-
-        else {
-
-            currentX +=
-                (
-                    dx /
-                    distance
-                ) *
-                movement;
-
-            currentY +=
-                (
-                    dy /
-                    distance
-                ) *
-                movement;
-
-        }
-
-        drink.style.left =
-            (
-                currentX -
-                gameRect.left -
-                35
-            ) + "px";
-
-        drink.style.top =
-            (
-                currentY -
-                gameRect.top -
-                35
-            ) + "px";
-
-        const remainingX =
-            endX -
-            currentX;
-
-        const remainingY =
-            endY -
-            currentY;
-
-        const remainingDistance =
-            Math.sqrt(
-                remainingX *
-                remainingX +
-                remainingY *
-                remainingY
-            );
-
-        if (
-            remainingDistance <=
-            3
-        ) {
-
-            hitCustomerWithDrink(
-                target,
-                drink
-            );
-
-            if (hitMarker.parentNode) {
-                hitMarker.remove();
-            }
-
-            return;
-
-        }
-
-        requestAnimationFrame(
-            moveDrink
-        );
-
-    }
-
-    requestAnimationFrame(
-        moveDrink
-    );
+hitMarker.style.left=
+(endX-gameRect.left)+"px";
+
+hitMarker.style.top=
+(endY-gameRect.top)+"px";
+
+const deltaTime=Math.min(
+(currentTime-lastTime)/1000,
+.05
+);
+
+lastTime=currentTime;
+
+const dx=endX-currentX;
+const dy=endY-currentY;
+
+const distance=Math.sqrt(dx*dx+dy*dy);
+
+const movement=speed*deltaTime;
+
+if(distance<=movement){
+
+currentX=endX;
+currentY=endY;
+
+}else{
+
+currentX+=(dx/distance)*movement;
+currentY+=(dy/distance)*movement;
+
+}
+
+drink.style.left=
+(currentX-gameRect.left-35)+"px";
+
+drink.style.top=
+(currentY-gameRect.top-35)+"px";
+
+const remainingX=endX-currentX;
+const remainingY=endY-currentY;
+
+const remainingDistance=
+Math.sqrt(
+remainingX*remainingX+
+remainingY*remainingY
+);
+
+if(remainingDistance<=3){
+
+hitCustomerWithDrink(target,drink);
+
+if(hitMarker.parentNode)hitMarker.remove();
+
+return;
+
+}
+
+requestAnimationFrame(moveDrink);
+
+}
+
+requestAnimationFrame(moveDrink);
 
 }
 
@@ -3064,109 +1784,64 @@ function throwDrink(target) {
    COLPITO DAL DRINK
 ================================================== */
 
-function hitCustomerWithDrink(
-    customer,
-    drink
-) {
+function hitCustomerWithDrink(customer,drink){
 
-    if (
-        drink &&
-        drink.parentNode
-    ) {
+if(drink&&drink.parentNode)drink.remove();
 
-        drink.remove();
+if(
+!customer||
+customer.dataset.satisfied==="true"
+)return;
 
-    }
+let hp=parseInt(customer.dataset.hp||"30");
 
-    if (
-        !customer ||
-        customer.dataset.satisfied ===
-        "true"
-    ) {
+const damage=3;
 
-        return;
+hp-=damage;
 
-    }
+customer.dataset.hp=hp;
 
-    let hp =
-        parseInt(
-            customer.dataset.hp ||
-            "30"
-        );
+if(hp<=0){
 
-    const damage = 3;
+satisfyCustomer(customer);
 
-    hp -=
-        damage;
-
-    customer.dataset.hp =
-        hp;
-
-    if (
-        hp <= 0
-    ) {
-
-        satisfyCustomer(
-            customer
-        );
-
-    }
+}
 
 }
 
 /* ==================================================
-   COLPITO
+   COLPITO DALLA PASTA
 ================================================== */
 
-function hitCustomer(
-    customer,
-    pasta
-) {
+function hitCustomer(customer,pasta){
 
-    if (
-        pasta &&
-        pasta.parentNode
-    ) {
+if(pasta&&pasta.parentNode)pasta.remove();
 
-        pasta.remove();
+if(
+!customer||
+customer.dataset.satisfied==="true"
+)return;
 
-    }
+let hp=parseInt(customer.dataset.hp||"30");
 
-    if (
-        !customer ||
-        customer.dataset.satisfied ===
-        "true"
-    ) {
+/*
+   Peperoncino:
+   LV1 = +1
+   LV2 = +2
+   LV3 = +3
+*/
 
-        return;
+const damage=5+powerUps.sauce;
 
-    }
+hp-=damage;
 
-    let hp =
-        parseInt(
-            customer.dataset.hp ||
-            "30"
-        );
+customer.dataset.hp=hp;
 
-    const damage =
-        5 +
-        powerUps.sauce;
+if(hp<=0){
 
-    hp -=
-        damage;
+satisfyCustomer(customer);
 
-    customer.dataset.hp =
-        hp;
-
-    if (
-        hp <= 0
-    ) {
-
-        satisfyCustomer(
-            customer
-        );
-
-    }
+}
 
 }
 
@@ -3174,112 +1849,59 @@ function hitCustomer(
    CLIENTE SODDISFATTO
 ================================================== */
 
-function satisfyCustomer(
-    customer
-) {
+function satisfyCustomer(customer){
 
-    if (
-        !customer ||
-        customer.dataset.satisfied ===
-        "true"
-    ) {
+if(
+!customer||
+customer.dataset.satisfied==="true"
+)return;
 
-        return;
+const rect=customer.getBoundingClientRect();
 
-    }
+const game=document.getElementById("game");
+const gameRect=game.getBoundingClientRect();
 
-    const rect =
-        customer
-        .getBoundingClientRect();
+const currentTop=rect.top-gameRect.top;
+const currentLeft=rect.left-gameRect.left;
 
-    const game =
-        document
-        .getElementById("game");
+customer.style.animation="none";
 
-    const gameRect =
-        game
-        .getBoundingClientRect();
+customer.classList.remove("walking");
+customer.classList.add("satisfied");
 
-    const currentTop =
-        rect.top -
-        gameRect.top;
+customer.style.top=currentTop+"px";
+customer.style.left=currentLeft+"px";
 
-    const currentLeft =
-        rect.left -
-        gameRect.left;
+customer.dataset.satisfied="true";
+customer.dataset.atKitchen="false";
 
-    customer.style.animation =
-        "none";
+addEXP(EXP_PER_CUSTOMER);
 
-    customer.classList.remove(
-        "walking"
-    );
+const normalFrames=
+customer.querySelectorAll(".frame");
 
-    customer.classList.add(
-        "satisfied"
-    );
+normalFrames.forEach(function(frame){
+frame.classList.remove("active");
+});
 
-    customer.style.top =
-        currentTop + "px";
+const happyFrame=
+customer.querySelector(".happy-frame");
 
-    customer.style.left =
-        currentLeft + "px";
+happyFrame.style.display="block";
 
-    customer.dataset.satisfied =
-        "true";
+updateZIndexes();
 
-    customer.dataset.atKitchen =
-        "false";
+setTimeout(function(){
 
-    addEXP(
-        EXP_PER_CUSTOMER
-    );
+customer.style.display="none";
 
-    const normalFrames =
-        customer
-        .querySelectorAll(
-            ".frame"
-        );
+happyFrame.style.display="none";
 
-    normalFrames.forEach(
-        function(frame) {
+customer.classList.remove("satisfied");
 
-            frame.classList.remove(
-                "active"
-            );
+updateZIndexes();
 
-        }
-    );
-
-    const happyFrame =
-        customer
-        .querySelector(
-            ".happy-frame"
-        );
-
-    happyFrame.style.display =
-        "block";
-
-    updateZIndexes();
-
-    setTimeout(
-        function() {
-
-            customer.style.display =
-                "none";
-
-            happyFrame.style.display =
-                "none";
-
-            customer.classList.remove(
-                "satisfied"
-            );
-
-            updateZIndexes();
-
-        },
-        1000
-    );
+},1000);
 
 }
 
@@ -3287,53 +1909,33 @@ function satisfyCustomer(
    COMPATIBILITÀ
 ================================================== */
 
-function satisfyCustomer1() {
+function satisfyCustomer1(){
 
-    const customer =
-        customers.find(
-            function(c) {
+const customer=customers.find(function(c){
 
-                return (
-                    c.dataset.type === "1" &&
-                    c.dataset.satisfied !==
-                        "true"
-                );
+return(
+c.dataset.type==="1" &&
+c.dataset.satisfied!=="true"
+);
 
-            }
-        );
+});
 
-    if (customer) {
-
-        satisfyCustomer(
-            customer
-        );
-
-    }
+if(customer)satisfyCustomer(customer);
 
 }
 
-function satisfyCustomer2() {
+function satisfyCustomer2(){
 
-    const customer =
-        customers.find(
-            function(c) {
+const customer=customers.find(function(c){
 
-                return (
-                    c.dataset.type === "2" &&
-                    c.dataset.satisfied !==
-                        "true"
-                );
+return(
+c.dataset.type==="2" &&
+c.dataset.satisfied!=="true"
+);
 
-            }
-        );
+});
 
-    if (customer) {
-
-        satisfyCustomer(
-            customer
-        );
-
-    }
+if(customer)satisfyCustomer(customer);
 
 }
 
