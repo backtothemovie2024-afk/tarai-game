@@ -157,7 +157,7 @@ pointer-events:none;opacity:0;
 }
 
 /* ==================================================
-   SISTEMA PANNELLI POWER UP
+   NUOVO SISTEMA PANNELLI POWER UP
 ================================================== */
 
 #powerup-overlay{
@@ -166,49 +166,26 @@ display:none;align-items:center;justify-content:center;z-index:500;
 }
 
 #powerup-panel{
-width:96%;
-height:78%;
-position:relative;
-background:transparent;
-border:none;
-border-radius:0;
-box-shadow:none;
-padding:0;
+width:96%;height:78%;position:relative;
+background:transparent;border:none;border-radius:0;
+box-shadow:none;padding:0;
 }
 
 #powerup-options{
-position:absolute;
-inset:0;
-display:flex;
-align-items:center;
-justify-content:center;
+position:absolute;inset:0;display:flex;
+align-items:center;justify-content:center;
 gap:1.5%;
 }
 
-/*
-   TUTTI I PANNELLI HANNO LO STESSO SPAZIO
-   DI VISUALIZZAZIONE, COMPRESO SEO YOON.
-*/
-
 .powerup-slot{
-position:relative;
-width:32%;
-height:100%;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
--webkit-tap-highlight-color:transparent;
-overflow:hidden;
+position:relative;width:32%;height:100%;
+display:flex;align-items:center;justify-content:center;
+cursor:pointer;-webkit-tap-highlight-color:transparent;
 }
 
 .powerup-slot img{
-display:block;
-width:100%;
-height:100%;
-object-fit:contain;
-object-position:center;
-pointer-events:none;
+width:100%;height:100%;object-fit:contain;
+display:block;pointer-events:none;
 }
 
 #game.powerup-paused *{
@@ -236,8 +213,7 @@ height:27px;left:2.5%;width:95%;
 #exp-level{font-size:13px}
 
 #powerup-panel{
-width:98%;
-height:78%;
+width:98%;height:78%;
 }
 
 #powerup-options{
@@ -246,14 +222,6 @@ gap:0;
 
 .powerup-slot{
 width:33.33%;
-height:100%;
-}
-
-.powerup-slot img{
-width:100%;
-height:100%;
-object-fit:contain;
-object-position:center;
 }
 
 }
@@ -460,36 +428,38 @@ waitress:false
 let powerUpPaused=false;
 
 /* ==================================================
-   PANNELLI POWER UP
+   PANNELLI POWER UP DEFINITIVI
+   TUTTI 800 × 1500
 ================================================== */
 
 const POWER_UP_PANELS={
 
 pasta:[
-"https://i.ibb.co/NHmK3wd/file-00000000e20481fa9b76f5fa0d30ba53-removebg-preview-removebg-preview.png",
-"https://i.ibb.co/vvH6kjL2/file-00000000eae481f684cfd2789751d01c-removebg-preview.png",
-"https://i.ibb.co/zHW8b4PM/file-00000000a260821187b48b306fc2fe79-removebg-preview.png"
+"https://i.ibb.co/fVytY9Q0/file-00000000e20481fa9b76f5fa0d30ba53-removebg-preview-removebg-preview-800x1500.png",
+
+"https://i.ibb.co/4gT30T9h/file-00000000eae481f684cfd2789751d01c-removebg-preview-800x1500.png",
+
+"https://i.ibb.co/cXr3fFDL/file-00000000a260821187b48b306fc2fe79-removebg-preview-800x1500.png"
 ],
 
 speed:[
-"https://i.ibb.co/MkxGQgrs/file-00000000516481fab57f2c7137dbb936-removebg-preview.png",
-"https://i.ibb.co/zWtzSCgV/file-000000005a8481f693949f689bf265db-removebg-preview.png",
-"https://i.ibb.co/qY9jv9Wh/file-000000008db88211b40fe2988f4f3623-removebg-preview.png"
+"https://i.ibb.co/RGdJT5fx/file-00000000516481fab57f2c7137dbb936-removebg-preview-800x1500.png",
+
+"https://i.ibb.co/RTXHXDcB/file-000000005a8481f693949f689bf265db-removebg-preview-800x1500.png",
+
+"https://i.ibb.co/fbLrtF6/file-000000008db88211b40fe2988f4f3623-removebg-preview-800x1500.png"
 ],
 
 sauce:[
-"https://i.ibb.co/nMD4Xr4K/file-000000005b408211a76255b46c29a71a-removebg-preview.png",
-"https://i.ibb.co/4g33MYbY/file-00000000a9008230bbc9b469a34b2107-removebg-preview.png",
-"https://i.ibb.co/V0x1HBSx/file-00000000925082308307cb91361e8001-removebg-preview.png"
+"https://i.ibb.co/LXMPB4c7/file-000000005b408211a76255b46c29a71a-removebg-preview-800x1500.png",
+
+"https://i.ibb.co/840LBt1Y/file-00000000a9008230bbc9b469a34b2107-removebg-preview-800x1500.png",
+
+"https://i.ibb.co/gb4wX305/file-00000000925082308307cb91361e8001-removebg-preview-800x1500.png"
 ],
 
-/*
-   SEO YOON:
-   pannello corretto SENZA BACKGROUND
-*/
-
 waitress:
-"https://i.ibb.co/xtm6ChZp/file-000000006b8881f590068e56e39361f6.png"
+"https://i.ibb.co/dRbXm7z/file-000000006b8881f590068e56e39361f6-800x1500-removebg-preview.png"
 
 };
 
@@ -502,23 +472,9 @@ function showPowerUpScreen(){
 if(powerUpPaused)return;
 
 const options=document.getElementById("powerup-options");
-
 options.innerHTML="";
 
 let available=[];
-
-/*
-   REGOLA LIVELLI:
-
-   LV0 -> può comparire LV1
-   LV1 -> può comparire LV2
-   LV2 -> può comparire LV3
-   LV3 -> nessun altro pannello
-
-   Quindi un livello superiore NON può
-   comparire se quello precedente non è
-   stato sbloccato.
-*/
 
 Object.keys(powerUps).forEach(function(type){
 
@@ -535,8 +491,6 @@ level:powerUps[type]+1
 
 });
 
-/* Mescola i power-up disponibili */
-
 for(let i=available.length-1;i>0;i--){
 
 const j=Math.floor(Math.random()*(i+1));
@@ -545,12 +499,6 @@ const j=Math.floor(Math.random()*(i+1));
 [available[j],available[i]];
 
 }
-
-/*
-   SEO YOON:
-   compare sempre come LV1 finché
-   non viene sbloccata.
-*/
 
 if(!powerUps.waitress){
 
@@ -561,8 +509,6 @@ level:1
 
 }
 
-/* Mescola nuovamente tutte le possibilità */
-
 for(let i=available.length-1;i>0;i--){
 
 const j=Math.floor(Math.random()*(i+1));
@@ -572,10 +518,6 @@ const j=Math.floor(Math.random()*(i+1));
 
 }
 
-/*
-   Vengono mostrate esattamente 3 scelte.
-*/
-
 const selected=available.slice(0,3);
 
 selected.forEach(function(powerUp){
@@ -583,16 +525,10 @@ selected.forEach(function(powerUp){
 const slot=document.createElement("div");
 
 slot.className="powerup-slot";
-
 slot.dataset.type=powerUp.type;
 slot.dataset.level=powerUp.level;
 
 const image=document.createElement("img");
-
-/*
-   Ogni immagine viene inserita nello
-   stesso identico contenitore.
-*/
 
 if(powerUp.type==="waitress"){
 
@@ -1339,12 +1275,6 @@ a.getBoundingClientRect().top
 );
 
 });
-
-/*
-   LV1 pasta = 2
-   LV2 pasta = 3
-   LV3 pasta = 4
-*/
 
 let numberOfPasta=1+powerUps.pasta;
 
