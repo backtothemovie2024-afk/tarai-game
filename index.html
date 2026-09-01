@@ -207,7 +207,12 @@ body {
     position: absolute;
     width: 100px;
     height: 135px;
+
+    /* MODIFICA:
+       il cliente nasce dentro la parte nera
+       visibile del background */
     top: 5%;
+
     z-index: 10;
 }
 
@@ -289,6 +294,8 @@ body {
 @keyframes walkDown {
 
     0% {
+        /* MODIFICA:
+           stesso punto di partenza dentro lo schermo */
         top: 8%;
     }
 
@@ -375,8 +382,8 @@ body {
 }
 
 .drink {
-    width: 84px;
-    height: 84px;
+    width: 140px;
+    height: 140px;
 }
 
 /* ==================================================
@@ -1551,6 +1558,9 @@ function spawnCustomer(
         "satisfied"
     );
 
+    /* MODIFICA:
+       il cliente viene creato dentro
+       la zona nera visibile */
     customer.style.top = "5%";
 
     let laneIndex;
@@ -2838,7 +2848,8 @@ function throwDrink(target) {
         "drink";
 
     drink.src =
-        "https://i.ibb.co/nqJ8Lh8w/Screenshot-20260830-210005-Grok-removebg-preview.png";
+        drink.src =
+    "https://i.ibb.co/MDk4xzJd/1788234306668-removebg-preview.png";
 
     game.appendChild(
         drink
@@ -2854,14 +2865,14 @@ function throwDrink(target) {
         (
             currentX -
             gameRect.left -
-            42
+            84
         ) + "px";
 
     drink.style.top =
         (
             currentY -
             gameRect.top -
-            42
+            84
         ) + "px";
 
     const speed = 350;
@@ -2993,14 +3004,14 @@ function throwDrink(target) {
             (
                 currentX -
                 gameRect.left -
-                42
+                35
             ) + "px";
 
         drink.style.top =
             (
                 currentY -
                 gameRect.top -
-                42
+                35
             ) + "px";
 
         const remainingX =
