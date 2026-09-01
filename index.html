@@ -672,8 +672,6 @@ LV 1
 
 </div>
 
-<div id="wave-message"></div>
-
 </div>
 </div>
 
@@ -702,38 +700,39 @@ const WAITRESS_HAND_Y=.30;
 ================================================== */
 
 /*
-   Ogni elemento rappresenta una wave.
+   Difficoltà aumentata progressivamente.
 
-   customers = numero di clienti
-   spawnInterval = tempo tra un cliente e l'altro
-   walkTime = tempo impiegato dai clienti per arrivare
+   customers       = numero clienti
+   spawnInterval   = intervallo tra clienti
+   walkTime        = tempo di percorrenza
+   hp              = vita dei clienti
 */
 
 const WAVES=[
 
-{customers:5,  spawnInterval:4000, walkTime:70},
-{customers:5,  spawnInterval:3800, walkTime:68},
-{customers:6,  spawnInterval:3600, walkTime:66},
-{customers:6,  spawnInterval:3400, walkTime:64},
-{customers:7,  spawnInterval:3200, walkTime:62},
+{customers:5,  spawnInterval:3800, walkTime:70, hp:30},
+{customers:6,  spawnInterval:3600, walkTime:68, hp:32},
+{customers:6,  spawnInterval:3400, walkTime:66, hp:34},
+{customers:7,  spawnInterval:3200, walkTime:64, hp:36},
+{customers:7,  spawnInterval:3000, walkTime:62, hp:38},
 
-{customers:7,  spawnInterval:3000, walkTime:60},
-{customers:8,  spawnInterval:2900, walkTime:58},
-{customers:8,  spawnInterval:2800, walkTime:56},
-{customers:9,  spawnInterval:2700, walkTime:54},
-{customers:9,  spawnInterval:2600, walkTime:52},
+{customers:8,  spawnInterval:2850, walkTime:60, hp:40},
+{customers:8,  spawnInterval:2700, walkTime:58, hp:42},
+{customers:9,  spawnInterval:2550, walkTime:56, hp:44},
+{customers:9,  spawnInterval:2400, walkTime:54, hp:46},
+{customers:10, spawnInterval:2250, walkTime:52, hp:48},
 
-{customers:10, spawnInterval:2500, walkTime:50},
-{customers:10, spawnInterval:2400, walkTime:48},
-{customers:11, spawnInterval:2300, walkTime:46},
-{customers:11, spawnInterval:2200, walkTime:44},
-{customers:12, spawnInterval:2100, walkTime:42},
+{customers:10, spawnInterval:2150, walkTime:50, hp:50},
+{customers:11, spawnInterval:2050, walkTime:48, hp:52},
+{customers:11, spawnInterval:1950, walkTime:46, hp:54},
+{customers:12, spawnInterval:1850, walkTime:44, hp:56},
+{customers:12, spawnInterval:1750, walkTime:42, hp:58},
 
-{customers:12, spawnInterval:2000, walkTime:40},
-{customers:13, spawnInterval:1900, walkTime:38},
-{customers:13, spawnInterval:1800, walkTime:36},
-{customers:14, spawnInterval:1700, walkTime:34},
-{customers:15, spawnInterval:1600, walkTime:32}
+{customers:13, spawnInterval:1650, walkTime:40, hp:60},
+{customers:13, spawnInterval:1550, walkTime:38, hp:62},
+{customers:14, spawnInterval:1450, walkTime:36, hp:64},
+{customers:15, spawnInterval:1350, walkTime:34, hp:66},
+{customers:16, spawnInterval:1250, walkTime:32, hp:70}
 
 ];
 
@@ -804,6 +803,21 @@ sauce:0,
 waitress:false
 };
 
+/*
+   Bonus velocità specifico della PASTA.
+
+   Pasta:
+   LV0 = nessun bonus
+   LV1 = nessun bonus
+   LV2 = +15%
+   LV3 = nessun ulteriore bonus
+
+   Il bonus viene applicato alla velocità
+   di lancio della pasta.
+*/
+
+let pastaSpeedBonus=0;
+
 let powerUpPaused=false;
 
 
@@ -850,45 +864,59 @@ waitress:
 
 
 /* ==================================================
-   MOSTRA POWER UP
+   VERIFICA POWER UP DISPONIBILI
 ================================================== */
 
-function showPowerUpScreen(){
-
-if(powerUpPaused)return;
-
-const options=
-document.getElementById("powerup-options");
-
-options.innerHTML="";
+function getAvailablePowerUps(){
 
 let available=[];
 
-Object.keys(powerUps).forEach(function(type){
 
-if(type==="waitress")return;
+/*
+   Pasta
+*/
 
-if(powerUps[type]<3){
+if(powerUps.pasta<3){
 
 available.push({
-type:type,
-level:powerUps[type]+1
+type:"pasta",
+level:powerUps.pasta+1
 });
 
 }
 
+
+/*
+   Velocità
+*/
+
+if(powerUps.speed<3){
+
+available.push({
+type:"speed",
+level:powerUps.speed+1
 });
-
-
-for(let i=available.length-1;i>0;i--){
-
-const j=Math.floor(Math.random()*(i+1));
-
-[available[i],available[j]]=
-[available[j],available[i]];
 
 }
 
+
+/*
+   Salsa
+*/
+
+if(powerUps.sauce<3){
+
+available.push({
+type:"sauce",
+level:powerUps.sauce+1
+});
+
+}
+
+
+/*
+   Cameriera
+*/
 
 if(!powerUps.waitress){
 
@@ -900,6 +928,64 @@ level:1
 }
 
 
+return available;
+
+}
+
+
+/* ==================================================
+   MOSTRA POWER UP
+================================================== */
+
+function showPowerUpScreen(){
+
+/*
+   IMPORTANTE:
+
+   Se tutti i power-up sono già stati presi,
+   NON blocchiamo il gioco.
+*/
+
+if(powerUpPaused)return;
+
+
+const available=
+getAvailablePowerUps();
+
+
+if(available.length===0){
+
+/*
+   Nessuna scelta disponibile.
+   Il livello è già stato aumentato,
+   quindi continuiamo normalmente.
+*/
+
+document
+.getElementById("powerup-overlay")
+.style.display="none";
+
+document
+.getElementById("game")
+.classList.remove("powerup-paused");
+
+powerUpPaused=false;
+
+return;
+
+}
+
+
+const options=
+document.getElementById("powerup-options");
+
+options.innerHTML="";
+
+
+/*
+   Mischia
+*/
+
 for(let i=available.length-1;i>0;i--){
 
 const j=Math.floor(Math.random()*(i+1));
@@ -910,19 +996,30 @@ const j=Math.floor(Math.random()*(i+1));
 }
 
 
-const selected=available.slice(0,3);
+/*
+   Massimo 3 scelte
+*/
+
+const selected=
+available.slice(0,3);
 
 
 selected.forEach(function(powerUp){
 
-const slot=document.createElement("div");
+const slot=
+document.createElement("div");
 
 slot.className="powerup-slot";
 
-slot.dataset.type=powerUp.type;
-slot.dataset.level=powerUp.level;
+slot.dataset.type=
+powerUp.type;
 
-const image=document.createElement("img");
+slot.dataset.level=
+powerUp.level;
+
+
+const image=
+document.createElement("img");
 
 
 if(powerUp.type==="waitress"){
@@ -938,6 +1035,7 @@ powerUp.type
 ][powerUp.level-1];
 
 }
+
 
 image.alt="";
 
@@ -960,9 +1058,11 @@ options.appendChild(slot);
 
 powerUpPaused=true;
 
+
 document
 .getElementById("game")
 .classList.add("powerup-paused");
+
 
 document
 .getElementById("powerup-overlay")
@@ -990,9 +1090,26 @@ summonWaitress();
 
 }else{
 
+
 if(powerUps[type]>=3)return;
 
+
 powerUps[type]++;
+
+
+/*
+   PASTA LV2
+   +15% velocità
+*/
+
+if(
+type==="pasta" &&
+powerUps.pasta===2
+){
+
+pastaSpeedBonus=.15;
+
+}
 
 }
 
@@ -1001,15 +1118,19 @@ document
 .getElementById("powerup-overlay")
 .style.display="none";
 
+
 document
 .getElementById("powerup-options")
 .innerHTML="";
 
+
 powerUpPaused=false;
+
 
 document
 .getElementById("game")
 .classList.remove("powerup-paused");
+
 
 updateEXPBar();
 
@@ -1064,11 +1185,13 @@ document
 .getElementById("waitress")
 .querySelectorAll("img");
 
+
 frames.forEach(function(frame){
 
 frame.classList.remove("active");
 
 });
+
 
 if(frames[frameNumber]){
 
@@ -1109,13 +1232,17 @@ return;
 const requiredEXP=
 EXP_REQUIREMENTS[currentLevel-1];
 
-const percentage=Math.min(
+
+const percentage=
+Math.min(
 100,
 (currentEXP/requiredEXP)*100
 );
 
+
 fill.style.width=
 percentage+"%";
+
 
 levelText.textContent=
 "LV "+currentLevel;
@@ -1131,28 +1258,44 @@ function addEXP(amount){
 
 if(currentLevel>=MAX_LEVEL)return;
 
+
 currentEXP+=amount;
 
-const requiredEXP=
+
+let levelUp=false;
+
+
+while(
+currentLevel<MAX_LEVEL &&
+currentEXP>=EXP_REQUIREMENTS[currentLevel-1]
+){
+
+currentEXP-=
 EXP_REQUIREMENTS[currentLevel-1];
-
-
-if(currentEXP>=requiredEXP){
-
-currentEXP-=requiredEXP;
 
 currentLevel++;
 
-updateEXPBar();
-
-showPowerUpScreen();
-
-return;
+levelUp=true;
 
 }
 
 
 updateEXPBar();
+
+
+/*
+   Mostriamo una sola schermata
+   per il/i livello/i raggiunto/i.
+
+   Se non esistono più power-up,
+   showPowerUpScreen() non bloccherà il gioco.
+*/
+
+if(levelUp){
+
+showPowerUpScreen();
+
+}
 
 }
 
@@ -1192,6 +1335,7 @@ document
 
 resetGame();
 
+
 startWave(1);
 
 startCustomerAnimation();
@@ -1215,6 +1359,7 @@ clearAllTimers();
 
 customers=[];
 
+
 currentWave=1;
 waveSpawned=0;
 waveFinished=false;
@@ -1233,6 +1378,10 @@ powerUps.speed=0;
 powerUps.sauce=0;
 powerUps.waitress=false;
 
+
+pastaSpeedBonus=0;
+
+
 powerUpPaused=false;
 
 
@@ -1244,6 +1393,7 @@ document
 document
 .getElementById("powerup-overlay")
 .style.display="none";
+
 
 document
 .getElementById("powerup-options")
@@ -1268,9 +1418,11 @@ document
 .getElementById("kitchen")
 .style.display="block";
 
+
 document
 .getElementById("kitchenDamaged")
 .style.display="none";
+
 
 document
 .getElementById("kitchenDestroyed")
@@ -1354,6 +1506,7 @@ waveStarting=true;
 
 
 updateWaveDisplay();
+
 
 showWaveMessage(
 "WAVE "+currentWave
@@ -1439,10 +1592,12 @@ lastLaneSpawn[i]=-Infinity;
 
 for(let i=0;i<config.customers;i++){
 
-const delay=i*config.spawnInterval;
+const delay=
+i*config.spawnInterval;
 
 
-waveTimer=setTimeout(function(){
+waveTimer=
+setTimeout(function(){
 
 if(powerUpPaused){
 
@@ -1552,7 +1707,8 @@ lastLaneSpawn[laneIndex]=currentTime;
 spawnCustomer(
 waveSpawned,
 laneIndex,
-config.walkTime
+config.walkTime,
+config.hp
 );
 
 
@@ -1581,7 +1737,8 @@ clearInterval(waveCheckTimer);
 }
 
 
-waveCheckTimer=setInterval(function(){
+waveCheckTimer=
+setInterval(function(){
 
 if(powerUpPaused)return;
 
@@ -1641,18 +1798,13 @@ return;
 }
 
 
-showWaveMessage(
-"WAVE "+currentWave+" COMPLETATA!"
-);
+/*
+   NESSUNA PAUSA TRA LE WAVE.
 
-
-setTimeout(function(){
-
-hideWaveMessage();
+   La wave successiva parte immediatamente.
+*/
 
 startWave(currentWave+1);
-
-},2000);
 
 }
 
@@ -1677,7 +1829,8 @@ showWaveMessage(
 function spawnCustomer(
 index,
 forcedLaneIndex=null,
-walkTime=null
+walkTime=null,
+waveHP=null
 ){
 
 const game=
@@ -1744,6 +1897,7 @@ Math.random()*LANES.length
 customer.dataset.lane=
 laneIndex;
 
+
 customer.style.left=
 LANES[laneIndex]+"%";
 
@@ -1752,12 +1906,14 @@ customer.dataset.type=type;
 
 
 /*
-   HP iniziali.
-   Per ora entrambi i clienti
-   hanno la stessa resistenza.
+   HP determinati dalla wave.
 */
 
-customer.dataset.hp="30";
+customer.dataset.hp=
+String(
+waveHP || 30
+);
+
 
 customer.dataset.satisfied="false";
 
@@ -2282,8 +2438,31 @@ a.getBoundingClientRect().top
 });
 
 
-let numberOfPasta=
-1+powerUps.pasta;
+/*
+   NUMERO PASTE:
+
+   LV0 = 1
+   LV1 = 2
+   LV2 = 2
+   LV3 = 3
+*/
+
+let numberOfPasta=1;
+
+
+if(powerUps.pasta===1){
+
+numberOfPasta=2;
+
+}else if(powerUps.pasta===2){
+
+numberOfPasta=2;
+
+}else if(powerUps.pasta>=3){
+
+numberOfPasta=3;
+
+}
 
 
 return activeCustomers.slice(
@@ -2341,9 +2520,28 @@ setCookFrame(0);
 
 function getCookAttackInterval(){
 
+/*
+   Il power-up SPEED rimane indipendente.
+
+   Il power-up PASTA LV2 aggiunge inoltre
+   +15% velocità.
+*/
+
+let speedMultiplier=
+1+(powerUps.speed*.33);
+
+
+/*
+   Bonus pasta LV2:
+   +15% velocità di attacco.
+*/
+
+speedMultiplier*=
+(1+pastaSpeedBonus);
+
+
 return Math.round(
-3000/
-(1+powerUps.speed*.33)
+3000/speedMultiplier
 );
 
 }
@@ -2489,8 +2687,16 @@ pasta.style.top=
 (currentY-gameRect.top-42)+"px";
 
 
+/*
+   Velocità del proiettile.
+
+   Anche qui LV2 pasta applica +15%.
+*/
+
 const speed=
-350*(1+powerUps.speed*.33);
+350*
+(1+powerUps.speed*.33)*
+(1+pastaSpeedBonus);
 
 
 let lastTime=
