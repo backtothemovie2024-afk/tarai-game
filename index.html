@@ -207,12 +207,7 @@ body {
     position: absolute;
     width: 100px;
     height: 135px;
-
-    /* MODIFICA:
-       il cliente nasce dentro la parte nera
-       visibile del background */
     top: 5%;
-
     z-index: 10;
 }
 
@@ -294,8 +289,6 @@ body {
 @keyframes walkDown {
 
     0% {
-        /* MODIFICA:
-           stesso punto di partenza dentro lo schermo */
         top: 8%;
     }
 
@@ -382,8 +375,8 @@ body {
 }
 
 .drink {
-    width: 140px;
-    height: 140px;
+    width: 84px;
+    height: 84px;
 }
 
 /* ==================================================
@@ -1558,9 +1551,6 @@ function spawnCustomer(
         "satisfied"
     );
 
-    /* MODIFICA:
-       il cliente viene creato dentro
-       la zona nera visibile */
     customer.style.top = "5%";
 
     let laneIndex;
@@ -2864,14 +2854,14 @@ function throwDrink(target) {
         (
             currentX -
             gameRect.left -
-            84
+            42
         ) + "px";
 
     drink.style.top =
         (
             currentY -
             gameRect.top -
-            84
+            42
         ) + "px";
 
     const speed = 350;
@@ -3003,14 +2993,14 @@ function throwDrink(target) {
             (
                 currentX -
                 gameRect.left -
-                35
+                42
             ) + "px";
 
         drink.style.top =
             (
                 currentY -
                 gameRect.top -
-                35
+                42
             ) + "px";
 
         const remainingX =
