@@ -74,9 +74,6 @@ align-items:center;
 z-index:100;
 }
 
-
-/* NUOVO BACKGROUND HOME */
-
 #cover{
 position:absolute;
 inset:0;
@@ -89,9 +86,6 @@ display:block;
 z-index:10;
 }
 
-
-/* NUOVA GRAFICA SOPRA IL BACKGROUND */
-
 #coverOverlay{
 position:absolute;
 inset:0;
@@ -103,17 +97,6 @@ object-fit:fill;
 z-index:20;
 pointer-events:none;
 }
-
-
-/*
-   ZONA INVISIBILE DEL PLAY
-
-   Il pulsante grafico PLAY è già dentro
-   l'immagine coverOverlay.
-
-   Questo elemento serve soltanto a rendere
-   cliccabile quella zona.
-*/
 
 #playButton{
 position:absolute;
@@ -128,6 +111,74 @@ font-size:0;
 z-index:30;
 cursor:pointer;
 -webkit-tap-highlight-color:transparent;
+}
+
+
+/* ==================================================
+   TRANSIZIONE NERA DOPO PLAY
+================================================== */
+
+#blackTransition{
+position:absolute;
+inset:0;
+background:#000;
+display:none;
+overflow:hidden;
+z-index:2000;
+pointer-events:none;
+}
+
+.transition-image{
+position:absolute;
+width:100%;
+height:auto;
+display:block;
+pointer-events:none;
+}
+
+/* PRIMA IMMAGINE — ALTO */
+
+#transitionImage1{
+top:5%;
+left:-100%;
+}
+
+/* SECONDA IMMAGINE — CENTRO */
+
+#transitionImage2{
+top:35%;
+right:-100%;
+}
+
+/* TERZA IMMAGINE — FONDO */
+
+#transitionImage3{
+bottom:5%;
+left:-100%;
+}
+
+@keyframes transitionFromLeft{
+
+from{
+left:-100%;
+}
+
+to{
+left:0%;
+}
+
+}
+
+@keyframes transitionFromRight{
+
+from{
+right:-100%;
+}
+
+to{
+right:0%;
+}
+
 }
 
 
@@ -614,17 +665,11 @@ type="video/mp4"
 
 <div id="menu">
 
-
-<!-- NUOVO BACKGROUND -->
-
 <img
 id="cover"
 src="https://i.ibb.co/WNW9X5rn/file-000000004404823099b99d50c2988e04.png"
 alt=""
 >
-
-
-<!-- GRAFICA HOME CON LE ICONE E PLAY -->
 
 <img
 id="coverOverlay"
@@ -632,18 +677,12 @@ src="https://i.ibb.co/67Fhq4qw/file-0000000053c481f796fb5ec6162a6b2e-removebg-pr
 alt=""
 >
 
-
-<!--
-     ZONA INVISIBILE SOPRA AL PLAY
--->
-
 <button
 id="playButton"
 aria-label="Play"
 >
 PLAY
 </button>
-
 
 </div>
 
@@ -868,6 +907,38 @@ LV 1
 
 
 </div>
+
+
+<!-- ==================================================
+     TRANSIZIONE NERA POST PLAY
+================================================== -->
+
+<div id="blackTransition">
+
+<img
+id="transitionImage1"
+class="transition-image"
+src="https://i.ibb.co/Xfyp7q6S/IMG-20260902-WA0007-removebg-preview.png"
+alt=""
+>
+
+<img
+id="transitionImage2"
+class="transition-image"
+src="https://i.ibb.co/7tJLX4sv/IMG-20260902-WA0006-removebg-preview.png"
+alt=""
+>
+
+<img
+id="transitionImage3"
+class="transition-image"
+src="https://i.ibb.co/RGnVyM45/file-000000002dd881f5ba124fc2a3c78a0c-removebg-preview-removebg-preview.png"
+alt=""
+>
+
+</div>
+
+
 </div>
 
 
@@ -1510,10 +1581,104 @@ document
 "click",
 function(){
 
+const blackTransition=
+document.getElementById(
+"blackTransition"
+);
+
+const image1=
+document.getElementById(
+"transitionImage1"
+);
+
+const image2=
+document.getElementById(
+"transitionImage2"
+);
+
+const image3=
+document.getElementById(
+"transitionImage3"
+);
+
+
+/* NASCONDE IL MENU */
+
 document
 .getElementById("menu")
 .style.display="none";
 
+
+/* MOSTRA SCHERMATA NERA */
+
+blackTransition.style.display="block";
+
+
+/* RESET POSIZIONI */
+
+image1.style.animation="none";
+image2.style.animation="none";
+image3.style.animation="none";
+
+image1.style.left="-100%";
+image2.style.right="-100%";
+image3.style.left="-100%";
+
+
+/* ==============================================
+   0 → 2,33 SECONDI
+   IMMAGINE 1
+   SINISTRA → DESTRA
+================================================ */
+
+setTimeout(function(){
+
+image1.style.animation=
+"transitionFromLeft 2.33s ease-out forwards";
+
+},0);
+
+
+/* ==============================================
+   2,33 → 4,66 SECONDI
+   IMMAGINE 2
+   DESTRA → SINISTRA
+================================================ */
+
+setTimeout(function(){
+
+image2.style.animation=
+"transitionFromRight 2.33s ease-out forwards";
+
+},2330);
+
+
+/* ==============================================
+   4,66 → 7 SECONDI
+   IMMAGINE 3
+   SINISTRA → DESTRA
+================================================ */
+
+setTimeout(function(){
+
+image3.style.animation=
+"transitionFromLeft 2.34s ease-out forwards";
+
+},4660);
+
+
+/* ==============================================
+   7 → 8 SECONDI
+   TUTTE E TRE VISIBILI
+================================================ */
+
+
+/* ==============================================
+   A 8 SECONDI
+   PARTE IL GIOCO
+================================================ */
+
+setTimeout(function(){
 
 document
 .getElementById("game")
@@ -1535,6 +1700,11 @@ startKitchenEnergySystem();
 startFirstAttackDetection();
 
 startZIndexSystem();
+
+
+blackTransition.style.display="none";
+
+},8000);
 
 }
 );
