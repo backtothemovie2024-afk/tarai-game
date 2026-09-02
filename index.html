@@ -6,7 +6,9 @@
 <title>Tarai Rush</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+box-sizing:border-box
+}
 
 html,body{
 margin:0;
@@ -27,6 +29,7 @@ margin:auto;
 overflow:hidden;
 background:#000;
 }
+
 
 /* ==================================================
    INTRO VIDEO
@@ -56,6 +59,7 @@ z-index:1001;
 cursor:pointer;
 }
 
+
 /* ==================================================
    MENU HOME
 ================================================== */
@@ -70,6 +74,9 @@ align-items:center;
 z-index:100;
 }
 
+
+/* NUOVO BACKGROUND HOME */
+
 #cover{
 position:absolute;
 width:100%;
@@ -78,20 +85,48 @@ object-fit:cover;
 z-index:10;
 }
 
+
+/* NUOVA GRAFICA SOPRA IL BACKGROUND */
+
+#coverOverlay{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:20;
+pointer-events:none;
+}
+
+
+/*
+   ZONA INVISIBILE DEL PLAY
+
+   Il pulsante grafico PLAY è già dentro
+   l'immagine coverOverlay.
+
+   Questo elemento serve soltanto a rendere
+   cliccabile quella zona.
+*/
+
 #playButton{
 position:absolute;
-bottom:12%;
-width:60%;
-max-width:240px;
-height:70px;
+left:12%;
+top:58%;
+width:76%;
+height:14%;
 border:none;
-border-radius:18px;
-background:#ef6428;
-color:white;
-font-size:28px;
-font-weight:bold;
+background:transparent;
+color:transparent;
+font-size:0;
 z-index:30;
+cursor:pointer;
+-webkit-tap-highlight-color:transparent;
 }
+
+
+/* ==================================================
+   GIOCO
+================================================== */
 
 #game{
 display:none;
@@ -124,9 +159,14 @@ pointer-events:none;
 z-index:50;
 }
 
-#kitchen{display:block}
+#kitchen{
+display:block;
+}
+
 #kitchenDamaged,
-#kitchenDestroyed{display:none}
+#kitchenDestroyed{
+display:none;
+}
 
 #hud{
 position:absolute;
@@ -189,6 +229,11 @@ z-index:2;
 pointer-events:none;
 }
 
+
+/* ==================================================
+   CLIENTI
+================================================== */
+
 .customer{
 position:absolute;
 width:100px;
@@ -247,18 +292,33 @@ display:block;
 }
 
 @keyframes heartFloat{
+
 0%{
 transform:translateX(-50%) translateY(0) scale(1)
 }
+
 100%{
 transform:translateX(-50%) translateY(-7px) scale(1.12)
 }
+
 }
 
 @keyframes walkDown{
-0%{top:8%}
-100%{top:69%}
+
+0%{
+top:8%
 }
+
+100%{
+top:69%
+}
+
+}
+
+
+/* ==================================================
+   CUOCO
+================================================== */
 
 #cook,
 #waitress{
@@ -288,6 +348,11 @@ display:none;
 display:block;
 }
 
+
+/* ==================================================
+   CAMERIERA
+================================================== */
+
 #waitress{
 left:62.5%;
 display:none;
@@ -309,6 +374,11 @@ transform-origin:center bottom;
 display:block;
 }
 
+
+/* ==================================================
+   PASTA / DRINK
+================================================== */
+
 .pasta,
 .drink{
 position:absolute;
@@ -323,6 +393,11 @@ pointer-events:none;
 width:140px;
 height:140px;
 }
+
+
+/* ==================================================
+   HIT MARKER
+================================================== */
 
 .hit-marker{
 position:absolute;
@@ -339,6 +414,7 @@ z-index:90;
 pointer-events:none;
 opacity:0;
 }
+
 
 /* ==================================================
    POWER UP
@@ -397,6 +473,7 @@ pointer-events:none;
 animation-play-state:paused!important;
 }
 
+
 /* ==================================================
    WAVE DISPLAY
 ================================================== */
@@ -432,6 +509,11 @@ z-index:400;
 display:none;
 pointer-events:none;
 }
+
+
+/* ==================================================
+   MOBILE
+================================================== */
 
 @media(max-width:500px){
 
@@ -492,6 +574,7 @@ font-size:21px;
 
 <div id="phone">
 
+
 <!-- ==================================================
      INTRO VIDEO
 ================================================== -->
@@ -505,16 +588,13 @@ muted
 playsinline
 preload="auto"
 >
+
 <source
 src="https://yourimageshare.com/ib/LjN0a6FLZL.mp4"
 type="video/mp4"
 >
-</video>
 
-<!--
-     TAP IN QUALSIASI PUNTO DEL VIDEO
-     PER PASSARE ALLA HOME
--->
+</video>
 
 <div id="introTap"></div>
 
@@ -527,13 +607,36 @@ type="video/mp4"
 
 <div id="menu">
 
+
+<!-- NUOVO BACKGROUND -->
+
 <img
 id="cover"
-src="https://i.ibb.co/qMC7T0bk/1787735382053.png"
+src="https://i.ibb.co/WNW9X5rn/file-000000004404823099b99d50c2988e04.png"
 alt=""
 >
 
-<button id="playButton">PLAY</button>
+
+<!-- GRAFICA HOME CON LE ICONE E PLAY -->
+
+<img
+id="coverOverlay"
+src="https://i.ibb.co/67Fhq4qw/file-0000000053c481f796fb5ec6162a6b2e-removebg-preview.png"
+alt=""
+>
+
+
+<!--
+     ZONA INVISIBILE SOPRA AL PLAY
+-->
+
+<button
+id="playButton"
+aria-label="Play"
+>
+PLAY
+</button>
+
 
 </div>
 
@@ -544,11 +647,13 @@ alt=""
 
 <div id="game">
 
+
 <img
 id="background"
 src="https://cdn.imgchest.com/files/25a5041a8483.jpg"
 alt=""
 >
+
 
 <img
 id="kitchen"
@@ -556,11 +661,13 @@ src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png"
 alt=""
 >
 
+
 <img
 id="kitchenDamaged"
 src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"
 alt=""
 >
+
 
 <img
 id="kitchenDestroyed"
@@ -568,14 +675,20 @@ src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"
 alt=""
 >
 
+
 <div id="hud">
+
 <span>❤️ 3</span>
+
 <span>⭐ 0</span>
+
 </div>
+
 
 <div id="wave-display">
 WAVE 1 / 20
 </div>
+
 
 <div id="wave-message">
 WAVE 1
@@ -610,7 +723,9 @@ src="https://i.ibb.co/mV43yWMM/grok-1788037208959-removebg-preview.png"
 alt=""
 >
 
-<div class="heart">❤️</div>
+<div class="heart">
+❤️
+</div>
 
 </div>
 
@@ -643,7 +758,9 @@ src="https://i.ibb.co/m5xmJrBq/Screenshot-20260830-060945-Grok-removebg-preview.
 alt=""
 >
 
-<div class="heart">❤️</div>
+<div class="heart">
+❤️
+</div>
 
 </div>
 
@@ -742,11 +859,13 @@ LV 1
 
 </div>
 
+
 </div>
 </div>
 
 
 <script>
+
 
 /* ==================================================
    INTRO → HOME
@@ -762,14 +881,10 @@ const introTap=
 document.getElementById("introTap");
 
 
-/*
-   TAP IN QUALSIASI PUNTO DEL VIDEO
-   PER PASSARE ALLA HOME
-*/
-
 function closeIntro(){
 
-if(intro.style.display==="none")return;
+if(intro.style.display==="none")
+return;
 
 introVideo.pause();
 
@@ -778,15 +893,11 @@ intro.style.display="none";
 }
 
 
-/*
-   Funziona sia con tap su smartphone
-   sia con click su PC.
-*/
-
 introTap.addEventListener(
 "click",
 closeIntro
 );
+
 
 introTap.addEventListener(
 "touchend",
@@ -800,11 +911,6 @@ closeIntro();
 {passive:false}
 );
 
-
-/*
-   Se il video finisce da solo,
-   passa comunque alla HOME.
-*/
 
 introVideo.addEventListener(
 "ended",
@@ -1030,7 +1136,8 @@ return available;
 
 function showPowerUpScreen(){
 
-if(powerUpPaused)return;
+if(powerUpPaused)
+return;
 
 const available=
 getAvailablePowerUps();
@@ -1056,17 +1163,32 @@ document.getElementById("powerup-options");
 
 options.innerHTML="";
 
-for(let i=available.length-1;i>0;i--){
 
-const j=Math.floor(Math.random()*(i+1));
+for(
+let i=available.length-1;
+i>0;
+i--
+){
 
-[available[i],available[j]]=
-[available[j],available[i]];
+const j=
+Math.floor(
+Math.random()*(i+1)
+);
+
+[
+available[i],
+available[j]
+]=[
+available[j],
+available[i]
+];
 
 }
 
+
 const selected=
 available.slice(0,3);
+
 
 selected.forEach(function(powerUp){
 
@@ -1081,8 +1203,10 @@ powerUp.type;
 slot.dataset.level=
 powerUp.level;
 
+
 const image=
 document.createElement("img");
+
 
 if(powerUp.type==="waitress"){
 
@@ -1098,9 +1222,11 @@ powerUp.type
 
 }
 
+
 image.alt="";
 
 slot.appendChild(image);
+
 
 slot.addEventListener(
 "click",
@@ -1110,15 +1236,19 @@ selectPowerUp(powerUp.type);
 
 });
 
+
 options.appendChild(slot);
 
 });
 
+
 powerUpPaused=true;
+
 
 document
 .getElementById("game")
 .classList.add("powerup-paused");
+
 
 document
 .getElementById("powerup-overlay")
@@ -1133,21 +1263,27 @@ document
 
 function selectPowerUp(type){
 
-if(!powerUpPaused)return;
+if(!powerUpPaused)
+return;
+
 
 if(type==="waitress"){
 
-if(powerUps.waitress)return;
+if(powerUps.waitress)
+return;
 
 powerUps.waitress=true;
 
 summonWaitress();
 
+
 }else{
 
-if(powerUps[type]>=3)return;
+if(powerUps[type]>=3)
+return;
 
 powerUps[type]++;
+
 
 if(
 type==="pasta" &&
@@ -1160,19 +1296,24 @@ pastaSpeedBonus=.15;
 
 }
 
+
 document
 .getElementById("powerup-overlay")
 .style.display="none";
+
 
 document
 .getElementById("powerup-options")
 .innerHTML="";
 
+
 powerUpPaused=false;
+
 
 document
 .getElementById("game")
 .classList.remove("powerup-paused");
+
 
 updateEXPBar();
 
@@ -1227,11 +1368,13 @@ document
 .getElementById("waitress")
 .querySelectorAll("img");
 
+
 frames.forEach(function(frame){
 
 frame.classList.remove("active");
 
 });
+
 
 if(frames[frameNumber]){
 
@@ -1254,9 +1397,11 @@ document.getElementById("exp-fill");
 const levelText=
 document.getElementById("exp-level");
 
+
 if(currentLevel>=MAX_LEVEL){
 
 currentLevel=MAX_LEVEL;
+
 currentEXP=0;
 
 fill.style.width="100%";
@@ -1267,8 +1412,10 @@ return;
 
 }
 
+
 const requiredEXP=
 EXP_REQUIREMENTS[currentLevel-1];
+
 
 const percentage=
 Math.min(
@@ -1276,8 +1423,10 @@ Math.min(
 (currentEXP/requiredEXP)*100
 );
 
+
 fill.style.width=
 percentage+"%";
+
 
 levelText.textContent=
 "LV "+currentLevel;
@@ -1291,15 +1440,19 @@ levelText.textContent=
 
 function addEXP(amount){
 
-if(currentLevel>=MAX_LEVEL)return;
+if(currentLevel>=MAX_LEVEL)
+return;
+
 
 currentEXP+=amount;
 
 let levelUp=false;
 
+
 while(
 currentLevel<MAX_LEVEL &&
-currentEXP>=EXP_REQUIREMENTS[currentLevel-1]
+currentEXP>=
+EXP_REQUIREMENTS[currentLevel-1]
 ){
 
 currentEXP-=
@@ -1311,7 +1464,9 @@ levelUp=true;
 
 }
 
+
 updateEXPBar();
+
 
 if(levelUp){
 
@@ -1339,33 +1494,43 @@ let customers=[];
 
 
 /* ==================================================
-   PLAY
+   PLAY → GIOCO
 ================================================== */
 
 document
 .getElementById("playButton")
-.addEventListener("click",function(){
+.addEventListener(
+"click",
+function(){
 
 document
 .getElementById("menu")
 .style.display="none";
 
+
 document
 .getElementById("game")
 .style.display="block";
+
 
 resetGame();
 
 startWave(1);
 
 startCustomerAnimation();
+
 startCookAnimation();
+
 startWaitressAttack();
+
 startKitchenEnergySystem();
+
 startFirstAttackDetection();
+
 startZIndexSystem();
 
-});
+}
+);
 
 
 /* ==================================================
@@ -1379,66 +1544,89 @@ clearAllTimers();
 customers=[];
 
 currentWave=1;
+
 waveSpawned=0;
+
 waveFinished=false;
+
 waveStarting=false;
 
 kitchenEnergy=100;
 
 currentLevel=1;
+
 currentEXP=0;
 
 powerUps.pasta=0;
+
 powerUps.speed=0;
+
 powerUps.sauce=0;
+
 powerUps.waitress=false;
 
 pastaSpeedBonus=0;
 
 powerUpPaused=false;
 
+
 document
 .getElementById("waitress")
 .style.display="none";
+
 
 document
 .getElementById("powerup-overlay")
 .style.display="none";
 
+
 document
 .getElementById("powerup-options")
 .innerHTML="";
 
-document
-.getElementById("game")
-.classList.remove("powerup-paused");
 
 document
-.querySelectorAll(".spawned-customer")
+.getElementById("game")
+.classList.remove(
+"powerup-paused"
+);
+
+
+document
+.querySelectorAll(
+".spawned-customer"
+)
 .forEach(function(customer){
 
 customer.remove();
 
 });
 
+
 document
 .getElementById("kitchen")
 .style.display="block";
+
 
 document
 .getElementById("kitchenDamaged")
 .style.display="none";
 
+
 document
 .getElementById("kitchenDestroyed")
 .style.display="none";
+
 
 document
 .getElementById("wave-message")
 .style.display="none";
 
+
 updateKitchenEnergy();
+
 updateEXPBar();
+
 updateWaveDisplay();
 
 }
@@ -1474,13 +1662,21 @@ clearTimeout(waveTimer);
 if(waveCheckTimer!==null)
 clearInterval(waveCheckTimer);
 
+
 customerTimer=null;
+
 cookTimer=null;
+
 waitressAttackTimer=null;
+
 firstAttackTimer=null;
+
 kitchenDamageTimer=null;
+
 zIndexTimer=null;
+
 waveTimer=null;
+
 waveCheckTimer=null;
 
 }
@@ -1500,16 +1696,23 @@ return;
 
 }
 
+
 currentWave=waveNumber;
+
 waveSpawned=0;
+
 waveFinished=false;
+
 waveStarting=true;
 
+
 updateWaveDisplay();
+
 
 showWaveMessage(
 "WAVE "+currentWave
 );
+
 
 setTimeout(function(){
 
@@ -1531,9 +1734,12 @@ spawnWaveCustomers();
 function showWaveMessage(text){
 
 const message=
-document.getElementById("wave-message");
+document.getElementById(
+"wave-message"
+);
 
 message.textContent=text;
+
 message.style.display="block";
 
 }
@@ -1546,7 +1752,9 @@ message.style.display="block";
 function hideWaveMessage(){
 
 const message=
-document.getElementById("wave-message");
+document.getElementById(
+"wave-message"
+);
 
 message.style.display="none";
 
@@ -1562,7 +1770,10 @@ function updateWaveDisplay(){
 document
 .getElementById("wave-display")
 .textContent=
-"WAVE "+currentWave+" / "+TOTAL_WAVES;
+"WAVE "+
+currentWave+
+" / "+
+TOTAL_WAVES;
 
 }
 
@@ -1576,20 +1787,33 @@ function spawnWaveCustomers(){
 const config=
 WAVES[currentWave-1];
 
-if(!config)return;
+if(!config)
+return;
+
 
 const lastLaneSpawn=[];
 
-for(let i=0;i<LANES.length;i++){
+
+for(
+let i=0;
+i<LANES.length;
+i++
+){
 
 lastLaneSpawn[i]=-Infinity;
 
 }
 
-for(let i=0;i<config.customers;i++){
+
+for(
+let i=0;
+i<config.customers;
+i++
+){
 
 const delay=
 i*config.spawnInterval;
+
 
 waveTimer=
 setTimeout(function(){
@@ -1645,6 +1869,7 @@ return;
 
 }
 
+
 spawnWaveCustomer(
 index,
 lastLaneSpawn,
@@ -1655,7 +1880,7 @@ config
 
 
 /* ==================================================
-   SPAWN SINGOLO CLIENTE DELLA WAVE
+   SPAWN SINGOLO CLIENTE
 ================================================== */
 
 function spawnWaveCustomer(
@@ -1664,7 +1889,11 @@ lastLaneSpawn,
 config
 ){
 
-if(waveSpawned>=config.customers)return;
+if(
+waveSpawned>=config.customers
+)
+return;
+
 
 let laneIndex;
 
@@ -1672,6 +1901,7 @@ let attempts=0;
 
 const currentTime=
 performance.now();
+
 
 do{
 
@@ -1686,13 +1916,16 @@ attempts++;
 
 attempts<50 &&
 
-currentTime-lastLaneSpawn[laneIndex]
+currentTime-
+lastLaneSpawn[laneIndex]
 <
 SAME_LANE_MIN_DELAY
 
 );
 
+
 lastLaneSpawn[laneIndex]=currentTime;
+
 
 spawnCustomer(
 waveSpawned,
@@ -1701,9 +1934,13 @@ config.walkTime,
 config.hp
 );
 
+
 waveSpawned++;
 
-if(waveSpawned>=config.customers){
+
+if(
+waveSpawned>=config.customers
+){
 
 scheduleWaveCheck();
 
@@ -1724,12 +1961,16 @@ clearInterval(waveCheckTimer);
 
 }
 
+
 waveCheckTimer=
 setInterval(function(){
 
-if(powerUpPaused)return;
+if(powerUpPaused)
+return;
 
-if(waveFinished)return;
+if(waveFinished)
+return;
+
 
 const activeWaveCustomers=
 customers.filter(function(customer){
@@ -1743,11 +1984,16 @@ customer.style.display!=="none"
 
 });
 
+
 if(
+
 waveSpawned>=
 WAVES[currentWave-1].customers
+
 &&
+
 activeWaveCustomers.length===0
+
 ){
 
 clearInterval(waveCheckTimer);
@@ -1769,9 +2015,12 @@ completeWave();
 
 function completeWave(){
 
-if(waveFinished)return;
+if(waveFinished)
+return;
+
 
 waveFinished=true;
+
 
 if(currentWave>=TOTAL_WAVES){
 
@@ -1781,7 +2030,10 @@ return;
 
 }
 
-startWave(currentWave+1);
+
+startWave(
+currentWave+1
+);
 
 }
 
@@ -1813,10 +2065,12 @@ waveHP=null
 const game=
 document.getElementById("game");
 
+
 const type=
 Math.random()<.5
 ?1
 :2;
+
 
 const template=
 document.getElementById(
@@ -1825,11 +2079,17 @@ type===1
 :"customer2Template"
 );
 
+
 const customer=
 template.cloneNode(true);
 
+
 customer.id=
-"customer-"+Date.now()+"-"+index;
+"customer-"+
+Date.now()+
+"-"+
+index;
+
 
 customer.classList.remove(
 "customer-template"
@@ -1839,12 +2099,20 @@ customer.classList.add(
 "spawned-customer"
 );
 
+
 customer.style.display="block";
+
 customer.style.animation="none";
-customer.classList.remove("satisfied");
+
+customer.classList.remove(
+"satisfied"
+);
+
 customer.style.top="5%";
 
+
 let laneIndex;
+
 
 if(
 forcedLaneIndex!==null &&
@@ -1862,18 +2130,23 @@ Math.random()*LANES.length
 
 }
 
+
 customer.dataset.lane=
 laneIndex;
+
 
 customer.style.left=
 LANES[laneIndex]+"%";
 
+
 customer.dataset.type=type;
+
 
 customer.dataset.hp=
 String(
 waveHP || 30
 );
+
 
 customer.dataset.satisfied="false";
 
@@ -1884,41 +2157,62 @@ customer.dataset.frame="0";
 customer.dataset.wave=
 currentWave;
 
+
 const frames=
-customer.querySelectorAll(".frame");
+customer.querySelectorAll(
+".frame"
+);
+
 
 frames.forEach(function(frame){
 
-frame.classList.remove("active");
+frame.classList.remove(
+"active"
+);
 
 });
 
+
 if(frames.length>0){
 
-frames[0].classList.add("active");
+frames[0].classList.add(
+"active"
+);
 
 }
 
+
 const happyFrame=
-customer.querySelector(".happy-frame");
+customer.querySelector(
+".happy-frame"
+);
+
 
 happyFrame.style.display="none";
+
 
 game.appendChild(customer);
 
 customers.push(customer);
 
+
 const actualWalkTime=
 walkTime || 60;
+
 
 requestAnimationFrame(function(){
 
 customer.style.animation=
-"walkDown "+actualWalkTime+"s linear forwards";
+"walkDown "+
+actualWalkTime+
+"s linear forwards";
 
-customer.classList.add("walking");
+customer.classList.add(
+"walking"
+);
 
 });
+
 
 setTimeout(function(){
 
@@ -1958,6 +2252,7 @@ document
 .getElementById("kitchenDestroyed")
 .style.display="none";
 
+
 }else if(kitchenEnergy>20){
 
 document
@@ -1971,6 +2266,7 @@ document
 document
 .getElementById("kitchenDestroyed")
 .style.display="none";
+
 
 }else{
 
@@ -1999,23 +2295,33 @@ function startKitchenEnergySystem(){
 
 if(kitchenDamageTimer!==null){
 
-clearInterval(kitchenDamageTimer);
+clearInterval(
+kitchenDamageTimer
+);
 
 }
+
 
 kitchenDamageTimer=
 setInterval(function(){
 
-if(powerUpPaused)return;
+if(powerUpPaused)
+return;
+
 
 let damage=0;
+
 
 customers.forEach(function(customer){
 
 if(
+
 customer &&
+
 customer.dataset.atKitchen==="true" &&
+
 customer.dataset.satisfied!=="true"
+
 ){
 
 damage++;
@@ -2024,12 +2330,15 @@ damage++;
 
 });
 
+
 if(damage>0){
 
 kitchenEnergy-=damage;
 
+
 if(kitchenEnergy<0)
 kitchenEnergy=0;
+
 
 updateKitchenEnergy();
 
@@ -2049,20 +2358,26 @@ function customerIsVisible(customer){
 if(
 !customer ||
 customer.style.display==="none"
-)return false;
+)
+return false;
+
 
 const rect=
 customer.getBoundingClientRect();
 
+
 const game=
 document.getElementById("game");
+
 
 const gameRect=
 game.getBoundingClientRect();
 
+
 return(
 
 rect.bottom>gameRect.top &&
+
 rect.top<gameRect.bottom
 
 );
@@ -2078,14 +2393,18 @@ function startZIndexSystem(){
 
 if(zIndexTimer!==null){
 
-clearInterval(zIndexTimer);
+clearInterval(
+zIndexTimer
+);
 
 }
+
 
 zIndexTimer=
 setInterval(function(){
 
-if(powerUpPaused)return;
+if(powerUpPaused)
+return;
 
 updateZIndexes();
 
@@ -2100,11 +2419,15 @@ const activeCustomers=
 customers.filter(function(customer){
 
 return(
+
 customer &&
+
 customer.style.display!=="none"
+
 );
 
 });
+
 
 activeCustomers.sort(function(a,b){
 
@@ -2117,6 +2440,7 @@ b.getBoundingClientRect().top;
 return aTop-bTop;
 
 });
+
 
 activeCustomers.forEach(function(customer,index){
 
@@ -2136,23 +2460,31 @@ function startFirstAttackDetection(){
 
 if(firstAttackTimer!==null){
 
-clearInterval(firstAttackTimer);
+clearInterval(
+firstAttackTimer
+);
 
 }
+
 
 firstAttackTimer=
 setInterval(function(){
 
-if(powerUpPaused)return;
+if(powerUpPaused)
+return;
+
 
 const target=
 getNearestVisibleCustomer();
+
 
 if(target){
 
 playCookAttack();
 
-clearInterval(firstAttackTimer);
+clearInterval(
+firstAttackTimer
+);
 
 }
 
@@ -2169,45 +2501,70 @@ function startCustomerAnimation(){
 
 if(customerTimer!==null){
 
-clearInterval(customerTimer);
+clearInterval(
+customerTimer
+);
 
 }
+
 
 customerTimer=
 setInterval(function(){
 
-if(powerUpPaused)return;
+if(powerUpPaused)
+return;
+
 
 customers.forEach(function(customer){
 
 if(
+
 !customer ||
+
 customer.style.display==="none" ||
+
 customer.dataset.satisfied==="true"
-)return;
+
+)
+return;
+
 
 const frames=
-customer.querySelectorAll(".frame");
+customer.querySelectorAll(
+".frame"
+);
 
-if(frames.length===0)return;
+
+if(frames.length===0)
+return;
+
 
 let frame=
 parseInt(
 customer.dataset.frame||"0"
 );
 
+
 frames.forEach(function(image){
 
-image.classList.remove("active");
+image.classList.remove(
+"active"
+);
 
 });
 
-frames[frame].classList.add("active");
+
+frames[frame].classList.add(
+"active"
+);
+
 
 frame++;
 
+
 if(frame>=frames.length)
 frame=0;
+
 
 customer.dataset.frame=frame;
 
@@ -2229,15 +2586,21 @@ document
 .getElementById("cook")
 .querySelectorAll("img");
 
+
 frames.forEach(function(frame){
 
-frame.classList.remove("active");
+frame.classList.remove(
+"active"
+);
 
 });
 
+
 if(frames[frameNumber]){
 
-frames[frameNumber].classList.add("active");
+frames[frameNumber].classList.add(
+"active"
+);
 
 }
 
@@ -2250,10 +2613,13 @@ frames[frameNumber].classList.add("active");
 
 function playCookAttack(){
 
-if(powerUpPaused)return;
+if(powerUpPaused)
+return;
+
 
 const targets=
 getAttackTargets();
+
 
 if(targets.length===0){
 
@@ -2263,7 +2629,9 @@ return;
 
 }
 
+
 setCookFrame(0);
+
 
 setTimeout(function(){
 
@@ -2272,6 +2640,7 @@ setCookFrame(1);
 
 },120);
 
+
 setTimeout(function(){
 
 if(!powerUpPaused)
@@ -2279,17 +2648,22 @@ setCookFrame(2);
 
 },240);
 
+
 setTimeout(function(){
 
 if(!powerUpPaused){
 
 setCookFrame(3);
 
+
 targets.forEach(function(target){
 
 if(
+
 target &&
+
 target.dataset.satisfied!=="true"
+
 ){
 
 throwPasta(target);
@@ -2302,12 +2676,14 @@ throwPasta(target);
 
 },360);
 
+
 setTimeout(function(){
 
 if(!powerUpPaused)
 setCookFrame(4);
 
 },480);
+
 
 setTimeout(function(){
 
@@ -2328,19 +2704,28 @@ function getAttackTargets(){
 const activeCustomers=
 customers.filter(function(customer){
 
-if(!customer)return false;
+if(!customer)
+return false;
+
 
 if(
 customer.style.display==="none"
-)return false;
+)
+return false;
+
 
 if(
 customer.dataset.satisfied==="true"
-)return false;
+)
+return false;
 
-return customerIsVisible(customer);
+
+return customerIsVisible(
+customer
+);
 
 });
+
 
 activeCustomers.sort(function(a,b){
 
@@ -2351,7 +2736,9 @@ a.getBoundingClientRect().top
 
 });
 
+
 let numberOfPasta=1;
+
 
 if(powerUps.pasta===1){
 
@@ -2366,6 +2753,7 @@ numberOfPasta=2;
 numberOfPasta=3;
 
 }
+
 
 return activeCustomers.slice(
 0,
@@ -2383,19 +2771,26 @@ function startCookAnimation(){
 
 if(cookTimer!==null){
 
-clearInterval(cookTimer);
+clearInterval(
+cookTimer
+);
 
 }
 
+
 setCookFrame(0);
+
 
 cookTimer=
 setInterval(function(){
 
-if(powerUpPaused)return;
+if(powerUpPaused)
+return;
+
 
 const target=
 getNearestVisibleCustomer();
+
 
 if(target!==null){
 
@@ -2421,8 +2816,10 @@ function getCookAttackInterval(){
 let speedMultiplier=
 1+(powerUps.speed*.33);
 
+
 speedMultiplier*=
 (1+pastaSpeedBonus);
+
 
 return Math.round(
 3000/speedMultiplier
@@ -2453,42 +2850,57 @@ function getNearestVisibleCustomer(){
 const activeCustomers=
 customers.filter(function(customer){
 
-if(!customer)return false;
+if(!customer)
+return false;
+
 
 if(
 customer.style.display==="none"
-)return false;
+)
+return false;
+
 
 if(
 customer.dataset.satisfied==="true"
-)return false;
+)
+return false;
 
-return customerIsVisible(customer);
+
+return customerIsVisible(
+customer
+);
 
 });
+
 
 if(activeCustomers.length===0)
 return null;
 
+
 let nearest=
 activeCustomers[0];
 
+
 let nearestTop=
 nearest.getBoundingClientRect().top;
+
 
 activeCustomers.forEach(function(customer){
 
 const top=
 customer.getBoundingClientRect().top;
 
+
 if(top>nearestTop){
 
 nearest=customer;
+
 nearestTop=top;
 
 }
 
 });
+
 
 return nearest;
 
@@ -2501,111 +2913,167 @@ return nearest;
 
 function throwPasta(target){
 
-if(!target)return;
+if(!target)
+return;
+
 
 if(
 target.dataset.satisfied==="true"
-)return;
+)
+return;
+
 
 const cook=
 document.getElementById("cook");
 
+
 const game=
 document.getElementById("game");
+
 
 const gameRect=
 game.getBoundingClientRect();
 
+
 const cookRect=
 cook.getBoundingClientRect();
+
 
 const startX=
 cookRect.left+
 cookRect.width*.72;
 
+
 const startY=
 cookRect.top+
 cookRect.height*.32;
 
+
 const hitMarker=
 document.createElement("div");
 
+
 hitMarker.className="hit-marker";
 
-game.appendChild(hitMarker);
+
+game.appendChild(
+hitMarker
+);
+
 
 const pasta=
 document.createElement("img");
 
+
 pasta.className="pasta";
+
 
 pasta.src=
 "https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png";
 
-game.appendChild(pasta);
+
+game.appendChild(
+pasta
+);
+
 
 let currentX=startX;
+
 let currentY=startY;
 
+
 pasta.style.left=
-(currentX-gameRect.left-42)+"px";
+(
+currentX-
+gameRect.left-
+42
+)+"px";
+
 
 pasta.style.top=
-(currentY-gameRect.top-42)+"px";
+(
+currentY-
+gameRect.top-
+42
+)+"px";
+
 
 const speed=
 350*
 (1+powerUps.speed*.33)*
 (1+pastaSpeedBonus);
 
+
 let lastTime=
 performance.now();
+
 
 function movePasta(currentTime){
 
 if(
+
 !target ||
+
 target.dataset.satisfied==="true"
+
 ){
 
 if(pasta.parentNode)
 pasta.remove();
 
+
 if(hitMarker.parentNode)
 hitMarker.remove();
+
 
 return;
 
 }
+
 
 if(powerUpPaused){
 
 lastTime=currentTime;
 
-requestAnimationFrame(movePasta);
+requestAnimationFrame(
+movePasta
+);
 
 return;
 
 }
 
+
 const targetRect=
 target.getBoundingClientRect();
+
 
 const endX=
 targetRect.left+
 targetRect.width/2+
 HIT_X;
 
+
 const endY=
 targetRect.top+
-targetRect.height*HIT_POSITION_Y+
+targetRect.height*
+HIT_POSITION_Y+
 HIT_Y;
 
+
 hitMarker.style.left=
-(endX-gameRect.left)+"px";
+(
+endX-
+gameRect.left
+)+"px";
+
 
 hitMarker.style.top=
-(endY-gameRect.top)+"px";
+(
+endY-
+gameRect.top
+)+"px";
+
 
 const deltaTime=
 Math.min(
@@ -2613,10 +3081,17 @@ Math.min(
 .05
 );
 
+
 lastTime=currentTime;
 
-const dx=endX-currentX;
-const dy=endY-currentY;
+
+const dx=
+endX-currentX;
+
+
+const dy=
+endY-currentY;
+
 
 const distance=
 Math.sqrt(
@@ -2624,41 +3099,60 @@ dx*dx+
 dy*dy
 );
 
+
 const movement=
 speed*deltaTime;
+
 
 if(distance<=movement){
 
 currentX=endX;
+
 currentY=endY;
 
 }else{
 
 currentX+=
-(dx/distance)*movement;
+(dx/distance)*
+movement;
 
 currentY+=
-(dy/distance)*movement;
+(dy/distance)*
+movement;
 
 }
 
+
 pasta.style.left=
-(currentX-gameRect.left-42)+"px";
+(
+currentX-
+gameRect.left-
+42
+)+"px";
+
 
 pasta.style.top=
-(currentY-gameRect.top-42)+"px";
+(
+currentY-
+gameRect.top-
+42
+)+"px";
+
 
 const remainingX=
 endX-currentX;
 
+
 const remainingY=
 endY-currentY;
+
 
 const remainingDistance=
 Math.sqrt(
 remainingX*remainingX+
 remainingY*remainingY
 );
+
 
 if(remainingDistance<=3){
 
@@ -2667,18 +3161,26 @@ target,
 pasta
 );
 
+
 if(hitMarker.parentNode)
 hitMarker.remove();
+
 
 return;
 
 }
 
-requestAnimationFrame(movePasta);
+
+requestAnimationFrame(
+movePasta
+);
 
 }
 
-requestAnimationFrame(movePasta);
+
+requestAnimationFrame(
+movePasta
+);
 
 }
 
@@ -2689,12 +3191,17 @@ requestAnimationFrame(movePasta);
 
 function playWaitressAttack(){
 
-if(powerUpPaused)return;
+if(powerUpPaused)
+return;
 
-if(!powerUps.waitress)return;
+
+if(!powerUps.waitress)
+return;
+
 
 const target=
 getNearestVisibleCustomer();
+
 
 if(!target){
 
@@ -2704,7 +3211,9 @@ return;
 
 }
 
+
 setWaitressFrame(0);
+
 
 setTimeout(function(){
 
@@ -2712,6 +3221,7 @@ if(!powerUpPaused)
 setWaitressFrame(1);
 
 },120);
+
 
 setTimeout(function(){
 
@@ -2725,12 +3235,14 @@ throwDrink(target);
 
 },240);
 
+
 setTimeout(function(){
 
 if(!powerUpPaused)
 setWaitressFrame(3);
 
 },360);
+
 
 setTimeout(function(){
 
@@ -2750,25 +3262,37 @@ function startWaitressAttack(){
 
 if(waitressAttackTimer!==null){
 
-clearInterval(waitressAttackTimer);
+clearInterval(
+waitressAttackTimer
+);
 
 }
+
 
 waitressAttackTimer=
 setInterval(function(){
 
-if(powerUpPaused)return;
+if(powerUpPaused)
+return;
 
-if(!powerUps.waitress)return;
+
+if(!powerUps.waitress)
+return;
+
 
 const waitress=
-document.getElementById("waitress");
+document.getElementById(
+"waitress"
+);
+
 
 if(waitress.style.display==="none")
 return;
 
+
 const target=
 getNearestVisibleCustomer();
+
 
 if(target){
 
@@ -2791,108 +3315,170 @@ setWaitressFrame(0);
 
 function throwDrink(target){
 
-if(!target)return;
+if(!target)
+return;
+
 
 if(
 target.dataset.satisfied==="true"
-)return;
+)
+return;
+
 
 const waitress=
-document.getElementById("waitress");
+document.getElementById(
+"waitress"
+);
+
 
 const game=
-document.getElementById("game");
+document.getElementById(
+"game"
+);
+
 
 const gameRect=
 game.getBoundingClientRect();
 
+
 const waitressRect=
 waitress.getBoundingClientRect();
 
+
 const startX=
 waitressRect.left+
-waitressRect.width*WAITRESS_HAND_X;
+waitressRect.width*
+WAITRESS_HAND_X;
+
 
 const startY=
 waitressRect.top+
-waitressRect.height*WAITRESS_HAND_Y;
+waitressRect.height*
+WAITRESS_HAND_Y;
+
 
 const hitMarker=
 document.createElement("div");
 
+
 hitMarker.className="hit-marker";
 
-game.appendChild(hitMarker);
+
+game.appendChild(
+hitMarker
+);
+
 
 const drink=
 document.createElement("img");
 
+
 drink.className="drink";
+
 
 drink.src=
 "https://i.ibb.co/MDk4xzJd/1788234306668-removebg-preview.png";
 
-game.appendChild(drink);
+
+game.appendChild(
+drink
+);
+
 
 let currentX=startX;
+
 let currentY=startY;
 
+
 drink.style.left=
-(currentX-gameRect.left-84)+"px";
+(
+currentX-
+gameRect.left-
+84
+)+"px";
+
 
 drink.style.top=
-(currentY-gameRect.top-84)+"px";
+(
+currentY-
+gameRect.top-
+84
+)+"px";
+
 
 const speed=350;
+
 
 let lastTime=
 performance.now();
 
+
 function moveDrink(currentTime){
 
 if(
+
 !target ||
+
 target.dataset.satisfied==="true"
+
 ){
 
 if(drink.parentNode)
 drink.remove();
 
+
 if(hitMarker.parentNode)
 hitMarker.remove();
+
 
 return;
 
 }
+
 
 if(powerUpPaused){
 
 lastTime=currentTime;
 
-requestAnimationFrame(moveDrink);
+requestAnimationFrame(
+moveDrink
+);
 
 return;
 
 }
 
+
 const targetRect=
 target.getBoundingClientRect();
+
 
 const endX=
 targetRect.left+
 targetRect.width/2+
 HIT_X;
 
+
 const endY=
 targetRect.top+
-targetRect.height*HIT_POSITION_Y+
+targetRect.height*
+HIT_POSITION_Y+
 HIT_Y;
 
+
 hitMarker.style.left=
-(endX-gameRect.left)+"px";
+(
+endX-
+gameRect.left
+)+"px";
+
 
 hitMarker.style.top=
-(endY-gameRect.top)+"px";
+(
+endY-
+gameRect.top
+)+"px";
+
 
 const deltaTime=
 Math.min(
@@ -2900,10 +3486,17 @@ Math.min(
 .05
 );
 
+
 lastTime=currentTime;
 
-const dx=endX-currentX;
-const dy=endY-currentY;
+
+const dx=
+endX-currentX;
+
+
+const dy=
+endY-currentY;
+
 
 const distance=
 Math.sqrt(
@@ -2911,41 +3504,60 @@ dx*dx+
 dy*dy
 );
 
+
 const movement=
 speed*deltaTime;
+
 
 if(distance<=movement){
 
 currentX=endX;
+
 currentY=endY;
 
 }else{
 
 currentX+=
-(dx/distance)*movement;
+(dx/distance)*
+movement;
 
 currentY+=
-(dy/distance)*movement;
+(dy/distance)*
+movement;
 
 }
 
+
 drink.style.left=
-(currentX-gameRect.left-35)+"px";
+(
+currentX-
+gameRect.left-
+35
+)+"px";
+
 
 drink.style.top=
-(currentY-gameRect.top-35)+"px";
+(
+currentY-
+gameRect.top-
+35
+)+"px";
+
 
 const remainingX=
 endX-currentX;
 
+
 const remainingY=
 endY-currentY;
+
 
 const remainingDistance=
 Math.sqrt(
 remainingX*remainingX+
 remainingY*remainingY
 );
+
 
 if(remainingDistance<=3){
 
@@ -2954,18 +3566,26 @@ target,
 drink
 );
 
+
 if(hitMarker.parentNode)
 hitMarker.remove();
+
 
 return;
 
 }
 
-requestAnimationFrame(moveDrink);
+
+requestAnimationFrame(
+moveDrink
+);
 
 }
 
-requestAnimationFrame(moveDrink);
+
+requestAnimationFrame(
+moveDrink
+);
 
 }
 
@@ -2982,25 +3602,37 @@ drink
 if(drink&&drink.parentNode)
 drink.remove();
 
+
 if(
+
 !customer ||
+
 customer.dataset.satisfied==="true"
-)return;
+
+)
+return;
+
 
 let hp=
 parseInt(
 customer.dataset.hp||"30"
 );
 
+
 const damage=3;
+
 
 hp-=damage;
 
+
 customer.dataset.hp=hp;
+
 
 if(hp<=0){
 
-satisfyCustomer(customer);
+satisfyCustomer(
+customer
+);
 
 }
 
@@ -3019,26 +3651,39 @@ pasta
 if(pasta&&pasta.parentNode)
 pasta.remove();
 
+
 if(
+
 !customer ||
+
 customer.dataset.satisfied==="true"
-)return;
+
+)
+return;
+
 
 let hp=
 parseInt(
 customer.dataset.hp||"30"
 );
 
+
 const damage=
-5+powerUps.sauce;
+5+
+powerUps.sauce;
+
 
 hp-=damage;
 
+
 customer.dataset.hp=hp;
+
 
 if(hp<=0){
 
-satisfyCustomer(customer);
+satisfyCustomer(
+customer
+);
 
 }
 
@@ -3049,61 +3694,102 @@ satisfyCustomer(customer);
    CLIENTE SODDISFATTO
 ================================================== */
 
-function satisfyCustomer(customer){
+function satisfyCustomer(
+customer
+){
 
 if(
+
 !customer ||
+
 customer.dataset.satisfied==="true"
-)return;
+
+)
+return;
+
 
 const rect=
 customer.getBoundingClientRect();
 
+
 const game=
-document.getElementById("game");
+document.getElementById(
+"game"
+);
+
 
 const gameRect=
 game.getBoundingClientRect();
 
+
 const currentTop=
-rect.top-gameRect.top;
+rect.top-
+gameRect.top;
+
 
 const currentLeft=
-rect.left-gameRect.left;
+rect.left-
+gameRect.left;
+
 
 customer.style.animation="none";
 
-customer.classList.remove("walking");
 
-customer.classList.add("satisfied");
+customer.classList.remove(
+"walking"
+);
+
+
+customer.classList.add(
+"satisfied"
+);
+
 
 customer.style.top=
 currentTop+"px";
 
+
 customer.style.left=
 currentLeft+"px";
 
+
 customer.dataset.satisfied="true";
+
 
 customer.dataset.atKitchen="false";
 
-addEXP(EXP_PER_CUSTOMER);
+
+addEXP(
+EXP_PER_CUSTOMER
+);
+
 
 const normalFrames=
-customer.querySelectorAll(".frame");
+customer.querySelectorAll(
+".frame"
+);
+
 
 normalFrames.forEach(function(frame){
 
-frame.classList.remove("active");
+frame.classList.remove(
+"active"
+);
 
 });
 
+
 const happyFrame=
-customer.querySelector(".happy-frame");
+customer.querySelector(
+".happy-frame"
+);
+
 
 happyFrame.style.display="block";
 
+
 updateZIndexes();
+
 
 setTimeout(function(){
 
@@ -3111,7 +3797,9 @@ customer.style.display="none";
 
 happyFrame.style.display="none";
 
-customer.classList.remove("satisfied");
+customer.classList.remove(
+"satisfied"
+);
 
 updateZIndexes();
 
@@ -3130,14 +3818,20 @@ const customer=
 customers.find(function(c){
 
 return(
+
 c.dataset.type==="1" &&
+
 c.dataset.satisfied!=="true"
+
 );
 
 });
 
+
 if(customer)
-satisfyCustomer(customer);
+satisfyCustomer(
+customer
+);
 
 }
 
@@ -3148,14 +3842,20 @@ const customer=
 customers.find(function(c){
 
 return(
+
 c.dataset.type==="2" &&
+
 c.dataset.satisfied!=="true"
+
 );
 
 });
 
+
 if(customer)
-satisfyCustomer(customer);
+satisfyCustomer(
+customer
+);
 
 }
 
