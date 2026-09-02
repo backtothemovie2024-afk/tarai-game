@@ -28,6 +28,38 @@ overflow:hidden;
 background:#000;
 }
 
+/* ==================================================
+   INTRO VIDEO
+================================================== */
+
+#intro{
+position:absolute;
+inset:0;
+background:#000;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:1000;
+}
+
+#introVideo{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+}
+
+#introTap{
+position:absolute;
+inset:0;
+z-index:1001;
+cursor:pointer;
+}
+
+/* ==================================================
+   MENU HOME
+================================================== */
+
 #menu{
 position:absolute;
 inset:0;
@@ -460,6 +492,39 @@ font-size:21px;
 
 <div id="phone">
 
+<!-- ==================================================
+     INTRO VIDEO
+================================================== -->
+
+<div id="intro">
+
+<video
+id="introVideo"
+autoplay
+muted
+playsinline
+preload="auto"
+>
+<source
+src="https://yourimageshare.com/ib/LjN0a6FLZL.mp4"
+type="video/mp4"
+>
+</video>
+
+<!--
+     TAP IN QUALSIASI PUNTO DEL VIDEO
+     PER PASSARE ALLA HOME
+-->
+
+<div id="introTap"></div>
+
+</div>
+
+
+<!-- ==================================================
+     HOME
+================================================== -->
+
 <div id="menu">
 
 <img
@@ -471,6 +536,11 @@ alt=""
 <button id="playButton">PLAY</button>
 
 </div>
+
+
+<!-- ==================================================
+     GIOCO
+================================================== -->
 
 <div id="game">
 
@@ -679,6 +749,70 @@ LV 1
 <script>
 
 /* ==================================================
+   INTRO → HOME
+================================================== */
+
+const intro=
+document.getElementById("intro");
+
+const introVideo=
+document.getElementById("introVideo");
+
+const introTap=
+document.getElementById("introTap");
+
+
+/*
+   TAP IN QUALSIASI PUNTO DEL VIDEO
+   PER PASSARE ALLA HOME
+*/
+
+function closeIntro(){
+
+if(intro.style.display==="none")return;
+
+introVideo.pause();
+
+intro.style.display="none";
+
+}
+
+
+/*
+   Funziona sia con tap su smartphone
+   sia con click su PC.
+*/
+
+introTap.addEventListener(
+"click",
+closeIntro
+);
+
+introTap.addEventListener(
+"touchend",
+function(event){
+
+event.preventDefault();
+
+closeIntro();
+
+},
+{passive:false}
+);
+
+
+/*
+   Se il video finisce da solo,
+   passa comunque alla HOME.
+*/
+
+introVideo.addEventListener(
+"ended",
+closeIntro
+);
+
+
+/* ==================================================
    REGOLAZIONE HITBOX
 ================================================== */
 
@@ -698,15 +832,6 @@ const WAITRESS_HAND_Y=.30;
 /* ==================================================
    SISTEMA 20 WAVE
 ================================================== */
-
-/*
-   Difficoltà aumentata progressivamente.
-
-   customers       = numero clienti
-   spawnInterval   = intervallo tra clienti
-   walkTime        = tempo di percorrenza
-   hp              = vita dei clienti
-*/
 
 const WAVES=[
 
@@ -803,19 +928,6 @@ sauce:0,
 waitress:false
 };
 
-/*
-   Bonus velocità specifico della PASTA.
-
-   Pasta:
-   LV0 = nessun bonus
-   LV1 = nessun bonus
-   LV2 = +15%
-   LV3 = nessun ulteriore bonus
-
-   Il bonus viene applicato alla velocità
-   di lancio della pasta.
-*/
-
 let pastaSpeedBonus=0;
 
 let powerUpPaused=false;
@@ -871,11 +983,6 @@ function getAvailablePowerUps(){
 
 let available=[];
 
-
-/*
-   Pasta
-*/
-
 if(powerUps.pasta<3){
 
 available.push({
@@ -884,11 +991,6 @@ level:powerUps.pasta+1
 });
 
 }
-
-
-/*
-   Velocità
-*/
 
 if(powerUps.speed<3){
 
@@ -899,11 +1001,6 @@ level:powerUps.speed+1
 
 }
 
-
-/*
-   Salsa
-*/
-
 if(powerUps.sauce<3){
 
 available.push({
@@ -913,11 +1010,6 @@ level:powerUps.sauce+1
 
 }
 
-
-/*
-   Cameriera
-*/
-
 if(!powerUps.waitress){
 
 available.push({
@@ -926,7 +1018,6 @@ level:1
 });
 
 }
-
 
 return available;
 
@@ -939,27 +1030,12 @@ return available;
 
 function showPowerUpScreen(){
 
-/*
-   IMPORTANTE:
-
-   Se tutti i power-up sono già stati presi,
-   NON blocchiamo il gioco.
-*/
-
 if(powerUpPaused)return;
-
 
 const available=
 getAvailablePowerUps();
 
-
 if(available.length===0){
-
-/*
-   Nessuna scelta disponibile.
-   Il livello è già stato aumentato,
-   quindi continuiamo normalmente.
-*/
 
 document
 .getElementById("powerup-overlay")
@@ -975,16 +1051,10 @@ return;
 
 }
 
-
 const options=
 document.getElementById("powerup-options");
 
 options.innerHTML="";
-
-
-/*
-   Mischia
-*/
 
 for(let i=available.length-1;i>0;i--){
 
@@ -995,14 +1065,8 @@ const j=Math.floor(Math.random()*(i+1));
 
 }
 
-
-/*
-   Massimo 3 scelte
-*/
-
 const selected=
 available.slice(0,3);
-
 
 selected.forEach(function(powerUp){
 
@@ -1017,10 +1081,8 @@ powerUp.type;
 slot.dataset.level=
 powerUp.level;
 
-
 const image=
 document.createElement("img");
-
 
 if(powerUp.type==="waitress"){
 
@@ -1036,11 +1098,9 @@ powerUp.type
 
 }
 
-
 image.alt="";
 
 slot.appendChild(image);
-
 
 slot.addEventListener(
 "click",
@@ -1050,19 +1110,15 @@ selectPowerUp(powerUp.type);
 
 });
 
-
 options.appendChild(slot);
 
 });
 
-
 powerUpPaused=true;
-
 
 document
 .getElementById("game")
 .classList.add("powerup-paused");
-
 
 document
 .getElementById("powerup-overlay")
@@ -1079,7 +1135,6 @@ function selectPowerUp(type){
 
 if(!powerUpPaused)return;
 
-
 if(type==="waitress"){
 
 if(powerUps.waitress)return;
@@ -1090,17 +1145,9 @@ summonWaitress();
 
 }else{
 
-
 if(powerUps[type]>=3)return;
 
-
 powerUps[type]++;
-
-
-/*
-   PASTA LV2
-   +15% velocità
-*/
 
 if(
 type==="pasta" &&
@@ -1113,24 +1160,19 @@ pastaSpeedBonus=.15;
 
 }
 
-
 document
 .getElementById("powerup-overlay")
 .style.display="none";
-
 
 document
 .getElementById("powerup-options")
 .innerHTML="";
 
-
 powerUpPaused=false;
-
 
 document
 .getElementById("game")
 .classList.remove("powerup-paused");
-
 
 updateEXPBar();
 
@@ -1185,13 +1227,11 @@ document
 .getElementById("waitress")
 .querySelectorAll("img");
 
-
 frames.forEach(function(frame){
 
 frame.classList.remove("active");
 
 });
-
 
 if(frames[frameNumber]){
 
@@ -1214,7 +1254,6 @@ document.getElementById("exp-fill");
 const levelText=
 document.getElementById("exp-level");
 
-
 if(currentLevel>=MAX_LEVEL){
 
 currentLevel=MAX_LEVEL;
@@ -1228,10 +1267,8 @@ return;
 
 }
 
-
 const requiredEXP=
 EXP_REQUIREMENTS[currentLevel-1];
-
 
 const percentage=
 Math.min(
@@ -1239,10 +1276,8 @@ Math.min(
 (currentEXP/requiredEXP)*100
 );
 
-
 fill.style.width=
 percentage+"%";
-
 
 levelText.textContent=
 "LV "+currentLevel;
@@ -1258,12 +1293,9 @@ function addEXP(amount){
 
 if(currentLevel>=MAX_LEVEL)return;
 
-
 currentEXP+=amount;
 
-
 let levelUp=false;
-
 
 while(
 currentLevel<MAX_LEVEL &&
@@ -1279,17 +1311,7 @@ levelUp=true;
 
 }
 
-
 updateEXPBar();
-
-
-/*
-   Mostriamo una sola schermata
-   per il/i livello/i raggiunto/i.
-
-   Se non esistono più power-up,
-   showPowerUpScreen() non bloccherà il gioco.
-*/
 
 if(levelUp){
 
@@ -1332,9 +1354,7 @@ document
 .getElementById("game")
 .style.display="block";
 
-
 resetGame();
-
 
 startWave(1);
 
@@ -1356,54 +1376,42 @@ function resetGame(){
 
 clearAllTimers();
 
-
 customers=[];
-
 
 currentWave=1;
 waveSpawned=0;
 waveFinished=false;
 waveStarting=false;
 
-
 kitchenEnergy=100;
-
 
 currentLevel=1;
 currentEXP=0;
-
 
 powerUps.pasta=0;
 powerUps.speed=0;
 powerUps.sauce=0;
 powerUps.waitress=false;
 
-
 pastaSpeedBonus=0;
 
-
 powerUpPaused=false;
-
 
 document
 .getElementById("waitress")
 .style.display="none";
 
-
 document
 .getElementById("powerup-overlay")
 .style.display="none";
-
 
 document
 .getElementById("powerup-options")
 .innerHTML="";
 
-
 document
 .getElementById("game")
 .classList.remove("powerup-paused");
-
 
 document
 .querySelectorAll(".spawned-customer")
@@ -1413,26 +1421,21 @@ customer.remove();
 
 });
 
-
 document
 .getElementById("kitchen")
 .style.display="block";
-
 
 document
 .getElementById("kitchenDamaged")
 .style.display="none";
 
-
 document
 .getElementById("kitchenDestroyed")
 .style.display="none";
 
-
 document
 .getElementById("wave-message")
 .style.display="none";
-
 
 updateKitchenEnergy();
 updateEXPBar();
@@ -1471,7 +1474,6 @@ clearTimeout(waveTimer);
 if(waveCheckTimer!==null)
 clearInterval(waveCheckTimer);
 
-
 customerTimer=null;
 cookTimer=null;
 waitressAttackTimer=null;
@@ -1498,20 +1500,16 @@ return;
 
 }
 
-
 currentWave=waveNumber;
 waveSpawned=0;
 waveFinished=false;
 waveStarting=true;
 
-
 updateWaveDisplay();
-
 
 showWaveMessage(
 "WAVE "+currentWave
 );
-
 
 setTimeout(function(){
 
@@ -1580,7 +1578,6 @@ WAVES[currentWave-1];
 
 if(!config)return;
 
-
 const lastLaneSpawn=[];
 
 for(let i=0;i<LANES.length;i++){
@@ -1589,12 +1586,10 @@ lastLaneSpawn[i]=-Infinity;
 
 }
 
-
 for(let i=0;i<config.customers;i++){
 
 const delay=
 i*config.spawnInterval;
-
 
 waveTimer=
 setTimeout(function(){
@@ -1650,7 +1645,6 @@ return;
 
 }
 
-
 spawnWaveCustomer(
 index,
 lastLaneSpawn,
@@ -1672,14 +1666,12 @@ config
 
 if(waveSpawned>=config.customers)return;
 
-
 let laneIndex;
 
 let attempts=0;
 
 const currentTime=
 performance.now();
-
 
 do{
 
@@ -1700,9 +1692,7 @@ SAME_LANE_MIN_DELAY
 
 );
 
-
 lastLaneSpawn[laneIndex]=currentTime;
-
 
 spawnCustomer(
 waveSpawned,
@@ -1711,9 +1701,7 @@ config.walkTime,
 config.hp
 );
 
-
 waveSpawned++;
-
 
 if(waveSpawned>=config.customers){
 
@@ -1736,14 +1724,12 @@ clearInterval(waveCheckTimer);
 
 }
 
-
 waveCheckTimer=
 setInterval(function(){
 
 if(powerUpPaused)return;
 
 if(waveFinished)return;
-
 
 const activeWaveCustomers=
 customers.filter(function(customer){
@@ -1756,7 +1742,6 @@ customer.style.display!=="none"
 );
 
 });
-
 
 if(
 waveSpawned>=
@@ -1788,7 +1773,6 @@ if(waveFinished)return;
 
 waveFinished=true;
 
-
 if(currentWave>=TOTAL_WAVES){
 
 finishLevel();
@@ -1796,13 +1780,6 @@ finishLevel();
 return;
 
 }
-
-
-/*
-   NESSUNA PAUSA TRA LE WAVE.
-
-   La wave successiva parte immediatamente.
-*/
 
 startWave(currentWave+1);
 
@@ -1836,12 +1813,10 @@ waveHP=null
 const game=
 document.getElementById("game");
 
-
 const type=
 Math.random()<.5
 ?1
 :2;
-
 
 const template=
 document.getElementById(
@@ -1850,14 +1825,11 @@ type===1
 :"customer2Template"
 );
 
-
 const customer=
 template.cloneNode(true);
 
-
 customer.id=
 "customer-"+Date.now()+"-"+index;
-
 
 customer.classList.remove(
 "customer-template"
@@ -1867,15 +1839,12 @@ customer.classList.add(
 "spawned-customer"
 );
 
-
 customer.style.display="block";
 customer.style.animation="none";
 customer.classList.remove("satisfied");
 customer.style.top="5%";
 
-
 let laneIndex;
-
 
 if(
 forcedLaneIndex!==null &&
@@ -1893,27 +1862,18 @@ Math.random()*LANES.length
 
 }
 
-
 customer.dataset.lane=
 laneIndex;
-
 
 customer.style.left=
 LANES[laneIndex]+"%";
 
-
 customer.dataset.type=type;
-
-
-/*
-   HP determinati dalla wave.
-*/
 
 customer.dataset.hp=
 String(
 waveHP || 30
 );
-
 
 customer.dataset.satisfied="false";
 
@@ -1924,10 +1884,8 @@ customer.dataset.frame="0";
 customer.dataset.wave=
 currentWave;
 
-
 const frames=
 customer.querySelectorAll(".frame");
-
 
 frames.forEach(function(frame){
 
@@ -1935,28 +1893,23 @@ frame.classList.remove("active");
 
 });
 
-
 if(frames.length>0){
 
 frames[0].classList.add("active");
 
 }
 
-
 const happyFrame=
 customer.querySelector(".happy-frame");
 
 happyFrame.style.display="none";
 
-
 game.appendChild(customer);
 
 customers.push(customer);
 
-
 const actualWalkTime=
 walkTime || 60;
-
 
 requestAnimationFrame(function(){
 
@@ -1966,7 +1919,6 @@ customer.style.animation=
 customer.classList.add("walking");
 
 });
-
 
 setTimeout(function(){
 
@@ -2006,7 +1958,6 @@ document
 .getElementById("kitchenDestroyed")
 .style.display="none";
 
-
 }else if(kitchenEnergy>20){
 
 document
@@ -2020,7 +1971,6 @@ document
 document
 .getElementById("kitchenDestroyed")
 .style.display="none";
-
 
 }else{
 
@@ -2053,15 +2003,12 @@ clearInterval(kitchenDamageTimer);
 
 }
 
-
 kitchenDamageTimer=
 setInterval(function(){
 
 if(powerUpPaused)return;
 
-
 let damage=0;
-
 
 customers.forEach(function(customer){
 
@@ -2077,15 +2024,12 @@ damage++;
 
 });
 
-
 if(damage>0){
 
 kitchenEnergy-=damage;
 
-
 if(kitchenEnergy<0)
 kitchenEnergy=0;
-
 
 updateKitchenEnergy();
 
@@ -2107,7 +2051,6 @@ if(
 customer.style.display==="none"
 )return false;
 
-
 const rect=
 customer.getBoundingClientRect();
 
@@ -2116,7 +2059,6 @@ document.getElementById("game");
 
 const gameRect=
 game.getBoundingClientRect();
-
 
 return(
 
@@ -2139,7 +2081,6 @@ if(zIndexTimer!==null){
 clearInterval(zIndexTimer);
 
 }
-
 
 zIndexTimer=
 setInterval(function(){
@@ -2165,7 +2106,6 @@ customer.style.display!=="none"
 
 });
 
-
 activeCustomers.sort(function(a,b){
 
 const aTop=
@@ -2177,7 +2117,6 @@ b.getBoundingClientRect().top;
 return aTop-bTop;
 
 });
-
 
 activeCustomers.forEach(function(customer,index){
 
@@ -2201,16 +2140,13 @@ clearInterval(firstAttackTimer);
 
 }
 
-
 firstAttackTimer=
 setInterval(function(){
 
 if(powerUpPaused)return;
 
-
 const target=
 getNearestVisibleCustomer();
-
 
 if(target){
 
@@ -2237,12 +2173,10 @@ clearInterval(customerTimer);
 
 }
 
-
 customerTimer=
 setInterval(function(){
 
 if(powerUpPaused)return;
-
 
 customers.forEach(function(customer){
 
@@ -2252,19 +2186,15 @@ customer.style.display==="none" ||
 customer.dataset.satisfied==="true"
 )return;
 
-
 const frames=
 customer.querySelectorAll(".frame");
 
-
 if(frames.length===0)return;
-
 
 let frame=
 parseInt(
 customer.dataset.frame||"0"
 );
-
 
 frames.forEach(function(image){
 
@@ -2272,16 +2202,12 @@ image.classList.remove("active");
 
 });
 
-
 frames[frame].classList.add("active");
-
 
 frame++;
 
-
 if(frame>=frames.length)
 frame=0;
-
 
 customer.dataset.frame=frame;
 
@@ -2303,13 +2229,11 @@ document
 .getElementById("cook")
 .querySelectorAll("img");
 
-
 frames.forEach(function(frame){
 
 frame.classList.remove("active");
 
 });
-
 
 if(frames[frameNumber]){
 
@@ -2328,10 +2252,8 @@ function playCookAttack(){
 
 if(powerUpPaused)return;
 
-
 const targets=
 getAttackTargets();
-
 
 if(targets.length===0){
 
@@ -2341,9 +2263,7 @@ return;
 
 }
 
-
 setCookFrame(0);
-
 
 setTimeout(function(){
 
@@ -2352,7 +2272,6 @@ setCookFrame(1);
 
 },120);
 
-
 setTimeout(function(){
 
 if(!powerUpPaused)
@@ -2360,13 +2279,11 @@ setCookFrame(2);
 
 },240);
 
-
 setTimeout(function(){
 
 if(!powerUpPaused){
 
 setCookFrame(3);
-
 
 targets.forEach(function(target){
 
@@ -2385,14 +2302,12 @@ throwPasta(target);
 
 },360);
 
-
 setTimeout(function(){
 
 if(!powerUpPaused)
 setCookFrame(4);
 
 },480);
-
 
 setTimeout(function(){
 
@@ -2427,7 +2342,6 @@ return customerIsVisible(customer);
 
 });
 
-
 activeCustomers.sort(function(a,b){
 
 return(
@@ -2437,18 +2351,7 @@ a.getBoundingClientRect().top
 
 });
 
-
-/*
-   NUMERO PASTE:
-
-   LV0 = 1
-   LV1 = 2
-   LV2 = 2
-   LV3 = 3
-*/
-
 let numberOfPasta=1;
-
 
 if(powerUps.pasta===1){
 
@@ -2463,7 +2366,6 @@ numberOfPasta=2;
 numberOfPasta=3;
 
 }
-
 
 return activeCustomers.slice(
 0,
@@ -2485,19 +2387,15 @@ clearInterval(cookTimer);
 
 }
 
-
 setCookFrame(0);
-
 
 cookTimer=
 setInterval(function(){
 
 if(powerUpPaused)return;
 
-
 const target=
 getNearestVisibleCustomer();
-
 
 if(target!==null){
 
@@ -2520,25 +2418,11 @@ setCookFrame(0);
 
 function getCookAttackInterval(){
 
-/*
-   Il power-up SPEED rimane indipendente.
-
-   Il power-up PASTA LV2 aggiunge inoltre
-   +15% velocità.
-*/
-
 let speedMultiplier=
 1+(powerUps.speed*.33);
 
-
-/*
-   Bonus pasta LV2:
-   +15% velocità di attacco.
-*/
-
 speedMultiplier*=
 (1+pastaSpeedBonus);
-
 
 return Math.round(
 3000/speedMultiplier
@@ -2583,24 +2467,19 @@ return customerIsVisible(customer);
 
 });
 
-
 if(activeCustomers.length===0)
 return null;
-
 
 let nearest=
 activeCustomers[0];
 
-
 let nearestTop=
 nearest.getBoundingClientRect().top;
-
 
 activeCustomers.forEach(function(customer){
 
 const top=
 customer.getBoundingClientRect().top;
-
 
 if(top>nearestTop){
 
@@ -2610,7 +2489,6 @@ nearestTop=top;
 }
 
 });
-
 
 return nearest;
 
@@ -2629,13 +2507,11 @@ if(
 target.dataset.satisfied==="true"
 )return;
 
-
 const cook=
 document.getElementById("cook");
 
 const game=
 document.getElementById("game");
-
 
 const gameRect=
 game.getBoundingClientRect();
@@ -2643,16 +2519,13 @@ game.getBoundingClientRect();
 const cookRect=
 cook.getBoundingClientRect();
 
-
 const startX=
 cookRect.left+
 cookRect.width*.72;
 
-
 const startY=
 cookRect.top+
 cookRect.height*.32;
-
 
 const hitMarker=
 document.createElement("div");
@@ -2661,47 +2534,32 @@ hitMarker.className="hit-marker";
 
 game.appendChild(hitMarker);
 
-
 const pasta=
 document.createElement("img");
 
 pasta.className="pasta";
 
-
 pasta.src=
 "https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png";
 
-
 game.appendChild(pasta);
-
 
 let currentX=startX;
 let currentY=startY;
 
-
 pasta.style.left=
 (currentX-gameRect.left-42)+"px";
 
-
 pasta.style.top=
 (currentY-gameRect.top-42)+"px";
-
-
-/*
-   Velocità del proiettile.
-
-   Anche qui LV2 pasta applica +15%.
-*/
 
 const speed=
 350*
 (1+powerUps.speed*.33)*
 (1+pastaSpeedBonus);
 
-
 let lastTime=
 performance.now();
-
 
 function movePasta(currentTime){
 
@@ -2720,7 +2578,6 @@ return;
 
 }
 
-
 if(powerUpPaused){
 
 lastTime=currentTime;
@@ -2731,30 +2588,24 @@ return;
 
 }
 
-
 const targetRect=
 target.getBoundingClientRect();
-
 
 const endX=
 targetRect.left+
 targetRect.width/2+
 HIT_X;
 
-
 const endY=
 targetRect.top+
 targetRect.height*HIT_POSITION_Y+
 HIT_Y;
 
-
 hitMarker.style.left=
 (endX-gameRect.left)+"px";
 
-
 hitMarker.style.top=
 (endY-gameRect.top)+"px";
-
 
 const deltaTime=
 Math.min(
@@ -2762,13 +2613,10 @@ Math.min(
 .05
 );
 
-
 lastTime=currentTime;
-
 
 const dx=endX-currentX;
 const dy=endY-currentY;
-
 
 const distance=
 Math.sqrt(
@@ -2776,10 +2624,8 @@ dx*dx+
 dy*dy
 );
 
-
 const movement=
 speed*deltaTime;
-
 
 if(distance<=movement){
 
@@ -2796,14 +2642,11 @@ currentY+=
 
 }
 
-
 pasta.style.left=
 (currentX-gameRect.left-42)+"px";
 
-
 pasta.style.top=
 (currentY-gameRect.top-42)+"px";
-
 
 const remainingX=
 endX-currentX;
@@ -2811,13 +2654,11 @@ endX-currentX;
 const remainingY=
 endY-currentY;
 
-
 const remainingDistance=
 Math.sqrt(
 remainingX*remainingX+
 remainingY*remainingY
 );
-
 
 if(remainingDistance<=3){
 
@@ -2826,7 +2667,6 @@ target,
 pasta
 );
 
-
 if(hitMarker.parentNode)
 hitMarker.remove();
 
@@ -2834,11 +2674,9 @@ return;
 
 }
 
-
 requestAnimationFrame(movePasta);
 
 }
-
 
 requestAnimationFrame(movePasta);
 
@@ -2855,10 +2693,8 @@ if(powerUpPaused)return;
 
 if(!powerUps.waitress)return;
 
-
 const target=
 getNearestVisibleCustomer();
-
 
 if(!target){
 
@@ -2868,9 +2704,7 @@ return;
 
 }
 
-
 setWaitressFrame(0);
-
 
 setTimeout(function(){
 
@@ -2878,7 +2712,6 @@ if(!powerUpPaused)
 setWaitressFrame(1);
 
 },120);
-
 
 setTimeout(function(){
 
@@ -2892,14 +2725,12 @@ throwDrink(target);
 
 },240);
 
-
 setTimeout(function(){
 
 if(!powerUpPaused)
 setWaitressFrame(3);
 
 },360);
-
 
 setTimeout(function(){
 
@@ -2923,7 +2754,6 @@ clearInterval(waitressAttackTimer);
 
 }
 
-
 waitressAttackTimer=
 setInterval(function(){
 
@@ -2931,18 +2761,14 @@ if(powerUpPaused)return;
 
 if(!powerUps.waitress)return;
 
-
 const waitress=
 document.getElementById("waitress");
-
 
 if(waitress.style.display==="none")
 return;
 
-
 const target=
 getNearestVisibleCustomer();
-
 
 if(target){
 
@@ -2971,13 +2797,11 @@ if(
 target.dataset.satisfied==="true"
 )return;
 
-
 const waitress=
 document.getElementById("waitress");
 
 const game=
 document.getElementById("game");
-
 
 const gameRect=
 game.getBoundingClientRect();
@@ -2985,16 +2809,13 @@ game.getBoundingClientRect();
 const waitressRect=
 waitress.getBoundingClientRect();
 
-
 const startX=
 waitressRect.left+
 waitressRect.width*WAITRESS_HAND_X;
 
-
 const startY=
 waitressRect.top+
 waitressRect.height*WAITRESS_HAND_Y;
-
 
 const hitMarker=
 document.createElement("div");
@@ -3003,37 +2824,29 @@ hitMarker.className="hit-marker";
 
 game.appendChild(hitMarker);
 
-
 const drink=
 document.createElement("img");
 
 drink.className="drink";
 
-
 drink.src=
 "https://i.ibb.co/MDk4xzJd/1788234306668-removebg-preview.png";
 
-
 game.appendChild(drink);
-
 
 let currentX=startX;
 let currentY=startY;
 
-
 drink.style.left=
 (currentX-gameRect.left-84)+"px";
 
-
 drink.style.top=
 (currentY-gameRect.top-84)+"px";
-
 
 const speed=350;
 
 let lastTime=
 performance.now();
-
 
 function moveDrink(currentTime){
 
@@ -3052,7 +2865,6 @@ return;
 
 }
 
-
 if(powerUpPaused){
 
 lastTime=currentTime;
@@ -3063,30 +2875,24 @@ return;
 
 }
 
-
 const targetRect=
 target.getBoundingClientRect();
-
 
 const endX=
 targetRect.left+
 targetRect.width/2+
 HIT_X;
 
-
 const endY=
 targetRect.top+
 targetRect.height*HIT_POSITION_Y+
 HIT_Y;
 
-
 hitMarker.style.left=
 (endX-gameRect.left)+"px";
 
-
 hitMarker.style.top=
 (endY-gameRect.top)+"px";
-
 
 const deltaTime=
 Math.min(
@@ -3094,13 +2900,10 @@ Math.min(
 .05
 );
 
-
 lastTime=currentTime;
-
 
 const dx=endX-currentX;
 const dy=endY-currentY;
-
 
 const distance=
 Math.sqrt(
@@ -3108,10 +2911,8 @@ dx*dx+
 dy*dy
 );
 
-
 const movement=
 speed*deltaTime;
-
 
 if(distance<=movement){
 
@@ -3128,14 +2929,11 @@ currentY+=
 
 }
 
-
 drink.style.left=
 (currentX-gameRect.left-35)+"px";
 
-
 drink.style.top=
 (currentY-gameRect.top-35)+"px";
-
 
 const remainingX=
 endX-currentX;
@@ -3143,13 +2941,11 @@ endX-currentX;
 const remainingY=
 endY-currentY;
 
-
 const remainingDistance=
 Math.sqrt(
 remainingX*remainingX+
 remainingY*remainingY
 );
-
 
 if(remainingDistance<=3){
 
@@ -3158,7 +2954,6 @@ target,
 drink
 );
 
-
 if(hitMarker.parentNode)
 hitMarker.remove();
 
@@ -3166,11 +2961,9 @@ return;
 
 }
 
-
 requestAnimationFrame(moveDrink);
 
 }
-
 
 requestAnimationFrame(moveDrink);
 
@@ -3189,27 +2982,21 @@ drink
 if(drink&&drink.parentNode)
 drink.remove();
 
-
 if(
 !customer ||
 customer.dataset.satisfied==="true"
 )return;
-
 
 let hp=
 parseInt(
 customer.dataset.hp||"30"
 );
 
-
 const damage=3;
-
 
 hp-=damage;
 
-
 customer.dataset.hp=hp;
-
 
 if(hp<=0){
 
@@ -3232,35 +3019,22 @@ pasta
 if(pasta&&pasta.parentNode)
 pasta.remove();
 
-
 if(
 !customer ||
 customer.dataset.satisfied==="true"
 )return;
-
 
 let hp=
 parseInt(
 customer.dataset.hp||"30"
 );
 
-
-/*
-   Peperoncino
-   LV1 = +1
-   LV2 = +2
-   LV3 = +3
-*/
-
 const damage=
 5+powerUps.sauce;
 
-
 hp-=damage;
 
-
 customer.dataset.hp=hp;
-
 
 if(hp<=0){
 
@@ -3282,10 +3056,8 @@ if(
 customer.dataset.satisfied==="true"
 )return;
 
-
 const rect=
 customer.getBoundingClientRect();
-
 
 const game=
 document.getElementById("game");
@@ -3293,13 +3065,11 @@ document.getElementById("game");
 const gameRect=
 game.getBoundingClientRect();
 
-
 const currentTop=
 rect.top-gameRect.top;
 
 const currentLeft=
 rect.left-gameRect.left;
-
 
 customer.style.animation="none";
 
@@ -3307,25 +3077,20 @@ customer.classList.remove("walking");
 
 customer.classList.add("satisfied");
 
-
 customer.style.top=
 currentTop+"px";
 
 customer.style.left=
 currentLeft+"px";
 
-
 customer.dataset.satisfied="true";
 
 customer.dataset.atKitchen="false";
 
-
 addEXP(EXP_PER_CUSTOMER);
-
 
 const normalFrames=
 customer.querySelectorAll(".frame");
-
 
 normalFrames.forEach(function(frame){
 
@@ -3333,16 +3098,12 @@ frame.classList.remove("active");
 
 });
 
-
 const happyFrame=
 customer.querySelector(".happy-frame");
 
-
 happyFrame.style.display="block";
 
-
 updateZIndexes();
-
 
 setTimeout(function(){
 
@@ -3351,7 +3112,6 @@ customer.style.display="none";
 happyFrame.style.display="none";
 
 customer.classList.remove("satisfied");
-
 
 updateZIndexes();
 
@@ -3376,7 +3136,6 @@ c.dataset.satisfied!=="true"
 
 });
 
-
 if(customer)
 satisfyCustomer(customer);
 
@@ -3394,7 +3153,6 @@ c.dataset.satisfied!=="true"
 );
 
 });
-
 
 if(customer)
 satisfyCustomer(customer);
