@@ -183,6 +183,44 @@ right:0%;
 
 
 /* ==================================================
+   ANIMAZIONE USCITA TRANSIZIONE
+================================================== */
+
+@keyframes transitionExit{
+
+from{
+opacity:1;
+transform:scale(1);
+}
+
+to{
+opacity:0;
+transform:scale(1.08);
+}
+
+}
+
+
+/* ==================================================
+   ANIMAZIONE ENTRATA GIOCO
+================================================== */
+
+@keyframes gameEnter{
+
+from{
+opacity:0;
+transform:scale(0.94);
+}
+
+to{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+
+/* ==================================================
    GIOCO
 ================================================== */
 
@@ -1601,6 +1639,11 @@ document.getElementById(
 "transitionImage3"
 );
 
+const game=
+document.getElementById(
+"game"
+);
+
 
 /* NASCONDE IL MENU */
 
@@ -1624,39 +1667,49 @@ image1.style.left="-100%";
 image2.style.right="-100%";
 image3.style.left="-100%";
 
+image1.style.opacity="1";
+image2.style.opacity="1";
+image3.style.opacity="1";
+
+image1.style.transform="scale(1)";
+image2.style.transform="scale(1)";
+image3.style.transform="scale(1)";
+
 
 /* ==============================================
-   0 → 2,33 SECONDI
+   DOPO 2 SECONDI
    IMMAGINE 1
-   SINISTRA → DESTRA
+   VELOCITÀ DOPPIA
 ================================================ */
 
 setTimeout(function(){
 
 image1.style.animation=
-"transitionFromLeft 2.33s ease-out forwards";
+"transitionFromLeft 1.165s ease-out forwards";
 
-},0);
+},2000);
 
 
 /* ==============================================
-   2,33 → 4,66 SECONDI
-   IMMAGINE 2
-   DESTRA → SINISTRA
+   DOPO CHE LA 1 È ARRIVATA
+   ASPETTA 2 SECONDI
+   POI IMMAGINE 2
+   VELOCITÀ DOPPIA
 ================================================ */
 
 setTimeout(function(){
 
 image2.style.animation=
-"transitionFromRight 2.33s ease-out forwards";
+"transitionFromRight 1.165s ease-out forwards";
 
-},2330);
+},5165);
 
 
 /* ==============================================
-   4,66 → 7 SECONDI
-   IMMAGINE 3
-   SINISTRA → DESTRA
+   DOPO CHE LA 2 È ARRIVATA
+   ASPETTA 2 SECONDI
+   POI IMMAGINE 3
+   VELOCITÀ ORIGINALE
 ================================================ */
 
 setTimeout(function(){
@@ -1664,25 +1717,41 @@ setTimeout(function(){
 image3.style.animation=
 "transitionFromLeft 2.34s ease-out forwards";
 
-},4660);
+},8320);
 
 
 /* ==============================================
-   7 → 8 SECONDI
-   TUTTE E TRE VISIBILI
-================================================ */
-
-
-/* ==============================================
-   A 8 SECONDI
-   PARTE IL GIOCO
+   DOPO CHE LA 3 È ARRIVATA
+   ASPETTA 3 SECONDI
 ================================================ */
 
 setTimeout(function(){
 
-document
-.getElementById("game")
-.style.display="block";
+},12660);
+
+
+/* ==============================================
+   SPARIZIONE DELLE 3 IMMAGINI
+================================================ */
+
+setTimeout(function(){
+
+blackTransition.style.animation=
+"transitionExit 0.8s ease-in forwards";
+
+},15660);
+
+
+/* ==============================================
+   APPARIZIONE DEL GIOCO
+================================================== */
+
+setTimeout(function(){
+
+game.style.display="block";
+
+game.style.animation=
+"gameEnter 0.8s ease-out forwards";
 
 
 resetGame();
@@ -1704,7 +1773,9 @@ startZIndexSystem();
 
 blackTransition.style.display="none";
 
-},8000);
+blackTransition.style.animation="none";
+
+},16460);
 
 }
 );
@@ -2586,6 +2657,7 @@ return;
 updateZIndexes();
 
 },50);
+
 
 }
 
