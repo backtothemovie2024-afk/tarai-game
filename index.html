@@ -67,32 +67,43 @@ cursor:pointer;
 #menu{
 position:absolute;
 inset:0;
+width:100%;
+height:100%;
 background:#000;
 display:flex;
 justify-content:center;
 align-items:center;
 z-index:100;
+overflow:hidden;
 }
 
 
-/* NUOVO BACKGROUND HOME */
+/* BACKGROUND HOME */
 
 #cover{
 position:absolute;
+inset:0;
 width:100%;
 height:100%;
-object-fit:cover;
+max-width:100%;
+max-height:100%;
+object-fit:fill;
+display:block;
 z-index:10;
 }
 
 
-/* NUOVA GRAFICA SOPRA IL BACKGROUND */
+/* GRAFICA HOME SOPRA IL BACKGROUND */
 
 #coverOverlay{
 position:absolute;
+inset:0;
 width:100%;
 height:100%;
-object-fit:cover;
+max-width:100%;
+max-height:100%;
+object-fit:fill;
+display:block;
 z-index:20;
 pointer-events:none;
 }
@@ -114,6 +125,8 @@ left:12%;
 top:58%;
 width:76%;
 height:14%;
+padding:0;
+margin:0;
 border:none;
 background:transparent;
 color:transparent;
@@ -121,6 +134,7 @@ font-size:0;
 z-index:30;
 cursor:pointer;
 -webkit-tap-highlight-color:transparent;
+appearance:none;
 }
 
 
@@ -608,7 +622,7 @@ type="video/mp4"
 <div id="menu">
 
 
-<!-- NUOVO BACKGROUND -->
+<!-- BACKGROUND HOME -->
 
 <img
 id="cover"
@@ -626,9 +640,7 @@ alt=""
 >
 
 
-<!--
-     ZONA INVISIBILE SOPRA AL PLAY
--->
+<!-- ZONA INVISIBILE SOPRA AL PLAY -->
 
 <button
 id="playButton"
@@ -954,16 +966,16 @@ const WAVES=[
 {customers:10, spawnInterval:2250, walkTime:52, hp:48},
 
 {customers:10, spawnInterval:2150, walkTime:50, hp:50},
-{customers:11, spawnInterval:2050, walkTime:48, hp:52},
-{customers:11, spawnInterval:1950, walkTime:46, hp:54},
-{customers:12, spawnInterval:1850, walkTime:44, hp:56},
-{customers:12, spawnInterval:1750, walkTime:42, hp:58},
+{customers:11,  spawnInterval:2050, walkTime:48, hp:52},
+{customers:11,  spawnInterval:1950, walkTime:46, hp:54},
+{customers:12,  spawnInterval:1850, walkTime:44, hp:56},
+{customers:12,  spawnInterval:1750, walkTime:42, hp:58},
 
-{customers:13, spawnInterval:1650, walkTime:40, hp:60},
-{customers:13, spawnInterval:1550, walkTime:38, hp:62},
-{customers:14, spawnInterval:1450, walkTime:36, hp:64},
-{customers:15, spawnInterval:1350, walkTime:34, hp:66},
-{customers:16, spawnInterval:1250, walkTime:32, hp:70}
+{customers:13,  spawnInterval:1650, walkTime:40, hp:60},
+{customers:13,  spawnInterval:1550, walkTime:38, hp:62},
+{customers:14,  spawnInterval:1450, walkTime:36, hp:64},
+{customers:15,  spawnInterval:1350, walkTime:34, hp:66},
+{customers:16,  spawnInterval:1250, walkTime:32, hp:70}
 
 ];
 
@@ -2346,8 +2358,6 @@ updateKitchenEnergy();
 
 },5000);
 
-}
-
 
 /* ==================================================
    CLIENTE VISIBILE
@@ -2393,9 +2403,7 @@ function startZIndexSystem(){
 
 if(zIndexTimer!==null){
 
-clearInterval(
-zIndexTimer
-);
+clearInterval(zIndexTimer);
 
 }
 
@@ -2589,18 +2597,14 @@ document
 
 frames.forEach(function(frame){
 
-frame.classList.remove(
-"active"
-);
+frame.classList.remove("active");
 
 });
 
 
 if(frames[frameNumber]){
 
-frames[frameNumber].classList.add(
-"active"
-);
+frames[frameNumber].classList.add("active");
 
 }
 
