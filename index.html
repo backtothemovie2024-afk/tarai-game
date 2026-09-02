@@ -1967,12 +1967,14 @@ setTimeout(function(){
 hideWaveMessage();
 
 waveStarting=false;
-
+if(waveNumber===1){
+setTimeout(function(){
 spawnWaveCustomers();
-
-},1200);
-
+},3000);
+}else{
+spawnWaveCustomers();
 }
+},1200);
 
 
 /* ==================================================
