@@ -365,40 +365,6 @@ display:none;
 }
 
 
-/* ==================================================
-   CLIENTE 2 - 2 FRAME
-================================================== */
-
-.customer2-sprite{
-display:none;
-}
-
-.customer2-sprite + .happy-frame{
-width:100%;
-height:100%;
-object-fit:contain;
-left:0%;
-}
-
-.customer2-template .frame:nth-of-type(1){
-transform:scale(1.25);
-transform-origin:center bottom;
-}
-
-.customer2-template .frame:nth-of-type(2){
-transform:scale(1.25);
-transform-origin:center bottom;
-}
-
-.customer2-template .happy-frame{
-width:100%;
-height:100%;
-object-fit:contain;
-left:0%;
-transform:scale(1.25);
-transform-origin:center bottom;
-}
-
 .heart{
 position:absolute;
 left:50%;
@@ -810,43 +776,6 @@ alt=""
 class="happy-frame"
 src="https://i.ibb.co/xK0KvtVy/file-00000000c12c82098b5b04e3cf209f24-removebg-preview.png"
 alt=""
->
-
-<div class="heart">
-❤️
-</div>
-
-</div>
-
-
-<!-- ==================================================
-     CLIENTE 2
-================================================== -->
-
-<div
-id="customer2Template"
-class="customer customer-template"
-style="display:none;"
->
-
-<img
-class="frame"
-src="https://i.ibb.co/KcRsHGBM/file-00000000c98081f5b726e6e0d5b17f8d-removebg-preview.png"
-alt=""
->
-
-<img
-class="frame"
-src="https://i.ibb.co/KcRsHGBM/file-00000000c98081f5b726e6e0d5b17f8d-removebg-preview.png"
-alt=""
-style="transform:scale(1.40);transform-origin:center bottom;"
->
-
-<img
-class="happy-frame"
-src=https://i.ibb.co/Nd07D6qM/IMG-20260903-WA0000-removebg-preview.png
-alt=""
-style="transform:scale(1.25);transform-origin:center bottom;"
 >
 
 <div class="heart">
@@ -2285,17 +2214,12 @@ const game=
 document.getElementById("game");
 
 
-const type=
-Math.random()<.5
-?1
-:2;
+const type=1;
 
 
 const template=
 document.getElementById(
-type===1
-?"customer1Template"
-:"customer2Template"
+"customer1Template"
 );
 
 
@@ -2720,9 +2644,7 @@ function startCustomerAnimation(){
 
 if(customerTimer!==null){
 
-clearInterval(
-customerTimer
-);
+clearInterval(customerTimer);
 
 }
 
@@ -4033,30 +3955,6 @@ customers.find(function(c){
 return(
 
 c.dataset.type==="1" &&
-
-c.dataset.satisfied!=="true"
-
-);
-
-});
-
-
-if(customer)
-satisfyCustomer(
-customer
-);
-
-}
-
-
-function satisfyCustomer2(){
-
-const customer=
-customers.find(function(c){
-
-return(
-
-c.dataset.type==="2" &&
 
 c.dataset.satisfied!=="true"
 
