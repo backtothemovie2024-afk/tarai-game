@@ -1,8 +1,11 @@
-<!DOCTYPE html><html lang="it">
+<!DOCTYPE html>
+<html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tarai Rush</title><style>
+<title>Tarai Rush</title>
+
+<style>
 *{
 box-sizing:border-box
 }
@@ -172,11 +175,6 @@ right:0%;
 
 }
 
-
-/* ==================================================
-   ANIMAZIONE USCITA TRANSIZIONE
-================================================== */
-
 @keyframes transitionExit{
 
 from{
@@ -190,11 +188,6 @@ transform:scale(1.08);
 }
 
 }
-
-
-/* ==================================================
-   ANIMAZIONE ENTRATA GIOCO
-================================================== */
 
 @keyframes gameEnter{
 
@@ -378,7 +371,8 @@ background-image:url("https://i.ibb.co/yn0jKrX5/file-0000000099e08209902707f2215
 background-repeat:no-repeat;
 background-size:300% 200%;
 background-position:0% 0%;
-animation:customer1Walk 1.8s steps(1,end) infinite;
+animation:customer1Walk 1.8s 
+steps(1,end) infinite;
 }
 
 @keyframes customer1Walk{
@@ -433,7 +427,8 @@ background-image:url("https://i.ibb.co/tPTqhYM2/file-00000000bbc881fd905293e33d9
 background-repeat:no-repeat;
 background-size:300% 200%;
 background-position:0% 0%;
-animation:customer2Walk 1.8s steps(1,end) infinite;
+animation:customer2Walk 1.8s 
+steps(1,end) infinite;
 }
 
 @keyframes customer2Walk{
@@ -472,10 +467,6 @@ background-position:100% 100%;
 display:none;
 }
 
-
-/* ==================================================
-   CUORE CLIENTE
-================================================== */
 
 .heart{
 position:absolute;
@@ -769,210 +760,268 @@ font-size:21px;
 }
 
 }
-</style></head><body><div id="phone"><!-- ==================================================
-     INTRO VIDEO
-================================================== --><div id="intro"><video
+</style>
+</head>
+
+<body>
+
+<div id="phone">
+
+<div id="intro">
+
+<video
 id="introVideo"
 autoplay
 muted
 playsinline
 preload="auto"
-
-«»
+>
 
 <source
 src="https://yourimageshare.com/ib/LjN0a6FLZL.mp4"
 type="video/mp4"
+>
 
-«»
+</video>
 
-</video><div id="introTap"></div></div><!-- ==================================================
-     HOME
-================================================== --><div id="menu"><img
+<div id="introTap"></div>
+
+</div>
+
+
+<div id="menu">
+
+<img
 id="cover"
-src="https://i.ibb.co/7JzwW3pP/file-00000000e8d8820b9cbd75d3f8d8e3a1.png"
+src=https://i.ibb.co/7JzwW3pP/file-00000000e8d8820b9cbd75d3f8d8e3a1.png
 alt=""
-
-«»
+>
 
 <img
 id="coverOverlay"
 src="https://i.ibb.co/67Fhq4qw/file-0000000053c481f796fb5ec6162a6b2e-removebg-preview.png"
 alt=""
-
-«»
+>
 
 <button
 id="playButton"
 aria-label="Play"
-
-«»
-
+>
 PLAY
 </button>
 
-</div><!-- ==================================================
-     GIOCO
-================================================== --><div id="game"><img
+</div>
+
+
+<div id="game">
+
+<img
 id="background"
 src="https://cdn.imgchest.com/files/25a5041a8483.jpg"
 alt=""
-
-«»
+>
 
 <img
 id="kitchen"
 src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png"
 alt=""
-
-«»
+>
 
 <img
 id="kitchenDamaged"
 src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"
 alt=""
-
-«»
+>
 
 <img
 id="kitchenDestroyed"
 src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"
 alt=""
+>
 
-«»
-
-<div id="hud"><span>❤️ 3</span>
-
+<div id="hud">
+<span>❤️ 3</span>
 <span>⭐ 0</span>
+</div>
 
-</div><div id="wave-display">
+<div id="wave-display">
 WAVE 1 / 20
-</div><div id="wave-message">
+</div>
+
+<div id="wave-message">
 WAVE 1
-</div><!-- ==================================================
+</div>
+
+
+<!-- ==================================================
      CLIENTE 1
-================================================== --><div
+================================================== -->
+
+<div
 id="customer1Template"
 class="customer customer-template"
 style="display:none;"
-><div class="customer1-sprite"></div><img
+>
+
+<div class="customer1-sprite"></div>
+
+<img
 class="happy-frame"
 src="https://i.ibb.co/xK0KvtVy/file-00000000c12c82098b5b04e3cf209f24-removebg-preview.png"
 alt=""
-
-«»
+>
 
 <div class="heart">
 ❤️
-</div></div><!-- ==================================================
+</div>
+
+</div>
+
+
+<!-- ==================================================
      CLIENTE 2
-================================================== --><div
+================================================== -->
+
+<div
 id="customer2Template"
 class="customer customer-template"
 style="display:none;"
-><div class="customer2-sprite"></div><img
+>
+
+<div class="customer2-sprite"></div>
+
+<img
 class="happy-frame"
 src="https://i.ibb.co/HpVyywWW/IMG-20260903-WA0000-removebg-preview-removebg-preview.png"
 alt=""
-
-«»
+>
 
 <div class="heart">
 ❤️
-</div></div><!-- ==================================================
+</div>
+
+</div>
+
+
+<!-- ==================================================
      CUOCO
-================================================== --><div id="cook"><img
+================================================== -->
+
+<div id="cook">
+
+<img
 class="active"
 src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
 alt=""
-
-«»
+>
 
 <img
 src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
 alt=""
-
-«»
+>
 
 <img
 src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
 alt=""
-
-«»
+>
 
 <img
 src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
 alt=""
-
-«»
+>
 
 <img
 src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
 alt=""
+>
 
-«»
+</div>
 
-</div><!-- ==================================================
+
+<!-- ==================================================
      CAMERIERA
-================================================== --><div id="waitress"><img
+================================================== -->
+
+<div id="waitress">
+
+<img
 class="active"
 src="https://i.ibb.co/7x5t6Krk/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
 alt=""
-
-«»
+>
 
 <img
 src="https://i.ibb.co/2L0bgr3/Screenshot-20260830-195703-Grok-3-removebg-preview.png"
 alt=""
-
-«»
+>
 
 <img
 src="https://i.ibb.co/8Ln3LmCm/1788087630930-removebg-preview.png"
 alt=""
-
-«»
+>
 
 <img
 src="https://i.ibb.co/7x5t6Krk/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
 alt=""
+>
 
-«»
+</div>
 
-</div><!-- ==================================================
-     EXP
-================================================== --><div id="exp-bar"><div id="exp-fill"></div><div id="exp-level">
+
+<div id="exp-bar">
+
+<div id="exp-fill"></div>
+
+<div id="exp-level">
 LV 1
-</div></div><!-- ==================================================
-     POWER UP
-================================================== --><div id="powerup-overlay"><div id="powerup-panel"><div id="powerup-options"></div></div></div></div><!-- ==================================================
-     TRANSIZIONE NERA POST PLAY
-================================================== --><div id="blackTransition"><img
+</div>
+
+</div>
+
+
+<div id="powerup-overlay">
+
+<div id="powerup-panel">
+
+<div id="powerup-options"></div>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<div id="blackTransition">
+
+<img
 id="transitionImage1"
 class="transition-image"
 src="https://i.ibb.co/Xfyp7q6S/IMG-20260902-WA0007-removebg-preview.png"
 alt=""
-
-«»
+>
 
 <img
 id="transitionImage2"
 class="transition-image"
 src="https://i.ibb.co/7tJLX4sv/IMG-20260902-WA0006-removebg-preview.png"
 alt=""
-
-«»
+>
 
 <img
 id="transitionImage3"
 class="transition-image"
 src="https://i.ibb.co/RGnVyM45/file-000000002dd881f5ba124fc2a3c78a0c-removebg-preview-removebg-preview.png"
 alt=""
+>
 
-«»
+</div>
 
-</div></div><script>
+</div>
 
+
+<script>
 
 /* ==================================================
    INTRO → HOME
@@ -1478,14 +1527,18 @@ document
 
 frames.forEach(function(frame){
 
-frame.classList.remove("active");
+frame.classList.remove(
+"active"
+);
 
 });
 
 
 if(frames[frameNumber]){
 
-frames[frameNumber].classList.add("active");
+frames[frameNumber].classList.add(
+"active"
+);
 
 }
 
@@ -2372,9 +2425,29 @@ customer.dataset.wave=
 currentWave;
 
 
-/* ==================================================
-   RESET FRAME FELICITÀ
-================================================== */
+const frames=
+customer.querySelectorAll(
+".frame"
+);
+
+
+frames.forEach(function(frame){
+
+frame.classList.remove(
+"active"
+);
+
+});
+
+
+if(frames.length>0){
+
+frames[0].classList.add(
+"active"
+);
+
+}
+
 
 const happyFrame=
 customer.querySelector(
@@ -2587,9 +2660,7 @@ function startZIndexSystem(){
 
 if(zIndexTimer!==null){
 
-clearInterval(
-zIndexTimer
-);
+clearInterval(zIndexTimer);
 
 }
 
@@ -2701,6 +2772,71 @@ customerTimer
 );
 
 }
+
+
+customerTimer=
+setInterval(function(){
+
+if(powerUpPaused)
+return;
+
+
+customers.forEach(function(customer){
+
+if(
+
+!customer ||
+
+customer.style.display==="none" ||
+
+customer.dataset.satisfied==="true"
+
+)
+return;
+
+
+const frames=
+customer.querySelectorAll(
+".frame"
+);
+
+
+if(frames.length===0)
+return;
+
+
+let frame=
+parseInt(
+customer.dataset.frame||"0"
+);
+
+
+frames.forEach(function(image){
+
+image.classList.remove(
+"active"
+);
+
+});
+
+
+frames[frame].classList.add(
+"active"
+);
+
+
+frame++;
+
+
+if(frame>=frames.length)
+frame=0;
+
+
+customer.dataset.frame=frame;
+
+});
+
+},300);
 
 }
 
@@ -3989,5 +4125,7 @@ customer
 
 }
 
-</script></body>
+</script>
+
+</body>
 </html>
