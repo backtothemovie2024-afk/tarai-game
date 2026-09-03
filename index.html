@@ -366,57 +366,10 @@ display:none;
 
 
 /* ==================================================
-   CLIENTE 2 - SPRITE SHEET 3x2
+   CLIENTE 2 - 2 FRAME
 ================================================== */
 
 .customer2-sprite{
-position:absolute;
-top:0;
-left:20%;
-width:60%;
-height:100%;
-overflow:hidden;
-background-image:url("https://i.ibb.co/H8dZ6D4/file-00000000fd7c8211b94b00a1aa845110-removebg-preview.png");
-background-repeat:no-repeat;
-background-size:300% 200%;
-background-position:0% 0%;
-animation:customer2Walk 1.8s 
-steps(1,end) infinite;
-}
-
-@keyframes customer2Walk{
-
-0%{
-background-position:0% 0%;
-}
-
-16.666%{
-background-position:50% 0%;
-}
-
-33.333%{
-background-position:100% 0%;
-}
-
-50%{
-background-position:0% 100%;
-}
-
-66.666%{
-background-position:50% 100%;
-}
-
-83.333%{
-background-position:100% 100%;
-}
-
-100%{
-background-position:100% 100%;
-}
-
-}
-
-.customer.satisfied .customer2-sprite{
 display:none;
 }
 
@@ -425,6 +378,15 @@ width:100%;
 height:100%;
 object-fit:contain;
 left:0%;
+}
+
+.customer2-template .happy-frame{
+width:100%;
+height:100%;
+object-fit:contain;
+left:0%;
+transform:scale(1);
+transform-origin:center center;
 }
 
 .heart{
@@ -857,11 +819,21 @@ class="customer customer-template"
 style="display:none;"
 >
 
-<div class="customer2-sprite"></div>
+<img
+class="frame"
+src="https://i.ibb.co/4n1Vcrs8/file-00000000c86081f587400a1dde8b1eb7-removebg-preview.png"
+alt=""
+>
+
+<img
+class="frame"
+src="https://i.ibb.co/93gtkHY0/file-00000000bd4481f587f5f108d3d9bc5e-removebg-preview.png"
+alt=""
+>
 
 <img
 class="happy-frame"
-src="https://i.ibb.co/HpVyywWW/IMG-20260903-WA0000-removebg-preview-removebg-preview.png"
+src="https://i.ibb.co/C5GygFnf/IMG-20260903-WA0000-removebg-preview-removebg-preview-removebg-preview.png"
 alt=""
 >
 
@@ -3559,15 +3531,11 @@ return;
 
 
 const waitress=
-document.getElementById(
-"waitress"
-);
+document.getElementById("waitress");
 
 
 const game=
-document.getElementById(
-"game"
-);
+document.getElementById("game");
 
 
 const gameRect=
@@ -4095,4 +4063,4 @@ customer
 </script>
 
 </body>
-   </html>
+</html>
