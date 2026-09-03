@@ -373,42 +373,56 @@ z-index:2;
 
 
 /* ==================================================
-   CLIENTE 1 - SPRITE SHEET 6 FRAME
+   CLIENTE 1 - SPRITE SHEET 3x2
 ================================================== */
 
-.walk-sheet{
+.customer1-sprite{
 position:absolute;
 top:0;
-left:0;
-width:100%;
+left:20%;
+width:60%;
 height:100%;
 overflow:hidden;
-}
-
-.walk-sheet img{
-position:absolute;
-top:0;
-left:0;
-width:600%;
-height:100%;
-max-width:none;
-object-fit:fill;
-animation:customer1Walk .72s steps(6) infinite;
+background-image:url("https://i.ibb.co/yn0jKrX5/file-0000000099e08209902707f22152363a-removebg-preview.png");
+background-repeat:no-repeat;
+background-size:300% 200%;
+background-position:0% 0%;
+animation:customer1Walk .72s steps(1,end) infinite;
 }
 
 @keyframes customer1Walk{
 
-from{
-transform:translateX(0);
+0%{
+background-position:0% 0%;
 }
 
-to{
-transform:translateX(-83.333333%);
+16.666%{
+background-position:50% 0%;
+}
+
+33.333%{
+background-position:100% 0%;
+}
+
+50%{
+background-position:0% 100%;
+}
+
+66.666%{
+background-position:50% 100%;
+}
+
+83.333%{
+background-position:100% 100%;
+}
+
+100%{
+background-position:100% 100%;
 }
 
 }
 
-.customer.satisfied .walk-sheet img{
+.customer.satisfied .customer1-sprite{
 animation-play-state:paused;
 }
 
@@ -747,7 +761,7 @@ type="video/mp4"
 
 <img
 id="cover"
-src="https://i.ibb.co/7JzwW3pP/file-00000000e8d8820b9cbd75d3f8d8e3a1.png"
+src=https://i.ibb.co/7JzwW3pP/file-00000000e8d8820b9cbd75d3f8d8e3a1.png
 alt=""
 >
 
@@ -831,14 +845,7 @@ class="customer customer-template"
 style="display:none;"
 >
 
-<div class="walk-sheet">
-
-<img
-src="https://i.ibb.co/yn0jKrX5/file-0000000099e08209902707f22152363a-removebg-preview.png"
-alt=""
->
-
-</div>
+<div class="customer1-sprite"></div>
 
 <img
 class="happy-frame"
@@ -2462,6 +2469,10 @@ customer.dataset.frame="0";
 customer.dataset.wave=
 currentWave;
 
+
+/* ==================================================
+   FRAME CLIENTE 2
+================================================== */
 
 const frames=
 customer.querySelectorAll(
@@ -4168,4 +4179,4 @@ customer
 </script>
 
 </body>
-</html>
+   </html>
