@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="it">
+<!DOCTYPE html><html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tarai Rush</title>
-
-<style>
+<title>Tarai Rush</title><style>
 *{
 box-sizing:border-box
 }
@@ -136,21 +133,15 @@ display:block;
 pointer-events:none;
 }
 
-/* PRIMA IMMAGINE — ALTO */
-
 #transitionImage1{
 top:5%;
 left:-100%;
 }
 
-/* SECONDA IMMAGINE — CENTRO */
-
 #transitionImage2{
 top:35%;
 right:-100%;
 }
-
-/* TERZA IMMAGINE — FONDO */
 
 #transitionImage3{
 bottom:5%;
@@ -387,8 +378,7 @@ background-image:url("https://i.ibb.co/yn0jKrX5/file-0000000099e08209902707f2215
 background-repeat:no-repeat;
 background-size:300% 200%;
 background-position:0% 0%;
-animation:customer1Walk 1.0s 
-steps(1,end) infinite;
+animation:customer1Walk 1.8s steps(1,end) infinite;
 }
 
 @keyframes customer1Walk{
@@ -427,6 +417,65 @@ background-position:100% 100%;
 display:none;
 }
 
+
+/* ==================================================
+   CLIENTE 2 - SPRITE SHEET 3x2
+================================================== */
+
+.customer2-sprite{
+position:absolute;
+top:0;
+left:20%;
+width:60%;
+height:100%;
+overflow:hidden;
+background-image:url("https://i.ibb.co/tPTqhYM2/file-00000000bbc881fd905293e33d9cf475-removebg-preview.png");
+background-repeat:no-repeat;
+background-size:300% 200%;
+background-position:0% 0%;
+animation:customer2Walk 1.8s steps(1,end) infinite;
+}
+
+@keyframes customer2Walk{
+
+0%{
+background-position:0% 0%;
+}
+
+16.666%{
+background-position:50% 0%;
+}
+
+33.333%{
+background-position:100% 0%;
+}
+
+50%{
+background-position:0% 100%;
+}
+
+66.666%{
+background-position:50% 100%;
+}
+
+83.333%{
+background-position:100% 100%;
+}
+
+100%{
+background-position:100% 100%;
+}
+
+}
+
+.customer.satisfied .customer2-sprite{
+display:none;
+}
+
+
+/* ==================================================
+   CUORE CLIENTE
+================================================== */
 
 .heart{
 position:absolute;
@@ -720,314 +769,209 @@ font-size:21px;
 }
 
 }
-</style>
-</head>
-
-<body>
-
-<div id="phone">
-
-
-<!-- ==================================================
+</style></head><body><div id="phone"><!-- ==================================================
      INTRO VIDEO
-================================================== -->
-
-<div id="intro">
-
-<video
+================================================== --><div id="intro"><video
 id="introVideo"
 autoplay
 muted
 playsinline
 preload="auto"
->
+
+«»
 
 <source
 src="https://yourimageshare.com/ib/LjN0a6FLZL.mp4"
 type="video/mp4"
->
 
-</video>
+«»
 
-<div id="introTap"></div>
-
-</div>
-
-
-<!-- ==================================================
+</video><div id="introTap"></div></div><!-- ==================================================
      HOME
-================================================== -->
-
-<div id="menu">
-
-<img
+================================================== --><div id="menu"><img
 id="cover"
-src=https://i.ibb.co/7JzwW3pP/file-00000000e8d8820b9cbd75d3f8d8e3a1.png
+src="https://i.ibb.co/7JzwW3pP/file-00000000e8d8820b9cbd75d3f8d8e3a1.png"
 alt=""
->
+
+«»
 
 <img
 id="coverOverlay"
 src="https://i.ibb.co/67Fhq4qw/file-0000000053c481f796fb5ec6162a6b2e-removebg-preview.png"
 alt=""
->
+
+«»
 
 <button
 id="playButton"
 aria-label="Play"
->
+
+«»
+
 PLAY
 </button>
 
-</div>
-
-
-<!-- ==================================================
+</div><!-- ==================================================
      GIOCO
-================================================== -->
-
-<div id="game">
-
-
-<img
+================================================== --><div id="game"><img
 id="background"
 src="https://cdn.imgchest.com/files/25a5041a8483.jpg"
 alt=""
->
 
+«»
 
 <img
 id="kitchen"
 src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png"
 alt=""
->
 
+«»
 
 <img
 id="kitchenDamaged"
 src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"
 alt=""
->
 
+«»
 
 <img
 id="kitchenDestroyed"
 src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"
 alt=""
->
 
+«»
 
-<div id="hud">
-
-<span>❤️ 3</span>
+<div id="hud"><span>❤️ 3</span>
 
 <span>⭐ 0</span>
 
-</div>
-
-
-<div id="wave-display">
+</div><div id="wave-display">
 WAVE 1 / 20
-</div>
-
-
-<div id="wave-message">
+</div><div id="wave-message">
 WAVE 1
-</div>
-
-
-<!-- ==================================================
+</div><!-- ==================================================
      CLIENTE 1
-================================================== -->
-
-<div
+================================================== --><div
 id="customer1Template"
 class="customer customer-template"
 style="display:none;"
->
-
-<div class="customer1-sprite"></div>
-
-<img
+><div class="customer1-sprite"></div><img
 class="happy-frame"
 src="https://i.ibb.co/xK0KvtVy/file-00000000c12c82098b5b04e3cf209f24-removebg-preview.png"
 alt=""
->
+
+«»
 
 <div class="heart">
 ❤️
-</div>
-
-</div>
-
-
-<!-- ==================================================
+</div></div><!-- ==================================================
      CLIENTE 2
-================================================== -->
-
-<div
+================================================== --><div
 id="customer2Template"
 class="customer customer-template"
 style="display:none;"
->
-
-<img
-class="frame active"
-src="https://i.ibb.co/jP6QSPFd/1000040572-removebg-preview.png"
-alt=""
->
-
-<img
-class="frame"
-src="https://i.ibb.co/vxJCRK81/1000040573-removebg-preview.png"
-alt=""
->
-
-<img
+><div class="customer2-sprite"></div><img
 class="happy-frame"
-src="https://i.ibb.co/m5xmJrBq/Screenshot-20260830-060945-Grok-removebg-preview.png"
+src="https://i.ibb.co/HpVyywWW/IMG-20260903-WA0000-removebg-preview-removebg-preview.png"
 alt=""
->
+
+«»
 
 <div class="heart">
 ❤️
-</div>
-
-</div>
-
-
-<!-- ==================================================
+</div></div><!-- ==================================================
      CUOCO
-================================================== -->
-
-<div id="cook">
-
-<img
+================================================== --><div id="cook"><img
 class="active"
 src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
 alt=""
->
+
+«»
 
 <img
 src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
 alt=""
->
+
+«»
 
 <img
 src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
 alt=""
->
+
+«»
 
 <img
 src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
 alt=""
->
+
+«»
 
 <img
 src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
 alt=""
->
 
-</div>
+«»
 
-
-<!-- ==================================================
+</div><!-- ==================================================
      CAMERIERA
-================================================== -->
-
-<div id="waitress">
-
-<img
+================================================== --><div id="waitress"><img
 class="active"
 src="https://i.ibb.co/7x5t6Krk/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
 alt=""
->
+
+«»
 
 <img
 src="https://i.ibb.co/2L0bgr3/Screenshot-20260830-195703-Grok-3-removebg-preview.png"
 alt=""
->
+
+«»
 
 <img
 src="https://i.ibb.co/8Ln3LmCm/1788087630930-removebg-preview.png"
 alt=""
->
+
+«»
 
 <img
 src="https://i.ibb.co/7x5t6Krk/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
 alt=""
->
 
-</div>
+«»
 
-
-<!-- ==================================================
+</div><!-- ==================================================
      EXP
-================================================== -->
-
-<div id="exp-bar">
-
-<div id="exp-fill"></div>
-
-<div id="exp-level">
+================================================== --><div id="exp-bar"><div id="exp-fill"></div><div id="exp-level">
 LV 1
-</div>
-
-</div>
-
-
-<!-- ==================================================
+</div></div><!-- ==================================================
      POWER UP
-================================================== -->
-
-<div id="powerup-overlay">
-
-<div id="powerup-panel">
-
-<div id="powerup-options"></div>
-
-</div>
-
-</div>
-
-
-</div>
-
-
-<!-- ==================================================
+================================================== --><div id="powerup-overlay"><div id="powerup-panel"><div id="powerup-options"></div></div></div></div><!-- ==================================================
      TRANSIZIONE NERA POST PLAY
-================================================== -->
-
-<div id="blackTransition">
-
-<img
+================================================== --><div id="blackTransition"><img
 id="transitionImage1"
 class="transition-image"
 src="https://i.ibb.co/Xfyp7q6S/IMG-20260902-WA0007-removebg-preview.png"
 alt=""
->
+
+«»
 
 <img
 id="transitionImage2"
 class="transition-image"
 src="https://i.ibb.co/7tJLX4sv/IMG-20260902-WA0006-removebg-preview.png"
 alt=""
->
+
+«»
 
 <img
 id="transitionImage3"
 class="transition-image"
 src="https://i.ibb.co/RGnVyM45/file-000000002dd881f5ba124fc2a3c78a0c-removebg-preview-removebg-preview.png"
 alt=""
->
 
-</div>
+«»
 
-
-</div>
-
-
-<script>
+</div></div><script>
 
 
 /* ==================================================
@@ -1692,19 +1636,13 @@ document.getElementById(
 );
 
 
-/* NASCONDE IL MENU */
-
 document
 .getElementById("menu")
 .style.display="none";
 
 
-/* MOSTRA SCHERMATA NERA */
-
 blackTransition.style.display="block";
 
-
-/* RESET POSIZIONI */
 
 image1.style.animation="none";
 image2.style.animation="none";
@@ -1723,12 +1661,6 @@ image2.style.transform="scale(1)";
 image3.style.transform="scale(1)";
 
 
-/* ==============================================
-   DOPO 2 SECONDI
-   IMMAGINE 1
-   VELOCITÀ DOPPIA
-================================================ */
-
 setTimeout(function(){
 
 image1.style.animation=
@@ -1736,13 +1668,6 @@ image1.style.animation=
 
 },2000);
 
-
-/* ==============================================
-   DOPO CHE LA 1 È ARRIVATA
-   ASPETTA 2 SECONDI
-   POI IMMAGINE 2
-   VELOCITÀ DOPPIA
-================================================ */
 
 setTimeout(function(){
 
@@ -1752,13 +1677,6 @@ image2.style.animation=
 },5165);
 
 
-/* ==============================================
-   DOPO CHE LA 2 È ARRIVATA
-   ASPETTA 2 SECONDI
-   POI IMMAGINE 3
-   VELOCITÀ ORIGINALE
-================================================ */
-
 setTimeout(function(){
 
 image3.style.animation=
@@ -1767,19 +1685,10 @@ image3.style.animation=
 },8320);
 
 
-/* ==============================================
-   DOPO CHE LA 3 È ARRIVATA
-   ASPETTA 3 SECONDI
-================================================== */
-
 setTimeout(function(){
 
 },12660);
 
-
-/* ==============================================
-   SPARIZIONE DELLE 3 IMMAGINI
-================================================== */
 
 setTimeout(function(){
 
@@ -1788,10 +1697,6 @@ blackTransition.style.animation=
 
 },15660);
 
-
-/* ==============================================
-   APPARIZIONE DEL GIOCO
-================================================== */
 
 setTimeout(function(){
 
@@ -2015,10 +1920,6 @@ hideWaveMessage();
 
 waveStarting=false;
 
-
-/* ==============================================
-   RITARDO INIZIALE SOLO PER LA PRIMA WAVE
-================================================ */
 
 if(waveNumber===1){
 
@@ -2472,32 +2373,8 @@ currentWave;
 
 
 /* ==================================================
-   FRAME CLIENTE 2
+   RESET FRAME FELICITÀ
 ================================================== */
-
-const frames=
-customer.querySelectorAll(
-".frame"
-);
-
-
-frames.forEach(function(frame){
-
-frame.classList.remove(
-"active"
-);
-
-});
-
-
-if(frames.length>0){
-
-frames[0].classList.add(
-"active"
-);
-
-}
-
 
 const happyFrame=
 customer.querySelector(
@@ -2824,71 +2701,6 @@ customerTimer
 );
 
 }
-
-
-customerTimer=
-setInterval(function(){
-
-if(powerUpPaused)
-return;
-
-
-customers.forEach(function(customer){
-
-if(
-
-!customer ||
-
-customer.style.display==="none" ||
-
-customer.dataset.satisfied==="true"
-
-)
-return;
-
-
-const frames=
-customer.querySelectorAll(
-".frame"
-);
-
-
-if(frames.length===0)
-return;
-
-
-let frame=
-parseInt(
-customer.dataset.frame||"0"
-);
-
-
-frames.forEach(function(image){
-
-image.classList.remove(
-"active"
-);
-
-});
-
-
-frames[frame].classList.add(
-"active"
-);
-
-
-frame++;
-
-
-if(frame>=frames.length)
-frame=0;
-
-
-customer.dataset.frame=frame;
-
-});
-
-},300);
 
 }
 
@@ -4177,7 +3989,5 @@ customer
 
 }
 
-</script>
-
-</body>
-   </html>
+</script></body>
+</html>
