@@ -371,6 +371,48 @@ display:none;
 z-index:2;
 }
 
+
+/* ==================================================
+   CLIENTE 1 - SPRITE SHEET 6 FRAME
+================================================== */
+
+.walk-sheet{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+overflow:hidden;
+}
+
+.walk-sheet img{
+position:absolute;
+top:0;
+left:0;
+width:600%;
+height:100%;
+max-width:none;
+object-fit:fill;
+animation:customer1Walk .72s steps(6) infinite;
+}
+
+@keyframes customer1Walk{
+
+from{
+transform:translateX(0);
+}
+
+to{
+transform:translateX(-83.333333%);
+}
+
+}
+
+.customer.satisfied .walk-sheet img{
+animation-play-state:paused;
+}
+
+
 .heart{
 position:absolute;
 left:50%;
@@ -705,7 +747,7 @@ type="video/mp4"
 
 <img
 id="cover"
-src=https://i.ibb.co/7JzwW3pP/file-00000000e8d8820b9cbd75d3f8d8e3a1.png
+src="https://i.ibb.co/7JzwW3pP/file-00000000e8d8820b9cbd75d3f8d8e3a1.png"
 alt=""
 >
 
@@ -783,27 +825,20 @@ WAVE 1
      CLIENTE 1
 ================================================== -->
 
-<!-- ==================================================
-     CLIENTE 1
-================================================== -->
-
 <div
 id="customer1Template"
 class="customer customer-template"
 style="display:none;"
 >
 
+<div class="walk-sheet">
+
 <img
-class="frame active"
-src="https://i.ibb.co/tpnK83wv/file-000000008af88209ac0b937460ac0420-removebg-preview.png"
+src="https://i.ibb.co/yn0jKrX5/file-0000000099e08209902707f22152363a-removebg-preview.png"
 alt=""
 >
 
-<img
-class="frame"
-src="https://i.ibb.co/1tqhK1S6/file-00000000c2908206b409c37366f21a8c-removebg-preview.png"
-alt=""
->
+</div>
 
 <img
 class="happy-frame"
@@ -2422,6 +2457,7 @@ customer.dataset.satisfied="false";
 customer.dataset.atKitchen="false";
 
 customer.dataset.frame="0";
+
 
 customer.dataset.wave=
 currentWave;
