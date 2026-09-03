@@ -400,6 +400,20 @@ transform-origin:center bottom;
 }
 
 
+/* ==================================================
+   CLIENTI 3 - 4 - 5
+================================================== */
+
+.customer3-template .frame,
+.customer3-template .happy-frame,
+.customer4-template .frame,
+.customer4-template .happy-frame,
+.customer5-template .frame,
+.customer5-template .happy-frame{
+transform-origin:center bottom;
+}
+
+
 .heart{
 position:absolute;
 left:50%;
@@ -845,6 +859,111 @@ alt=""
 <img
 class="happy-frame"
 src="https://i.ibb.co/Nd07D6qM/IMG-20260903-WA0000-removebg-preview.png"
+alt=""
+>
+
+<div class="heart">
+❤️
+</div>
+
+</div>
+
+
+<!-- ==================================================
+     CLIENTE 3
+================================================== -->
+
+<div
+id="customer3Template"
+class="customer customer-template customer3-template"
+style="display:none;"
+>
+
+<img
+class="frame active"
+src="https://i.ibb.co/yn4FhD9R/file-000000009aa881f8ad8a606f56cfd20e-removebg-preview.png"
+alt=""
+>
+
+<img
+class="frame"
+src="https://i.ibb.co/q3sVXb91/file-00000000f6a8820b9386a96b7ceb0de1-removebg-preview.png"
+alt=""
+>
+
+<img
+class="happy-frame"
+src="https://i.ibb.co/hJV2h1SB/file-00000000e11481fbb52f984cb27b249b-removebg-preview.png"
+alt=""
+>
+
+<div class="heart">
+❤️
+</div>
+
+</div>
+
+
+<!-- ==================================================
+     CLIENTE 4
+================================================== -->
+
+<div
+id="customer4Template"
+class="customer customer-template customer4-template"
+style="display:none;"
+>
+
+<img
+class="frame active"
+src="https://i.ibb.co/nFD6qXM/file-00000000676481f6bf0d716bb15816ea-removebg-preview.png"
+alt=""
+>
+
+<img
+class="frame"
+src="https://i.ibb.co/cSfW6zzZ/file-0000000042ec821190d66e8cdf595ef7-removebg-preview.png"
+alt=""
+>
+
+<img
+class="happy-frame"
+src="https://i.ibb.co/QF3p9tqg/file-000000000fac81fa84533e82a16b37af-removebg-preview.png"
+alt=""
+>
+
+<div class="heart">
+❤️
+</div>
+
+</div>
+
+
+<!-- ==================================================
+     CLIENTE 5
+================================================== -->
+
+<div
+id="customer5Template"
+class="customer customer-template customer5-template"
+style="display:none;"
+>
+
+<img
+class="frame active"
+src="https://i.ibb.co/tPcTpmCp/file-00000000fb7481faa77857eab2c72b35-removebg-preview.png"
+alt=""
+>
+
+<img
+class="frame"
+src="https://i.ibb.co/B5kyP23r/file-00000000629c8230a812e52a7d5e884c-removebg-preview.png"
+alt=""
+>
+
+<img
+class="happy-frame"
+src="https://i.ibb.co/HptPnxqL/file-00000000afec8206808ae4a9281b5442-removebg-preview.png"
 alt=""
 >
 
@@ -2284,19 +2403,19 @@ const game=
 document.getElementById("game");
 
 
-/* CLIENTE 1 O CLIENTE 2 */
+/* CLIENTE 1, 2, 3, 4 O 5 */
 
 const type=
-Math.random()<.5
-?1
-:2;
+Math.floor(
+Math.random()*5
+)+1;
 
 
 const template=
 document.getElementById(
-type===1
-?"customer1Template"
-:"customer2Template"
+"customer"+
+type+
+"Template"
 );
 
 
@@ -4074,4 +4193,4 @@ customer
 </script>
 
 </body>
-</html>
+   </html>
