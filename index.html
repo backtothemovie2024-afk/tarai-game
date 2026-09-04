@@ -364,15 +364,16 @@ z-index:2;
 display:none;
 }
 
-/* MODIFICA:
-   I due frame del Cliente 1 hanno
-   esattamente le stesse dimensioni */
 .customer1-template .frame{
 width:100%;
 height:100%;
-object-fit:fill;
+object-fit:contain;
 transform:none;
 transform-origin:center bottom;
+}
+
+.customer1-template .frame:nth-child(5){
+transform:translateX(2px);
 }
 
 
@@ -844,18 +845,43 @@ id="customer1Template"
 class="customer customer-template customer1-template"
 style="display:none;"
 >
+<div
+id="customer1Template"
+class="customer customer-template customer1-template"
+style="display:none;"
+>
 
 <img
 class="frame active"
-src="https://i.ibb.co/jvTNwt9c/file-00000000c2908206b409c37366f21a8c-removebg-preview.png"
+src="https://i.ibb.co/HTz7CSVH/tile000-removebg-preview.png"
 alt=""
 >
 
 <img
 class="frame"
-src="https://i.ibb.co/jknrrcrQ/file-000000008af88209ac0b937460ac0420-removebg-preview.png"
+src="https://i.ibb.co/k6q3F747/tile001-removebg-preview.png"
 alt=""
 >
+
+<img
+class="frame"
+src="https://i.ibb.co/23XfHsdD/tile002-removebg-preview.png"
+alt=""
+>
+
+<img
+class="frame"
+src="https://i.ibb.co/S7VVv2Ts/tile003-removebg-preview.png"
+alt=""
+>
+
+<img
+class="frame"
+src="https://i.ibb.co/twdzqFr9/tile004-removebg-preview.png"
+alt=""
+>
+
+
 
 <img
 class="happy-frame"
