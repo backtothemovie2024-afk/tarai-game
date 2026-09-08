@@ -323,7 +323,7 @@ z-index:2;
 }
 
 /* ==================================================
-   CLIENTE 1 - 2 FRAME
+   CLIENTE 1
 ================================================== */
 
 .customer1-sprite{
@@ -339,7 +339,7 @@ transform-origin:center bottom;
 }
 
 /* ==================================================
-   CLIENTE 2 - 2 FRAME
+   CLIENTE 2
 ================================================== */
 
 .customer2-sprite{
@@ -386,20 +386,8 @@ transform-origin:center bottom;
 }
 
 /* ==================================================
-   CLIENTE 3 - CORREZIONE FRAME CAMMINATA
+   CLIENTE 3 - CORREZIONE FRAME
 ================================================== */
-
-/*
-   Nel file standalone:
-   frame 1 = x 0
-   frame 2 = x 36
-   sprite originale = 256 px
-
-   36 / 256 = 14.0625%
-
-   L'offset viene quindi applicato in proporzione
-   al ridimensionamento del personaggio nel gioco.
-*/
 
 .customer3-template .frame:nth-of-type(1){
 transform:translateX(0);
@@ -451,7 +439,9 @@ transform:translateX(-50%);
 z-index:60;
 }
 
-#cook{left:37.5%;}
+#cook{
+left:37.5%;
+}
 
 #cook img{
 position:absolute;
@@ -463,7 +453,9 @@ object-fit:contain;
 display:none;
 }
 
-#cook img.active{display:block;}
+#cook img.active{
+display:block;
+}
 
 /* ==================================================
    CAMERIERA
@@ -472,21 +464,28 @@ display:none;
 #waitress{
 left:62.5%;
 display:none;
+overflow:visible;
 }
 
 #waitress img{
 position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
+left:50%;
+bottom:0;
+top:auto;
+width:118%;
+height:auto;
+max-width:none;
+max-height:none;
 object-fit:contain;
 display:none;
-transform:scale(1.18);
+transform:translateX(-50%);
 transform-origin:center bottom;
+pointer-events:none;
 }
 
-#waitress img.active{display:block;}
+#waitress img.active{
+display:block;
+}
 
 /* ==================================================
    PASTA / DRINK
@@ -699,6 +698,7 @@ top:50px;
 #wave-message{
 font-size:21px;
 }
+
 }
 </style>
 </head>
@@ -785,21 +785,20 @@ WAVE 1 / 20
 WAVE 1
 </div>
 
-<!-- ==================================================
-     CLIENTE 1 bionda
-================================================== -->
-
 <!-- CLIENTE 1 -->
+
 <div
 id="customer1Template"
 class="customer customer-template customer1-template"
 style="display:none;"
 >
+
 <img
 class="frame active"
 src="https://i.ibb.co/TMLpLFpV/tile006-191x720-removebg-preview.png"
 alt=""
 >
+
 <img
 class="frame"
 src="https://i.ibb.co/qYHtzZC6/tile008-191x720-removebg-preview.png"
@@ -818,9 +817,7 @@ alt=""
 
 </div>
 
-<!-- ==================================================
-     CLIENTE 2
-================================================== -->
+<!-- CLIENTE 2 -->
 
 <div
 id="customer2Template"
@@ -852,9 +849,7 @@ alt=""
 
 </div>
 
-<!-- ==================================================
-     CLIENTE 3 occhiali 
-================================================== -->
+<!-- CLIENTE 3 -->
 
 <div
 id="customer3Template"
@@ -886,9 +881,7 @@ alt=""
 
 </div>
 
-<!-- ==================================================
-     CLIENTE 4
-================================================== -->
+<!-- CLIENTE 4 -->
 
 <div
 id="customer4Template"
@@ -920,9 +913,7 @@ alt=""
 
 </div>
 
-<!-- ==================================================
-     CLIENTE 5
-================================================== -->
+<!-- CLIENTE 5 -->
 
 <div
 id="customer5Template"
@@ -996,22 +987,37 @@ alt=""
 
 <img
 class="active"
-src="https://i.ibb.co/7x5t6Krk/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
+src="https://i.ibb.co/QF89M6kD/1000042138-removebg-preview.png"
 alt=""
 >
 
 <img
-src="https://i.ibb.co/2L0bgr3/Screenshot-20260830-195703-Grok-3-removebg-preview.png"
+src="https://i.ibb.co/Kj0pmpYW/1000042139-removebg-preview.png"
 alt=""
 >
 
 <img
-src="https://i.ibb.co/8Ln3LmCm/1788087630930-removebg-preview.png"
+src="https://i.ibb.co/k68q8JzG/1000042140-removebg-preview.png"
 alt=""
 >
 
 <img
-src="https://i.ibb.co/7x5t6Krk/Screenshot-20260830-195703-Grok-2-removebg-preview.png"
+src="https://i.ibb.co/21cygdFG/1000042141-removebg-preview.png"
+alt=""
+>
+
+<img
+src="https://i.ibb.co/ns3H0fCB/1000042143-removebg-preview.png"
+alt=""
+>
+
+<img
+src="https://i.ibb.co/TBvNWcQ8/1000042144-removebg-preview.png"
+alt=""
+>
+
+<img
+src="https://i.ibb.co/QF89M6kD/1000042138-removebg-preview.png"
 alt=""
 >
 
@@ -1116,11 +1122,11 @@ const HIT_Y=0;
 const HIT_POSITION_Y=.45;
 
 /* ==================================================
-   POSIZIONE MANO CAMERIERA
+   POSIZIONE MANO CAMERIERA - FRAME 5
 ================================================== */
 
-const WAITRESS_HAND_X=.70;
-const WAITRESS_HAND_Y=.30;
+const WAITRESS_HAND_X=.72;
+const WAITRESS_HAND_Y=.38;
 
 /* ==================================================
    SISTEMA 20 WAVE
@@ -1258,43 +1264,34 @@ function getAvailablePowerUps(){
 let available=[];
 
 if(powerUps.pasta<3){
-
 available.push({
 type:"pasta",
 level:powerUps.pasta+1
 });
-
 }
 
 if(powerUps.speed<3){
-
 available.push({
 type:"speed",
 level:powerUps.speed+1
 });
-
 }
 
 if(powerUps.sauce<3){
-
 available.push({
 type:"sauce",
 level:powerUps.sauce+1
 });
-
 }
 
 if(!powerUps.waitress){
-
 available.push({
 type:"waitress",
 level:1
 });
-
 }
 
 return available;
-
 }
 
 /* ==================================================
@@ -1322,7 +1319,6 @@ document
 powerUpPaused=false;
 
 return;
-
 }
 
 const options=
@@ -1330,11 +1326,7 @@ document.getElementById("powerup-options");
 
 options.innerHTML="";
 
-for(
-let i=available.length-1;
-i>0;
-i--
-){
+for(let i=available.length-1;i>0;i--){
 
 const j=
 Math.floor(
@@ -1491,9 +1483,7 @@ let waitressTimer=null;
 function startWaitressAnimation(){
 
 if(waitressTimer!==null){
-
 clearInterval(waitressTimer);
-
 }
 
 setWaitressFrame(0);
@@ -1550,7 +1540,6 @@ fill.style.width="100%";
 levelText.textContent="LV MAX";
 
 return;
-
 }
 
 const requiredEXP=
@@ -1601,9 +1590,7 @@ levelUp=true;
 updateEXPBar();
 
 if(levelUp){
-
 showPowerUpScreen();
-
 }
 
 }
@@ -1700,10 +1687,6 @@ image3.style.animation=
 "transitionFromLeft 2.34s ease-out forwards";
 
 },8320);
-
-setTimeout(function(){
-
-},12660);
 
 setTimeout(function(){
 
@@ -1872,7 +1855,6 @@ function startWave(waveNumber){
 if(waveNumber>TOTAL_WAVES){
 
 finishLevel();
-
 return;
 
 }
@@ -1972,21 +1954,13 @@ return;
 
 const lastLaneSpawn=[];
 
-for(
-let i=0;
-i<LANES.length;
-i++
-){
+for(let i=0;i<LANES.length;i++){
 
 lastLaneSpawn[i]=-Infinity;
 
 }
 
-for(
-let i=0;
-i<config.customers;
-i++
-){
+for(let i=0;i<config.customers;i++){
 
 const delay=
 i*config.spawnInterval;
@@ -2019,7 +1993,7 @@ config
 }
 
 /* ==================================================
-   ATTESA POWER UP PRIMA DELLO SPAWN
+   ATTESA POWER UP
 ================================================== */
 
 function waitForPowerUpThenSpawn(
@@ -2767,14 +2741,10 @@ customers.filter(function(customer){
 if(!customer)
 return false;
 
-if(
-customer.style.display==="none"
-)
+if(customer.style.display==="none")
 return false;
 
-if(
-customer.dataset.satisfied==="true"
-)
+if(customer.dataset.satisfied==="true")
 return false;
 
 return customerIsVisible(
@@ -2896,14 +2866,10 @@ customers.filter(function(customer){
 if(!customer)
 return false;
 
-if(
-customer.style.display==="none"
-)
+if(customer.style.display==="none")
 return false;
 
-if(
-customer.dataset.satisfied==="true"
-)
+if(customer.dataset.satisfied==="true")
 return false;
 
 return customerIsVisible(
@@ -3168,6 +3134,7 @@ movePasta
 
 /* ==================================================
    ATTACCO CAMERIERA
+   FRAME 5 = LANCIO COCKTAIL
 ================================================== */
 
 function playWaitressAttack(){
@@ -3190,37 +3157,78 @@ return;
 
 setWaitressFrame(0);
 
+/* FRAME 2 */
 setTimeout(function(){
 
 if(!powerUpPaused)
 setWaitressFrame(1);
 
-},120);
+},160);
 
+/* FRAME 3 */
 setTimeout(function(){
 
-if(!powerUpPaused){
-
+if(!powerUpPaused)
 setWaitressFrame(2);
-throwDrink(target);
 
-}
+},320);
 
-},240);
-
+/* FRAME 4 */
 setTimeout(function(){
 
 if(!powerUpPaused)
 setWaitressFrame(3);
 
-},360);
+},480);
 
+/* FRAME 5 + LANCIO */
+setTimeout(function(){
+
+if(!powerUpPaused){
+
+setWaitressFrame(4);
+
+requestAnimationFrame(function(){
+
+if(
+!powerUpPaused &&
+target &&
+target.dataset.satisfied!=="true"
+){
+
+throwDrink(target);
+
+}
+
+});
+
+}
+
+},640);
+
+/* FRAME 6 */
+setTimeout(function(){
+
+if(!powerUpPaused)
+setWaitressFrame(5);
+
+},800);
+
+/* FRAME 7 = FRAME 1 */
+setTimeout(function(){
+
+if(!powerUpPaused)
+setWaitressFrame(6);
+
+},960);
+
+/* RITORNO POSIZIONE BASE */
 setTimeout(function(){
 
 if(!powerUpPaused)
 setWaitressFrame(0);
 
-},600);
+},1120);
 
 }
 
@@ -3295,18 +3303,38 @@ document.getElementById("game");
 const gameRect=
 game.getBoundingClientRect();
 
+/*
+IMPORTANTE:
+la posizione viene presa dal PNG attualmente visibile,
+quindi dal FRAME 5.
+*/
+
+const activeWaitressFrame=
+waitress.querySelector("img.active");
+
+if(!activeWaitressFrame)
+return;
+
 const waitressRect=
-waitress.getBoundingClientRect();
+activeWaitressFrame.getBoundingClientRect();
+
+/*
+PUNTO DI PARTENZA DEL COCKTAIL:
+coordinate relative al frame 5.
+*/
+
+/* ==================================================
+   PUNTO REALE DELLA MANO - FRAME 5
+================================================== */
 
 const startX=
 waitressRect.left+
-waitressRect.width*
-WAITRESS_HAND_X;
+(waitressRect.width/2)+
+(waitressRect.width*.38);
 
 const startY=
 waitressRect.top+
-waitressRect.height*
-WAITRESS_HAND_Y;
+(waitressRect.height*.34);
 
 const hitMarker=
 document.createElement("div");
@@ -3332,18 +3360,32 @@ drink
 let currentX=startX;
 let currentY=startY;
 
+/*
+Centro del cocktail esattamente
+sul punto della mano.
+*/
+
+const drinkRect=
+drink.getBoundingClientRect();
+
+const drinkHalfWidth=
+drinkRect.width/2;
+
+const drinkHalfHeight=
+drinkRect.height/2;
+
 drink.style.left=
 (
 currentX-
 gameRect.left-
-84
+drinkHalfWidth
 )+"px";
 
 drink.style.top=
 (
 currentY-
 gameRect.top-
-84
+drinkHalfHeight
 )+"px";
 
 const speed=350;
@@ -3450,14 +3492,14 @@ drink.style.left=
 (
 currentX-
 gameRect.left-
-35
+drinkHalfWidth
 )+"px";
 
 drink.style.top=
 (
 currentY-
 gameRect.top-
-35
+drinkHalfHeight
 )+"px";
 
 const remainingX=
@@ -3669,7 +3711,7 @@ customer.classList.remove(
 
 updateZIndexes();
 
-},1000)
+},1000);
 
 }
 
@@ -3717,4 +3759,4 @@ customer
 
 </script>
 </body>
-</html
+</html>
