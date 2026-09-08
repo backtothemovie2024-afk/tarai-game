@@ -2708,7 +2708,7 @@ setCookFrame(2);
 },320);
 
 
-/* FRAME 4 */
+/* FRAME 4 + LANCIO PASTA */
 
 setTimeout(function(){
 
@@ -2716,29 +2716,7 @@ if(!powerUpPaused){
 
 setCookFrame(3);
 
-}
-
-},480);
-
-
-/* FRAME 5 */
-
-setTimeout(function(){
-
-if(!powerUpPaused){
-
-setCookFrame(4);
-
-}
-
-},640);
-
-
-/* LANCIO PASTA */
-
-setTimeout(function(){
-
-if(!powerUpPaused){
+requestAnimationFrame(function(){
 
 targets.forEach(function(target){
 
@@ -2752,6 +2730,21 @@ throwPasta(target);
 }
 
 });
+
+});
+
+}
+
+},480);
+
+
+/* FRAME 5 */
+
+setTimeout(function(){
+
+if(!powerUpPaused){
+
+setCookFrame(4);
 
 }
 
@@ -2971,8 +2964,16 @@ document.getElementById("game");
 const gameRect=
 game.getBoundingClientRect();
 
+const activeCookFrame=
+cook.querySelector("img.active");
+
+if(!activeCookFrame)
+return;
+
 const cookRect=
-cook.getBoundingClientRect();
+activeCookFrame.getBoundingClientRect();
+
+/* PUNTO MANO SPRITE 4 */
 
 const startX=
 cookRect.left+
