@@ -948,32 +948,31 @@ alt=""
 <!-- ==================================================
      CUOCO
 ================================================== -->
-
 <div id="cook">
 
 <img
 class="active"
-src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
+src="https://i.ibb.co/yFtf2t1Z/1000042207-removebg-preview.png"
 alt=""
 >
 
 <img
-src="https://i.ibb.co/fY9GKKNP/IMG-20260829-WA0006-removebg-preview.png"
+src="https://i.ibb.co/C55PHjY3/1000042208-removebg-preview.png"
 alt=""
 >
 
 <img
-src="https://i.ibb.co/kskzw0J1/IMG-20260829-WA0004-removebg-preview.png"
+src="https://i.ibb.co/TxB5sjB4/1000042209-removebg-preview.png"
 alt=""
 >
 
 <img
-src="https://i.ibb.co/9mSrQBZx/IMG-20260829-WA0007-removebg-preview.png"
+src="https://i.ibb.co/n88k4TCp/1000042210-removebg-preview.png"
 alt=""
 >
 
 <img
-src="https://i.ibb.co/x8BnTGCV/IMG-20260829-WA0005-removebg-preview.png"
+src="https://i.ibb.co/M5yvWywM/1000042211-removebg-preview.png"
 alt=""
 >
 
@@ -2656,7 +2655,9 @@ frames[frameNumber].classList.add(
 }
 
 /* ==================================================
-   ATTACCO CUOCO
+   NUOVO ATTACCO CUOCO
+   1 → 2 → 3 → 4 → 5 → 1
+   160ms PER FRAME
 ================================================== */
 
 function playCookAttack(){
@@ -2674,27 +2675,68 @@ return;
 
 }
 
+/* FRAME 1 */
+
 setCookFrame(0);
 
+
+/* FRAME 2 */
+
 setTimeout(function(){
 
-if(!powerUpPaused)
+if(!powerUpPaused){
+
 setCookFrame(1);
 
-},120);
+}
+
+},160);
+
+
+/* FRAME 3 */
 
 setTimeout(function(){
 
-if(!powerUpPaused)
+if(!powerUpPaused){
+
 setCookFrame(2);
 
-},240);
+}
+
+},320);
+
+
+/* FRAME 4 */
 
 setTimeout(function(){
 
 if(!powerUpPaused){
 
 setCookFrame(3);
+
+}
+
+},480);
+
+
+/* FRAME 5 */
+
+setTimeout(function(){
+
+if(!powerUpPaused){
+
+setCookFrame(4);
+
+}
+
+},640);
+
+
+/* LANCIO PASTA */
+
+setTimeout(function(){
+
+if(!powerUpPaused){
 
 targets.forEach(function(target){
 
@@ -2711,21 +2753,20 @@ throwPasta(target);
 
 }
 
-},360);
+},640);
+
+
+/* RITORNO FRAME 1 */
 
 setTimeout(function(){
 
-if(!powerUpPaused)
-setCookFrame(4);
+if(!powerUpPaused){
 
-},480);
-
-setTimeout(function(){
-
-if(!powerUpPaused)
 setCookFrame(0);
 
-},600);
+}
+
+},800);
 
 }
 
