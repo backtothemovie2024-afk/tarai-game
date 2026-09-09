@@ -1452,6 +1452,8 @@ function getAvailablePowerUps(){
 
 let available=[];
 
+/* CUOCO */
+
 if(powerUps.pasta<3){
 available.push({
 type:"pasta",
@@ -1473,11 +1475,46 @@ level:powerUps.sauce+1
 });
 }
 
+/* EVOCA CAMERIERA */
+
 if(!powerUps.waitress){
+
 available.push({
 type:"waitress",
 level:1
 });
+
+}else{
+
+/* POWER UP CAMERIERA */
+
+if(powerUps.iceShot<3){
+
+available.push({
+type:"iceShot",
+level:powerUps.iceShot+1
+});
+
+}
+
+if(powerUps.iceChain<3){
+
+available.push({
+type:"iceChain",
+level:powerUps.iceChain+1
+});
+
+}
+
+if(powerUps.deepFreeze<3){
+
+available.push({
+type:"deepFreeze",
+level:powerUps.deepFreeze+1
+});
+
+}
+
 }
 
 return available;
@@ -1601,6 +1638,11 @@ function selectPowerUp(type){
 if(!powerUpPaused)
 return;
 
+
+/* ==================================================
+   EVOCA CAMERIERA
+================================================== */
+
 if(type==="waitress"){
 
 if(powerUps.waitress)
@@ -1610,7 +1652,18 @@ powerUps.waitress=true;
 
 summonWaitress();
 
-}else{
+}
+
+
+/* ==================================================
+   POWER UP CUOCO
+================================================== */
+
+else if(
+type==="pasta" ||
+type==="speed" ||
+type==="sauce"
+){
 
 if(powerUps[type]>=3)
 return;
@@ -1627,6 +1680,39 @@ pastaSpeedBonus=.15;
 }
 
 }
+
+
+/* ==================================================
+   POWER UP CAMERIERA
+================================================== */
+
+else if(
+type==="iceShot" ||
+type==="iceChain" ||
+type==="deepFreeze"
+){
+
+/* NON POSSONO ESSERE PRESI
+   PRIMA DI AVER EVOCATO LA CAMERIERA */
+
+if(!powerUps.waitress)
+return;
+
+/* MASSIMO LIVELLO 3 */
+
+if(powerUps[type]>=3)
+return;
+
+/* AUMENTA DI UN LIVELLO */
+
+powerUps[type]++;
+
+}
+
+
+/* ==================================================
+   CHIUDI PANNELLO
+================================================== */
 
 document
 .getElementById("powerup-overlay")
@@ -4053,13 +4139,34 @@ customer
 
 }else{
 
-/* 10% CHANCE CONGELAMENTO */
+/* ==================================================
+   CHANCE CONGELAMENTO
+   BASE 10% + ICE SHOT
+================================================== */
 
-if(Math.random()<0.10){
+let freezeChance=0.10;
+
+if(powerUps.iceShot===1){
+
+freezeChance=0.20;
+
+}else if(powerUps.iceShot===2){
+
+freezeChance=0.35;
+
+}else if(powerUps.iceShot>=3){
+
+freezeChance=0.50;
+
+}
+
+if(Math.random()<freezeChance){
 
 freezeCustomer(customer);
 
-}
+/* ICE CHAIN */
+
+tryIceChain(customer);
 
 }
 
@@ -4088,6 +4195,22 @@ clearTimeout(customer._freezeTimer);
 customer.dataset.frozen="true";
 
 customer.style.animationPlayState="paused";
+
+let freezeDuration=500;
+
+if(powerUps.deepFreeze===1){
+
+freezeDuration=1500;
+
+}else if(powerUps.deepFreeze===2){
+
+freezeDuration=2000;
+
+}else if(powerUps.deepFreeze>=3){
+
+freezeDuration=2500;
+
+}
 
 const normalFrames=
 customer.querySelectorAll(".frame");
@@ -4150,10 +4273,115 @@ frames[frameIndex].classList.add("active");
 
 customer._freezeTimer=null;
 
-},500);
+},freezeDuration);
 
 }
 
+/* ==================================================
+   ICE CHAIN
+   CONGELA UN CLIENTE VICINO
+================================================== */
+
+function tryIceChain(originalCustomer){
+
+if(powerUps.iceChain<=0)
+return;
+
+
+/* CHANCE ICE CHAIN */
+
+let chainChance=0;
+
+if(powerUps.iceChain===1){
+
+chainChance=0.30;
+
+}else if(powerUps.iceChain===2){
+
+chainChance=0.50;
+
+}else if(powerUps.iceChain>=3){
+
+chainChance=0.75;
+
+}
+
+
+/* CONTROLLO PROBABILITÀ */
+
+if(Math.random()>=chainChance)
+return;
+
+
+/* POSIZIONE CLIENTE ORIGINALE */
+
+const originalRect=
+originalCustomer.getBoundingClientRect();
+
+const originalX=
+originalRect.left+
+originalRect.width/2;
+
+const originalY=
+originalRect.top+
+originalRect.height/2;
+
+
+/* CERCA IL CLIENTE PIÙ VICINO */
+
+let nearestCustomer=null;
+let nearestDistance=Infinity;
+
+customers.forEach(function(customer){
+
+if(
+!customer ||
+customer===originalCustomer ||
+customer.style.display==="none" ||
+customer.dataset.satisfied==="true"
+)
+return;
+
+const rect=
+customer.getBoundingClientRect();
+
+const x=
+rect.left+
+rect.width/2;
+
+const y=
+rect.top+
+rect.height/2;
+
+const dx=x-originalX;
+const dy=y-originalY;
+
+const distance=
+Math.sqrt(
+dx*dx+
+dy*dy
+);
+
+if(distance<nearestDistance){
+
+nearestDistance=distance;
+nearestCustomer=customer;
+
+}
+
+});
+
+
+/* CONGELA IL CLIENTE VICINO */
+
+if(nearestCustomer){
+
+freezeCustomer(nearestCustomer);
+
+}
+
+}
+   
 /* ==================================================
    COLPITO DALLA PASTA
 ================================================== */
