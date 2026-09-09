@@ -1807,6 +1807,7 @@ resetGame();
 startWave(1);
 
 startCustomerAnimation();
+startCustomer4Animation()
 
 startCookAnimation();
 
@@ -1913,6 +1914,8 @@ function clearAllTimers(){
 
 if(customerTimer!==null)
 clearInterval(customerTimer);
+if(customer4Timer!==null)
+clearInterval(customer4Timer);
 
 if(cookTimer!==null)
 clearInterval(cookTimer);
@@ -1936,6 +1939,7 @@ if(waveCheckTimer!==null)
 clearInterval(waveCheckTimer);
 
 customerTimer=null;
+customer4Timer=null;
 cookTimer=null;
 waitressAttackTimer=null;
 firstAttackTimer=null;
@@ -2665,6 +2669,8 @@ firstAttackTimer
    ANIMAZIONE CLIENTI
 ================================================== */
 
+let customer4Timer=null;
+   
 function startCustomerAnimation(){
 
 if(customerTimer!==null){
@@ -2672,6 +2678,8 @@ if(customerTimer!==null){
 clearInterval(customerTimer);
 
 }
+
+   
 
 customerTimer=
 setInterval(function(){
@@ -2687,6 +2695,11 @@ customer.style.display==="none" ||
 customer.dataset.satisfied==="true"
 )
 return;
+
+/* CLIENTE 4 HA UN TIMER SEPARATO */
+
+if(customer.classList.contains("customer4-template"))
+return;   
 
 const frames=
 customer.querySelectorAll(
@@ -2723,6 +2736,74 @@ customer.dataset.frame=frame;
 });
 
 },300);
+
+}
+
+   /* ==================================================
+   ANIMAZIONE CLIENTE 4 - PIÙ VELOCE
+================================================== */
+
+function startCustomer4Animation(){
+
+if(customer4Timer!==null){
+
+clearInterval(customer4Timer);
+
+}
+
+customer4Timer=
+setInterval(function(){
+
+if(powerUpPaused)
+return;
+
+customers.forEach(function(customer){
+
+if(
+!customer ||
+customer.style.display==="none" ||
+customer.dataset.satisfied==="true"
+)
+return;
+
+if(!customer.classList.contains("customer4-template"))
+return;
+
+const frames=
+customer.querySelectorAll(
+".frame"
+);
+
+if(frames.length===0)
+return;
+
+let frame=
+parseInt(
+customer.dataset.frame||"0"
+);
+
+frames.forEach(function(image){
+
+image.classList.remove(
+"active"
+);
+
+});
+
+frames[frame].classList.add(
+"active"
+);
+
+frame++;
+
+if(frame>=frames.length)
+frame=0;
+
+customer.dataset.frame=frame;
+
+});
+
+},200);
 
 }
 
