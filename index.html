@@ -2738,7 +2738,8 @@ customers.forEach(function(customer){
 if(
 !customer ||
 customer.style.display==="none" ||
-customer.dataset.satisfied==="true"
+customer.dataset.satisfied==="true" ||
+customer.dataset.frozen==="true"
 )
 return;
 
@@ -2808,7 +2809,8 @@ customers.forEach(function(customer){
 if(
 !customer ||
 customer.style.display==="none" ||
-customer.dataset.satisfied==="true"
+customer.dataset.satisfied==="true" ||
+customer.dataset.frozen==="true"
 )
 return;
 
@@ -4225,6 +4227,17 @@ frame.classList.remove(
 
 });
 
+const frozenFrame=
+customer.querySelector(
+".frozen-frame"
+);
+
+if(frozenFrame){
+
+frozenFrame.style.display="none";
+
+}
+   
 const happyFrame=
 customer.querySelector(
 ".happy-frame"
