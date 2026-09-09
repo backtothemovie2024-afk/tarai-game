@@ -322,6 +322,17 @@ display:none;
 z-index:2;
 }
 
+.customer .frozen-frame{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:contain;
+display:none;
+z-index:3;
+}
+
 /* ==================================================
    CLIENTE 1
 ================================================== */
@@ -916,6 +927,12 @@ src="https://i.ibb.co/xK0KvtVy/file-00000000c12c82098b5b04e3cf209f24-removebg-pr
 alt=""
 >
 
+<img
+class="frozen-frame"
+src="https://i.ibb.co/Kx64hLcM/1000042445-removebg-preview.png"
+alt=""
+>
+
 <div class="heart">
 ❤️
 </div>
@@ -948,6 +965,12 @@ src="https://i.ibb.co/Nd07D6qM/IMG-20260903-WA0000-removebg-preview.png"
 alt=""
 >
 
+<img
+class="frozen-frame"
+src="https://i.ibb.co/YT061kxh/1000042452-removebg-preview.png"
+alt=""
+>
+
 <div class="heart">
 ❤️
 </div>
@@ -977,6 +1000,12 @@ alt=""
 <img
 class="happy-frame"
 src="https://i.ibb.co/bjJz8mYb/file-000000000fac81fa84533e82a16b37af-removebg-preview.png"
+alt=""
+>
+
+<img
+class="frozen-frame"
+src="https://i.ibb.co/nJTx657/1000042451-removebg-preview.png"
 alt=""
 >
 
@@ -1013,6 +1042,12 @@ src="https://i.ibb.co/F4BLT4j8/1000042309-removebg-preview.png"
 alt=""
 >
 
+
+<img
+class="frozen-frame"
+src="https://i.ibb.co/DPsjg9ww/1000042455-removebg-preview.png"
+alt=""
+>
 <div class="heart">
 ❤️
 </div>
@@ -1042,6 +1077,12 @@ alt=""
 <img
 class="happy-frame"
 src="https://i.ibb.co/HptPnxqL/file-00000000afec8206808ae4a9281b5442-removebg-preview.png"
+alt=""
+>
+
+<img
+class="frozen-frame"
+src="https://i.ibb.co/k2DfX1WT/1000042453-removebg-preview.png"
 alt=""
 >
 
@@ -3969,7 +4010,7 @@ customer
 
 /* 10% CHANCE CONGELAMENTO */
 
-if(Math.random()<0.10){
+if(Math.random()<1.00){
 
 freezeCustomer(customer);
 
@@ -4003,6 +4044,24 @@ customer.dataset.frozen="true";
 
 customer.style.animationPlayState="paused";
 
+const normalFrames=
+customer.querySelectorAll(".frame");
+
+normalFrames.forEach(function(frame){
+
+frame.classList.remove("active");
+
+});
+
+const frozenFrame=
+customer.querySelector(".frozen-frame");
+
+if(frozenFrame){
+
+frozenFrame.style.display="block";
+
+}
+
 customer._freezeTimer=
 setTimeout(function(){
 
@@ -4014,6 +4073,33 @@ customer.dataset.satisfied!=="true"
 
 customer.style.animationPlayState="running";
 customer.dataset.frozen="false";
+
+if(frozenFrame){
+
+frozenFrame.style.display="none";
+
+}
+
+const frames=
+customer.querySelectorAll(".frame");
+
+let frameIndex=
+parseInt(customer.dataset.frame||"0");
+
+if(frameIndex>=frames.length)
+frameIndex=0;
+
+frames.forEach(function(frame){
+
+frame.classList.remove("active");
+
+});
+
+if(frames[frameIndex]){
+
+frames[frameIndex].classList.add("active");
+
+}
 
 }
 
