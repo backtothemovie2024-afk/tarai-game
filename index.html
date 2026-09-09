@@ -3965,7 +3965,61 @@ satisfyCustomer(
 customer
 );
 
+}else{
+
+/* 10% CHANCE CONGELAMENTO */
+
+if(Math.random()<0.10){
+
+freezeCustomer(customer);
+
 }
+
+}
+
+}
+
+/* ==================================================
+   CONGELAMENTO CAMERIERA
+   10% CHANCE - 0.5 SECONDI
+================================================== */
+
+function freezeCustomer(customer){
+
+if(
+!customer ||
+customer.style.display==="none" ||
+customer.dataset.satisfied==="true"
+)
+return;
+
+if(customer._freezeTimer){
+
+clearTimeout(customer._freezeTimer);
+
+}
+
+customer.dataset.frozen="true";
+
+customer.style.animationPlayState="paused";
+
+customer._freezeTimer=
+setTimeout(function(){
+
+if(
+customer &&
+customer.style.display!=="none" &&
+customer.dataset.satisfied!=="true"
+){
+
+customer.style.animationPlayState="running";
+customer.dataset.frozen="false";
+
+}
+
+customer._freezeTimer=null;
+
+},500);
 
 }
 
