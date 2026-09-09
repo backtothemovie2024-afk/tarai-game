@@ -1567,8 +1567,74 @@ available[i]
 
 }
 
-const selected=
+let selected=[];
+
+if(powerUps.waitress){
+
+const waitressAvailable=
+available.filter(function(powerUp){
+
+return(
+powerUp.type==="iceShot" ||
+powerUp.type==="iceChain" ||
+powerUp.type==="deepFreeze"
+);
+
+});
+
+const waitressChoice=
+waitressAvailable[
+Math.floor(
+Math.random()*waitressAvailable.length
+)
+];
+
+if(waitressChoice){
+
+selected.push(
+waitressChoice
+);
+
+}
+
+const remaining=
+available.filter(function(powerUp){
+
+return powerUp!==waitressChoice;
+
+});
+
+for(let i=remaining.length-1;i>0;i--){
+
+const j=
+Math.floor(
+Math.random()*(i+1)
+);
+
+[
+remaining[i],
+remaining[j]
+]=[
+remaining[j],
+remaining[i]
+];
+
+}
+
+selected=
+selected.concat(
+remaining.slice(
+0,
+3-selected.length
+)
+);
+
+}else{
+
+selected=
 available.slice(0,3);
+
+}
 
 selected.forEach(function(powerUp){
 
