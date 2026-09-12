@@ -28,9 +28,7 @@ overflow:hidden;
 background:#000;
 }
 
-/* ==================================================
-   INTRO VIDEO
-================================================== */
+/* INTRO VIDEO */
 
 #intro{
 position:absolute;
@@ -56,9 +54,7 @@ z-index:1001;
 cursor:pointer;
 }
 
-/* ==================================================
-   MENU HOME
-================================================== */
+/* MENU HOME */
 
 #menu{
 position:absolute;
@@ -109,9 +105,7 @@ cursor:pointer;
 -webkit-tap-highlight-color:transparent;
 }
 
-/* ==================================================
-   TRANSIZIONE NERA DOPO PLAY
-================================================== */
+/* TRANSIZIONE NERA DOPO PLAY */
 
 #blackTransition{
 position:absolute;
@@ -178,9 +172,7 @@ transform:scale(1);
 }
 }
 
-/* ==================================================
-   GIOCO
-================================================== */
+/* GIOCO */
 
 #game{
 display:none;
@@ -279,9 +271,7 @@ z-index:2;
 pointer-events:none;
 }
 
-/* ==================================================
-   CLIENTI
-================================================== */
+/* CLIENTI */
 
 .customer{
 position:absolute;
@@ -309,7 +299,9 @@ object-fit:contain;
 display:none;
 }
 
-.customer .frame.active{display:block;}
+.customer .frame.active{
+display:block;
+}
 
 .customer .happy-frame{
 position:absolute;
@@ -333,9 +325,7 @@ display:none;
 z-index:3;
 }
 
-/* ==================================================
-   CLIENTE 1
-================================================== */
+/* CLIENTE 1 */
 
 .customer1-sprite{
 display:none;
@@ -349,27 +339,22 @@ transform:scale(1);
 transform-origin:center bottom;
 }
 
-/* ==================================================
-   DIMENSIONE CLIENTE 1
-================================================== */
-
 .customer1-template{
 width:160px;
 height:202px;
 }
+
 .customer1-template .happy-frame{
 transform:scale(0.90);
 transform-origin:center bottom;
 }
-   .customer1-template .frozen-frame{
+
+.customer1-template .frozen-frame{
 transform:scale(0.92);
 transform-origin:center bottom;
-   }
-   
-   
-/* ==================================================
-   CLIENTE 2
-================================================== */
+}
+
+/* CLIENTE 2 */
 
 .customer2-sprite{
 display:none;
@@ -405,10 +390,8 @@ transform-origin:center bottom;
 transform:scale(0.90);
 transform-origin:center bottom;
 }
-   
-/* ==================================================
-   CLIENTE 3 - 4 - 5
-================================================== */
+
+/* CLIENTI 3 - 4 - 5 */
 
 .customer3-template .frame,
 .customer3-template .happy-frame,
@@ -419,16 +402,97 @@ transform-origin:center bottom;
 transform-origin:center bottom;
 }
 
-/* ==================================================
-   CLIENTE 3 - CORREZIONE FRAME
-================================================== */
-
 .customer3-template .frame:nth-of-type(1){
 transform:translateX(0);
 }
 
 .customer3-template .frame:nth-of-type(2){
 transform:translateX(14.0625%);
+}
+
+/* CLIENTI 6 - 7 - 8: STUDENTE, MAMMA, ANZIANA */
+
+.customer6-template .frame,
+.customer6-template .happy-frame,
+.customer6-template .frozen-frame,
+.customer7-template .frame,
+.customer7-template .happy-frame,
+.customer7-template .frozen-frame,
+.customer8-template .frame,
+.customer8-template .happy-frame,
+.customer8-template .frozen-frame{
+width:100%;
+height:100%;
+object-fit:contain;
+object-position:center bottom;
+transform:scale(1);
+transform-origin:center bottom;
+}
+
+/* BOSS / MINIBOSS */
+
+.boss-unit-template .frame,
+.boss-unit-template .happy-frame{
+width:100%;
+height:100%;
+object-fit:contain;
+transform:scale(1);
+transform-origin:center bottom;
+}
+
+/* INTRO BOSS WAVE 3 */
+
+#bossIntro{
+position:absolute;
+inset:0;
+display:none;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+background:rgba(0,0,0,.92);
+z-index:450;
+pointer-events:none;
+}
+
+#bossIntroImage{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+opacity:0;
+transform:translateX(110%) rotate(5deg) scale(.9);
+}
+
+#bossIntro.active #bossIntroImage{
+animation:bossIntroSequence 3.6s cubic-bezier(.22,.8,.3,1) forwards;
+}
+
+@keyframes bossIntroSequence{
+0%{
+opacity:0;
+transform:translateX(110%) rotate(5deg) scale(.9);
+}
+18%{
+opacity:1;
+transform:translateX(0) rotate(0deg) scale(1);
+}
+28%{
+opacity:1;
+transform:translateX(0) rotate(0deg) scale(1.06);
+}
+36%{
+opacity:1;
+transform:translateX(0) rotate(0deg) scale(1);
+}
+76%{
+opacity:1;
+transform:translateX(0) rotate(0deg) scale(1);
+}
+100%{
+opacity:0;
+transform:translateX(0) rotate(0deg) scale(1.22);
+}
 }
 
 .heart{
@@ -443,14 +507,16 @@ display:none;
 animation:heartFloat .8s ease-in-out infinite alternate;
 }
 
-.customer.satisfied .heart{display:block;}
+.customer.satisfied .heart{
+display:block;
+}
 
 @keyframes heartFloat{
 0%{
-transform:translateX(-50%) translateY(0) scale(1)
+transform:translateX(-50%) translateY(0) scale(1);
 }
 100%{
-transform:translateX(-50%) translateY(-7px) scale(1.12)
+transform:translateX(-50%) translateY(-7px) scale(1.12);
 }
 }
 
@@ -459,9 +525,7 @@ transform:translateX(-50%) translateY(-7px) scale(1.12)
 100%{top:69%}
 }
 
-/* ==================================================
-   CUOCO
-================================================== */
+/* CUOCO */
 
 #cook,
 #waitress{
@@ -492,9 +556,7 @@ display:none;
 display:block;
 }
 
-/* ==================================================
-   CAMERIERA
-================================================== */
+/* CAMERIERA */
 
 #waitress{
 left:62.5%;
@@ -523,9 +585,7 @@ pointer-events:none;
 display:block;
 }
 
-/* ==================================================
-   PASTA / DRINK
-================================================== */
+/* PASTA / DRINK */
 
 .pasta,
 .drink{
@@ -542,9 +602,7 @@ width:140px;
 height:140px;
 }
 
-/* ==================================================
-   HIT MARKER
-================================================== */
+/* HIT MARKER */
 
 .hit-marker{
 position:absolute;
@@ -562,9 +620,7 @@ pointer-events:none;
 opacity:0;
 }
 
-/* ==================================================
-   EFFETTO IMPATTO PASTA / COCKTAIL
-================================================== */
+/* EFFETTO IMPATTO */
 
 .impact-particle{
 position:absolute;
@@ -572,8 +628,6 @@ pointer-events:none;
 z-index:95;
 transform:translate(-50%,-50%);
 }
-
-/* GOCCIOLINE COCKTAIL */
 
 .drink-drop{
 width:7px;
@@ -585,7 +639,6 @@ animation:drinkDropFly .32s ease-out forwards;
 }
 
 @keyframes drinkDropFly{
-
 0%{
 opacity:1;
 transform:
@@ -593,7 +646,6 @@ translate(-50%,-50%)
 translate(0,0)
 scale(1);
 }
-
 100%{
 opacity:0;
 transform:
@@ -601,10 +653,7 @@ translate(-50%,-50%)
 translate(var(--dx),var(--dy))
 scale(.45);
 }
-
 }
-
-/* FILI DI PASTA */
 
 .pasta-strand{
 width:18px;
@@ -617,7 +666,6 @@ animation:pastaStrandFly .36s ease-out forwards;
 }
 
 @keyframes pastaStrandFly{
-
 0%{
 opacity:1;
 transform:
@@ -626,7 +674,6 @@ translate(0,0)
 rotate(var(--rot))
 scaleX(.7);
 }
-
 100%{
 opacity:0;
 transform:
@@ -635,12 +682,9 @@ translate(var(--dx),var(--dy))
 rotate(calc(var(--rot) + 90deg))
 scaleX(1.2);
 }
-
 }
-   
-/* ==================================================
-   POWER UP
-================================================== */
+
+/* POWER UP */
 
 #powerup-overlay{
 position:absolute;
@@ -694,25 +738,19 @@ pointer-events:none;
 .powerup-slot img[src*="MkNSjJwS"],
 .powerup-slot img[src*="S4pzKRB7"],
 .powerup-slot img[src*="yFG9djjL"],
-
 .powerup-slot img[src*="WN2w5Gdr"],
 .powerup-slot img[src*="TB2VNLT9"],
 .powerup-slot img[src*="v4HTHVvD"],
-
 .powerup-slot img[src*="wN1wThJ4"],
 .powerup-slot img[src*="bRBNBZjK"],
 .powerup-slot img[src*="9mqm7dsN"],
-
 .powerup-slot img[src*="5WW0VDPS"],
-
 .powerup-slot img[src*="3mytpycj"],
 .powerup-slot img[src*="RpPWmLf1"],
 .powerup-slot img[src*="kg8ZJ26R"],
-
 .powerup-slot img[src*="4RctQkYn"],
 .powerup-slot img[src*="YBXzXK8T"],
 .powerup-slot img[src*="R46THQGk"],
-
 .powerup-slot img[src*="d0wKYzSF"],
 .powerup-slot img[src*="1f3rLZ6L"],
 .powerup-slot img[src*="PG5PFZfw"]{
@@ -724,9 +762,7 @@ height:115%;
 animation-play-state:paused!important;
 }
 
-/* ==================================================
-   WAVE DISPLAY
-================================================== */
+/* WAVE DISPLAY */
 
 #wave-display{
 position:absolute;
@@ -760,9 +796,7 @@ display:none;
 pointer-events:none;
 }
 
-/* ==================================================
-   MOBILE
-================================================== */
+/* MOBILE */
 
 @media(max-width:500px){
 
@@ -777,11 +811,14 @@ height:88px;
 width:80px;
 height:108px;
 }
-   
+
 .customer2-template,
 .customer3-template,
 .customer4-template,
-.customer5-template{
+.customer5-template,
+.customer6-template,
+.customer7-template,
+.customer8-template{
 width:75px;
 height:102px;
 }
@@ -836,6 +873,16 @@ font-size:21px;
 }
 
 }
+
+/* DIMENSIONI SPRITE FELICI DEI 3 NUOVI CLIENTI */
+
+.customer6-template .happy-frame,
+.customer7-template .happy-frame,
+.customer8-template .happy-frame{
+transform:scale(0.90);
+transform-origin:center bottom;
+}
+
 </style>
 </head>
 
@@ -873,10 +920,7 @@ src="https://i.ibb.co/67Fhq4qw/file-0000000053c481f796fb5ec6162a6b2e-removebg-pr
 alt=""
 >
 
-<button
-id="playButton"
-aria-label="Play"
->
+<button id="playButton" aria-label="Play">
 PLAY
 </button>
 
@@ -913,12 +957,17 @@ alt=""
 <span>⭐ 0</span>
 </div>
 
-<div id="wave-display">
-WAVE 1 / 20
-</div>
+<div id="wave-display">WAVE 1 / 20</div>
+<div id="wave-message">WAVE 1</div>
 
-<div id="wave-message">
-WAVE 1
+<!-- INTRO FOODBLOGGER -->
+
+<div id="bossIntro">
+<img
+id="bossIntroImage"
+src="https://i.ibb.co/q3b3yPDV/file-000000003078820b829427a660872fdc.png"
+alt=""
+>
 </div>
 
 <!-- CLIENTE 1 -->
@@ -929,34 +978,23 @@ class="customer customer-template customer1-template"
 style="display:none;"
 >
 
-<img
-class="frame active"
+<img class="frame active"
 src="https://i.ibb.co/TMLpLFpV/tile006-191x720-removebg-preview.png"
-alt=""
->
+alt="">
 
-<img
-class="frame"
+<img class="frame"
 src="https://i.ibb.co/qYHtzZC6/tile008-191x720-removebg-preview.png"
-alt=""
->
+alt="">
 
-<img
-class="happy-frame"
+<img class="happy-frame"
 src="https://i.ibb.co/xK0KvtVy/file-00000000c12c82098b5b04e3cf209f24-removebg-preview.png"
-alt=""
->
+alt="">
 
-<img
-class="frozen-frame"
+<img class="frozen-frame"
 src="https://i.ibb.co/Kx64hLcM/1000042445-removebg-preview.png"
-alt=""
->
+alt="">
 
-<div class="heart">
-❤️
-</div>
-
+<div class="heart">❤️</div>
 </div>
 
 <!-- CLIENTE 2 -->
@@ -967,34 +1005,23 @@ class="customer customer-template customer2-template"
 style="display:none;"
 >
 
-<img
-class="frame active"
+<img class="frame active"
 src="https://i.ibb.co/KcRsHGBM/file-00000000c98081f5b726e6e0d5b17f8d-removebg-preview.png"
-alt=""
->
+alt="">
 
-<img
-class="frame"
+<img class="frame"
 src="https://i.ibb.co/SXD5sdPw/IMG-20260903-WA0001-removebg-preview.png"
-alt=""
->
+alt="">
 
-<img
-class="happy-frame"
+<img class="happy-frame"
 src="https://i.ibb.co/Nd07D6qM/IMG-20260903-WA0000-removebg-preview.png"
-alt=""
->
+alt="">
 
-<img
-class="frozen-frame"
+<img class="frozen-frame"
 src="https://i.ibb.co/YT061kxh/1000042452-removebg-preview.png"
-alt=""
->
+alt="">
 
-<div class="heart">
-❤️
-</div>
-
+<div class="heart">❤️</div>
 </div>
 
 <!-- CLIENTE 3 -->
@@ -1005,38 +1032,26 @@ class="customer customer-template customer3-template"
 style="display:none;"
 >
 
-<img
-class="frame active"
+<img class="frame active"
 src="https://i.ibb.co/vxTN6874/tile001-removebg-preview-1.png"
-alt=""
->
+alt="">
 
-<img
-class="frame"
+<img class="frame"
 src="https://i.ibb.co/9kzB8Fw3/tile002-removebg-preview-1.png"
-alt=""
->
+alt="">
 
-<img
-class="happy-frame"
+<img class="happy-frame"
 src="https://i.ibb.co/bjJz8mYb/file-000000000fac81fa84533e82a16b37af-removebg-preview.png"
-alt=""
->
+alt="">
 
-<img
-class="frozen-frame"
+<img class="frozen-frame"
 src="https://i.ibb.co/nJTx657/1000042451-removebg-preview.png"
-alt=""
->
+alt="">
 
-<div class="heart">
-❤️
+<div class="heart">❤️</div>
 </div>
 
-</div>
-
-
-<!-- CLIENTE 4 salary man -->
+<!-- CLIENTE 4 -->
 
 <div
 id="customer4Template"
@@ -1044,34 +1059,23 @@ class="customer customer-template customer4-template"
 style="display:none;"
 >
 
-<img
-class="frame active"
+<img class="frame active"
 src="https://i.ibb.co/k2fF7sB9/1000042318-removebg-preview.png"
-alt=""
->
+alt="">
 
-<img
-class="frame"
+<img class="frame"
 src="https://i.ibb.co/QyB3W9h/1000042319-removebg-preview.png"
-alt=""
->
+alt="">
 
-<img
-class="happy-frame"
+<img class="happy-frame"
 src="https://i.ibb.co/F4BLT4j8/1000042309-removebg-preview.png"
-alt=""
->
+alt="">
 
-
-<img
-class="frozen-frame"
+<img class="frozen-frame"
 src="https://i.ibb.co/DPsjg9ww/1000042455-removebg-preview.png"
-alt=""
->
-<div class="heart">
-❤️
-</div>
+alt="">
 
+<div class="heart">❤️</div>
 </div>
 
 <!-- CLIENTE 5 -->
@@ -1082,118 +1086,238 @@ class="customer customer-template customer5-template"
 style="display:none;"
 >
 
-<img
-class="frame active"
+<img class="frame active"
 src="https://i.ibb.co/tPcTpmCp/file-00000000fb7481faa77857eab2c72b35-removebg-preview.png"
-alt=""
->
+alt="">
 
-<img
-class="frame"
+<img class="frame"
 src="https://i.ibb.co/B5kyP23r/file-00000000629c8230a812e52a7d5e884c-removebg-preview.png"
-alt=""
->
+alt="">
 
-<img
-class="happy-frame"
+<img class="happy-frame"
 src="https://i.ibb.co/HptPnxqL/file-00000000afec8206808ae4a9281b5442-removebg-preview.png"
-alt=""
->
+alt="">
 
-<img
-class="frozen-frame"
+<img class="frozen-frame"
 src="https://i.ibb.co/k2DfX1WT/1000042453-removebg-preview.png"
-alt=""
+alt="">
+
+<div class="heart">❤️</div>
+</div>
+
+<!-- CLIENTE 6 - STUDENTE -->
+
+<div
+id="customer6Template"
+class="customer customer-template customer6-template"
+style="display:none;"
 >
 
-<div class="heart">
-❤️
+<img class="frame active"
+src="https://i.ibb.co/rKHKzCzZ/1000043212-removebg-preview.png"
+alt="">
+
+<img class="frame"
+src="https://i.ibb.co/wNHh3RXs/1000043213-removebg-preview.png"
+alt="">
+
+<img class="happy-frame"
+src="https://i.ibb.co/rG8rp5GG/1000043191-removebg-preview.png"
+alt="">
+
+<img class="frozen-frame"
+src="https://i.ibb.co/x4SynkS/1000043192-removebg-preview.png"
+alt="">
+
+<div class="heart">❤️</div>
 </div>
 
+<!-- CLIENTE 7 - MAMMA -->
+
+<div
+id="customer7Template"
+class="customer customer-template customer7-template"
+style="display:none;"
+>
+
+<img class="frame active"
+src="https://i.ibb.co/vxgVj8cw/1000043210-removebg-preview.png"
+alt="">
+
+<img class="frame"
+src="https://i.ibb.co/s9t1kT4s/1000043211-removebg-preview.png"
+alt="">
+
+<img class="happy-frame"
+src="https://i.ibb.co/b8XZs1r/1000043193-removebg-preview.png"
+alt="">
+
+<img class="frozen-frame"
+src="https://i.ibb.co/xKQFS6Vg/1000043194-removebg-preview.png"
+alt="">
+
+<div class="heart">❤️</div>
 </div>
 
-<!-- ==================================================
-     CUOCO
-================================================== -->
+<!-- CLIENTE 8 - ANZIANA -->
+
+<div
+id="customer8Template"
+class="customer customer-template customer8-template"
+style="display:none;"
+>
+
+<img class="frame active"
+src="https://i.ibb.co/MxpjYyFm/1000043214-removebg-preview.png"
+alt="">
+
+<img class="frame"
+src="https://i.ibb.co/r1XTGSg/1000043209-removebg-preview.png"
+alt="">
+
+<img class="happy-frame"
+src="https://i.ibb.co/CKCXBT8L/1000043199-removebg-preview.png"
+alt="">
+
+<img class="frozen-frame"
+src="https://i.ibb.co/RGQdckHM/1000043200-removebg-preview.png"
+alt="">
+
+<div class="heart">❤️</div>
+</div>
+
+<!-- MINIBOSS ASSISTENTE - 300 HP -->
+
+<div
+id="assistantBossTemplate"
+class="customer customer-template boss-unit-template"
+style="display:none;"
+>
+
+<img class="frame active"
+src="https://i.ibb.co/gL7RgywQ/1000042613-removebg-preview.png"
+alt="">
+
+<img class="frame"
+src="https://i.ibb.co/KjFm1jwP/1000042614-removebg-preview.png"
+alt="">
+
+<img class="happy-frame"
+src="https://i.ibb.co/Wvpbt1Xj/1000042616-removebg-preview.png"
+alt="">
+
+<div class="heart">❤️</div>
+</div>
+
+<!-- BOSS PRINCIPALE - 600 HP -->
+
+<div
+id="mainBossTemplate"
+class="customer customer-template boss-unit-template"
+style="display:none;"
+>
+
+<img class="frame active"
+src="https://i.ibb.co/nqtp2fbX/1000042606-removebg-preview.png"
+alt="">
+
+<img class="frame"
+src="https://i.ibb.co/rTs3r2F/1000042607-removebg-preview.png"
+alt="">
+
+<img class="happy-frame"
+src="https://i.ibb.co/WvM1QTVC/1000042381-removebg-preview.png"
+alt="">
+
+<div class="heart">❤️</div>
+</div>
+
+<!-- MINIBOSS CAMERAMAN - 300 HP -->
+
+<div
+id="cameramanBossTemplate"
+class="customer customer-template boss-unit-template"
+style="display:none;"
+>
+
+<img class="frame active"
+src="https://i.ibb.co/NgZmwGVt/1000042623-removebg-preview.png"
+alt="">
+
+<img class="frame"
+src="https://i.ibb.co/ymH4x7R9/1000042624-removebg-preview.png"
+alt="">
+
+<img class="happy-frame"
+src="https://i.ibb.co/20kVQ3Wk/1000042617-removebg-preview.png"
+alt="">
+
+<div class="heart">❤️</div>
+</div>
+
+<!-- CUOCO -->
+
 <div id="cook">
 
-<img
-class="active"
+<img class="active"
 src="https://i.ibb.co/yFtf2t1Z/1000042207-removebg-preview.png"
-alt=""
->
+alt="">
 
 <img
 src="https://i.ibb.co/C55PHjY3/1000042208-removebg-preview.png"
-alt=""
->
+alt="">
 
 <img
 src="https://i.ibb.co/TxB5sjB4/1000042209-removebg-preview.png"
-alt=""
->
+alt="">
 
 <img
 src="https://i.ibb.co/n88k4TCp/1000042210-removebg-preview.png"
-alt=""
->
+alt="">
 
 <img
 src="https://i.ibb.co/M5yvWywM/1000042211-removebg-preview.png"
-alt=""
->
+alt="">
 
 </div>
 
-<!-- ==================================================
-     CAMERIERA
-================================================== -->
+<!-- CAMERIERA -->
 
 <div id="waitress">
 
-<img
-class="active"
+<img class="active"
 src="https://i.ibb.co/QF89M6kD/1000042138-removebg-preview.png"
-alt=""
->
+alt="">
 
 <img
 src="https://i.ibb.co/Kj0pmpYW/1000042139-removebg-preview.png"
-alt=""
->
+alt="">
 
 <img
 src="https://i.ibb.co/k68q8JzG/1000042140-removebg-preview.png"
-alt=""
->
+alt="">
 
 <img
 src="https://i.ibb.co/21cygdFG/1000042141-removebg-preview.png"
-alt=""
->
+alt="">
 
 <img
 src="https://i.ibb.co/ns3H0fCB/1000042143-removebg-preview.png"
-alt=""
->
+alt="">
 
 <img
 src="https://i.ibb.co/TBvNWcQ8/1000042144-removebg-preview.png"
-alt=""
->
+alt="">
 
 <img
 src="https://i.ibb.co/QF89M6kD/1000042138-removebg-preview.png"
-alt=""
->
+alt="">
 
 </div>
 
 <div id="exp-bar">
 <div id="exp-fill"></div>
-<div id="exp-level">
-LV 1
-</div>
+<div id="exp-level">LV 1</div>
 </div>
 
 <div id="powerup-overlay">
@@ -1233,73 +1357,43 @@ alt=""
 
 <script>
 
-/* ==================================================
-   INTRO → HOME
-================================================== */
+/* INTRO → HOME */
 
-const intro=
-document.getElementById("intro");
-
-const introVideo=
-document.getElementById("introVideo");
-
-const introTap=
-document.getElementById("introTap");
+const intro=document.getElementById("intro");
+const introVideo=document.getElementById("introVideo");
+const introTap=document.getElementById("introTap");
 
 function closeIntro(){
-
-if(intro.style.display==="none")
-return;
-
+if(intro.style.display==="none") return;
 introVideo.pause();
-
 intro.style.display="none";
-
 }
 
-introTap.addEventListener(
-"click",
-closeIntro
-);
+introTap.addEventListener("click",closeIntro);
 
 introTap.addEventListener(
 "touchend",
 function(event){
-
 event.preventDefault();
-
 closeIntro();
-
 },
 {passive:false}
 );
 
-introVideo.addEventListener(
-"ended",
-closeIntro
-);
+introVideo.addEventListener("ended",closeIntro);
 
-/* ==================================================
-   REGOLAZIONE HITBOX
-================================================== */
+/* HITBOX */
 
 const HIT_X=5;
 const HIT_Y=0;
 const HIT_POSITION_Y=.45;
 
-/* ==================================================
-   POSIZIONE MANO CAMERIERA - FRAME 5
-================================================== */
-
 const WAITRESS_HAND_X=.72;
 const WAITRESS_HAND_Y=.38;
 
-/* ==================================================
-   SISTEMA 20 WAVE
-================================================== */
+/* WAVES */
 
 const WAVES=[
-
 {customers:5, spawnInterval:3800, walkTime:70, hp:30},
 {customers:6, spawnInterval:3600, walkTime:68, hp:32},
 {customers:6, spawnInterval:3400, walkTime:66, hp:34},
@@ -1323,7 +1417,6 @@ const WAVES=[
 {customers:14, spawnInterval:1450, walkTime:36, hp:64},
 {customers:15, spawnInterval:1350, walkTime:34, hp:66},
 {customers:16, spawnInterval:1250, walkTime:32, hp:70}
-
 ];
 
 const TOTAL_WAVES=WAVES.length;
@@ -1335,9 +1428,9 @@ let waveTimer=null;
 let waveCheckTimer=null;
 let waveStarting=false;
 
-/* ==================================================
-   CORSIE
-================================================== */
+let spawnTimers=[];
+
+/* CORSIE */
 
 const LANES=[
 29,
@@ -1347,15 +1440,9 @@ const LANES=[
 58.6
 ];
 
-/* ==================================================
-   DISTANZA MINIMA CLIENTI STESSA CORSIA
-================================================== */
-
 const SAME_LANE_MIN_DELAY=1500;
 
-/* ==================================================
-   SISTEMA EXP
-================================================== */
+/* EXP */
 
 let currentLevel=1;
 let currentEXP=0;
@@ -1363,31 +1450,18 @@ let currentEXP=0;
 const EXP_PER_CUSTOMER=5;
 
 const EXP_REQUIREMENTS=[
-15,
-20,
-25,
-30,
-35,
-40,
-45,
-50,
-55,
-60,
-65
+15,20,25,30,35,40,45,50,55,60,65
 ];
 
 const MAX_LEVEL=12;
 
-/* ==================================================
-   POWER UP
-================================================== */
+/* POWER UP */
 
 let powerUps={
 pasta:0,
 speed:0,
 sauce:0,
 waitress:false,
-
 iceShot:0,
 iceChain:0,
 deepFreeze:0
@@ -1396,9 +1470,7 @@ deepFreeze:0
 let pastaSpeedBonus=0;
 let powerUpPaused=false;
 
-/* ==================================================
-   PANNELLI POWER UP
-================================================== */
+/* PANNELLI POWER UP */
 
 const POWER_UP_PANELS={
 
@@ -1442,38 +1514,24 @@ deepFreeze:[
 ]
 
 };
-/* ==================================================
-   VERIFICA POWER UP DISPONIBILI
-================================================== */
+
+/* POWER UP DISPONIBILI */
 
 function getAvailablePowerUps(){
 
 let available=[];
 
-/* CUOCO */
-
 if(powerUps.pasta<3){
-available.push({
-type:"pasta",
-level:powerUps.pasta+1
-});
+available.push({type:"pasta",level:powerUps.pasta+1});
 }
 
 if(powerUps.speed<3){
-available.push({
-type:"speed",
-level:powerUps.speed+1
-});
+available.push({type:"speed",level:powerUps.speed+1});
 }
 
 if(powerUps.sauce<3){
-available.push({
-type:"sauce",
-level:powerUps.sauce+1
-});
+available.push({type:"sauce",level:powerUps.sauce+1});
 }
-
-/* EVOCA CAMERIERA */
 
 if(!powerUps.waitress){
 
@@ -1484,33 +1542,25 @@ level:1
 
 }else{
 
-/* POWER UP CAMERIERA */
-
 if(powerUps.iceShot<3){
-
 available.push({
 type:"iceShot",
 level:powerUps.iceShot+1
 });
-
 }
 
 if(powerUps.iceChain<3){
-
 available.push({
 type:"iceChain",
 level:powerUps.iceChain+1
 });
-
 }
 
 if(powerUps.deepFreeze<3){
-
 available.push({
 type:"deepFreeze",
 level:powerUps.deepFreeze+1
 });
-
 }
 
 }
@@ -1518,163 +1568,92 @@ level:powerUps.deepFreeze+1
 return available;
 }
 
-/* ==================================================
-   MOSTRA POWER UP
-================================================== */
+/* MOSTRA POWER UP */
 
 function showPowerUpScreen(){
 
-if(powerUpPaused)
-return;
+if(powerUpPaused) return;
 
-const available=
-getAvailablePowerUps();
+const available=getAvailablePowerUps();
 
 if(available.length===0){
-
-document
-.getElementById("powerup-overlay")
-.style.display="none";
-
-document
-.getElementById("game")
-.classList.remove("powerup-paused");
-
+document.getElementById("powerup-overlay").style.display="none";
+document.getElementById("game").classList.remove("powerup-paused");
 powerUpPaused=false;
-
 return;
 }
 
-const options=
-document.getElementById("powerup-options");
+const options=document.getElementById("powerup-options");
 
 options.innerHTML="";
 
 for(let i=available.length-1;i>0;i--){
-
-const j=
-Math.floor(
-Math.random()*(i+1)
-);
-
-[
-available[i],
-available[j]
-]=[
-available[j],
-available[i]
-];
-
+const j=Math.floor(Math.random()*(i+1));
+[available[i],available[j]]=[available[j],available[i]];
 }
 
 let selected=[];
 
 if(powerUps.waitress){
 
-const waitressAvailable=
-available.filter(function(powerUp){
-
+const waitressAvailable=available.filter(function(powerUp){
 return(
 powerUp.type==="iceShot" ||
 powerUp.type==="iceChain" ||
 powerUp.type==="deepFreeze"
 );
-
 });
 
 const waitressChoice=
 waitressAvailable[
-Math.floor(
-Math.random()*waitressAvailable.length
-)
+Math.floor(Math.random()*waitressAvailable.length)
 ];
 
 if(waitressChoice){
-
-selected.push(
-waitressChoice
-);
-
+selected.push(waitressChoice);
 }
 
-const remaining=
-available.filter(function(powerUp){
-
+const remaining=available.filter(function(powerUp){
 return powerUp!==waitressChoice;
-
 });
 
 for(let i=remaining.length-1;i>0;i--){
-
-const j=
-Math.floor(
-Math.random()*(i+1)
-);
-
-[
-remaining[i],
-remaining[j]
-]=[
-remaining[j],
-remaining[i]
-];
-
+const j=Math.floor(Math.random()*(i+1));
+[remaining[i],remaining[j]]=[remaining[j],remaining[i]];
 }
 
-selected=
-selected.concat(
-remaining.slice(
-0,
-3-selected.length
-)
+selected=selected.concat(
+remaining.slice(0,3-selected.length)
 );
 
 }else{
 
-selected=
-available.slice(0,3);
+selected=available.slice(0,3);
 
 }
 
 selected.forEach(function(powerUp){
 
-const slot=
-document.createElement("div");
+const slot=document.createElement("div");
 
 slot.className="powerup-slot";
+slot.dataset.type=powerUp.type;
+slot.dataset.level=powerUp.level;
 
-slot.dataset.type=
-powerUp.type;
-
-slot.dataset.level=
-powerUp.level;
-
-const image=
-document.createElement("img");
+const image=document.createElement("img");
 
 if(powerUp.type==="waitress"){
-
-image.src=
-POWER_UP_PANELS.waitress;
-
+image.src=POWER_UP_PANELS.waitress;
 }else{
-
-image.src=
-POWER_UP_PANELS[
-powerUp.type
-][powerUp.level-1];
-
+image.src=POWER_UP_PANELS[powerUp.type][powerUp.level-1];
 }
 
 image.alt="";
+
 slot.appendChild(image);
 
-slot.addEventListener(
-"click",
-function(){
-
+slot.addEventListener("click",function(){
 selectPowerUp(powerUp.type);
-
 });
 
 options.appendChild(slot);
@@ -1683,127 +1662,70 @@ options.appendChild(slot);
 
 powerUpPaused=true;
 
-document
-.getElementById("game")
-.classList.add("powerup-paused");
+document.getElementById("game").classList.add("powerup-paused");
 
-document
-.getElementById("powerup-overlay")
-.style.display="flex";
+document.getElementById("powerup-overlay").style.display="flex";
 
 }
 
-/* ==================================================
-   SCELTA POWER UP
-================================================== */
+/* SCELTA POWER UP */
 
 function selectPowerUp(type){
 
-if(!powerUpPaused)
-return;
-
-
-/* ==================================================
-   EVOCA CAMERIERA
-================================================== */
+if(!powerUpPaused) return;
 
 if(type==="waitress"){
 
-if(powerUps.waitress)
-return;
+if(powerUps.waitress) return;
 
 powerUps.waitress=true;
-
 summonWaitress();
 
-}
-
-
-/* ==================================================
-   POWER UP CUOCO
-================================================== */
-
-else if(
+}else if(
 type==="pasta" ||
 type==="speed" ||
 type==="sauce"
 ){
 
-if(powerUps[type]>=3)
-return;
+if(powerUps[type]>=3) return;
 
 powerUps[type]++;
 
-if(
-type==="pasta" &&
-powerUps.pasta===2
-){
-
+if(type==="pasta" && powerUps.pasta===2){
 pastaSpeedBonus=.15;
-
 }
 
-}
-
-
-/* ==================================================
-   POWER UP CAMERIERA
-================================================== */
-
-else if(
+}else if(
 type==="iceShot" ||
 type==="iceChain" ||
 type==="deepFreeze"
 ){
 
-/* NON POSSONO ESSERE PRESI
-   PRIMA DI AVER EVOCATO LA CAMERIERA */
+if(!powerUps.waitress) return;
 
-if(!powerUps.waitress)
-return;
-
-/* MASSIMO LIVELLO 3 */
-
-if(powerUps[type]>=3)
-return;
-
-/* AUMENTA DI UN LIVELLO */
+if(powerUps[type]>=3) return;
 
 powerUps[type]++;
 
 }
 
+document.getElementById("powerup-overlay").style.display="none";
 
-/* ==================================================
-   CHIUDI PANNELLO
-================================================== */
-
-document
-.getElementById("powerup-overlay")
-.style.display="none";
-
-document
-.getElementById("powerup-options")
-.innerHTML="";
+document.getElementById("powerup-options").innerHTML="";
 
 powerUpPaused=false;
 
-document
-.getElementById("game")
-.classList.remove("powerup-paused");
+document.getElementById("game").classList.remove("powerup-paused");
 
 updateEXPBar();
 
 }
 
-/* ==================================================
-   EVOCA CAMERIERA
-================================================== */
+/* CAMERIERA */
 
 function summonWaitress(){
 
-const waitress=
-document.getElementById("waitress");
+const waitress=document.getElementById("waitress");
 
 waitress.style.display="block";
 
@@ -1812,10 +1734,6 @@ setWaitressFrame(0);
 startWaitressAnimation();
 
 }
-
-/* ==================================================
-   ANIMAZIONE CAMERIERA
-================================================== */
 
 let waitressTimer=null;
 
@@ -1829,46 +1747,27 @@ setWaitressFrame(0);
 
 }
 
-/* ==================================================
-   FRAME CAMERIERA
-================================================== */
-
 function setWaitressFrame(frameNumber){
 
 const frames=
-document
-.getElementById("waitress")
-.querySelectorAll("img");
+document.getElementById("waitress").querySelectorAll("img");
 
 frames.forEach(function(frame){
-
-frame.classList.remove(
-"active"
-);
-
+frame.classList.remove("active");
 });
 
 if(frames[frameNumber]){
-
-frames[frameNumber].classList.add(
-"active"
-);
-
+frames[frameNumber].classList.add("active");
 }
 
 }
 
-/* ==================================================
-   BARRA EXP
-================================================== */
+/* EXP */
 
 function updateEXPBar(){
 
-const fill=
-document.getElementById("exp-fill");
-
-const levelText=
-document.getElementById("exp-level");
+const fill=document.getElementById("exp-fill");
+const levelText=document.getElementById("exp-level");
 
 if(currentLevel>=MAX_LEVEL){
 
@@ -1881,31 +1780,22 @@ levelText.textContent="LV MAX";
 return;
 }
 
-const requiredEXP=
-EXP_REQUIREMENTS[currentLevel-1];
+const requiredEXP=EXP_REQUIREMENTS[currentLevel-1];
 
-const percentage=
-Math.min(
+const percentage=Math.min(
 100,
 (currentEXP/requiredEXP)*100
 );
 
-fill.style.width=
-percentage+"%";
+fill.style.width=percentage+"%";
 
-levelText.textContent=
-"LV "+currentLevel;
+levelText.textContent="LV "+currentLevel;
 
 }
 
-/* ==================================================
-   AGGIUNGI EXP
-================================================== */
-
 function addEXP(amount){
 
-if(currentLevel>=MAX_LEVEL)
-return;
+if(currentLevel>=MAX_LEVEL) return;
 
 currentEXP+=amount;
 
@@ -1913,12 +1803,10 @@ let levelUp=false;
 
 while(
 currentLevel<MAX_LEVEL &&
-currentEXP>=
-EXP_REQUIREMENTS[currentLevel-1]
+currentEXP>=EXP_REQUIREMENTS[currentLevel-1]
 ){
 
-currentEXP-=
-EXP_REQUIREMENTS[currentLevel-1];
+currentEXP-=EXP_REQUIREMENTS[currentLevel-1];
 
 currentLevel++;
 
@@ -1934,11 +1822,10 @@ showPowerUpScreen();
 
 }
 
-/* ==================================================
-   VARIABILI
-================================================== */
+/* VARIABILI */
 
 let customerTimer=null;
+let customer4Timer=null;
 let cookTimer=null;
 let waitressAttackTimer=null;
 let firstAttackTimer=null;
@@ -1946,47 +1833,21 @@ let kitchenDamageTimer=null;
 let zIndexTimer=null;
 
 let kitchenEnergy=100;
-
 let customers=[];
 
-/* ==================================================
-   PLAY → GIOCO
-================================================== */
+/* PLAY */
 
-document
-.getElementById("playButton")
-.addEventListener(
+document.getElementById("playButton").addEventListener(
 "click",
 function(){
 
-const blackTransition=
-document.getElementById(
-"blackTransition"
-);
+const blackTransition=document.getElementById("blackTransition");
+const image1=document.getElementById("transitionImage1");
+const image2=document.getElementById("transitionImage2");
+const image3=document.getElementById("transitionImage3");
+const game=document.getElementById("game");
 
-const image1=
-document.getElementById(
-"transitionImage1"
-);
-
-const image2=
-document.getElementById(
-"transitionImage2"
-);
-
-const image3=
-document.getElementById(
-"transitionImage3"
-);
-
-const game=
-document.getElementById(
-"game"
-);
-
-document
-.getElementById("menu")
-.style.display="none";
+document.getElementById("menu").style.display="none";
 
 blackTransition.style.display="block";
 
@@ -2007,59 +1868,39 @@ image2.style.transform="scale(1)";
 image3.style.transform="scale(1)";
 
 setTimeout(function(){
-
-image1.style.animation=
-"transitionFromLeft 1.165s ease-out forwards";
-
+image1.style.animation="transitionFromLeft 1.165s ease-out forwards";
 },2000);
 
 setTimeout(function(){
-
-image2.style.animation=
-"transitionFromRight 1.165s ease-out forwards";
-
+image2.style.animation="transitionFromRight 1.165s ease-out forwards";
 },5165);
 
 setTimeout(function(){
-
-image3.style.animation=
-"transitionFromLeft 2.34s ease-out forwards";
-
+image3.style.animation="transitionFromLeft 2.34s ease-out forwards";
 },8320);
 
 setTimeout(function(){
-
-blackTransition.style.animation=
-"transitionExit 0.8s ease-in forwards";
-
+blackTransition.style.animation="transitionExit 0.8s ease-in forwards";
 },15660);
 
 setTimeout(function(){
 
 game.style.display="block";
-
-game.style.animation=
-"gameEnter 0.8s ease-out forwards";
+game.style.animation="gameEnter 0.8s ease-out forwards";
 
 resetGame();
 
 startWave(1);
 
 startCustomerAnimation();
-startCustomer4Animation()
-
+startCustomer4Animation();
 startCookAnimation();
-
 startWaitressAttack();
-
 startKitchenEnergySystem();
-
 startFirstAttackDetection();
-
 startZIndexSystem();
 
 blackTransition.style.display="none";
-
 blackTransition.style.animation="none";
 
 },16460);
@@ -2067,9 +1908,7 @@ blackTransition.style.animation="none";
 }
 );
 
-/* ==================================================
-   RESET GAME
-================================================== */
+/* RESET */
 
 function resetGame(){
 
@@ -2091,8 +1930,6 @@ powerUps.pasta=0;
 powerUps.speed=0;
 powerUps.sauce=0;
 powerUps.waitress=false;
-
-
 powerUps.iceShot=0;
 powerUps.iceChain=0;
 powerUps.deepFreeze=0;
@@ -2100,49 +1937,27 @@ powerUps.deepFreeze=0;
 pastaSpeedBonus=0;
 powerUpPaused=false;
 
-document
-.getElementById("waitress")
-.style.display="none";
+document.getElementById("waitress").style.display="none";
 
-document
-.getElementById("powerup-overlay")
-.style.display="none";
+document.getElementById("powerup-overlay").style.display="none";
+document.getElementById("powerup-options").innerHTML="";
 
-document
-.getElementById("powerup-options")
-.innerHTML="";
+document.getElementById("game").classList.remove("powerup-paused");
 
-document
-.getElementById("game")
-.classList.remove(
-"powerup-paused"
-);
-
-document
-.querySelectorAll(
-".spawned-customer"
-)
-.forEach(function(customer){
-
+document.querySelectorAll(".spawned-customer").forEach(function(customer){
 customer.remove();
-
 });
 
-document
-.getElementById("kitchen")
-.style.display="block";
+const bossIntro=document.getElementById("bossIntro");
 
-document
-.getElementById("kitchenDamaged")
-.style.display="none";
+bossIntro.classList.remove("active");
+bossIntro.style.display="none";
 
-document
-.getElementById("kitchenDestroyed")
-.style.display="none";
+document.getElementById("kitchen").style.display="block";
+document.getElementById("kitchenDamaged").style.display="none";
+document.getElementById("kitchenDestroyed").style.display="none";
 
-document
-.getElementById("wave-message")
-.style.display="none";
+document.getElementById("wave-message").style.display="none";
 
 updateKitchenEnergy();
 updateEXPBar();
@@ -2150,37 +1965,25 @@ updateWaveDisplay();
 
 }
 
-/* ==================================================
-   CANCELLA TIMER
-================================================== */
+/* CANCELLA TIMER */
 
 function clearAllTimers(){
 
-if(customerTimer!==null)
-clearInterval(customerTimer);
-if(customer4Timer!==null)
-clearInterval(customer4Timer);
+if(customerTimer!==null) clearInterval(customerTimer);
+if(customer4Timer!==null) clearInterval(customer4Timer);
+if(cookTimer!==null) clearInterval(cookTimer);
+if(waitressAttackTimer!==null) clearInterval(waitressAttackTimer);
+if(firstAttackTimer!==null) clearInterval(firstAttackTimer);
+if(kitchenDamageTimer!==null) clearInterval(kitchenDamageTimer);
+if(zIndexTimer!==null) clearInterval(zIndexTimer);
+if(waveTimer!==null) clearTimeout(waveTimer);
+if(waveCheckTimer!==null) clearInterval(waveCheckTimer);
 
-if(cookTimer!==null)
-clearInterval(cookTimer);
+spawnTimers.forEach(function(timer){
+clearTimeout(timer);
+});
 
-if(waitressAttackTimer!==null)
-clearInterval(waitressAttackTimer);
-
-if(firstAttackTimer!==null)
-clearInterval(firstAttackTimer);
-
-if(kitchenDamageTimer!==null)
-clearInterval(kitchenDamageTimer);
-
-if(zIndexTimer!==null)
-clearInterval(zIndexTimer);
-
-if(waveTimer!==null)
-clearTimeout(waveTimer);
-
-if(waveCheckTimer!==null)
-clearInterval(waveCheckTimer);
+spawnTimers=[];
 
 customerTimer=null;
 customer4Timer=null;
@@ -2194,17 +1997,13 @@ waveCheckTimer=null;
 
 }
 
-/* ==================================================
-   INIZIO WAVE
-================================================== */
+/* INIZIO WAVE */
 
 function startWave(waveNumber){
 
 if(waveNumber>TOTAL_WAVES){
-
 finishLevel();
 return;
-
 }
 
 currentWave=waveNumber;
@@ -2214,9 +2013,14 @@ waveStarting=true;
 
 updateWaveDisplay();
 
-showWaveMessage(
-"WAVE "+currentWave
-);
+/* WAVE 3: prima mostriamo la presentazione del boss. */
+
+if(waveNumber===3){
+showBossIntro();
+return;
+}
+
+showWaveMessage("WAVE "+currentWave);
 
 setTimeout(function(){
 
@@ -2226,9 +2030,7 @@ waveStarting=false;
 if(waveNumber===1){
 
 setTimeout(function(){
-
 spawnWaveCustomers();
-
 },3000);
 
 }else{
@@ -2241,178 +2043,280 @@ spawnWaveCustomers();
 
 }
 
-/* ==================================================
-   MOSTRA WAVE
-================================================== */
+/* INTRO BOSS */
+
+function showBossIntro(){
+
+const bossIntro=document.getElementById("bossIntro");
+
+bossIntro.classList.remove("active");
+bossIntro.style.display="flex";
+
+void bossIntro.offsetWidth;
+
+bossIntro.classList.add("active");
+
+const timer=setTimeout(function(){
+
+bossIntro.classList.remove("active");
+bossIntro.style.display="none";
+
+showWaveMessage("WAVE 3");
+
+const waveMessageTimer=setTimeout(function(){
+
+hideWaveMessage();
+waveStarting=false;
+spawnWaveCustomers();
+
+},1200);
+
+spawnTimers.push(waveMessageTimer);
+
+},3600);
+
+spawnTimers.push(timer);
+
+}
+
+/* MOSTRA/NASCONDI WAVE */
 
 function showWaveMessage(text){
 
-const message=
-document.getElementById(
-"wave-message"
-);
+const message=document.getElementById("wave-message");
 
 message.textContent=text;
 message.style.display="block";
 
 }
 
-/* ==================================================
-   NASCONDI WAVE
-================================================== */
-
 function hideWaveMessage(){
-
-const message=
-document.getElementById(
-"wave-message"
-);
-
-message.style.display="none";
-
+document.getElementById("wave-message").style.display="none";
 }
-
-/* ==================================================
-   TESTO WAVE
-================================================== */
 
 function updateWaveDisplay(){
-
-document
-.getElementById("wave-display")
-.textContent=
-"WAVE "+
-currentWave+
-" / "+
-TOTAL_WAVES;
-
+document.getElementById("wave-display").textContent=
+"WAVE "+currentWave+" / "+TOTAL_WAVES;
 }
 
-/* ==================================================
-   CREA CLIENTI DELLA WAVE
-================================================== */
+/* CREA CLIENTI WAVE */
 
 function spawnWaveCustomers(){
 
-const config=
-WAVES[currentWave-1];
+/* WAVE 3 = BOSS WAVE. Nessun cliente normale. */
 
-if(!config)
+if(currentWave===3){
+spawnBossWave();
 return;
+}
+
+const config=WAVES[currentWave-1];
+
+if(!config) return;
 
 const lastLaneSpawn=[];
 
 for(let i=0;i<LANES.length;i++){
-
 lastLaneSpawn[i]=-Infinity;
-
 }
 
 for(let i=0;i<config.customers;i++){
 
-const delay=
-i*config.spawnInterval;
+const delay=i*config.spawnInterval;
 
-waveTimer=
-setTimeout(function(){
+const timer=setTimeout(function(){
 
 if(powerUpPaused){
-
-waitForPowerUpThenSpawn(
-i,
-lastLaneSpawn,
-config
-);
-
+waitForPowerUpThenSpawn(i,lastLaneSpawn,config);
 }else{
-
-spawnWaveCustomer(
-i,
-lastLaneSpawn,
-config
-);
-
+spawnWaveCustomer(i,lastLaneSpawn,config);
 }
 
 },delay);
 
-}
+spawnTimers.push(timer);
 
 }
 
-/* ==================================================
-   ATTESA POWER UP
-================================================== */
+}
 
-function waitForPowerUpThenSpawn(
-index,
-lastLaneSpawn,
-config
+/* BOSS WAVE 3 */
+
+function spawnBossWave(){
+
+const walkTime=66;
+
+/* ASSISTENTE: 300 HP, corsia estrema sinistra */
+
+spawnBossEntity(
+"assistantBossTemplate",
+300,
+0,
+walkTime,
+"assistant"
+);
+
+/* CAMERAMAN: 300 HP, corsia estrema destra */
+
+spawnBossEntity(
+"cameramanBossTemplate",
+300,
+4,
+walkTime,
+"cameraman"
+);
+
+/* BOSS: 600 HP, arriva 1,5 secondi dopo, corsia centrale */
+
+const bossTimer=setTimeout(function(){
+
+if(currentWave!==3 || waveFinished) return;
+
+spawnBossEntity(
+"mainBossTemplate",
+600,
+2,
+walkTime,
+"boss"
+);
+
+scheduleWaveCheck();
+
+},1500);
+
+spawnTimers.push(bossTimer);
+
+}
+
+/* CREA BOSS / MINIBOSS */
+
+function spawnBossEntity(
+templateId,
+hp,
+laneIndex,
+walkTime,
+bossType
 ){
+
+const game=document.getElementById("game");
+const template=document.getElementById(templateId);
+
+if(!template) return;
+
+const customer=template.cloneNode(true);
+
+customer.id=bossType+"-"+Date.now();
+
+customer.classList.remove("customer-template");
+customer.classList.add("spawned-customer");
+
+customer.style.display="block";
+customer.style.animation="none";
+customer.style.top="5%";
+
+customer.classList.remove("satisfied");
+
+customer.dataset.lane=laneIndex;
+customer.style.left=LANES[laneIndex]+"%";
+
+customer.dataset.type=bossType;
+customer.dataset.hp=String(hp);
+
+customer.dataset.satisfied="false";
+customer.dataset.atKitchen="false";
+customer.dataset.frame="0";
+customer.dataset.frozen="false";
+customer.dataset.wave=currentWave;
+customer.dataset.boss="true";
+
+const frames=customer.querySelectorAll(".frame");
+
+frames.forEach(function(frame){
+frame.classList.remove("active");
+});
+
+if(frames.length>0){
+frames[0].classList.add("active");
+}
+
+const happyFrame=customer.querySelector(".happy-frame");
+
+if(happyFrame){
+happyFrame.style.display="none";
+}
+
+game.appendChild(customer);
+customers.push(customer);
+
+waveSpawned++;
+
+requestAnimationFrame(function(){
+
+customer.style.animation="walkDown "+walkTime+"s linear forwards";
+
+customer.classList.add("walking");
+
+});
+
+const kitchenTimer=setTimeout(function(){
+
+if(
+customer &&
+customer.style.display!=="none" &&
+customer.dataset.satisfied!=="true"
+){
+
+customer.dataset.atKitchen="true";
+updateZIndexes();
+
+}
+
+},walkTime*1000);
+
+spawnTimers.push(kitchenTimer);
+
+return customer;
+
+}
+
+/* ATTESA POWER UP */
+
+function waitForPowerUpThenSpawn(index,lastLaneSpawn,config){
 
 if(powerUpPaused){
 
-setTimeout(function(){
-
-waitForPowerUpThenSpawn(
-index,
-lastLaneSpawn,
-config
-);
-
+const timer=setTimeout(function(){
+waitForPowerUpThenSpawn(index,lastLaneSpawn,config);
 },250);
 
+spawnTimers.push(timer);
+
 return;
+}
+
+spawnWaveCustomer(index,lastLaneSpawn,config);
 
 }
 
-spawnWaveCustomer(
-index,
-lastLaneSpawn,
-config
-);
+/* SPAWN CLIENTE */
 
-}
+function spawnWaveCustomer(index,lastLaneSpawn,config){
 
-/* ==================================================
-   SPAWN SINGOLO CLIENTE
-================================================== */
-
-function spawnWaveCustomer(
-index,
-lastLaneSpawn,
-config
-){
-
-if(
-waveSpawned>=config.customers
-)
-return;
+if(waveSpawned>=config.customers) return;
 
 let laneIndex;
 let attempts=0;
 
-const currentTime=
-performance.now();
+const currentTime=performance.now();
 
 do{
 
-laneIndex=
-Math.floor(
-Math.random()*LANES.length
-);
-
+laneIndex=Math.floor(Math.random()*LANES.length);
 attempts++;
 
 }while(
-
 attempts<50 &&
-
-currentTime-
-lastLaneSpawn[laneIndex]
-<
-SAME_LANE_MIN_DELAY
-
+currentTime-lastLaneSpawn[laneIndex]<SAME_LANE_MIN_DELAY
 );
 
 lastLaneSpawn[laneIndex]=currentTime;
@@ -2426,58 +2330,41 @@ config.hp
 
 waveSpawned++;
 
-if(
-waveSpawned>=config.customers
-){
-
+if(waveSpawned>=config.customers){
 scheduleWaveCheck();
-
 }
 
 }
 
-/* ==================================================
-   CONTROLLO FINE WAVE
-================================================== */
+/* CONTROLLO FINE WAVE */
 
 function scheduleWaveCheck(){
 
 if(waveCheckTimer!==null){
-
 clearInterval(waveCheckTimer);
-
 }
 
-waveCheckTimer=
-setInterval(function(){
+waveCheckTimer=setInterval(function(){
 
-if(powerUpPaused)
-return;
+if(powerUpPaused) return;
+if(waveFinished) return;
 
-if(waveFinished)
-return;
-
-const activeWaveCustomers=
-customers.filter(function(customer){
+const activeWaveCustomers=customers.filter(function(customer){
 
 return(
 customer &&
-customer.dataset.wave==
-currentWave &&
+customer.dataset.wave==currentWave &&
 customer.style.display!=="none"
 );
 
 });
 
+const expectedCustomers=
+currentWave===3 ? 3 : WAVES[currentWave-1].customers;
+
 if(
-
-waveSpawned>=
-WAVES[currentWave-1].customers
-
-&&
-
+waveSpawned>=expectedCustomers &&
 activeWaveCustomers.length===0
-
 ){
 
 clearInterval(waveCheckTimer);
@@ -2491,45 +2378,28 @@ completeWave();
 
 }
 
-/* ==================================================
-   COMPLETA WAVE
-================================================== */
+/* COMPLETA WAVE */
 
 function completeWave(){
 
-if(waveFinished)
-return;
+if(waveFinished) return;
 
 waveFinished=true;
 
 if(currentWave>=TOTAL_WAVES){
-
 finishLevel();
 return;
-
 }
 
-startWave(
-currentWave+1
-);
+startWave(currentWave+1);
 
 }
-
-/* ==================================================
-   FINE LIVELLO
-================================================== */
 
 function finishLevel(){
-
-showWaveMessage(
-"LIVELLO COMPLETATO!"
-);
-
+showWaveMessage("LIVELLO COMPLETATO!");
 }
 
-/* ==================================================
-   CREA CLIENTE
-================================================== */
+/* CREA CLIENTE NORMALE */
 
 function spawnCustomer(
 index,
@@ -2538,44 +2408,27 @@ walkTime=null,
 waveHP=null
 ){
 
-const game=
-document.getElementById("game");
+const game=document.getElementById("game");
 
-const type=
-Math.floor(
-Math.random()*5
-)+1;
+/* Selezione casuale fra tutti gli 8 clienti normali. */
 
-const template=
-document.getElementById(
-"customer"+
-type+
-"Template"
+const type=Math.floor(Math.random()*8)+1;
+
+const template=document.getElementById(
+"customer"+type+"Template"
 );
 
-const customer=
-template.cloneNode(true);
+const customer=template.cloneNode(true);
 
-customer.id=
-"customer-"+
-Date.now()+
-"-"+
-index;
+customer.id="customer-"+Date.now()+"-"+index;
 
-customer.classList.remove(
-"customer-template"
-);
-
-customer.classList.add(
-"spawned-customer"
-);
+customer.classList.remove("customer-template");
+customer.classList.add("spawned-customer");
 
 customer.style.display="block";
 customer.style.animation="none";
 
-customer.classList.remove(
-"satisfied"
-);
+customer.classList.remove("satisfied");
 
 customer.style.top="5%";
 
@@ -2585,173 +2438,101 @@ if(
 forcedLaneIndex!==null &&
 forcedLaneIndex!==undefined
 ){
-
 laneIndex=forcedLaneIndex;
-
 }else{
-
-laneIndex=
-Math.floor(
-Math.random()*LANES.length
-);
-
+laneIndex=Math.floor(Math.random()*LANES.length);
 }
 
-customer.dataset.lane=
-laneIndex;
-
-customer.style.left=
-LANES[laneIndex]+"%";
+customer.dataset.lane=laneIndex;
+customer.style.left=LANES[laneIndex]+"%";
 
 customer.dataset.type=type;
-
-customer.dataset.hp=
-String(
-waveHP || 30
-);
+customer.dataset.hp=String(waveHP || 30);
 
 customer.dataset.satisfied="false";
 customer.dataset.atKitchen="false";
 customer.dataset.frame="0";
+customer.dataset.frozen="false";
+customer.dataset.wave=currentWave;
 
-customer.dataset.wave=
-currentWave;
-
-const frames=
-customer.querySelectorAll(
-".frame"
-);
+const frames=customer.querySelectorAll(".frame");
 
 frames.forEach(function(frame){
-
-frame.classList.remove(
-"active"
-);
-
+frame.classList.remove("active");
 });
 
 if(frames.length>0){
-
-frames[0].classList.add(
-"active"
-);
-
+frames[0].classList.add("active");
 }
 
-const happyFrame=
-customer.querySelector(
-".happy-frame"
-);
+const happyFrame=customer.querySelector(".happy-frame");
 
 happyFrame.style.display="none";
 
 game.appendChild(customer);
 customers.push(customer);
 
-const actualWalkTime=
-walkTime || 60;
+const actualWalkTime=walkTime || 60;
 
 requestAnimationFrame(function(){
 
 customer.style.animation=
-"walkDown "+
-actualWalkTime+
-"s linear forwards";
+"walkDown "+actualWalkTime+"s linear forwards";
 
-customer.classList.add(
-"walking"
-);
+customer.classList.add("walking");
 
 });
 
-setTimeout(function(){
+const kitchenTimer=setTimeout(function(){
 
-if(
-customer &&
-customer.dataset.satisfied!=="true"
-){
+if(customer && customer.dataset.satisfied!=="true"){
 
 customer.dataset.atKitchen="true";
-
 updateZIndexes();
 
 }
 
 },actualWalkTime*1000);
 
+spawnTimers.push(kitchenTimer);
+
 }
 
-/* ==================================================
-   CUCINA
-================================================== */
+/* CUCINA */
 
 function updateKitchenEnergy(){
 
 if(kitchenEnergy>50){
 
-document
-.getElementById("kitchen")
-.style.display="block";
-
-document
-.getElementById("kitchenDamaged")
-.style.display="none";
-
-document
-.getElementById("kitchenDestroyed")
-.style.display="none";
+document.getElementById("kitchen").style.display="block";
+document.getElementById("kitchenDamaged").style.display="none";
+document.getElementById("kitchenDestroyed").style.display="none";
 
 }else if(kitchenEnergy>20){
 
-document
-.getElementById("kitchen")
-.style.display="none";
-
-document
-.getElementById("kitchenDamaged")
-.style.display="block";
-
-document
-.getElementById("kitchenDestroyed")
-.style.display="none";
+document.getElementById("kitchen").style.display="none";
+document.getElementById("kitchenDamaged").style.display="block";
+document.getElementById("kitchenDestroyed").style.display="none";
 
 }else{
 
-document
-.getElementById("kitchen")
-.style.display="none";
-
-document
-.getElementById("kitchenDamaged")
-.style.display="none";
-
-document
-.getElementById("kitchenDestroyed")
-.style.display="block";
+document.getElementById("kitchen").style.display="none";
+document.getElementById("kitchenDamaged").style.display="none";
+document.getElementById("kitchenDestroyed").style.display="block";
 
 }
 
 }
-
-/* ==================================================
-   ENERGIA CUCINA
-================================================== */
 
 function startKitchenEnergySystem(){
 
 if(kitchenDamageTimer!==null){
-
-clearInterval(
-kitchenDamageTimer
-);
-
+clearInterval(kitchenDamageTimer);
 }
 
-kitchenDamageTimer=
-setInterval(function(){
+kitchenDamageTimer=setInterval(function(){
 
-if(powerUpPaused)
-return;
+if(powerUpPaused) return;
 
 let damage=0;
 
@@ -2762,9 +2543,7 @@ customer &&
 customer.dataset.atKitchen==="true" &&
 customer.dataset.satisfied!=="true"
 ){
-
 damage++;
-
 }
 
 });
@@ -2773,8 +2552,7 @@ if(damage>0){
 
 kitchenEnergy-=damage;
 
-if(kitchenEnergy<0)
-kitchenEnergy=0;
+if(kitchenEnergy<0) kitchenEnergy=0;
 
 updateKitchenEnergy();
 
@@ -2784,54 +2562,34 @@ updateKitchenEnergy();
 
 }
 
-/* ==================================================
-   CLIENTE VISIBILE
-================================================== */
+/* VISIBILITÀ */
 
 function customerIsVisible(customer){
 
-if(
-!customer ||
-customer.style.display==="none"
-)
-return false;
+if(!customer || customer.style.display==="none") return false;
 
-const rect=
-customer.getBoundingClientRect();
-
-const game=
-document.getElementById("game");
-
-const gameRect=
-game.getBoundingClientRect();
+const rect=customer.getBoundingClientRect();
+const game=document.getElementById("game");
+const gameRect=game.getBoundingClientRect();
 
 return(
-
 rect.bottom>gameRect.top &&
-
 rect.top<gameRect.bottom
-
 );
 
 }
 
-/* ==================================================
-   Z INDEX
-================================================== */
+/* Z INDEX */
 
 function startZIndexSystem(){
 
 if(zIndexTimer!==null){
-
 clearInterval(zIndexTimer);
-
 }
 
-zIndexTimer=
-setInterval(function(){
+zIndexTimer=setInterval(function(){
 
-if(powerUpPaused)
-return;
+if(powerUpPaused) return;
 
 updateZIndexes();
 
@@ -2841,95 +2599,57 @@ updateZIndexes();
 
 function updateZIndexes(){
 
-const activeCustomers=
-customers.filter(function(customer){
-
-return(
-customer &&
-customer.style.display!=="none"
-);
-
+const activeCustomers=customers.filter(function(customer){
+return(customer && customer.style.display!=="none");
 });
 
 activeCustomers.sort(function(a,b){
-
-const aTop=
-a.getBoundingClientRect().top;
-
-const bTop=
-b.getBoundingClientRect().top;
-
-return aTop-bTop;
-
+return(
+a.getBoundingClientRect().top-
+b.getBoundingClientRect().top
+);
 });
 
 activeCustomers.forEach(function(customer,index){
-
-customer.style.zIndex=
-10+index;
-
+customer.style.zIndex=10+index;
 });
 
 }
 
-/* ==================================================
-   PRIMO ATTACCO
-================================================== */
+/* PRIMO ATTACCO */
 
 function startFirstAttackDetection(){
 
 if(firstAttackTimer!==null){
-
-clearInterval(
-firstAttackTimer
-);
-
+clearInterval(firstAttackTimer);
 }
 
-firstAttackTimer=
-setInterval(function(){
+firstAttackTimer=setInterval(function(){
 
-if(powerUpPaused)
-return;
+if(powerUpPaused) return;
 
-const target=
-getNearestVisibleCustomer();
+const target=getNearestVisibleCustomer();
 
 if(target){
-
 playCookAttack();
-
-clearInterval(
-firstAttackTimer
-);
-
+clearInterval(firstAttackTimer);
 }
 
 },100);
 
 }
 
-/* ==================================================
-   ANIMAZIONE CLIENTI
-================================================== */
+/* ANIMAZIONE CLIENTI */
 
-let customer4Timer=null;
-   
 function startCustomerAnimation(){
 
 if(customerTimer!==null){
-
 clearInterval(customerTimer);
-
 }
 
-   
+customerTimer=setInterval(function(){
 
-customerTimer=
-setInterval(function(){
-
-if(powerUpPaused)
-return;
+if(powerUpPaused) return;
 
 customers.forEach(function(customer){
 
@@ -2938,43 +2658,25 @@ if(
 customer.style.display==="none" ||
 customer.dataset.satisfied==="true" ||
 customer.dataset.frozen==="true"
-)
-return;
+) return;
 
-/* CLIENTE 4 HA UN TIMER SEPARATO */
+if(customer.classList.contains("customer4-template")) return;
 
-if(customer.classList.contains("customer4-template"))
-return;   
+const frames=customer.querySelectorAll(".frame");
 
-const frames=
-customer.querySelectorAll(
-".frame"
-);
+if(frames.length===0) return;
 
-if(frames.length===0)
-return;
-
-let frame=
-parseInt(
-customer.dataset.frame||"0"
-);
+let frame=parseInt(customer.dataset.frame||"0");
 
 frames.forEach(function(image){
-
-image.classList.remove(
-"active"
-);
-
+image.classList.remove("active");
 });
 
-frames[frame].classList.add(
-"active"
-);
+frames[frame].classList.add("active");
 
 frame++;
 
-if(frame>=frames.length)
-frame=0;
+if(frame>=frames.length) frame=0;
 
 customer.dataset.frame=frame;
 
@@ -2983,24 +2685,16 @@ customer.dataset.frame=frame;
 },300);
 
 }
-
-   /* ==================================================
-   ANIMAZIONE CLIENTE 4 - PIÙ VELOCE
-================================================== */
 
 function startCustomer4Animation(){
 
 if(customer4Timer!==null){
-
 clearInterval(customer4Timer);
-
 }
 
-customer4Timer=
-setInterval(function(){
+customer4Timer=setInterval(function(){
 
-if(powerUpPaused)
-return;
+if(powerUpPaused) return;
 
 customers.forEach(function(customer){
 
@@ -3009,41 +2703,25 @@ if(
 customer.style.display==="none" ||
 customer.dataset.satisfied==="true" ||
 customer.dataset.frozen==="true"
-)
-return;
+) return;
 
-if(!customer.classList.contains("customer4-template"))
-return;
+if(!customer.classList.contains("customer4-template")) return;
 
-const frames=
-customer.querySelectorAll(
-".frame"
-);
+const frames=customer.querySelectorAll(".frame");
 
-if(frames.length===0)
-return;
+if(frames.length===0) return;
 
-let frame=
-parseInt(
-customer.dataset.frame||"0"
-);
+let frame=parseInt(customer.dataset.frame||"0");
 
 frames.forEach(function(image){
-
-image.classList.remove(
-"active"
-);
-
+image.classList.remove("active");
 });
 
-frames[frame].classList.add(
-"active"
-);
+frames[frame].classList.add("active");
 
 frame++;
 
-if(frame>=frames.length)
-frame=0;
+if(frame>=frames.length) frame=0;
 
 customer.dataset.frame=frame;
 
@@ -3053,88 +2731,43 @@ customer.dataset.frame=frame;
 
 }
 
-/* ==================================================
-   FRAME CUOCO
-================================================== */
+/* CUOCO */
 
 function setCookFrame(frameNumber){
 
 const frames=
-document
-.getElementById("cook")
-.querySelectorAll("img");
+document.getElementById("cook").querySelectorAll("img");
 
 frames.forEach(function(frame){
-
-frame.classList.remove(
-"active"
-);
-
+frame.classList.remove("active");
 });
 
 if(frames[frameNumber]){
-
-frames[frameNumber].classList.add(
-"active"
-);
-
+frames[frameNumber].classList.add("active");
 }
 
 }
-
-/* ==================================================
-   NUOVO ATTACCO CUOCO
-   1 → 2 → 3 → 4 → 5 → 1
-   160ms PER FRAME
-================================================== */
 
 function playCookAttack(){
 
-if(powerUpPaused)
-return;
+if(powerUpPaused) return;
 
-const targets=
-getAttackTargets();
+const targets=getAttackTargets();
 
 if(targets.length===0){
-
 setCookFrame(0);
 return;
-
 }
-
-/* FRAME 1 */
 
 setCookFrame(0);
 
-
-/* FRAME 2 */
-
 setTimeout(function(){
-
-if(!powerUpPaused){
-
-setCookFrame(1);
-
-}
-
+if(!powerUpPaused) setCookFrame(1);
 },160);
 
-
-/* FRAME 3 */
-
 setTimeout(function(){
-
-if(!powerUpPaused){
-
-setCookFrame(2);
-
-}
-
+if(!powerUpPaused) setCookFrame(2);
 },320);
-
-
-/* FRAME 4 + LANCIO PASTA */
 
 setTimeout(function(){
 
@@ -3146,13 +2779,8 @@ requestAnimationFrame(function(){
 
 targets.forEach(function(target){
 
-if(
-target &&
-target.dataset.satisfied!=="true"
-){
-
+if(target && target.dataset.satisfied!=="true"){
 throwPasta(target);
-
 }
 
 });
@@ -3163,202 +2791,113 @@ throwPasta(target);
 
 },480);
 
-
-/* FRAME 5 */
-
 setTimeout(function(){
-
-if(!powerUpPaused){
-
-setCookFrame(4);
-
-}
-
+if(!powerUpPaused) setCookFrame(4);
 },640);
 
-
-/* RITORNO FRAME 1 */
-
 setTimeout(function(){
-
-if(!powerUpPaused){
-
-setCookFrame(0);
-
-}
-
+if(!powerUpPaused) setCookFrame(0);
 },800);
 
 }
 
-/* ==================================================
-   CLIENTI DA COLPIRE
-================================================== */
+/* TARGET */
 
 function getAttackTargets(){
 
-const activeCustomers=
-customers.filter(function(customer){
+const activeCustomers=customers.filter(function(customer){
 
-if(!customer)
-return false;
+if(!customer) return false;
+if(customer.style.display==="none") return false;
+if(customer.dataset.satisfied==="true") return false;
 
-if(customer.style.display==="none")
-return false;
-
-if(customer.dataset.satisfied==="true")
-return false;
-
-return customerIsVisible(
-customer
-);
+return customerIsVisible(customer);
 
 });
 
 activeCustomers.sort(function(a,b){
-
 return(
 b.getBoundingClientRect().top-
 a.getBoundingClientRect().top
 );
-
 });
 
 let numberOfPasta=1;
 
 if(powerUps.pasta===1){
-
 numberOfPasta=2;
-
 }else if(powerUps.pasta===2){
-
 numberOfPasta=2;
-
 }else if(powerUps.pasta>=3){
-
 numberOfPasta=3;
-
 }
 
-return activeCustomers.slice(
-0,
-numberOfPasta
-);
+return activeCustomers.slice(0,numberOfPasta);
 
 }
-
-/* ==================================================
-   ATTACCO AUTOMATICO CUOCO
-================================================== */
 
 function startCookAnimation(){
 
 if(cookTimer!==null){
-
-clearInterval(
-cookTimer
-);
-
+clearInterval(cookTimer);
 }
 
 setCookFrame(0);
 
-cookTimer=
-setInterval(function(){
+cookTimer=setInterval(function(){
 
-if(powerUpPaused)
-return;
+if(powerUpPaused) return;
 
-const target=
-getNearestVisibleCustomer();
+const target=getNearestVisibleCustomer();
 
 if(target!==null){
-
 playCookAttack();
-
 }else{
-
 setCookFrame(0);
-
 }
 
 },getCookAttackInterval());
 
 }
 
-/* ==================================================
-   VELOCITÀ CUOCO
-================================================== */
-
 function getCookAttackInterval(){
 
-let speedMultiplier=
-1+(powerUps.speed*.33);
+let speedMultiplier=1+(powerUps.speed*.33);
 
-speedMultiplier*=
-(1+pastaSpeedBonus);
+speedMultiplier*=(1+pastaSpeedBonus);
 
-return Math.round(
-3000/speedMultiplier
-);
+return Math.round(3000/speedMultiplier);
 
 }
-
-/* ==================================================
-   VELOCITÀ CAMERIERA
-================================================== */
 
 function getWaitressAttackInterval(){
-
-return Math.round(
-getCookAttackInterval()*.67
-);
-
+return Math.round(getCookAttackInterval()*.67);
 }
-
-/* ==================================================
-   CLIENTE PIÙ VICINO
-================================================== */
 
 function getNearestVisibleCustomer(){
 
-const activeCustomers=
-customers.filter(function(customer){
+const activeCustomers=customers.filter(function(customer){
 
-if(!customer)
-return false;
+if(!customer) return false;
+if(customer.style.display==="none") return false;
+if(customer.dataset.satisfied==="true") return false;
 
-if(customer.style.display==="none")
-return false;
-
-if(customer.dataset.satisfied==="true")
-return false;
-
-return customerIsVisible(
-customer
-);
+return customerIsVisible(customer);
 
 });
 
-if(activeCustomers.length===0)
-return null;
+if(activeCustomers.length===0) return null;
 
-let nearest=
-activeCustomers[0];
-
-let nearestTop=
-nearest.getBoundingClientRect().top;
+let nearest=activeCustomers[0];
+let nearestTop=nearest.getBoundingClientRect().top;
 
 activeCustomers.forEach(function(customer){
 
-const top=
-customer.getBoundingClientRect().top;
+const top=customer.getBoundingClientRect().top;
 
 if(top>nearestTop){
-
 nearest=customer;
 nearestTop=top;
-
 }
 
 });
@@ -3367,171 +2906,93 @@ return nearest;
 
 }
 
-/* ==================================================
-   LANCIO PASTA
-================================================== */
+/* PASTA */
 
 function throwPasta(target){
 
-if(!target)
-return;
+if(!target) return;
+if(target.dataset.satisfied==="true") return;
 
-if(
-target.dataset.satisfied==="true"
-)
-return;
+const cook=document.getElementById("cook");
+const game=document.getElementById("game");
+const gameRect=game.getBoundingClientRect();
 
-const cook=
-document.getElementById("cook");
+const activeCookFrame=cook.querySelector("img.active");
 
-const game=
-document.getElementById("game");
+if(!activeCookFrame) return;
 
-const gameRect=
-game.getBoundingClientRect();
+const cookRect=activeCookFrame.getBoundingClientRect();
 
-const activeCookFrame=
-cook.querySelector("img.active");
+const startX=cookRect.left+cookRect.width*.72;
+const startY=cookRect.top+cookRect.height*.32;
 
-if(!activeCookFrame)
-return;
-
-const cookRect=
-activeCookFrame.getBoundingClientRect();
-
-/* PUNTO MANO SPRITE 4 */
-
-const startX=
-cookRect.left+
-cookRect.width*.72;
-
-const startY=
-cookRect.top+
-cookRect.height*.32;
-
-const hitMarker=
-document.createElement("div");
+const hitMarker=document.createElement("div");
 
 hitMarker.className="hit-marker";
 
-game.appendChild(
-hitMarker
-);
+game.appendChild(hitMarker);
 
-const pasta=
-document.createElement("img");
+const pasta=document.createElement("img");
 
 pasta.className="pasta";
 
 pasta.src=
 "https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png";
 
-game.appendChild(
-pasta
-);
+game.appendChild(pasta);
 
 let currentX=startX;
 let currentY=startY;
 
-pasta.style.left=
-(
-currentX-
-gameRect.left-
-42
-)+"px";
-
-pasta.style.top=
-(
-currentY-
-gameRect.top-
-42
-)+"px";
+pasta.style.left=(currentX-gameRect.left-42)+"px";
+pasta.style.top=(currentY-gameRect.top-42)+"px";
 
 const speed=
-350*
-(1+powerUps.speed*.33)*
-(1+pastaSpeedBonus);
+350*(1+powerUps.speed*.33)*(1+pastaSpeedBonus);
 
-let lastTime=
-performance.now();
+let lastTime=performance.now();
 
 function movePasta(currentTime){
 
-if(
-!target ||
-target.dataset.satisfied==="true"
-){
+if(!target || target.dataset.satisfied==="true"){
 
-if(pasta.parentNode)
-pasta.remove();
-
-if(hitMarker.parentNode)
-hitMarker.remove();
+if(pasta.parentNode) pasta.remove();
+if(hitMarker.parentNode) hitMarker.remove();
 
 return;
-
 }
 
 if(powerUpPaused){
 
 lastTime=currentTime;
-
-requestAnimationFrame(
-movePasta
-);
+requestAnimationFrame(movePasta);
 
 return;
-
 }
 
-const targetRect=
-target.getBoundingClientRect();
+const targetRect=target.getBoundingClientRect();
 
 const endX=
-targetRect.left+
-targetRect.width/2+
-HIT_X;
+targetRect.left+targetRect.width/2+HIT_X;
 
 const endY=
-targetRect.top+
-targetRect.height*
-HIT_POSITION_Y+
-HIT_Y;
+targetRect.top+targetRect.height*HIT_POSITION_Y+HIT_Y;
 
-hitMarker.style.left=
-(
-endX-
-gameRect.left
-)+"px";
+hitMarker.style.left=(endX-gameRect.left)+"px";
+hitMarker.style.top=(endY-gameRect.top)+"px";
 
-hitMarker.style.top=
-(
-endY-
-gameRect.top
-)+"px";
-
-const deltaTime=
-Math.min(
+const deltaTime=Math.min(
 (currentTime-lastTime)/1000,
 .05
 );
 
 lastTime=currentTime;
 
-const dx=
-endX-currentX;
+const dx=endX-currentX;
+const dy=endY-currentY;
 
-const dy=
-endY-currentY;
-
-const distance=
-Math.sqrt(
-dx*dx+
-dy*dy
-);
-
-const movement=
-speed*deltaTime;
+const distance=Math.sqrt(dx*dx+dy*dy);
+const movement=speed*deltaTime;
 
 if(distance<=movement){
 
@@ -3540,118 +3001,67 @@ currentY=endY;
 
 }else{
 
-currentX+=
-(dx/distance)*
-movement;
-
-currentY+=
-(dy/distance)*
-movement;
+currentX+=(dx/distance)*movement;
+currentY+=(dy/distance)*movement;
 
 }
 
-pasta.style.left=
-(
-currentX-
-gameRect.left-
-42
-)+"px";
+pasta.style.left=(currentX-gameRect.left-42)+"px";
+pasta.style.top=(currentY-gameRect.top-42)+"px";
 
-pasta.style.top=
-(
-currentY-
-gameRect.top-
-42
-)+"px";
+const remainingX=endX-currentX;
+const remainingY=endY-currentY;
 
-const remainingX=
-endX-currentX;
-
-const remainingY=
-endY-currentY;
-
-const remainingDistance=
-Math.sqrt(
+const remainingDistance=Math.sqrt(
 remainingX*remainingX+
 remainingY*remainingY
 );
 
 if(remainingDistance<=3){
 
-hitCustomer(
-target,
-pasta
-);
+hitCustomer(target,pasta);
 
-if(hitMarker.parentNode)
-hitMarker.remove();
+if(hitMarker.parentNode) hitMarker.remove();
 
 return;
+}
+
+requestAnimationFrame(movePasta);
 
 }
 
-requestAnimationFrame(
-movePasta
-);
+requestAnimationFrame(movePasta);
 
 }
 
-requestAnimationFrame(
-movePasta
-);
-
-}
-
-/* ==================================================
-   ATTACCO CAMERIERA
-   FRAME 5 = LANCIO COCKTAIL
-================================================== */
+/* ATTACCO CAMERIERA */
 
 function playWaitressAttack(){
 
-if(powerUpPaused)
-return;
+if(powerUpPaused) return;
+if(!powerUps.waitress) return;
 
-if(!powerUps.waitress)
-return;
-
-const target=
-getNearestVisibleCustomer();
+const target=getNearestVisibleCustomer();
 
 if(!target){
-
 setWaitressFrame(0);
 return;
-
 }
 
 setWaitressFrame(0);
 
-/* FRAME 2 */
 setTimeout(function(){
-
-if(!powerUpPaused)
-setWaitressFrame(1);
-
+if(!powerUpPaused) setWaitressFrame(1);
 },160);
 
-/* FRAME 3 */
 setTimeout(function(){
-
-if(!powerUpPaused)
-setWaitressFrame(2);
-
+if(!powerUpPaused) setWaitressFrame(2);
 },320);
 
-/* FRAME 4 */
 setTimeout(function(){
-
-if(!powerUpPaused)
-setWaitressFrame(3);
-
+if(!powerUpPaused) setWaitressFrame(3);
 },480);
 
-/* FRAME 5 + LANCIO */
 setTimeout(function(){
 
 if(!powerUpPaused){
@@ -3665,9 +3075,7 @@ if(
 target &&
 target.dataset.satisfied!=="true"
 ){
-
 throwDrink(target);
-
 }
 
 });
@@ -3676,126 +3084,63 @@ throwDrink(target);
 
 },640);
 
-/* FRAME 6 */
 setTimeout(function(){
-
-if(!powerUpPaused)
-setWaitressFrame(5);
-
+if(!powerUpPaused) setWaitressFrame(5);
 },800);
 
-/* FRAME 7 = FRAME 1 */
 setTimeout(function(){
-
-if(!powerUpPaused)
-setWaitressFrame(6);
-
+if(!powerUpPaused) setWaitressFrame(6);
 },960);
 
-/* RITORNO POSIZIONE BASE */
 setTimeout(function(){
-
-if(!powerUpPaused)
-setWaitressFrame(0);
-
+if(!powerUpPaused) setWaitressFrame(0);
 },1120);
 
 }
 
-/* ==================================================
-   ATTACCO AUTOMATICO CAMERIERA
-================================================== */
-
 function startWaitressAttack(){
 
 if(waitressAttackTimer!==null){
-
-clearInterval(
-waitressAttackTimer
-);
-
+clearInterval(waitressAttackTimer);
 }
 
-waitressAttackTimer=
-setInterval(function(){
+waitressAttackTimer=setInterval(function(){
 
-if(powerUpPaused)
-return;
+if(powerUpPaused) return;
+if(!powerUps.waitress) return;
 
-if(!powerUps.waitress)
-return;
+const waitress=document.getElementById("waitress");
 
-const waitress=
-document.getElementById(
-"waitress"
-);
+if(waitress.style.display==="none") return;
 
-if(waitress.style.display==="none")
-return;
-
-const target=
-getNearestVisibleCustomer();
+const target=getNearestVisibleCustomer();
 
 if(target){
-
 playWaitressAttack();
-
 }else{
-
 setWaitressFrame(0);
-
 }
 
 },getWaitressAttackInterval());
 
 }
 
-/* ==================================================
-   LANCIO DRINK
-================================================== */
+/* DRINK */
 
 function throwDrink(target){
 
-if(!target)
-return;
+if(!target) return;
+if(target.dataset.satisfied==="true") return;
 
-if(
-target.dataset.satisfied==="true"
-)
-return;
+const waitress=document.getElementById("waitress");
+const game=document.getElementById("game");
+const gameRect=game.getBoundingClientRect();
 
-const waitress=
-document.getElementById("waitress");
+const activeWaitressFrame=waitress.querySelector("img.active");
 
-const game=
-document.getElementById("game");
+if(!activeWaitressFrame) return;
 
-const gameRect=
-game.getBoundingClientRect();
-
-/*
-IMPORTANTE:
-la posizione viene presa dal PNG attualmente visibile,
-quindi dal FRAME 5.
-*/
-
-const activeWaitressFrame=
-waitress.querySelector("img.active");
-
-if(!activeWaitressFrame)
-return;
-
-const waitressRect=
-activeWaitressFrame.getBoundingClientRect();
-
-/*
-PUNTO DI PARTENZA DEL COCKTAIL:
-coordinate relative al frame 5.
-*/
-
-/* ==================================================
-   PUNTO REALE DELLA MANO - FRAME 5
-================================================== */
+const waitressRect=activeWaitressFrame.getBoundingClientRect();
 
 const startX=
 waitressRect.left+
@@ -3806,140 +3151,79 @@ const startY=
 waitressRect.top+
 (waitressRect.height*.34);
 
-const hitMarker=
-document.createElement("div");
+const hitMarker=document.createElement("div");
 
 hitMarker.className="hit-marker";
 
-game.appendChild(
-hitMarker
-);
+game.appendChild(hitMarker);
 
-const drink=
-document.createElement("img");
+const drink=document.createElement("img");
 
 drink.className="drink";
 
 drink.src=
 "https://i.ibb.co/MDk4xzJd/1788234306668-removebg-preview.png";
 
-game.appendChild(
-drink
-);
+game.appendChild(drink);
 
 let currentX=startX;
 let currentY=startY;
 
-/*
-Centro del cocktail esattamente
-sul punto della mano.
-*/
-
-const drinkRect=
-drink.getBoundingClientRect();
-
-const drinkHalfWidth=
-drinkRect.width/2;
-
-const drinkHalfHeight=
-drinkRect.height/2;
+const drinkRect=drink.getBoundingClientRect();
+const drinkHalfWidth=drinkRect.width/2;
+const drinkHalfHeight=drinkRect.height/2;
 
 drink.style.left=
-(
-currentX-
-gameRect.left-
-drinkHalfWidth
-)+"px";
+(currentX-gameRect.left-drinkHalfWidth)+"px";
 
 drink.style.top=
-(
-currentY-
-gameRect.top-
-drinkHalfHeight
-)+"px";
+(currentY-gameRect.top-drinkHalfHeight)+"px";
 
 const speed=350;
 
-let lastTime=
-performance.now();
+let lastTime=performance.now();
 
 function moveDrink(currentTime){
 
-if(
-!target ||
-target.dataset.satisfied==="true"
-){
+if(!target || target.dataset.satisfied==="true"){
 
-if(drink.parentNode)
-drink.remove();
-
-if(hitMarker.parentNode)
-hitMarker.remove();
+if(drink.parentNode) drink.remove();
+if(hitMarker.parentNode) hitMarker.remove();
 
 return;
-
 }
 
 if(powerUpPaused){
 
 lastTime=currentTime;
-
-requestAnimationFrame(
-moveDrink
-);
+requestAnimationFrame(moveDrink);
 
 return;
-
 }
 
-const targetRect=
-target.getBoundingClientRect();
+const targetRect=target.getBoundingClientRect();
 
 const endX=
-targetRect.left+
-targetRect.width/2+
-HIT_X;
+targetRect.left+targetRect.width/2+HIT_X;
 
 const endY=
-targetRect.top+
-targetRect.height*
-HIT_POSITION_Y+
-HIT_Y;
+targetRect.top+targetRect.height*HIT_POSITION_Y+HIT_Y;
 
-hitMarker.style.left=
-(
-endX-
-gameRect.left
-)+"px";
+hitMarker.style.left=(endX-gameRect.left)+"px";
+hitMarker.style.top=(endY-gameRect.top)+"px";
 
-hitMarker.style.top=
-(
-endY-
-gameRect.top
-)+"px";
-
-const deltaTime=
-Math.min(
+const deltaTime=Math.min(
 (currentTime-lastTime)/1000,
 .05
 );
 
 lastTime=currentTime;
 
-const dx=
-endX-currentX;
+const dx=endX-currentX;
+const dy=endY-currentY;
 
-const dy=
-endY-currentY;
-
-const distance=
-Math.sqrt(
-dx*dx+
-dy*dy
-);
-
-const movement=
-speed*deltaTime;
+const distance=Math.sqrt(dx*dx+dy*dy);
+const movement=speed*deltaTime;
 
 if(distance<=movement){
 
@@ -3948,216 +3232,125 @@ currentY=endY;
 
 }else{
 
-currentX+=
-(dx/distance)*
-movement;
-
-currentY+=
-(dy/distance)*
-movement;
+currentX+=(dx/distance)*movement;
+currentY+=(dy/distance)*movement;
 
 }
 
 drink.style.left=
-(
-currentX-
-gameRect.left-
-drinkHalfWidth
-)+"px";
+(currentX-gameRect.left-drinkHalfWidth)+"px";
 
 drink.style.top=
-(
-currentY-
-gameRect.top-
-drinkHalfHeight
-)+"px";
+(currentY-gameRect.top-drinkHalfHeight)+"px";
 
-const remainingX=
-endX-currentX;
+const remainingX=endX-currentX;
+const remainingY=endY-currentY;
 
-const remainingY=
-endY-currentY;
-
-const remainingDistance=
-Math.sqrt(
+const remainingDistance=Math.sqrt(
 remainingX*remainingX+
 remainingY*remainingY
 );
 
 if(remainingDistance<=3){
 
-hitCustomerWithDrink(
-target,
-drink
-);
+hitCustomerWithDrink(target,drink);
 
-if(hitMarker.parentNode)
-hitMarker.remove();
+if(hitMarker.parentNode) hitMarker.remove();
 
 return;
+}
+
+requestAnimationFrame(moveDrink);
 
 }
 
-requestAnimationFrame(
-moveDrink
-);
+requestAnimationFrame(moveDrink);
 
 }
 
-requestAnimationFrame(
-moveDrink
-);
-
-}
-
-/* ==================================================
-   EFFETTO IMPATTO
-================================================== */
+/* IMPATTO */
 
 function createImpactEffect(customer,type){
 
-if(!customer)
-return;
+if(!customer) return;
 
-const game=
-document.getElementById("game");
-
-const gameRect=
-game.getBoundingClientRect();
-
-const rect=
-customer.getBoundingClientRect();
+const game=document.getElementById("game");
+const gameRect=game.getBoundingClientRect();
+const rect=customer.getBoundingClientRect();
 
 const centerX=
-rect.left+
-rect.width/2-
-gameRect.left;
+rect.left+rect.width/2-gameRect.left;
 
 const centerY=
-rect.top+
-rect.height*.45-
-gameRect.top;
-
-
-/* COCKTAIL = GOCCIOLINE */
+rect.top+rect.height*.45-gameRect.top;
 
 if(type==="drink"){
 
 for(let i=0;i<7;i++){
 
-const drop=
-document.createElement("div");
+const drop=document.createElement("div");
 
-drop.className=
-"impact-particle drink-drop";
+drop.className="impact-particle drink-drop";
 
-drop.style.left=
-centerX+"px";
+drop.style.left=centerX+"px";
+drop.style.top=centerY+"px";
 
-drop.style.top=
-centerY+"px";
-
-const angle=
-Math.random()*
-Math.PI*2;
-
-const distance=
-18+
-Math.random()*28;
-
-const dx=
-Math.cos(angle)*
-distance;
-
-const dy=
-Math.sin(angle)*
-distance;
+const angle=Math.random()*Math.PI*2;
+const distance=18+Math.random()*28;
 
 drop.style.setProperty(
 "--dx",
-dx+"px"
+Math.cos(angle)*distance+"px"
 );
 
 drop.style.setProperty(
 "--dy",
-dy+"px"
+Math.sin(angle)*distance+"px"
 );
 
 game.appendChild(drop);
 
 setTimeout(function(){
-
-if(drop.parentNode)
-drop.remove();
-
+if(drop.parentNode) drop.remove();
 },400);
 
 }
 
 }
 
-
-/* PASTA = FILI DI SPAGHETTI */
-
 if(type==="pasta"){
 
 for(let i=0;i<6;i++){
 
-const strand=
-document.createElement("div");
+const strand=document.createElement("div");
 
-strand.className=
-"impact-particle pasta-strand";
+strand.className="impact-particle pasta-strand";
 
-strand.style.left=
-centerX+"px";
+strand.style.left=centerX+"px";
+strand.style.top=centerY+"px";
 
-strand.style.top=
-centerY+"px";
-
-const angle=
-Math.random()*
-Math.PI*2;
-
-const distance=
-20+
-Math.random()*30;
-
-const dx=
-Math.cos(angle)*
-distance;
-
-const dy=
-Math.sin(angle)*
-distance;
-
-const rotation=
-Math.floor(
-Math.random()*180
-);
+const angle=Math.random()*Math.PI*2;
+const distance=20+Math.random()*30;
 
 strand.style.setProperty(
 "--dx",
-dx+"px"
+Math.cos(angle)*distance+"px"
 );
 
 strand.style.setProperty(
 "--dy",
-dy+"px"
+Math.sin(angle)*distance+"px"
 );
 
 strand.style.setProperty(
 "--rot",
-rotation+"deg"
+Math.floor(Math.random()*180)+"deg"
 );
 
 game.appendChild(strand);
 
 setTimeout(function(){
-
-if(strand.parentNode)
-strand.remove();
-
+if(strand.parentNode) strand.remove();
 },450);
 
 }
@@ -4165,88 +3358,49 @@ strand.remove();
 }
 
 }
-   
-/* ==================================================
-   COLPITO DAL DRINK
-================================================== */
 
-function hitCustomerWithDrink(
-customer,
-drink
-){
+/* DRINK HIT */
 
-if(drink&&drink.parentNode)
-drink.remove();
+function hitCustomerWithDrink(customer,drink){
 
-if(
-!customer ||
-customer.dataset.satisfied==="true"
-)
-return;
+if(drink&&drink.parentNode) drink.remove();
 
-createImpactEffect(
-customer,
-"drink"
-);
+if(!customer || customer.dataset.satisfied==="true") return;
 
-let hp=
-parseInt(
-customer.dataset.hp||"30"
-);
+createImpactEffect(customer,"drink");
 
-const damage=3;
+let hp=parseInt(customer.dataset.hp||"30");
 
-hp-=damage;
+hp-=3;
 
 customer.dataset.hp=hp;
 
 if(hp<=0){
 
-satisfyCustomer(
-customer
-);
+satisfyCustomer(customer);
 
 }else{
 
-/* ==================================================
-   CHANCE CONGELAMENTO
-   BASE 10% + ICE SHOT
-================================================== */
-
-let freezeChance=0.10;
+let freezeChance=.10;
 
 if(powerUps.iceShot===1){
-
-freezeChance=0.20;
-
+freezeChance=.20;
 }else if(powerUps.iceShot===2){
-
-freezeChance=0.35;
-
+freezeChance=.35;
 }else if(powerUps.iceShot>=3){
-
-freezeChance=0.50;
-
+freezeChance=.50;
 }
 
 if(Math.random()<freezeChance){
-
 freezeCustomer(customer);
-
-/* ICE CHAIN */
-
 tryIceChain(customer);
-
 }
 
 }
 
 }
 
-/* ==================================================
-   CONGELAMENTO CAMERIERA
-   10% CHANCE - 0.5 SECONDI
-================================================== */
+/* FREEZE */
 
 function freezeCustomer(customer){
 
@@ -4254,55 +3408,45 @@ if(
 !customer ||
 customer.style.display==="none" ||
 customer.dataset.satisfied==="true"
-)
-return;
+) return;
 
 if(customer._freezeTimer){
-
 clearTimeout(customer._freezeTimer);
-
 }
 
 customer.dataset.frozen="true";
-
 customer.style.animationPlayState="paused";
 
 let freezeDuration=500;
 
 if(powerUps.deepFreeze===1){
-
 freezeDuration=1500;
-
 }else if(powerUps.deepFreeze===2){
-
 freezeDuration=2000;
-
 }else if(powerUps.deepFreeze>=3){
-
 freezeDuration=2500;
-
 }
 
-const normalFrames=
-customer.querySelectorAll(".frame");
+const normalFrames=customer.querySelectorAll(".frame");
+const frozenFrame=customer.querySelector(".frozen-frame");
 
-normalFrames.forEach(function(frame){
-
-frame.classList.remove("active");
-
-});
-
-const frozenFrame=
-customer.querySelector(".frozen-frame");
+/*
+I clienti normali hanno lo sprite frozen.
+Boss e miniboss no.
+I frame normali vengono nascosti solo se esiste uno sprite frozen.
+*/
 
 if(frozenFrame){
+
+normalFrames.forEach(function(frame){
+frame.classList.remove("active");
+});
 
 frozenFrame.style.display="block";
 
 }
 
-customer._freezeTimer=
-setTimeout(function(){
+customer._freezeTimer=setTimeout(function(){
 
 if(
 customer &&
@@ -4314,30 +3458,21 @@ customer.style.animationPlayState="running";
 customer.dataset.frozen="false";
 
 if(frozenFrame){
-
 frozenFrame.style.display="none";
-
 }
 
-const frames=
-customer.querySelectorAll(".frame");
+const frames=customer.querySelectorAll(".frame");
 
-let frameIndex=
-parseInt(customer.dataset.frame||"0");
+let frameIndex=parseInt(customer.dataset.frame||"0");
 
-if(frameIndex>=frames.length)
-frameIndex=0;
+if(frameIndex>=frames.length) frameIndex=0;
 
 frames.forEach(function(frame){
-
 frame.classList.remove("active");
-
 });
 
 if(frames[frameIndex]){
-
 frames[frameIndex].classList.add("active");
-
 }
 
 }
@@ -4348,57 +3483,28 @@ customer._freezeTimer=null;
 
 }
 
-/* ==================================================
-   ICE CHAIN
-   CONGELA UN CLIENTE VICINO
-================================================== */
+/* ICE CHAIN */
 
 function tryIceChain(originalCustomer){
 
-if(powerUps.iceChain<=0)
-return;
-
-
-/* CHANCE ICE CHAIN */
+if(powerUps.iceChain<=0) return;
 
 let chainChance=0;
 
 if(powerUps.iceChain===1){
-
-chainChance=0.30;
-
+chainChance=.30;
 }else if(powerUps.iceChain===2){
-
-chainChance=0.50;
-
+chainChance=.50;
 }else if(powerUps.iceChain>=3){
-
-chainChance=0.75;
-
+chainChance=.75;
 }
 
+if(Math.random()>=chainChance) return;
 
-/* CONTROLLO PROBABILITÀ */
+const originalRect=originalCustomer.getBoundingClientRect();
 
-if(Math.random()>=chainChance)
-return;
-
-
-/* POSIZIONE CLIENTE ORIGINALE */
-
-const originalRect=
-originalCustomer.getBoundingClientRect();
-
-const originalX=
-originalRect.left+
-originalRect.width/2;
-
-const originalY=
-originalRect.top+
-originalRect.height/2;
-
-
-/* CERCA IL CLIENTE PIÙ VICINO */
+const originalX=originalRect.left+originalRect.width/2;
+const originalY=originalRect.top+originalRect.height/2;
 
 let nearestCustomer=null;
 let nearestDistance=Infinity;
@@ -4410,182 +3516,106 @@ if(
 customer===originalCustomer ||
 customer.style.display==="none" ||
 customer.dataset.satisfied==="true"
-)
-return;
+) return;
 
-const rect=
-customer.getBoundingClientRect();
+const rect=customer.getBoundingClientRect();
 
-const x=
-rect.left+
-rect.width/2;
-
-const y=
-rect.top+
-rect.height/2;
+const x=rect.left+rect.width/2;
+const y=rect.top+rect.height/2;
 
 const dx=x-originalX;
 const dy=y-originalY;
 
-const distance=
-Math.sqrt(
-dx*dx+
-dy*dy
-);
+const distance=Math.sqrt(dx*dx+dy*dy);
 
 if(distance<nearestDistance){
-
 nearestDistance=distance;
 nearestCustomer=customer;
-
 }
 
 });
 
-
-/* CONGELA IL CLIENTE VICINO */
-
 if(nearestCustomer){
-
 freezeCustomer(nearestCustomer);
-
 }
 
 }
-   
-/* ==================================================
-   COLPITO DALLA PASTA
-================================================== */
 
-function hitCustomer(
-customer,
-pasta
-){
+/* PASTA HIT */
 
-if(pasta&&pasta.parentNode)
-pasta.remove();
+function hitCustomer(customer,pasta){
 
-if(
-!customer ||
-customer.dataset.satisfied==="true"
-)
-return;
+if(pasta&&pasta.parentNode) pasta.remove();
 
-createImpactEffect(
-customer,
-"pasta"
-);
+if(!customer || customer.dataset.satisfied==="true") return;
 
-let hp=
-parseInt(
-customer.dataset.hp||"30"
-);
+createImpactEffect(customer,"pasta");
 
-const damage=
-5+
-powerUps.sauce;
+let hp=parseInt(customer.dataset.hp||"30");
+
+const damage=5+powerUps.sauce;
 
 hp-=damage;
 
 customer.dataset.hp=hp;
 
 if(hp<=0){
-
-satisfyCustomer(
-customer
-);
-
+satisfyCustomer(customer);
 }
 
 }
 
-/* ==================================================
-   CLIENTE SODDISFATTO
-================================================== */
+/* SODDISFATTO */
 
-function satisfyCustomer(
-customer
-){
+function satisfyCustomer(customer){
 
-if(
-!customer ||
-customer.dataset.satisfied==="true"
-)
-return;
+if(!customer || customer.dataset.satisfied==="true") return;
 
-const rect=
-customer.getBoundingClientRect();
+if(customer._freezeTimer){
+clearTimeout(customer._freezeTimer);
+customer._freezeTimer=null;
+}
 
-const game=
-document.getElementById(
-"game"
-);
+const rect=customer.getBoundingClientRect();
 
-const gameRect=
-game.getBoundingClientRect();
+const game=document.getElementById("game");
+const gameRect=game.getBoundingClientRect();
 
-const currentTop=
-rect.top-
-gameRect.top;
-
-const currentLeft=
-rect.left-
-gameRect.left;
+const currentTop=rect.top-gameRect.top;
+const currentLeft=rect.left-gameRect.left;
 
 customer.style.animation="none";
+customer.style.animationPlayState="running";
 
-customer.classList.remove(
-"walking"
-);
+customer.classList.remove("walking");
+customer.classList.add("satisfied");
 
-customer.classList.add(
-"satisfied"
-);
-
-customer.style.top=
-currentTop+"px";
-
-customer.style.left=
-currentLeft+"px";
+customer.style.top=currentTop+"px";
+customer.style.left=currentLeft+"px";
 
 customer.dataset.satisfied="true";
-
 customer.dataset.atKitchen="false";
+customer.dataset.frozen="false";
 
-addEXP(
-EXP_PER_CUSTOMER
-);
+addEXP(EXP_PER_CUSTOMER);
 
-const normalFrames=
-customer.querySelectorAll(
-".frame"
-);
+const normalFrames=customer.querySelectorAll(".frame");
 
 normalFrames.forEach(function(frame){
-
-frame.classList.remove(
-"active"
-);
-
+frame.classList.remove("active");
 });
 
-const frozenFrame=
-customer.querySelector(
-".frozen-frame"
-);
+const frozenFrame=customer.querySelector(".frozen-frame");
 
 if(frozenFrame){
-
 frozenFrame.style.display="none";
-
 }
-   
-const happyFrame=
-customer.querySelector(
-".happy-frame"
-);
 
+const happyFrame=customer.querySelector(".happy-frame");
+
+if(happyFrame){
 happyFrame.style.display="block";
+}
 
 updateZIndexes();
 
@@ -4593,11 +3623,11 @@ setTimeout(function(){
 
 customer.style.display="none";
 
+if(happyFrame){
 happyFrame.style.display="none";
+}
 
-customer.classList.remove(
-"satisfied"
-);
+customer.classList.remove("satisfied");
 
 updateZIndexes();
 
@@ -4605,45 +3635,31 @@ updateZIndexes();
 
 }
 
-/* ==================================================
-   COMPATIBILITÀ
-================================================== */
+/* COMPATIBILITÀ */
 
 function satisfyCustomer1(){
 
-const customer=
-customers.find(function(c){
-
+const customer=customers.find(function(c){
 return(
 c.dataset.type==="1" &&
 c.dataset.satisfied!=="true"
 );
-
 });
 
-if(customer)
-satisfyCustomer(
-customer
-);
+if(customer) satisfyCustomer(customer);
 
 }
 
 function satisfyCustomer2(){
 
-const customer=
-customers.find(function(c){
-
+const customer=customers.find(function(c){
 return(
 c.dataset.type==="2" &&
 c.dataset.satisfied!=="true"
 );
-
 });
 
-if(customer)
-satisfyCustomer(
-customer
-);
+if(customer) satisfyCustomer(customer);
 
 }
 
