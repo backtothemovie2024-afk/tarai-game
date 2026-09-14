@@ -66,18 +66,7 @@ align-items:center;
 z-index:100;
 }
 
-#cover{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
-max-width:100%;
-max-height:100%;
-object-fit:fill;
-display:block;
-z-index:10;
-}
-
+#cover,
 #coverOverlay{
 position:absolute;
 inset:0;
@@ -86,6 +75,14 @@ height:100%;
 max-width:100%;
 max-height:100%;
 object-fit:fill;
+display:block;
+}
+
+#cover{
+z-index:10;
+}
+
+#coverOverlay{
 z-index:20;
 pointer-events:none;
 }
@@ -141,13 +138,13 @@ left:-100%;
 }
 
 @keyframes transitionFromLeft{
-from{left:-100%;}
-to{left:0%;}
+from{left:-100%}
+to{left:0%}
 }
 
 @keyframes transitionFromRight{
-from{right:-100%;}
-to{right:0%;}
+from{right:-100%}
+to{right:0%}
 }
 
 @keyframes transitionExit{
@@ -164,7 +161,7 @@ transform:scale(1.08);
 @keyframes gameEnter{
 from{
 opacity:0;
-transform:scale(0.94);
+transform:scale(.94);
 }
 to{
 opacity:1;
@@ -205,23 +202,16 @@ pointer-events:none;
 z-index:50;
 }
 
-#kitchen{display:block;}
+#kitchen{
+display:block;
+}
 
 #kitchenDamaged,
-#kitchenDestroyed{display:none;}
-
-#hud{
-position:absolute;
-top:15px;
-left:20px;
-right:20px;
-display:flex;
-justify-content:space-between;
-color:white;
-font-size:22px;
-font-weight:bold;
-z-index:80;
+#kitchenDestroyed{
+display:none;
 }
+
+/* EXP */
 
 #exp-bar{
 position:absolute;
@@ -289,7 +279,9 @@ animation:walkDown 60s linear forwards;
 animation:none!important;
 }
 
-.customer .frame{
+.customer .frame,
+.customer .happy-frame,
+.customer .frozen-frame{
 position:absolute;
 top:0;
 left:0;
@@ -304,30 +296,17 @@ display:block;
 }
 
 .customer .happy-frame{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-object-fit:contain;
-display:none;
 z-index:2;
 }
 
 .customer .frozen-frame{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-object-fit:contain;
-display:none;
 z-index:3;
 }
 
 /* CLIENTE 1 */
 
-.customer1-sprite{
+.customer1-sprite,
+.customer2-sprite{
 display:none;
 }
 
@@ -345,20 +324,16 @@ height:202px;
 }
 
 .customer1-template .happy-frame{
-transform:scale(0.90);
+transform:scale(.90);
 transform-origin:center bottom;
 }
 
 .customer1-template .frozen-frame{
-transform:scale(0.92);
+transform:scale(.92);
 transform-origin:center bottom;
 }
 
 /* CLIENTE 2 */
-
-.customer2-sprite{
-display:none;
-}
 
 .customer2-sprite + .happy-frame{
 width:100%;
@@ -367,11 +342,7 @@ object-fit:contain;
 left:0%;
 }
 
-.customer2-template .frame:nth-of-type(1){
-transform:scale(1);
-transform-origin:center bottom;
-}
-
+.customer2-template .frame:nth-of-type(1),
 .customer2-template .frame:nth-of-type(2){
 transform:scale(1);
 transform-origin:center bottom;
@@ -387,7 +358,7 @@ transform-origin:center bottom;
 }
 
 .customer2-template .frozen-frame{
-transform:scale(0.90);
+transform:scale(.90);
 transform-origin:center bottom;
 }
 
@@ -410,7 +381,7 @@ transform:translateX(0);
 transform:translateX(14.0625%);
 }
 
-/* CLIENTI 6 - 7 - 8: STUDENTE, MAMMA, ANZIANA */
+/* CLIENTI 6 - 7 - 8 */
 
 .customer6-template .frame,
 .customer6-template .happy-frame,
@@ -440,7 +411,7 @@ transform:scale(1);
 transform-origin:center bottom;
 }
 
-/* INTRO BOSS WAVE 3 */
+/* VIDEO BOSS */
 
 #bossIntro{
 position:absolute;
@@ -449,51 +420,86 @@ display:none;
 align-items:center;
 justify-content:center;
 overflow:hidden;
-background:rgba(0,0,0,.92);
+background:#000;
 z-index:450;
-pointer-events:none;
 }
 
-#bossIntroImage{
-position:absolute;
-inset:0;
+#bossIntroVideo{
 width:100%;
 height:100%;
 object-fit:cover;
-opacity:0;
-transform:translateX(110%) rotate(5deg) scale(.9);
+display:block;
 }
 
-#bossIntro.active #bossIntroImage{
-animation:bossIntroSequence 3.6s cubic-bezier(.22,.8,.3,1) forwards;
+#bossIntro.entering{
+animation:bossSnapIn .2s ease-out both;
 }
 
-@keyframes bossIntroSequence{
+#bossIntro.leaving{
+animation:bossSnapOut .2s ease-in both;
+pointer-events:none;
+}
+
+@keyframes bossSnapIn{
 0%{
-opacity:0;
-transform:translateX(110%) rotate(5deg) scale(.9);
+transform:scale(.72);
 }
-18%{
-opacity:1;
-transform:translateX(0) rotate(0deg) scale(1);
-}
-28%{
-opacity:1;
-transform:translateX(0) rotate(0deg) scale(1.06);
-}
-36%{
-opacity:1;
-transform:translateX(0) rotate(0deg) scale(1);
-}
-76%{
-opacity:1;
-transform:translateX(0) rotate(0deg) scale(1);
+70%{
+transform:scale(1.04);
 }
 100%{
-opacity:0;
-transform:translateX(0) rotate(0deg) scale(1.22);
+transform:scale(1);
 }
 }
+
+@keyframes bossSnapOut{
+from{
+transform:translateX(0);
+}
+to{
+transform:translateX(110%);
+}
+}
+
+#bossVideoAction{
+position:absolute;
+left:10%;
+right:10%;
+bottom:12%;
+padding:14px;
+border:2px solid #fff;
+border-radius:10px;
+background:#191919;
+color:#fff;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* PULSANTE TEST BOSS TEMPORANEO */
+
+#testBossButton{
+position:absolute;
+top:12px;
+right:10px;
+z-index:420;
+padding:8px 10px;
+border:2px solid #ffd45a;
+border-radius:8px;
+background:rgba(0,0,0,.78);
+color:#ffd45a;
+font-size:12px;
+font-weight:bold;
+cursor:pointer;
+-webkit-tap-highlight-color:transparent;
+}
+
+#testBossButton:disabled{
+opacity:.45;
+cursor:default;
+}
+
+/* CUORI CLIENTI SODDISFATTI */
 
 .heart{
 position:absolute;
@@ -552,7 +558,8 @@ object-fit:contain;
 display:none;
 }
 
-#cook img.active{
+#cook img.active,
+#waitress img.active{
 display:block;
 }
 
@@ -579,10 +586,6 @@ display:none;
 transform:translateX(-50%);
 transform-origin:center bottom;
 pointer-events:none;
-}
-
-#waitress img.active{
-display:block;
 }
 
 /* PASTA / DRINK */
@@ -620,7 +623,7 @@ pointer-events:none;
 opacity:0;
 }
 
-/* EFFETTO IMPATTO */
+/* EFFETTI IMPATTO */
 
 .impact-particle{
 position:absolute;
@@ -762,7 +765,7 @@ height:115%;
 animation-play-state:paused!important;
 }
 
-/* WAVE DISPLAY */
+/* CONTATORE WAVE */
 
 #wave-display{
 position:absolute;
@@ -777,6 +780,8 @@ z-index:100;
 pointer-events:none;
 white-space:nowrap;
 }
+
+/* SOLO MESSAGGIO DI FINE LIVELLO */
 
 #wave-message{
 position:absolute;
@@ -823,11 +828,7 @@ width:75px;
 height:102px;
 }
 
-.pasta{
-width:60px;
-height:60px;
-}
-
+.pasta,
 .drink{
 width:60px;
 height:60px;
@@ -874,15 +875,14 @@ font-size:21px;
 
 }
 
-/* DIMENSIONI SPRITE FELICI DEI 3 NUOVI CLIENTI */
+/* DIMENSIONI FELICITÀ DEI TRE NUOVI CLIENTI */
 
 .customer6-template .happy-frame,
 .customer7-template .happy-frame,
 .customer8-template .happy-frame{
-transform:scale(0.90);
+transform:scale(.90);
 transform-origin:center bottom;
 }
-
 </style>
 </head>
 
@@ -890,7 +890,10 @@ transform-origin:center bottom;
 
 <div id="phone">
 
+<!-- INTRO INIZIALE -->
+
 <div id="intro">
+
 <video
 id="introVideo"
 autoplay
@@ -903,8 +906,12 @@ src="https://yourimageshare.com/ib/LjN0a6FLZL.mp4"
 type="video/mp4"
 >
 </video>
+
 <div id="introTap"></div>
+
 </div>
+
+<!-- MENU -->
 
 <div id="menu">
 
@@ -925,6 +932,8 @@ PLAY
 </button>
 
 </div>
+
+<!-- GIOCO -->
 
 <div id="game">
 
@@ -952,22 +961,42 @@ src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"
 alt=""
 >
 
-<div id="hud">
-<span>❤️ 3</span>
-<span>⭐ 0</span>
-</div>
-
 <div id="wave-display">WAVE 1 / 20</div>
-<div id="wave-message">WAVE 1</div>
 
-<!-- INTRO FOODBLOGGER -->
+<div id="wave-message"></div>
+
+<button
+id="testBossButton"
+type="button"
+hidden
+>
+TEST BOSS
+</button>
+
+<!-- VIDEO INTRODUZIONE BOSS -->
 
 <div id="bossIntro">
-<img
-id="bossIntroImage"
-src="https://i.ibb.co/q3b3yPDV/file-000000003078820b829427a660872fdc.png"
-alt=""
+
+<video
+id="bossIntroVideo"
+muted
+playsinline
+preload="auto"
 >
+<source
+src="https://github.com/backtothemovie2024-afk/tarai-game/raw/refs/heads/main/Video_animation_instructions_for%E2%80%A6_20260915063937.mp4"
+type="video/mp4"
+>
+</video>
+
+<button
+id="bossVideoAction"
+type="button"
+hidden
+>
+TOCCA PER AVVIARE IL VIDEO
+</button>
+
 </div>
 
 <!-- CLIENTE 1 -->
@@ -995,6 +1024,7 @@ src="https://i.ibb.co/Kx64hLcM/1000042445-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
+
 </div>
 
 <!-- CLIENTE 2 -->
@@ -1022,6 +1052,7 @@ src="https://i.ibb.co/YT061kxh/1000042452-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
+
 </div>
 
 <!-- CLIENTE 3 -->
@@ -1049,6 +1080,7 @@ src="https://i.ibb.co/nJTx657/1000042451-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
+
 </div>
 
 <!-- CLIENTE 4 -->
@@ -1076,6 +1108,7 @@ src="https://i.ibb.co/DPsjg9ww/1000042455-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
+
 </div>
 
 <!-- CLIENTE 5 -->
@@ -1103,6 +1136,7 @@ src="https://i.ibb.co/k2DfX1WT/1000042453-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
+
 </div>
 
 <!-- CLIENTE 6 - STUDENTE -->
@@ -1130,6 +1164,7 @@ src="https://i.ibb.co/x4SynkS/1000043192-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
+
 </div>
 
 <!-- CLIENTE 7 - MAMMA -->
@@ -1157,6 +1192,7 @@ src="https://i.ibb.co/xKQFS6Vg/1000043194-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
+
 </div>
 
 <!-- CLIENTE 8 - ANZIANA -->
@@ -1184,9 +1220,10 @@ src="https://i.ibb.co/RGQdckHM/1000043200-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
+
 </div>
 
-<!-- MINIBOSS ASSISTENTE - 300 HP -->
+<!-- MINIBOSS ASSISTENTE -->
 
 <div
 id="assistantBossTemplate"
@@ -1207,9 +1244,10 @@ src="https://i.ibb.co/Wvpbt1Xj/1000042616-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
+
 </div>
 
-<!-- BOSS PRINCIPALE - 600 HP -->
+<!-- BOSS PRINCIPALE -->
 
 <div
 id="mainBossTemplate"
@@ -1230,9 +1268,10 @@ src="https://i.ibb.co/WvM1QTVC/1000042381-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
+
 </div>
 
-<!-- MINIBOSS CAMERAMAN - 300 HP -->
+<!-- MINIBOSS CAMERAMAN -->
 
 <div
 id="cameramanBossTemplate"
@@ -1253,6 +1292,7 @@ src="https://i.ibb.co/20kVQ3Wk/1000042617-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
+
 </div>
 
 <!-- CUOCO -->
@@ -1315,10 +1355,14 @@ alt="">
 
 </div>
 
+<!-- EXP -->
+
 <div id="exp-bar">
 <div id="exp-fill"></div>
 <div id="exp-level">LV 1</div>
 </div>
+
+<!-- POWER UP -->
 
 <div id="powerup-overlay">
 <div id="powerup-panel">
@@ -1327,6 +1371,8 @@ alt="">
 </div>
 
 </div>
+
+<!-- TRANSIZIONE DOPO PLAY -->
 
 <div id="blackTransition">
 
@@ -1357,21 +1403,35 @@ alt=""
 
 <script>
 
+/*
+PULSANTE TEST BOSS
+
+true = pulsante visibile durante il gioco.
+false = pulsante nascosto.
+*/
+
+const ENABLE_BOSS_TEST=true;
+
 /* INTRO → HOME */
 
 const intro=document.getElementById("intro");
 const introVideo=document.getElementById("introVideo");
-const introTap=document.getElementById("introTap");
 
 function closeIntro(){
+
 if(intro.style.display==="none") return;
+
 introVideo.pause();
 intro.style.display="none";
+
 }
 
-introTap.addEventListener("click",closeIntro);
+document.getElementById("introTap").addEventListener(
+"click",
+closeIntro
+);
 
-introTap.addEventListener(
+document.getElementById("introTap").addEventListener(
 "touchend",
 function(event){
 event.preventDefault();
@@ -1394,41 +1454,33 @@ const WAITRESS_HAND_Y=.38;
 /* WAVES */
 
 const WAVES=[
-{customers:5, spawnInterval:3800, walkTime:70, hp:30},
-{customers:6, spawnInterval:3600, walkTime:68, hp:32},
-{customers:6, spawnInterval:3400, walkTime:66, hp:34},
-{customers:7, spawnInterval:3200, walkTime:64, hp:36},
-{customers:7, spawnInterval:3000, walkTime:62, hp:38},
+{customers:5,spawnInterval:3800,walkTime:70,hp:30},
+{customers:6,spawnInterval:3600,walkTime:68,hp:32},
+{customers:6,spawnInterval:3400,walkTime:66,hp:34},
+{customers:7,spawnInterval:3200,walkTime:64,hp:36},
+{customers:7,spawnInterval:3000,walkTime:62,hp:38},
 
-{customers:8, spawnInterval:2850, walkTime:60, hp:40},
-{customers:8, spawnInterval:2700, walkTime:58, hp:42},
-{customers:9, spawnInterval:2550, walkTime:56, hp:44},
-{customers:9, spawnInterval:2400, walkTime:54, hp:46},
-{customers:10, spawnInterval:2250, walkTime:52, hp:48},
+{customers:8,spawnInterval:2850,walkTime:60,hp:40},
+{customers:8,spawnInterval:2700,walkTime:58,hp:42},
+{customers:9,spawnInterval:2550,walkTime:56,hp:44},
+{customers:9,spawnInterval:2400,walkTime:54,hp:46},
+{customers:10,spawnInterval:2250,walkTime:52,hp:48},
 
-{customers:10, spawnInterval:2150, walkTime:50, hp:50},
-{customers:11, spawnInterval:2050, walkTime:48, hp:52},
-{customers:11, spawnInterval:1950, walkTime:46, hp:54},
-{customers:12, spawnInterval:1850, walkTime:44, hp:56},
-{customers:12, spawnInterval:1750, walkTime:42, hp:58},
+{customers:10,spawnInterval:2150,walkTime:50,hp:50},
+{customers:11,spawnInterval:2050,walkTime:48,hp:52},
+{customers:11,spawnInterval:1950,walkTime:46,hp:54},
+{customers:12,spawnInterval:1850,walkTime:44,hp:56},
+{customers:12,spawnInterval:1750,walkTime:42,hp:58},
 
-{customers:13, spawnInterval:1650, walkTime:40, hp:60},
-{customers:13, spawnInterval:1550, walkTime:38, hp:62},
-{customers:14, spawnInterval:1450, walkTime:36, hp:64},
-{customers:15, spawnInterval:1350, walkTime:34, hp:66},
-{customers:16, spawnInterval:1250, walkTime:32, hp:70}
+{customers:13,spawnInterval:1650,walkTime:40,hp:60},
+{customers:13,spawnInterval:1550,walkTime:38,hp:62},
+{customers:14,spawnInterval:1450,walkTime:36,hp:64},
+{customers:15,spawnInterval:1350,walkTime:34,hp:66},
+{customers:16,spawnInterval:1250,walkTime:32,hp:70}
 ];
 
 const TOTAL_WAVES=WAVES.length;
-
-let currentWave=1;
-let waveSpawned=0;
-let waveFinished=false;
-let waveTimer=null;
-let waveCheckTimer=null;
-let waveStarting=false;
-
-let spawnTimers=[];
+const BOSS_WAVE=TOTAL_WAVES;
 
 /* CORSIE */
 
@@ -1442,10 +1494,12 @@ const LANES=[
 
 const SAME_LANE_MIN_DELAY=1500;
 
-/* EXP */
+/* TEMPI TRA WAVE */
 
-let currentLevel=1;
-let currentEXP=0;
+const NORMAL_WAVE_DELAY=600;
+const BOSS_WAVE_DELAY=1200;
+
+/* EXP */
 
 const EXP_PER_CUSTOMER=5;
 
@@ -1455,7 +1509,16 @@ const EXP_REQUIREMENTS=[
 
 const MAX_LEVEL=12;
 
-/* POWER UP */
+let currentWave=1;
+let waveSpawned=0;
+let waveFinished=false;
+let waveStarting=false;
+
+let currentLevel=1;
+let currentEXP=0;
+
+let kitchenEnergy=100;
+let customers=[];
 
 let powerUps={
 pasta:0,
@@ -1469,6 +1532,166 @@ deepFreeze:0
 
 let pastaSpeedBonus=0;
 let powerUpPaused=false;
+
+let bossIntroPlaying=false;
+let gameStarted=false;
+let gameFinished=false;
+
+let cookAttacking=false;
+let waitressAttacking=false;
+
+let customerTimer=null;
+let customer4Timer=null;
+let cookTimer=null;
+let waitressAttackTimer=null;
+let firstAttackTimer=null;
+let kitchenDamageTimer=null;
+let zIndexTimer=null;
+let waveCheckTimer=null;
+
+/*
+TIMER DEL GIOCO
+
+Tutti i timer possono essere cancellati quando viene
+premuto TEST BOSS.
+
+Il tempo di gioco si ferma durante i potenziamenti
+e durante il video del boss.
+*/
+
+let gameClock=0;
+let lastClockTime=performance.now();
+let nextTaskId=1;
+let generation=0;
+
+const gameTasks=new Map();
+const gameFrames=new Set();
+
+function gameLater(callback,delay){
+
+const id=nextTaskId++;
+
+gameTasks.set(id,{
+callback:callback,
+due:gameClock+delay,
+interval:0
+});
+
+return id;
+
+}
+
+function gameEvery(callback,delay){
+
+const id=nextTaskId++;
+
+gameTasks.set(id,{
+callback:callback,
+due:gameClock+delay,
+interval:delay
+});
+
+return id;
+
+}
+
+function cancelTask(id){
+gameTasks.delete(id);
+}
+
+function gameFrame(callback){
+
+const token=generation;
+
+const id=requestAnimationFrame(function(time){
+
+gameFrames.delete(id);
+
+if(token===generation){
+callback(time);
+}
+
+});
+
+gameFrames.add(id);
+
+return id;
+
+}
+
+function tickGameClock(now){
+
+const delta=now-lastClockTime;
+lastClockTime=now;
+
+if(
+!powerUpPaused &&
+!bossIntroPlaying &&
+!gameFinished
+){
+
+gameClock+=delta;
+
+for(const [id,task] of Array.from(gameTasks)){
+
+if(
+powerUpPaused ||
+bossIntroPlaying ||
+gameFinished
+){
+break;
+}
+
+if(
+!gameTasks.has(id) ||
+task.due>gameClock
+){
+continue;
+}
+
+if(task.interval){
+task.due=gameClock+task.interval;
+}else{
+gameTasks.delete(id);
+}
+
+task.callback();
+
+}
+
+}
+
+requestAnimationFrame(tickGameClock);
+
+}
+
+requestAnimationFrame(tickGameClock);
+
+function clearAllTimers(){
+
+generation++;
+
+gameTasks.clear();
+
+gameFrames.forEach(function(id){
+cancelAnimationFrame(id);
+});
+
+gameFrames.clear();
+
+customerTimer=null;
+customer4Timer=null;
+cookTimer=null;
+waitressAttackTimer=null;
+firstAttackTimer=null;
+kitchenDamageTimer=null;
+zIndexTimer=null;
+waveCheckTimer=null;
+
+cookAttacking=false;
+waitressAttacking=false;
+
+}
 
 /* PANNELLI POWER UP */
 
@@ -1519,19 +1742,20 @@ deepFreeze:[
 
 function getAvailablePowerUps(){
 
-let available=[];
+const available=[];
 
-if(powerUps.pasta<3){
-available.push({type:"pasta",level:powerUps.pasta+1});
+["pasta","speed","sauce"].forEach(function(type){
+
+if(powerUps[type]<3){
+
+available.push({
+type:type,
+level:powerUps[type]+1
+});
+
 }
 
-if(powerUps.speed<3){
-available.push({type:"speed",level:powerUps.speed+1});
-}
-
-if(powerUps.sauce<3){
-available.push({type:"sauce",level:powerUps.sauce+1});
-}
+});
 
 if(!powerUps.waitress){
 
@@ -1542,30 +1766,37 @@ level:1
 
 }else{
 
-if(powerUps.iceShot<3){
+["iceShot","iceChain","deepFreeze"].forEach(function(type){
+
+if(powerUps[type]<3){
+
 available.push({
-type:"iceShot",
-level:powerUps.iceShot+1
+type:type,
+level:powerUps[type]+1
 });
+
 }
 
-if(powerUps.iceChain<3){
-available.push({
-type:"iceChain",
-level:powerUps.iceChain+1
 });
-}
-
-if(powerUps.deepFreeze<3){
-available.push({
-type:"deepFreeze",
-level:powerUps.deepFreeze+1
-});
-}
 
 }
 
 return available;
+
+}
+
+function shuffle(items){
+
+for(let i=items.length-1;i>0;i--){
+
+const j=Math.floor(Math.random()*(i+1));
+
+[items[i],items[j]]=[items[j],items[i]];
+
+}
+
+return items;
+
 }
 
 /* MOSTRA POWER UP */
@@ -1574,56 +1805,42 @@ function showPowerUpScreen(){
 
 if(powerUpPaused) return;
 
-const available=getAvailablePowerUps();
+const available=shuffle(getAvailablePowerUps());
 
-if(available.length===0){
-document.getElementById("powerup-overlay").style.display="none";
-document.getElementById("game").classList.remove("powerup-paused");
-powerUpPaused=false;
-return;
-}
+if(!available.length) return;
 
 const options=document.getElementById("powerup-options");
 
 options.innerHTML="";
 
-for(let i=available.length-1;i>0;i--){
-const j=Math.floor(Math.random()*(i+1));
-[available[i],available[j]]=[available[j],available[i]];
-}
-
 let selected=[];
 
 if(powerUps.waitress){
 
-const waitressAvailable=available.filter(function(powerUp){
-return(
-powerUp.type==="iceShot" ||
-powerUp.type==="iceChain" ||
-powerUp.type==="deepFreeze"
-);
+const choices=available.filter(function(powerUp){
+
+return [
+"iceShot",
+"iceChain",
+"deepFreeze"
+].includes(powerUp.type);
+
 });
 
-const waitressChoice=
-waitressAvailable[
-Math.floor(Math.random()*waitressAvailable.length)
+const choice=choices[
+Math.floor(Math.random()*choices.length)
 ];
 
-if(waitressChoice){
-selected.push(waitressChoice);
+if(choice){
+selected.push(choice);
 }
 
 const remaining=available.filter(function(powerUp){
-return powerUp!==waitressChoice;
+return powerUp!==choice;
 });
 
-for(let i=remaining.length-1;i>0;i--){
-const j=Math.floor(Math.random()*(i+1));
-[remaining[i],remaining[j]]=[remaining[j],remaining[i]];
-}
-
 selected=selected.concat(
-remaining.slice(0,3-selected.length)
+shuffle(remaining).slice(0,3-selected.length)
 );
 
 }else{
@@ -1643,9 +1860,15 @@ slot.dataset.level=powerUp.level;
 const image=document.createElement("img");
 
 if(powerUp.type==="waitress"){
+
 image.src=POWER_UP_PANELS.waitress;
+
 }else{
-image.src=POWER_UP_PANELS[powerUp.type][powerUp.level-1];
+
+image.src=POWER_UP_PANELS[
+powerUp.type
+][powerUp.level-1];
+
 }
 
 image.alt="";
@@ -1662,9 +1885,13 @@ options.appendChild(slot);
 
 powerUpPaused=true;
 
-document.getElementById("game").classList.add("powerup-paused");
+document.getElementById("game").classList.add(
+"powerup-paused"
+);
 
-document.getElementById("powerup-overlay").style.display="flex";
+document.getElementById(
+"powerup-overlay"
+).style.display="flex";
 
 }
 
@@ -1679,12 +1906,11 @@ if(type==="waitress"){
 if(powerUps.waitress) return;
 
 powerUps.waitress=true;
+
 summonWaitress();
 
 }else if(
-type==="pasta" ||
-type==="speed" ||
-type==="sauce"
+["pasta","speed","sauce"].includes(type)
 ){
 
 if(powerUps[type]>=3) return;
@@ -1696,69 +1922,70 @@ pastaSpeedBonus=.15;
 }
 
 }else if(
-type==="iceShot" ||
-type==="iceChain" ||
-type==="deepFreeze"
+["iceShot","iceChain","deepFreeze"].includes(type)
 ){
 
 if(!powerUps.waitress) return;
-
 if(powerUps[type]>=3) return;
 
 powerUps[type]++;
 
+}else{
+
+return;
+
 }
 
-document.getElementById("powerup-overlay").style.display="none";
+document.getElementById(
+"powerup-overlay"
+).style.display="none";
 
-document.getElementById("powerup-options").innerHTML="";
+document.getElementById(
+"powerup-options"
+).innerHTML="";
 
 powerUpPaused=false;
 
-document.getElementById("game").classList.remove("powerup-paused");
+document.getElementById("game").classList.remove(
+"powerup-paused"
+);
 
 updateEXPBar();
 
 }
 
-/* CAMERIERA */
+/* FRAME CUOCO E CAMERIERA */
 
 function summonWaitress(){
 
-const waitress=document.getElementById("waitress");
-
-waitress.style.display="block";
-
-setWaitressFrame(0);
-
-startWaitressAnimation();
-
-}
-
-let waitressTimer=null;
-
-function startWaitressAnimation(){
-
-if(waitressTimer!==null){
-clearInterval(waitressTimer);
-}
+document.getElementById(
+"waitress"
+).style.display="block";
 
 setWaitressFrame(0);
 
 }
 
 function setWaitressFrame(frameNumber){
-
-const frames=
-document.getElementById("waitress").querySelectorAll("img");
-
-frames.forEach(function(frame){
-frame.classList.remove("active");
-});
-
-if(frames[frameNumber]){
-frames[frameNumber].classList.add("active");
+setActorFrame("waitress",frameNumber);
 }
+
+function setCookFrame(frameNumber){
+setActorFrame("cook",frameNumber);
+}
+
+function setActorFrame(id,frameNumber){
+
+document.getElementById(id)
+.querySelectorAll("img")
+.forEach(function(frame,index){
+
+frame.classList.toggle(
+"active",
+index===frameNumber
+);
+
+});
 
 }
 
@@ -1767,7 +1994,7 @@ frames[frameNumber].classList.add("active");
 function updateEXPBar(){
 
 const fill=document.getElementById("exp-fill");
-const levelText=document.getElementById("exp-level");
+const text=document.getElementById("exp-level");
 
 if(currentLevel>=MAX_LEVEL){
 
@@ -1775,21 +2002,18 @@ currentLevel=MAX_LEVEL;
 currentEXP=0;
 
 fill.style.width="100%";
-levelText.textContent="LV MAX";
+text.textContent="LV MAX";
 
 return;
+
 }
 
-const requiredEXP=EXP_REQUIREMENTS[currentLevel-1];
-
-const percentage=Math.min(
+fill.style.width=Math.min(
 100,
-(currentEXP/requiredEXP)*100
-);
+currentEXP/EXP_REQUIREMENTS[currentLevel-1]*100
+)+"%";
 
-fill.style.width=percentage+"%";
-
-levelText.textContent="LV "+currentLevel;
+text.textContent="LV "+currentLevel;
 
 }
 
@@ -1809,7 +2033,6 @@ currentEXP>=EXP_REQUIREMENTS[currentLevel-1]
 currentEXP-=EXP_REQUIREMENTS[currentLevel-1];
 
 currentLevel++;
-
 levelUp=true;
 
 }
@@ -1822,75 +2045,161 @@ showPowerUpScreen();
 
 }
 
-/* VARIABILI */
-
-let customerTimer=null;
-let customer4Timer=null;
-let cookTimer=null;
-let waitressAttackTimer=null;
-let firstAttackTimer=null;
-let kitchenDamageTimer=null;
-let zIndexTimer=null;
-
-let kitchenEnergy=100;
-let customers=[];
-
 /* PLAY */
+
+let playPressed=false;
 
 document.getElementById("playButton").addEventListener(
 "click",
 function(){
 
-const blackTransition=document.getElementById("blackTransition");
-const image1=document.getElementById("transitionImage1");
-const image2=document.getElementById("transitionImage2");
-const image3=document.getElementById("transitionImage3");
+if(playPressed) return;
+
+playPressed=true;
+
+const black=document.getElementById("blackTransition");
 const game=document.getElementById("game");
 
 document.getElementById("menu").style.display="none";
 
-blackTransition.style.display="block";
-
-image1.style.animation="none";
-image2.style.animation="none";
-image3.style.animation="none";
-
-image1.style.left="-100%";
-image2.style.right="-100%";
-image3.style.left="-100%";
-
-image1.style.opacity="1";
-image2.style.opacity="1";
-image3.style.opacity="1";
-
-image1.style.transform="scale(1)";
-image2.style.transform="scale(1)";
-image3.style.transform="scale(1)";
+black.style.display="block";
 
 setTimeout(function(){
-image1.style.animation="transitionFromLeft 1.165s ease-out forwards";
+
+document.getElementById(
+"transitionImage1"
+).style.animation=
+"transitionFromLeft 1.165s ease-out forwards";
+
 },2000);
 
 setTimeout(function(){
-image2.style.animation="transitionFromRight 1.165s ease-out forwards";
+
+document.getElementById(
+"transitionImage2"
+).style.animation=
+"transitionFromRight 1.165s ease-out forwards";
+
 },5165);
 
 setTimeout(function(){
-image3.style.animation="transitionFromLeft 2.34s ease-out forwards";
+
+document.getElementById(
+"transitionImage3"
+).style.animation=
+"transitionFromLeft 2.34s ease-out forwards";
+
 },8320);
 
 setTimeout(function(){
-blackTransition.style.animation="transitionExit 0.8s ease-in forwards";
+
+black.style.animation=
+"transitionExit .8s ease-in forwards";
+
 },15660);
 
 setTimeout(function(){
 
 game.style.display="block";
-game.style.animation="gameEnter 0.8s ease-out forwards";
+
+game.style.animation=
+"gameEnter .8s ease-out forwards";
 
 resetGame();
 
+gameStarted=true;
+
+document.getElementById(
+"testBossButton"
+).hidden=!ENABLE_BOSS_TEST;
+
 startWave(1);
+startGameSystems();
+
+black.style.display="none";
+black.style.animation="none";
+
+},16460);
+
+}
+);
+
+/* PULIZIA SCENA */
+
+function clearScene(){
+
+document.querySelectorAll(
+".spawned-customer,.pasta,.drink,.hit-marker,.impact-particle"
+).forEach(function(element){
+element.remove();
+});
+
+customers=[];
+
+setCookFrame(0);
+setWaitressFrame(0);
+
+}
+
+/* RESET */
+
+function resetGame(){
+
+clearAllTimers();
+stopBossIntro();
+clearScene();
+
+currentWave=1;
+waveSpawned=0;
+waveFinished=false;
+waveStarting=false;
+gameFinished=false;
+
+kitchenEnergy=100;
+
+currentLevel=1;
+currentEXP=0;
+
+powerUps={
+pasta:0,
+speed:0,
+sauce:0,
+waitress:false,
+iceShot:0,
+iceChain:0,
+deepFreeze:0
+};
+
+pastaSpeedBonus=0;
+powerUpPaused=false;
+
+document.getElementById(
+"waitress"
+).style.display="none";
+
+document.getElementById(
+"powerup-overlay"
+).style.display="none";
+
+document.getElementById(
+"powerup-options"
+).innerHTML="";
+
+document.getElementById("game").classList.remove(
+"powerup-paused"
+);
+
+document.getElementById(
+"wave-message"
+).style.display="none";
+
+updateKitchenEnergy();
+updateEXPBar();
+updateWaveDisplay();
+
+}
+
+function startGameSystems(){
 
 startCustomerAnimation();
 startCustomer4Animation();
@@ -1900,405 +2209,92 @@ startKitchenEnergySystem();
 startFirstAttackDetection();
 startZIndexSystem();
 
-blackTransition.style.display="none";
-blackTransition.style.animation="none";
-
-},16460);
-
-}
-);
-
-/* RESET */
-
-function resetGame(){
-
-clearAllTimers();
-
-customers=[];
-
-currentWave=1;
-waveSpawned=0;
-waveFinished=false;
-waveStarting=false;
-
-kitchenEnergy=100;
-
-currentLevel=1;
-currentEXP=0;
-
-powerUps.pasta=0;
-powerUps.speed=0;
-powerUps.sauce=0;
-powerUps.waitress=false;
-powerUps.iceShot=0;
-powerUps.iceChain=0;
-powerUps.deepFreeze=0;
-
-pastaSpeedBonus=0;
-powerUpPaused=false;
-
-document.getElementById("waitress").style.display="none";
-
-document.getElementById("powerup-overlay").style.display="none";
-document.getElementById("powerup-options").innerHTML="";
-
-document.getElementById("game").classList.remove("powerup-paused");
-
-document.querySelectorAll(".spawned-customer").forEach(function(customer){
-customer.remove();
-});
-
-const bossIntro=document.getElementById("bossIntro");
-
-bossIntro.classList.remove("active");
-bossIntro.style.display="none";
-
-document.getElementById("kitchen").style.display="block";
-document.getElementById("kitchenDamaged").style.display="none";
-document.getElementById("kitchenDestroyed").style.display="none";
-
-document.getElementById("wave-message").style.display="none";
-
-updateKitchenEnergy();
-updateEXPBar();
-updateWaveDisplay();
-
 }
 
-/* CANCELLA TIMER */
+/* CONTATORE WAVE */
 
-function clearAllTimers(){
+function updateWaveDisplay(){
 
-if(customerTimer!==null) clearInterval(customerTimer);
-if(customer4Timer!==null) clearInterval(customer4Timer);
-if(cookTimer!==null) clearInterval(cookTimer);
-if(waitressAttackTimer!==null) clearInterval(waitressAttackTimer);
-if(firstAttackTimer!==null) clearInterval(firstAttackTimer);
-if(kitchenDamageTimer!==null) clearInterval(kitchenDamageTimer);
-if(zIndexTimer!==null) clearInterval(zIndexTimer);
-if(waveTimer!==null) clearTimeout(waveTimer);
-if(waveCheckTimer!==null) clearInterval(waveCheckTimer);
-
-spawnTimers.forEach(function(timer){
-clearTimeout(timer);
-});
-
-spawnTimers=[];
-
-customerTimer=null;
-customer4Timer=null;
-cookTimer=null;
-waitressAttackTimer=null;
-firstAttackTimer=null;
-kitchenDamageTimer=null;
-zIndexTimer=null;
-waveTimer=null;
-waveCheckTimer=null;
+document.getElementById(
+"wave-display"
+).textContent=
+"WAVE "+currentWave+" / "+TOTAL_WAVES;
 
 }
 
 /* INIZIO WAVE */
 
-function startWave(waveNumber){
+function startWave(number){
 
-if(waveNumber>TOTAL_WAVES){
+if(number>TOTAL_WAVES){
+
 finishLevel();
 return;
+
 }
 
-currentWave=waveNumber;
+currentWave=number;
 waveSpawned=0;
 waveFinished=false;
 waveStarting=true;
 
 updateWaveDisplay();
 
-/* WAVE 3: prima mostriamo la presentazione del boss. */
+if(number===BOSS_WAVE){
 
-if(waveNumber===3){
 showBossIntro();
 return;
-}
-
-showWaveMessage("WAVE "+currentWave);
-
-setTimeout(function(){
-
-hideWaveMessage();
-waveStarting=false;
-
-if(waveNumber===1){
-
-setTimeout(function(){
-spawnWaveCustomers();
-},3000);
-
-}else{
-
-spawnWaveCustomers();
 
 }
 
-},1200);
+/*
+La prima wave conserva l'attesa iniziale originale.
+Le wave normali successive hanno attesa dimezzata.
+*/
 
-}
+gameLater(function(){
 
-/* INTRO BOSS */
-
-function showBossIntro(){
-
-const bossIntro=document.getElementById("bossIntro");
-
-bossIntro.classList.remove("active");
-bossIntro.style.display="flex";
-
-void bossIntro.offsetWidth;
-
-bossIntro.classList.add("active");
-
-const timer=setTimeout(function(){
-
-bossIntro.classList.remove("active");
-bossIntro.style.display="none";
-
-showWaveMessage("WAVE 3");
-
-const waveMessageTimer=setTimeout(function(){
-
-hideWaveMessage();
 waveStarting=false;
 spawnWaveCustomers();
 
-},1200);
+},number===1 ? 4200 : NORMAL_WAVE_DELAY);
 
-spawnTimers.push(waveMessageTimer);
-
-},3600);
-
-spawnTimers.push(timer);
-
-}
-
-/* MOSTRA/NASCONDI WAVE */
-
-function showWaveMessage(text){
-
-const message=document.getElementById("wave-message");
-
-message.textContent=text;
-message.style.display="block";
-
-}
-
-function hideWaveMessage(){
-document.getElementById("wave-message").style.display="none";
-}
-
-function updateWaveDisplay(){
-document.getElementById("wave-display").textContent=
-"WAVE "+currentWave+" / "+TOTAL_WAVES;
 }
 
 /* CREA CLIENTI WAVE */
 
 function spawnWaveCustomers(){
 
-/* WAVE 3 = BOSS WAVE. Nessun cliente normale. */
+if(currentWave===BOSS_WAVE){
 
-if(currentWave===3){
 spawnBossWave();
 return;
+
 }
 
 const config=WAVES[currentWave-1];
 
 if(!config) return;
 
-const lastLaneSpawn=[];
-
-for(let i=0;i<LANES.length;i++){
-lastLaneSpawn[i]=-Infinity;
-}
+const lastLaneSpawn=LANES.map(function(){
+return -Infinity;
+});
 
 for(let i=0;i<config.customers;i++){
 
-const delay=i*config.spawnInterval;
+gameLater(function(){
 
-const timer=setTimeout(function(){
-
-if(powerUpPaused){
-waitForPowerUpThenSpawn(i,lastLaneSpawn,config);
-}else{
-spawnWaveCustomer(i,lastLaneSpawn,config);
-}
-
-},delay);
-
-spawnTimers.push(timer);
-
-}
-
-}
-
-/* BOSS WAVE 3 */
-
-function spawnBossWave(){
-
-const walkTime=66;
-
-/* ASSISTENTE: 300 HP, corsia estrema sinistra */
-
-spawnBossEntity(
-"assistantBossTemplate",
-300,
-0,
-walkTime,
-"assistant"
+spawnWaveCustomer(
+i,
+lastLaneSpawn,
+config
 );
 
-/* CAMERAMAN: 300 HP, corsia estrema destra */
-
-spawnBossEntity(
-"cameramanBossTemplate",
-300,
-4,
-walkTime,
-"cameraman"
-);
-
-/* BOSS: 600 HP, arriva 1,5 secondi dopo, corsia centrale */
-
-const bossTimer=setTimeout(function(){
-
-if(currentWave!==3 || waveFinished) return;
-
-spawnBossEntity(
-"mainBossTemplate",
-600,
-2,
-walkTime,
-"boss"
-);
-
-scheduleWaveCheck();
-
-},1500);
-
-spawnTimers.push(bossTimer);
+},i*config.spawnInterval);
 
 }
 
-/* CREA BOSS / MINIBOSS */
-
-function spawnBossEntity(
-templateId,
-hp,
-laneIndex,
-walkTime,
-bossType
-){
-
-const game=document.getElementById("game");
-const template=document.getElementById(templateId);
-
-if(!template) return;
-
-const customer=template.cloneNode(true);
-
-customer.id=bossType+"-"+Date.now();
-
-customer.classList.remove("customer-template");
-customer.classList.add("spawned-customer");
-
-customer.style.display="block";
-customer.style.animation="none";
-customer.style.top="5%";
-
-customer.classList.remove("satisfied");
-
-customer.dataset.lane=laneIndex;
-customer.style.left=LANES[laneIndex]+"%";
-
-customer.dataset.type=bossType;
-customer.dataset.hp=String(hp);
-
-customer.dataset.satisfied="false";
-customer.dataset.atKitchen="false";
-customer.dataset.frame="0";
-customer.dataset.frozen="false";
-customer.dataset.wave=currentWave;
-customer.dataset.boss="true";
-
-const frames=customer.querySelectorAll(".frame");
-
-frames.forEach(function(frame){
-frame.classList.remove("active");
-});
-
-if(frames.length>0){
-frames[0].classList.add("active");
 }
-
-const happyFrame=customer.querySelector(".happy-frame");
-
-if(happyFrame){
-happyFrame.style.display="none";
-}
-
-game.appendChild(customer);
-customers.push(customer);
-
-waveSpawned++;
-
-requestAnimationFrame(function(){
-
-customer.style.animation="walkDown "+walkTime+"s linear forwards";
-
-customer.classList.add("walking");
-
-});
-
-const kitchenTimer=setTimeout(function(){
-
-if(
-customer &&
-customer.style.display!=="none" &&
-customer.dataset.satisfied!=="true"
-){
-
-customer.dataset.atKitchen="true";
-updateZIndexes();
-
-}
-
-},walkTime*1000);
-
-spawnTimers.push(kitchenTimer);
-
-return customer;
-
-}
-
-/* ATTESA POWER UP */
-
-function waitForPowerUpThenSpawn(index,lastLaneSpawn,config){
-
-if(powerUpPaused){
-
-const timer=setTimeout(function(){
-waitForPowerUpThenSpawn(index,lastLaneSpawn,config);
-},250);
-
-spawnTimers.push(timer);
-
-return;
-}
-
-spawnWaveCustomer(index,lastLaneSpawn,config);
-
-}
-
-/* SPAWN CLIENTE */
 
 function spawnWaveCustomer(index,lastLaneSpawn,config){
 
@@ -2307,8 +2303,6 @@ if(waveSpawned>=config.customers) return;
 let laneIndex;
 let attempts=0;
 
-const currentTime=performance.now();
-
 do{
 
 laneIndex=Math.floor(Math.random()*LANES.length);
@@ -2316,10 +2310,10 @@ attempts++;
 
 }while(
 attempts<50 &&
-currentTime-lastLaneSpawn[laneIndex]<SAME_LANE_MIN_DELAY
+gameClock-lastLaneSpawn[laneIndex]<SAME_LANE_MIN_DELAY
 );
 
-lastLaneSpawn[laneIndex]=currentTime;
+lastLaneSpawn[laneIndex]=gameClock;
 
 spawnCustomer(
 waveSpawned,
@@ -2336,70 +2330,73 @@ scheduleWaveCheck();
 
 }
 
-/* CONTROLLO FINE WAVE */
+/* BOSS WAVE 20 */
 
-function scheduleWaveCheck(){
+function spawnBossWave(){
 
-if(waveCheckTimer!==null){
-clearInterval(waveCheckTimer);
-}
-
-waveCheckTimer=setInterval(function(){
-
-if(powerUpPaused) return;
-if(waveFinished) return;
-
-const activeWaveCustomers=customers.filter(function(customer){
-
-return(
-customer &&
-customer.dataset.wave==currentWave &&
-customer.style.display!=="none"
+spawnBossEntity(
+"assistantBossTemplate",
+300,
+0,
+66,
+"assistant"
 );
 
-});
+spawnBossEntity(
+"cameramanBossTemplate",
+300,
+4,
+66,
+"cameraman"
+);
 
-const expectedCustomers=
-currentWave===3 ? 3 : WAVES[currentWave-1].customers;
+gameLater(function(){
 
 if(
-waveSpawned>=expectedCustomers &&
-activeWaveCustomers.length===0
+currentWave!==BOSS_WAVE ||
+waveFinished
 ){
-
-clearInterval(waveCheckTimer);
-waveCheckTimer=null;
-
-completeWave();
-
-}
-
-},500);
-
-}
-
-/* COMPLETA WAVE */
-
-function completeWave(){
-
-if(waveFinished) return;
-
-waveFinished=true;
-
-if(currentWave>=TOTAL_WAVES){
-finishLevel();
 return;
 }
 
-startWave(currentWave+1);
+spawnBossEntity(
+"mainBossTemplate",
+600,
+2,
+66,
+"boss"
+);
+
+scheduleWaveCheck();
+
+},1500);
 
 }
 
-function finishLevel(){
-showWaveMessage("LIVELLO COMPLETATO!");
+function spawnBossEntity(
+templateId,
+hp,
+laneIndex,
+walkTime,
+type
+){
+
+const customer=createCustomer(
+templateId,
+type,
+hp,
+laneIndex,
+walkTime,
+true
+);
+
+waveSpawned++;
+
+return customer;
+
 }
 
-/* CREA CLIENTE NORMALE */
+/* CLIENTE NORMALE */
 
 function spawnCustomer(
 index,
@@ -2408,93 +2405,468 @@ walkTime=null,
 waveHP=null
 ){
 
-const game=document.getElementById("game");
-
-/* Selezione casuale fra tutti gli 8 clienti normali. */
-
 const type=Math.floor(Math.random()*8)+1;
 
-const template=document.getElementById(
-"customer"+type+"Template"
+return createCustomer(
+"customer"+type+"Template",
+type,
+waveHP || 30,
+forcedLaneIndex ?? Math.floor(Math.random()*LANES.length),
+walkTime || 60,
+false
 );
 
-const customer=template.cloneNode(true);
+}
 
-customer.id="customer-"+Date.now()+"-"+index;
+/* CREAZIONE PERSONAGGIO */
 
-customer.classList.remove("customer-template");
+let nextCustomerId=0;
+
+function createCustomer(
+templateId,
+type,
+hp,
+lane,
+walkTime,
+isBoss
+){
+
+const customer=document.getElementById(
+templateId
+).cloneNode(true);
+
+customer.id="customer-"+(++nextCustomerId);
+
+customer.classList.remove(
+"customer-template",
+"satisfied"
+);
+
 customer.classList.add("spawned-customer");
 
 customer.style.display="block";
 customer.style.animation="none";
-
-customer.classList.remove("satisfied");
-
 customer.style.top="5%";
+customer.style.left=LANES[lane]+"%";
 
-let laneIndex;
-
-if(
-forcedLaneIndex!==null &&
-forcedLaneIndex!==undefined
-){
-laneIndex=forcedLaneIndex;
-}else{
-laneIndex=Math.floor(Math.random()*LANES.length);
-}
-
-customer.dataset.lane=laneIndex;
-customer.style.left=LANES[laneIndex]+"%";
-
-customer.dataset.type=type;
-customer.dataset.hp=String(waveHP || 30);
-
-customer.dataset.satisfied="false";
-customer.dataset.atKitchen="false";
-customer.dataset.frame="0";
-customer.dataset.frozen="false";
-customer.dataset.wave=currentWave;
-
-const frames=customer.querySelectorAll(".frame");
-
-frames.forEach(function(frame){
-frame.classList.remove("active");
+Object.assign(customer.dataset,{
+type:String(type),
+hp:String(hp),
+lane:String(lane),
+satisfied:"false",
+atKitchen:"false",
+frame:"0",
+frozen:"false",
+wave:String(currentWave)
 });
 
-if(frames.length>0){
-frames[0].classList.add("active");
+if(isBoss){
+customer.dataset.boss="true";
 }
 
-const happyFrame=customer.querySelector(".happy-frame");
+customer.querySelectorAll(".frame").forEach(
+function(frame,index){
 
-happyFrame.style.display="none";
+frame.classList.toggle(
+"active",
+index===0
+);
 
-game.appendChild(customer);
+}
+);
+
+customer.querySelector(
+".happy-frame"
+).style.display="none";
+
+const frozen=customer.querySelector(".frozen-frame");
+
+if(frozen){
+frozen.style.display="none";
+}
+
+document.getElementById("game").appendChild(customer);
+
 customers.push(customer);
 
-const actualWalkTime=walkTime || 60;
+/*
+L'arrivo alla cucina segue la fine della camminata,
+comprese pause e congelamenti.
+*/
 
-requestAnimationFrame(function(){
+customer.addEventListener(
+"animationend",
+function(event){
 
-customer.style.animation=
-"walkDown "+actualWalkTime+"s linear forwards";
-
-customer.classList.add("walking");
-
-});
-
-const kitchenTimer=setTimeout(function(){
-
-if(customer && customer.dataset.satisfied!=="true"){
+if(
+event.target===customer &&
+event.animationName==="walkDown" &&
+customer.dataset.satisfied!=="true"
+){
 
 customer.dataset.atKitchen="true";
 updateZIndexes();
 
 }
 
-},actualWalkTime*1000);
+}
+);
 
-spawnTimers.push(kitchenTimer);
+gameFrame(function(){
+
+customer.style.animation=
+"walkDown "+walkTime+"s linear forwards";
+
+customer.classList.add("walking");
+
+});
+
+return customer;
+
+}
+
+/* CONTROLLO FINE WAVE */
+
+function scheduleWaveCheck(){
+
+cancelTask(waveCheckTimer);
+
+const interval=
+currentWave>=BOSS_WAVE-1 ? 500 : 250;
+
+waveCheckTimer=gameEvery(function(){
+
+if(waveFinished) return;
+
+const active=customers.filter(function(customer){
+
+return(
+customer.isConnected &&
+customer.dataset.wave==currentWave &&
+customer.style.display!=="none"
+);
+
+});
+
+const expected=
+currentWave===BOSS_WAVE
+? 3
+: WAVES[currentWave-1].customers;
+
+if(
+waveSpawned>=expected &&
+!active.length
+){
+
+cancelTask(waveCheckTimer);
+waveCheckTimer=null;
+
+completeWave();
+
+}
+
+},interval);
+
+}
+
+function completeWave(){
+
+if(waveFinished) return;
+
+waveFinished=true;
+
+if(currentWave>=TOTAL_WAVES){
+
+finishLevel();
+return;
+
+}
+
+startWave(currentWave+1);
+
+}
+
+function finishLevel(){
+
+gameFinished=true;
+
+clearAllTimers();
+
+const message=document.getElementById("wave-message");
+
+message.textContent="LIVELLO COMPLETATO!";
+message.style.display="block";
+
+}
+
+/* VIDEO BOSS */
+
+const bossIntro=document.getElementById("bossIntro");
+const bossVideo=document.getElementById("bossIntroVideo");
+const bossVideoAction=document.getElementById("bossVideoAction");
+
+let videoSession=0;
+let bossLeaving=false;
+let videoWatchdog=null;
+let videoExitTimer=null;
+
+function stopBossIntro(){
+
+videoSession++;
+
+clearTimeout(videoWatchdog);
+clearTimeout(videoExitTimer);
+
+bossVideo.onended=null;
+bossVideo.onplaying=null;
+bossVideo.onerror=null;
+
+bossVideo.pause();
+
+bossIntroPlaying=false;
+bossLeaving=false;
+
+bossIntro.style.display="none";
+
+bossIntro.classList.remove(
+"entering",
+"leaving"
+);
+
+bossVideoAction.hidden=true;
+bossVideoAction.onclick=null;
+
+document.getElementById(
+"testBossButton"
+).disabled=false;
+
+}
+
+function showBossIntro(){
+
+stopBossIntro();
+
+bossIntroPlaying=true;
+
+const session=videoSession;
+
+document.getElementById(
+"testBossButton"
+).disabled=true;
+
+bossIntro.style.display="flex";
+
+void bossIntro.offsetWidth;
+
+bossIntro.classList.add("entering");
+
+bossVideo.muted=true;
+bossVideo.currentTime=0;
+
+function valid(){
+
+return(
+session===videoSession &&
+bossIntroPlaying &&
+!bossLeaving
+);
+
+}
+
+function showAction(text,callback){
+
+if(!valid()) return;
+
+bossVideoAction.textContent=text;
+bossVideoAction.onclick=callback;
+bossVideoAction.hidden=false;
+
+}
+
+function playVideo(){
+
+if(!valid()) return;
+
+bossVideoAction.hidden=true;
+
+const promise=bossVideo.play();
+
+if(promise){
+
+promise.catch(function(error){
+
+if(!valid()) return;
+
+if(error.name==="NotAllowedError"){
+
+showAction(
+"TOCCA PER AVVIARE IL VIDEO",
+playVideo
+);
+
+}else{
+
+showAction(
+"VIDEO NON DISPONIBILE · CONTINUA",
+finishBossIntro
+);
+
+}
+
+});
+
+}
+
+}
+
+bossVideo.onplaying=function(){
+
+if(valid()){
+
+clearTimeout(videoWatchdog);
+bossVideoAction.hidden=true;
+
+}
+
+};
+
+bossVideo.onended=function(){
+
+if(valid()){
+finishBossIntro();
+}
+
+};
+
+bossVideo.onerror=function(){
+
+showAction(
+"VIDEO NON DISPONIBILE · CONTINUA",
+finishBossIntro
+);
+
+};
+
+/*
+Il video non viene interrotto dopo un tempo prefissato.
+L'uscita parte quando il filmato termina.
+
+Se il caricamento non riesce, è disponibile un pulsante
+per continuare senza bloccare il gioco.
+*/
+
+videoWatchdog=setTimeout(function(){
+
+if(
+valid() &&
+(
+bossVideo.paused ||
+bossVideo.readyState<3
+)
+){
+
+showAction(
+"VIDEO IN CARICAMENTO · SALTA",
+finishBossIntro
+);
+
+}
+
+},15000);
+
+playVideo();
+
+}
+
+function finishBossIntro(){
+
+if(
+!bossIntroPlaying ||
+bossLeaving
+){
+return;
+}
+
+bossLeaving=true;
+
+bossVideo.pause();
+
+bossVideoAction.hidden=true;
+
+clearTimeout(videoWatchdog);
+
+bossIntro.classList.remove("entering");
+bossIntro.classList.add("leaving");
+
+const session=videoSession;
+
+videoExitTimer=setTimeout(function(){
+
+if(session!==videoSession) return;
+
+stopBossIntro();
+
+gameLater(function(){
+
+waveStarting=false;
+spawnWaveCustomers();
+
+},BOSS_WAVE_DELAY);
+
+},200);
+
+}
+
+/* TEST BOSS */
+
+document.getElementById(
+"testBossButton"
+).addEventListener(
+"click",
+jumpToBossWave
+);
+
+function jumpToBossWave(){
+
+if(
+!ENABLE_BOSS_TEST ||
+!gameStarted ||
+bossIntroPlaying
+){
+return;
+}
+
+/*
+Cancella clienti, proiettili, animazioni degli attacchi
+e apparizioni ancora in attesa.
+
+Mantiene livello, EXP, potenziamenti ed energia cucina.
+*/
+
+clearAllTimers();
+clearScene();
+
+gameFinished=false;
+powerUpPaused=false;
+
+document.getElementById(
+"powerup-overlay"
+).style.display="none";
+
+document.getElementById(
+"powerup-options"
+).innerHTML="";
+
+document.getElementById("game").classList.remove(
+"powerup-paused"
+);
+
+document.getElementById(
+"wave-message"
+).style.display="none";
+
+startWave(BOSS_WAVE);
+startGameSystems();
 
 }
 
@@ -2502,57 +2874,47 @@ spawnTimers.push(kitchenTimer);
 
 function updateKitchenEnergy(){
 
-if(kitchenEnergy>50){
+document.getElementById(
+"kitchen"
+).style.display=
+kitchenEnergy>50 ? "block" : "none";
 
-document.getElementById("kitchen").style.display="block";
-document.getElementById("kitchenDamaged").style.display="none";
-document.getElementById("kitchenDestroyed").style.display="none";
+document.getElementById(
+"kitchenDamaged"
+).style.display=
+kitchenEnergy<=50 && kitchenEnergy>20
+? "block"
+: "none";
 
-}else if(kitchenEnergy>20){
-
-document.getElementById("kitchen").style.display="none";
-document.getElementById("kitchenDamaged").style.display="block";
-document.getElementById("kitchenDestroyed").style.display="none";
-
-}else{
-
-document.getElementById("kitchen").style.display="none";
-document.getElementById("kitchenDamaged").style.display="none";
-document.getElementById("kitchenDestroyed").style.display="block";
-
-}
+document.getElementById(
+"kitchenDestroyed"
+).style.display=
+kitchenEnergy<=20 ? "block" : "none";
 
 }
 
 function startKitchenEnergySystem(){
 
-if(kitchenDamageTimer!==null){
-clearInterval(kitchenDamageTimer);
-}
+cancelTask(kitchenDamageTimer);
 
-kitchenDamageTimer=setInterval(function(){
+kitchenDamageTimer=gameEvery(function(){
 
-if(powerUpPaused) return;
+const damage=customers.filter(function(customer){
 
-let damage=0;
-
-customers.forEach(function(customer){
-
-if(
-customer &&
+return(
+customer.isConnected &&
 customer.dataset.atKitchen==="true" &&
 customer.dataset.satisfied!=="true"
-){
-damage++;
-}
+);
 
-});
+}).length;
 
-if(damage>0){
+if(damage){
 
-kitchenEnergy-=damage;
-
-if(kitchenEnergy<0) kitchenEnergy=0;
+kitchenEnergy=Math.max(
+0,
+kitchenEnergy-damage
+);
 
 updateKitchenEnergy();
 
@@ -2566,11 +2928,19 @@ updateKitchenEnergy();
 
 function customerIsVisible(customer){
 
-if(!customer || customer.style.display==="none") return false;
+if(
+!customer ||
+!customer.isConnected ||
+customer.style.display==="none"
+){
+return false;
+}
 
 const rect=customer.getBoundingClientRect();
-const game=document.getElementById("game");
-const gameRect=game.getBoundingClientRect();
+
+const gameRect=document.getElementById(
+"game"
+).getBoundingClientRect();
 
 return(
 rect.bottom>gameRect.top &&
@@ -2583,35 +2953,35 @@ rect.top<gameRect.bottom
 
 function startZIndexSystem(){
 
-if(zIndexTimer!==null){
-clearInterval(zIndexTimer);
-}
+cancelTask(zIndexTimer);
 
-zIndexTimer=setInterval(function(){
-
-if(powerUpPaused) return;
-
-updateZIndexes();
-
-},50);
+zIndexTimer=gameEvery(
+updateZIndexes,
+50
+);
 
 }
 
 function updateZIndexes(){
 
-const activeCustomers=customers.filter(function(customer){
-return(customer && customer.style.display!=="none");
-});
+customers.filter(function(customer){
 
-activeCustomers.sort(function(a,b){
+return(
+customer.isConnected &&
+customer.style.display!=="none"
+);
+
+}).sort(function(a,b){
+
 return(
 a.getBoundingClientRect().top-
 b.getBoundingClientRect().top
 );
-});
 
-activeCustomers.forEach(function(customer,index){
+}).forEach(function(customer,index){
+
 customer.style.zIndex=10+index;
+
 });
 
 }
@@ -2620,19 +2990,17 @@ customer.style.zIndex=10+index;
 
 function startFirstAttackDetection(){
 
-if(firstAttackTimer!==null){
-clearInterval(firstAttackTimer);
-}
+cancelTask(firstAttackTimer);
 
-firstAttackTimer=setInterval(function(){
+firstAttackTimer=gameEvery(function(){
 
-if(powerUpPaused) return;
+if(getNearestVisibleCustomer()){
 
-const target=getNearestVisibleCustomer();
-
-if(target){
 playCookAttack();
-clearInterval(firstAttackTimer);
+
+cancelTask(firstAttackTimer);
+firstAttackTimer=null;
+
 }
 
 },100);
@@ -2641,46 +3009,57 @@ clearInterval(firstAttackTimer);
 
 /* ANIMAZIONE CLIENTI */
 
-function startCustomerAnimation(){
-
-if(customerTimer!==null){
-clearInterval(customerTimer);
-}
-
-customerTimer=setInterval(function(){
-
-if(powerUpPaused) return;
+function animateCustomerGroup(customer4){
 
 customers.forEach(function(customer){
 
 if(
-!customer ||
+!customer.isConnected ||
 customer.style.display==="none" ||
 customer.dataset.satisfied==="true" ||
 customer.dataset.frozen==="true"
-) return;
+){
+return;
+}
 
-if(customer.classList.contains("customer4-template")) return;
+if(
+customer.classList.contains("customer4-template")
+!==customer4
+){
+return;
+}
 
 const frames=customer.querySelectorAll(".frame");
 
-if(frames.length===0) return;
+if(!frames.length) return;
 
-let frame=parseInt(customer.dataset.frame||"0");
+const frameNumber=
+parseInt(customer.dataset.frame || "0")
+% frames.length;
 
-frames.forEach(function(image){
-image.classList.remove("active");
-});
+frames.forEach(function(frame,index){
 
-frames[frame].classList.add("active");
-
-frame++;
-
-if(frame>=frames.length) frame=0;
-
-customer.dataset.frame=frame;
+frame.classList.toggle(
+"active",
+index===frameNumber
+);
 
 });
+
+customer.dataset.frame=
+(frameNumber+1)%frames.length;
+
+});
+
+}
+
+function startCustomerAnimation(){
+
+cancelTask(customerTimer);
+
+customerTimer=gameEvery(function(){
+
+animateCustomerGroup(false);
 
 },300);
 
@@ -2688,541 +3067,431 @@ customer.dataset.frame=frame;
 
 function startCustomer4Animation(){
 
-if(customer4Timer!==null){
-clearInterval(customer4Timer);
-}
+cancelTask(customer4Timer);
 
-customer4Timer=setInterval(function(){
+customer4Timer=gameEvery(function(){
 
-if(powerUpPaused) return;
-
-customers.forEach(function(customer){
-
-if(
-!customer ||
-customer.style.display==="none" ||
-customer.dataset.satisfied==="true" ||
-customer.dataset.frozen==="true"
-) return;
-
-if(!customer.classList.contains("customer4-template")) return;
-
-const frames=customer.querySelectorAll(".frame");
-
-if(frames.length===0) return;
-
-let frame=parseInt(customer.dataset.frame||"0");
-
-frames.forEach(function(image){
-image.classList.remove("active");
-});
-
-frames[frame].classList.add("active");
-
-frame++;
-
-if(frame>=frames.length) frame=0;
-
-customer.dataset.frame=frame;
-
-});
+animateCustomerGroup(true);
 
 },300);
 
 }
 
-/* CUOCO */
-
-function setCookFrame(frameNumber){
-
-const frames=
-document.getElementById("cook").querySelectorAll("img");
-
-frames.forEach(function(frame){
-frame.classList.remove("active");
-});
-
-if(frames[frameNumber]){
-frames[frameNumber].classList.add("active");
-}
-
-}
-
-function playCookAttack(){
-
-if(powerUpPaused) return;
-
-const targets=getAttackTargets();
-
-if(targets.length===0){
-setCookFrame(0);
-return;
-}
-
-setCookFrame(0);
-
-setTimeout(function(){
-if(!powerUpPaused) setCookFrame(1);
-},160);
-
-setTimeout(function(){
-if(!powerUpPaused) setCookFrame(2);
-},320);
-
-setTimeout(function(){
-
-if(!powerUpPaused){
-
-setCookFrame(3);
-
-requestAnimationFrame(function(){
-
-targets.forEach(function(target){
-
-if(target && target.dataset.satisfied!=="true"){
-throwPasta(target);
-}
-
-});
-
-});
-
-}
-
-},480);
-
-setTimeout(function(){
-if(!powerUpPaused) setCookFrame(4);
-},640);
-
-setTimeout(function(){
-if(!powerUpPaused) setCookFrame(0);
-},800);
-
-}
-
-/* TARGET */
+/* BERSAGLI */
 
 function getAttackTargets(){
 
-const activeCustomers=customers.filter(function(customer){
+const active=customers.filter(function(customer){
 
-if(!customer) return false;
-if(customer.style.display==="none") return false;
-if(customer.dataset.satisfied==="true") return false;
-
-return customerIsVisible(customer);
+return(
+customer.dataset.satisfied!=="true" &&
+customerIsVisible(customer)
+);
 
 });
 
-activeCustomers.sort(function(a,b){
+active.sort(function(a,b){
+
 return(
 b.getBoundingClientRect().top-
 a.getBoundingClientRect().top
 );
+
 });
 
 let numberOfPasta=1;
 
-if(powerUps.pasta===1){
-numberOfPasta=2;
-}else if(powerUps.pasta===2){
-numberOfPasta=2;
-}else if(powerUps.pasta>=3){
+if(powerUps.pasta>=3){
+
 numberOfPasta=3;
+
+}else if(powerUps.pasta>=1){
+
+numberOfPasta=2;
+
 }
 
-return activeCustomers.slice(0,numberOfPasta);
+return active.slice(0,numberOfPasta);
 
 }
+
+function getNearestVisibleCustomer(){
+
+const active=customers.filter(function(customer){
+
+return(
+customer.dataset.satisfied!=="true" &&
+customerIsVisible(customer)
+);
+
+});
+
+active.sort(function(a,b){
+
+return(
+b.getBoundingClientRect().top-
+a.getBoundingClientRect().top
+);
+
+});
+
+return active[0] || null;
+
+}
+
+/* INTERVALLI ATTACCO */
+
+function getCookAttackInterval(){
+
+return Math.round(
+3000 /
+(
+(1+powerUps.speed*.33) *
+(1+pastaSpeedBonus)
+)
+);
+
+}
+
+function getWaitressAttackInterval(){
+
+return Math.round(
+getCookAttackInterval()*.67
+);
+
+}
+
+/* ATTACCO CUOCO */
 
 function startCookAnimation(){
 
-if(cookTimer!==null){
-clearInterval(cookTimer);
-}
+cancelTask(cookTimer);
 
 setCookFrame(0);
 
-cookTimer=setInterval(function(){
+cookTimer=gameEvery(function(){
 
-if(powerUpPaused) return;
+if(getNearestVisibleCustomer()){
 
-const target=getNearestVisibleCustomer();
-
-if(target!==null){
 playCookAttack();
-}else{
+
+}else if(!cookAttacking){
+
 setCookFrame(0);
+
 }
 
 },getCookAttackInterval());
 
 }
 
-function getCookAttackInterval(){
+function playCookAttack(){
 
-let speedMultiplier=1+(powerUps.speed*.33);
+if(
+powerUpPaused ||
+bossIntroPlaying ||
+cookAttacking
+){
+return;
+}
 
-speedMultiplier*=(1+pastaSpeedBonus);
+const targets=getAttackTargets();
 
-return Math.round(3000/speedMultiplier);
+if(!targets.length){
+
+setCookFrame(0);
+return;
 
 }
 
-function getWaitressAttackInterval(){
-return Math.round(getCookAttackInterval()*.67);
+cookAttacking=true;
+
+setCookFrame(0);
+
+gameLater(function(){
+setCookFrame(1);
+},160);
+
+gameLater(function(){
+setCookFrame(2);
+},320);
+
+gameLater(function(){
+
+setCookFrame(3);
+
+gameFrame(function(){
+
+targets.forEach(function(target){
+
+if(
+target.isConnected &&
+target.dataset.satisfied!=="true"
+){
+
+throwPasta(target);
+
 }
-
-function getNearestVisibleCustomer(){
-
-const activeCustomers=customers.filter(function(customer){
-
-if(!customer) return false;
-if(customer.style.display==="none") return false;
-if(customer.dataset.satisfied==="true") return false;
-
-return customerIsVisible(customer);
 
 });
 
-if(activeCustomers.length===0) return null;
-
-let nearest=activeCustomers[0];
-let nearestTop=nearest.getBoundingClientRect().top;
-
-activeCustomers.forEach(function(customer){
-
-const top=customer.getBoundingClientRect().top;
-
-if(top>nearestTop){
-nearest=customer;
-nearestTop=top;
-}
-
 });
 
-return nearest;
+},480);
 
-}
+gameLater(function(){
+setCookFrame(4);
+},640);
 
-/* PASTA */
+gameLater(function(){
 
-function throwPasta(target){
+setCookFrame(0);
+cookAttacking=false;
 
-if(!target) return;
-if(target.dataset.satisfied==="true") return;
-
-const cook=document.getElementById("cook");
-const game=document.getElementById("game");
-const gameRect=game.getBoundingClientRect();
-
-const activeCookFrame=cook.querySelector("img.active");
-
-if(!activeCookFrame) return;
-
-const cookRect=activeCookFrame.getBoundingClientRect();
-
-const startX=cookRect.left+cookRect.width*.72;
-const startY=cookRect.top+cookRect.height*.32;
-
-const hitMarker=document.createElement("div");
-
-hitMarker.className="hit-marker";
-
-game.appendChild(hitMarker);
-
-const pasta=document.createElement("img");
-
-pasta.className="pasta";
-
-pasta.src=
-"https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png";
-
-game.appendChild(pasta);
-
-let currentX=startX;
-let currentY=startY;
-
-pasta.style.left=(currentX-gameRect.left-42)+"px";
-pasta.style.top=(currentY-gameRect.top-42)+"px";
-
-const speed=
-350*(1+powerUps.speed*.33)*(1+pastaSpeedBonus);
-
-let lastTime=performance.now();
-
-function movePasta(currentTime){
-
-if(!target || target.dataset.satisfied==="true"){
-
-if(pasta.parentNode) pasta.remove();
-if(hitMarker.parentNode) hitMarker.remove();
-
-return;
-}
-
-if(powerUpPaused){
-
-lastTime=currentTime;
-requestAnimationFrame(movePasta);
-
-return;
-}
-
-const targetRect=target.getBoundingClientRect();
-
-const endX=
-targetRect.left+targetRect.width/2+HIT_X;
-
-const endY=
-targetRect.top+targetRect.height*HIT_POSITION_Y+HIT_Y;
-
-hitMarker.style.left=(endX-gameRect.left)+"px";
-hitMarker.style.top=(endY-gameRect.top)+"px";
-
-const deltaTime=Math.min(
-(currentTime-lastTime)/1000,
-.05
-);
-
-lastTime=currentTime;
-
-const dx=endX-currentX;
-const dy=endY-currentY;
-
-const distance=Math.sqrt(dx*dx+dy*dy);
-const movement=speed*deltaTime;
-
-if(distance<=movement){
-
-currentX=endX;
-currentY=endY;
-
-}else{
-
-currentX+=(dx/distance)*movement;
-currentY+=(dy/distance)*movement;
-
-}
-
-pasta.style.left=(currentX-gameRect.left-42)+"px";
-pasta.style.top=(currentY-gameRect.top-42)+"px";
-
-const remainingX=endX-currentX;
-const remainingY=endY-currentY;
-
-const remainingDistance=Math.sqrt(
-remainingX*remainingX+
-remainingY*remainingY
-);
-
-if(remainingDistance<=3){
-
-hitCustomer(target,pasta);
-
-if(hitMarker.parentNode) hitMarker.remove();
-
-return;
-}
-
-requestAnimationFrame(movePasta);
-
-}
-
-requestAnimationFrame(movePasta);
+},800);
 
 }
 
 /* ATTACCO CAMERIERA */
 
-function playWaitressAttack(){
+function startWaitressAttack(){
 
-if(powerUpPaused) return;
-if(!powerUps.waitress) return;
+cancelTask(waitressAttackTimer);
 
-const target=getNearestVisibleCustomer();
+waitressAttackTimer=gameEvery(function(){
 
-if(!target){
-setWaitressFrame(0);
+if(
+!powerUps.waitress ||
+document.getElementById("waitress").style.display==="none"
+){
 return;
 }
 
-setWaitressFrame(0);
+if(getNearestVisibleCustomer()){
 
-setTimeout(function(){
-if(!powerUpPaused) setWaitressFrame(1);
-},160);
-
-setTimeout(function(){
-if(!powerUpPaused) setWaitressFrame(2);
-},320);
-
-setTimeout(function(){
-if(!powerUpPaused) setWaitressFrame(3);
-},480);
-
-setTimeout(function(){
-
-if(!powerUpPaused){
-
-setWaitressFrame(4);
-
-requestAnimationFrame(function(){
-
-if(
-!powerUpPaused &&
-target &&
-target.dataset.satisfied!=="true"
-){
-throwDrink(target);
-}
-
-});
-
-}
-
-},640);
-
-setTimeout(function(){
-if(!powerUpPaused) setWaitressFrame(5);
-},800);
-
-setTimeout(function(){
-if(!powerUpPaused) setWaitressFrame(6);
-},960);
-
-setTimeout(function(){
-if(!powerUpPaused) setWaitressFrame(0);
-},1120);
-
-}
-
-function startWaitressAttack(){
-
-if(waitressAttackTimer!==null){
-clearInterval(waitressAttackTimer);
-}
-
-waitressAttackTimer=setInterval(function(){
-
-if(powerUpPaused) return;
-if(!powerUps.waitress) return;
-
-const waitress=document.getElementById("waitress");
-
-if(waitress.style.display==="none") return;
-
-const target=getNearestVisibleCustomer();
-
-if(target){
 playWaitressAttack();
-}else{
+
+}else if(!waitressAttacking){
+
 setWaitressFrame(0);
+
 }
 
 },getWaitressAttackInterval());
 
 }
 
-/* DRINK */
+function playWaitressAttack(){
 
-function throwDrink(target){
-
-if(!target) return;
-if(target.dataset.satisfied==="true") return;
-
-const waitress=document.getElementById("waitress");
-const game=document.getElementById("game");
-const gameRect=game.getBoundingClientRect();
-
-const activeWaitressFrame=waitress.querySelector("img.active");
-
-if(!activeWaitressFrame) return;
-
-const waitressRect=activeWaitressFrame.getBoundingClientRect();
-
-const startX=
-waitressRect.left+
-(waitressRect.width/2)+
-(waitressRect.width*.38);
-
-const startY=
-waitressRect.top+
-(waitressRect.height*.34);
-
-const hitMarker=document.createElement("div");
-
-hitMarker.className="hit-marker";
-
-game.appendChild(hitMarker);
-
-const drink=document.createElement("img");
-
-drink.className="drink";
-
-drink.src=
-"https://i.ibb.co/MDk4xzJd/1788234306668-removebg-preview.png";
-
-game.appendChild(drink);
-
-let currentX=startX;
-let currentY=startY;
-
-const drinkRect=drink.getBoundingClientRect();
-const drinkHalfWidth=drinkRect.width/2;
-const drinkHalfHeight=drinkRect.height/2;
-
-drink.style.left=
-(currentX-gameRect.left-drinkHalfWidth)+"px";
-
-drink.style.top=
-(currentY-gameRect.top-drinkHalfHeight)+"px";
-
-const speed=350;
-
-let lastTime=performance.now();
-
-function moveDrink(currentTime){
-
-if(!target || target.dataset.satisfied==="true"){
-
-if(drink.parentNode) drink.remove();
-if(hitMarker.parentNode) hitMarker.remove();
-
+if(
+powerUpPaused ||
+bossIntroPlaying ||
+!powerUps.waitress ||
+waitressAttacking
+){
 return;
 }
 
-if(powerUpPaused){
+const target=getNearestVisibleCustomer();
 
-lastTime=currentTime;
-requestAnimationFrame(moveDrink);
+if(!target){
+
+setWaitressFrame(0);
+return;
+
+}
+
+waitressAttacking=true;
+
+setWaitressFrame(0);
+
+gameLater(function(){
+setWaitressFrame(1);
+},160);
+
+gameLater(function(){
+setWaitressFrame(2);
+},320);
+
+gameLater(function(){
+setWaitressFrame(3);
+},480);
+
+gameLater(function(){
+
+setWaitressFrame(4);
+
+gameFrame(function(){
+
+if(
+target.isConnected &&
+target.dataset.satisfied!=="true"
+){
+
+throwDrink(target);
+
+}
+
+});
+
+},640);
+
+gameLater(function(){
+setWaitressFrame(5);
+},800);
+
+gameLater(function(){
+setWaitressFrame(6);
+},960);
+
+gameLater(function(){
+
+setWaitressFrame(0);
+waitressAttacking=false;
+
+},1120);
+
+}
+
+/* PASTA / DRINK */
+
+function throwPasta(target){
+throwProjectile(target,"pasta");
+}
+
+function throwDrink(target){
+throwProjectile(target,"drink");
+}
+
+function throwProjectile(target,type){
+
+if(
+!target ||
+!target.isConnected ||
+target.dataset.satisfied==="true"
+){
+return;
+}
+
+const isDrink=type==="drink";
+
+const game=document.getElementById("game");
+const gameRect=game.getBoundingClientRect();
+
+const frame=document.querySelector(
+isDrink
+? "#waitress img.active"
+: "#cook img.active"
+);
+
+if(!frame) return;
+
+const rect=frame.getBoundingClientRect();
+
+let currentX=
+rect.left+rect.width*(isDrink ? .88 : .72);
+
+let currentY=
+rect.top+rect.height*(isDrink ? .34 : .32);
+
+const marker=document.createElement("div");
+
+marker.className="hit-marker";
+
+game.appendChild(marker);
+
+const projectile=document.createElement("img");
+
+projectile.className=type;
+
+projectile.src=isDrink
+? "https://i.ibb.co/MDk4xzJd/1788234306668-removebg-preview.png"
+: "https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png";
+
+game.appendChild(projectile);
+
+const projectileRect=projectile.getBoundingClientRect();
+
+const halfWidth=
+isDrink ? projectileRect.width/2 : 42;
+
+const halfHeight=
+isDrink ? projectileRect.height/2 : 42;
+
+function position(){
+
+projectile.style.left=
+(currentX-gameRect.left-halfWidth)+"px";
+
+projectile.style.top=
+(currentY-gameRect.top-halfHeight)+"px";
+
+}
+
+position();
+
+const speed=isDrink
+? 350
+: 350*(1+powerUps.speed*.33)*(1+pastaSpeedBonus);
+
+let lastTime=performance.now();
+
+function move(now){
+
+if(
+!target.isConnected ||
+target.dataset.satisfied==="true"
+){
+
+projectile.remove();
+marker.remove();
 
 return;
+
+}
+
+if(
+powerUpPaused ||
+bossIntroPlaying
+){
+
+lastTime=now;
+
+gameFrame(move);
+
+return;
+
 }
 
 const targetRect=target.getBoundingClientRect();
 
 const endX=
-targetRect.left+targetRect.width/2+HIT_X;
+targetRect.left+
+targetRect.width/2+
+HIT_X;
 
 const endY=
-targetRect.top+targetRect.height*HIT_POSITION_Y+HIT_Y;
+targetRect.top+
+targetRect.height*HIT_POSITION_Y+
+HIT_Y;
 
-hitMarker.style.left=(endX-gameRect.left)+"px";
-hitMarker.style.top=(endY-gameRect.top)+"px";
+marker.style.left=
+(endX-gameRect.left)+"px";
+
+marker.style.top=
+(endY-gameRect.top)+"px";
 
 const deltaTime=Math.min(
-(currentTime-lastTime)/1000,
+(now-lastTime)/1000,
 .05
 );
 
-lastTime=currentTime;
+lastTime=now;
 
 const dx=endX-currentX;
 const dy=endY-currentY;
 
-const distance=Math.sqrt(dx*dx+dy*dy);
+const distance=Math.hypot(dx,dy);
 const movement=speed*deltaTime;
 
 if(distance<=movement){
@@ -3232,43 +3501,51 @@ currentY=endY;
 
 }else{
 
-currentX+=(dx/distance)*movement;
-currentY+=(dy/distance)*movement;
+currentX+=dx/distance*movement;
+currentY+=dy/distance*movement;
 
 }
 
-drink.style.left=
-(currentX-gameRect.left-drinkHalfWidth)+"px";
+position();
 
-drink.style.top=
-(currentY-gameRect.top-drinkHalfHeight)+"px";
+if(
+Math.hypot(
+endX-currentX,
+endY-currentY
+)<=3
+){
 
-const remainingX=endX-currentX;
-const remainingY=endY-currentY;
+if(isDrink){
 
-const remainingDistance=Math.sqrt(
-remainingX*remainingX+
-remainingY*remainingY
+hitCustomerWithDrink(
+target,
+projectile
 );
 
-if(remainingDistance<=3){
+}else{
 
-hitCustomerWithDrink(target,drink);
+hitCustomer(
+target,
+projectile
+);
 
-if(hitMarker.parentNode) hitMarker.remove();
+}
+
+marker.remove();
 
 return;
-}
-
-requestAnimationFrame(moveDrink);
 
 }
 
-requestAnimationFrame(moveDrink);
+gameFrame(move);
 
 }
 
-/* IMPATTO */
+gameFrame(move);
+
+}
+
+/* EFFETTI IMPATTO */
 
 function createImpactEffect(customer,type){
 
@@ -3278,83 +3555,85 @@ const game=document.getElementById("game");
 const gameRect=game.getBoundingClientRect();
 const rect=customer.getBoundingClientRect();
 
-const centerX=
-rect.left+rect.width/2-gameRect.left;
+const isDrink=type==="drink";
 
-const centerY=
-rect.top+rect.height*.45-gameRect.top;
+for(let i=0;i<(isDrink ? 7 : 6);i++){
 
-if(type==="drink"){
+const particle=document.createElement("div");
 
-for(let i=0;i<7;i++){
+particle.className=
+"impact-particle "+
+(isDrink ? "drink-drop" : "pasta-strand");
 
-const drop=document.createElement("div");
+particle.style.left=
+(rect.left+rect.width/2-gameRect.left)+"px";
 
-drop.className="impact-particle drink-drop";
-
-drop.style.left=centerX+"px";
-drop.style.top=centerY+"px";
+particle.style.top=
+(rect.top+rect.height*.45-gameRect.top)+"px";
 
 const angle=Math.random()*Math.PI*2;
-const distance=18+Math.random()*28;
 
-drop.style.setProperty(
+const distance=isDrink
+? 18+Math.random()*28
+: 20+Math.random()*30;
+
+particle.style.setProperty(
 "--dx",
 Math.cos(angle)*distance+"px"
 );
 
-drop.style.setProperty(
+particle.style.setProperty(
 "--dy",
 Math.sin(angle)*distance+"px"
 );
 
-game.appendChild(drop);
+if(!isDrink){
 
-setTimeout(function(){
-if(drop.parentNode) drop.remove();
-},400);
-
-}
-
-}
-
-if(type==="pasta"){
-
-for(let i=0;i<6;i++){
-
-const strand=document.createElement("div");
-
-strand.className="impact-particle pasta-strand";
-
-strand.style.left=centerX+"px";
-strand.style.top=centerY+"px";
-
-const angle=Math.random()*Math.PI*2;
-const distance=20+Math.random()*30;
-
-strand.style.setProperty(
-"--dx",
-Math.cos(angle)*distance+"px"
-);
-
-strand.style.setProperty(
-"--dy",
-Math.sin(angle)*distance+"px"
-);
-
-strand.style.setProperty(
+particle.style.setProperty(
 "--rot",
 Math.floor(Math.random()*180)+"deg"
 );
 
-game.appendChild(strand);
+}
 
-setTimeout(function(){
-if(strand.parentNode) strand.remove();
-},450);
+game.appendChild(particle);
+
+gameLater(function(){
+
+particle.remove();
+
+},isDrink ? 400 : 450);
 
 }
 
+}
+
+/* PASTA HIT */
+
+function hitCustomer(customer,pasta){
+
+if(pasta){
+pasta.remove();
+}
+
+if(
+!customer ||
+!customer.isConnected ||
+customer.dataset.satisfied==="true"
+){
+return;
+}
+
+createImpactEffect(customer,"pasta");
+
+const hp=
+parseInt(customer.dataset.hp || "30")-
+(5+powerUps.sauce);
+
+customer.dataset.hp=hp;
+
+if(hp<=0){
+satisfyCustomer(customer);
 }
 
 }
@@ -3363,15 +3642,22 @@ if(strand.parentNode) strand.remove();
 
 function hitCustomerWithDrink(customer,drink){
 
-if(drink&&drink.parentNode) drink.remove();
+if(drink){
+drink.remove();
+}
 
-if(!customer || customer.dataset.satisfied==="true") return;
+if(
+!customer ||
+!customer.isConnected ||
+customer.dataset.satisfied==="true"
+){
+return;
+}
 
 createImpactEffect(customer,"drink");
 
-let hp=parseInt(customer.dataset.hp||"30");
-
-hp-=3;
+const hp=
+parseInt(customer.dataset.hp || "30")-3;
 
 customer.dataset.hp=hp;
 
@@ -3381,19 +3667,18 @@ satisfyCustomer(customer);
 
 }else{
 
-let freezeChance=.10;
-
-if(powerUps.iceShot===1){
-freezeChance=.20;
-}else if(powerUps.iceShot===2){
-freezeChance=.35;
-}else if(powerUps.iceShot>=3){
-freezeChance=.50;
-}
+const freezeChance=[
+.10,
+.20,
+.35,
+.50
+][powerUps.iceShot];
 
 if(Math.random()<freezeChance){
+
 freezeCustomer(customer);
 tryIceChain(customer);
+
 }
 
 }
@@ -3406,50 +3691,45 @@ function freezeCustomer(customer){
 
 if(
 !customer ||
+!customer.isConnected ||
 customer.style.display==="none" ||
 customer.dataset.satisfied==="true"
-) return;
-
-if(customer._freezeTimer){
-clearTimeout(customer._freezeTimer);
+){
+return;
 }
+
+cancelTask(customer._freezeTimer);
 
 customer.dataset.frozen="true";
 customer.style.animationPlayState="paused";
 
-let freezeDuration=500;
+const frozen=customer.querySelector(".frozen-frame");
 
-if(powerUps.deepFreeze===1){
-freezeDuration=1500;
-}else if(powerUps.deepFreeze===2){
-freezeDuration=2000;
-}else if(powerUps.deepFreeze>=3){
-freezeDuration=2500;
-}
+if(frozen){
 
-const normalFrames=customer.querySelectorAll(".frame");
-const frozenFrame=customer.querySelector(".frozen-frame");
+customer.querySelectorAll(".frame").forEach(
+function(frame){
 
-/*
-I clienti normali hanno lo sprite frozen.
-Boss e miniboss no.
-I frame normali vengono nascosti solo se esiste uno sprite frozen.
-*/
-
-if(frozenFrame){
-
-normalFrames.forEach(function(frame){
 frame.classList.remove("active");
-});
 
-frozenFrame.style.display="block";
+}
+);
+
+frozen.style.display="block";
 
 }
 
-customer._freezeTimer=setTimeout(function(){
+const freezeDuration=[
+500,
+1500,
+2000,
+2500
+][powerUps.deepFreeze];
+
+customer._freezeTimer=gameLater(function(){
 
 if(
-customer &&
+customer.isConnected &&
 customer.style.display!=="none" &&
 customer.dataset.satisfied!=="true"
 ){
@@ -3457,23 +3737,24 @@ customer.dataset.satisfied!=="true"
 customer.style.animationPlayState="running";
 customer.dataset.frozen="false";
 
-if(frozenFrame){
-frozenFrame.style.display="none";
+if(frozen){
+frozen.style.display="none";
 }
 
 const frames=customer.querySelectorAll(".frame");
 
-let frameIndex=parseInt(customer.dataset.frame||"0");
+const frameNumber=
+parseInt(customer.dataset.frame || "0")%
+frames.length;
 
-if(frameIndex>=frames.length) frameIndex=0;
+frames.forEach(function(frame,index){
 
-frames.forEach(function(frame){
-frame.classList.remove("active");
+frame.classList.toggle(
+"active",
+index===frameNumber
+);
+
 });
-
-if(frames[frameIndex]){
-frames[frameIndex].classList.add("active");
-}
 
 }
 
@@ -3485,104 +3766,83 @@ customer._freezeTimer=null;
 
 /* ICE CHAIN */
 
-function tryIceChain(originalCustomer){
+function tryIceChain(original){
 
 if(powerUps.iceChain<=0) return;
 
-let chainChance=0;
-
-if(powerUps.iceChain===1){
-chainChance=.30;
-}else if(powerUps.iceChain===2){
-chainChance=.50;
-}else if(powerUps.iceChain>=3){
-chainChance=.75;
-}
+const chainChance=[
+0,
+.30,
+.50,
+.75
+][powerUps.iceChain];
 
 if(Math.random()>=chainChance) return;
 
-const originalRect=originalCustomer.getBoundingClientRect();
+const originalRect=original.getBoundingClientRect();
 
-const originalX=originalRect.left+originalRect.width/2;
-const originalY=originalRect.top+originalRect.height/2;
+const originalX=
+originalRect.left+originalRect.width/2;
 
-let nearestCustomer=null;
-let nearestDistance=Infinity;
+const originalY=
+originalRect.top+originalRect.height/2;
+
+let nearest=null;
+let bestDistance=Infinity;
 
 customers.forEach(function(customer){
 
 if(
-!customer ||
-customer===originalCustomer ||
+!customer.isConnected ||
+customer===original ||
 customer.style.display==="none" ||
 customer.dataset.satisfied==="true"
-) return;
+){
+return;
+}
 
 const rect=customer.getBoundingClientRect();
 
-const x=rect.left+rect.width/2;
-const y=rect.top+rect.height/2;
+const distance=Math.hypot(
+rect.left+rect.width/2-originalX,
+rect.top+rect.height/2-originalY
+);
 
-const dx=x-originalX;
-const dy=y-originalY;
+if(distance<bestDistance){
 
-const distance=Math.sqrt(dx*dx+dy*dy);
+bestDistance=distance;
+nearest=customer;
 
-if(distance<nearestDistance){
-nearestDistance=distance;
-nearestCustomer=customer;
 }
 
 });
 
-if(nearestCustomer){
-freezeCustomer(nearestCustomer);
+if(nearest){
+freezeCustomer(nearest);
 }
 
 }
 
-/* PASTA HIT */
-
-function hitCustomer(customer,pasta){
-
-if(pasta&&pasta.parentNode) pasta.remove();
-
-if(!customer || customer.dataset.satisfied==="true") return;
-
-createImpactEffect(customer,"pasta");
-
-let hp=parseInt(customer.dataset.hp||"30");
-
-const damage=5+powerUps.sauce;
-
-hp-=damage;
-
-customer.dataset.hp=hp;
-
-if(hp<=0){
-satisfyCustomer(customer);
-}
-
-}
-
-/* SODDISFATTO */
+/* CLIENTE SODDISFATTO */
 
 function satisfyCustomer(customer){
 
-if(!customer || customer.dataset.satisfied==="true") return;
-
-if(customer._freezeTimer){
-clearTimeout(customer._freezeTimer);
-customer._freezeTimer=null;
+if(
+!customer ||
+!customer.isConnected ||
+customer.dataset.satisfied==="true"
+){
+return;
 }
+
+cancelTask(customer._freezeTimer);
+customer._freezeTimer=null;
 
 const rect=customer.getBoundingClientRect();
 
-const game=document.getElementById("game");
-const gameRect=game.getBoundingClientRect();
-
-const currentTop=rect.top-gameRect.top;
-const currentLeft=rect.left-gameRect.left;
+const gameRect=document.getElementById(
+"game"
+).getBoundingClientRect();
 
 customer.style.animation="none";
 customer.style.animationPlayState="running";
@@ -3590,8 +3850,11 @@ customer.style.animationPlayState="running";
 customer.classList.remove("walking");
 customer.classList.add("satisfied");
 
-customer.style.top=currentTop+"px";
-customer.style.left=currentLeft+"px";
+customer.style.top=
+(rect.top-gameRect.top)+"px";
+
+customer.style.left=
+(rect.left-gameRect.left)+"px";
 
 customer.dataset.satisfied="true";
 customer.dataset.atKitchen="false";
@@ -3599,39 +3862,56 @@ customer.dataset.frozen="false";
 
 addEXP(EXP_PER_CUSTOMER);
 
-const normalFrames=customer.querySelectorAll(".frame");
+customer.querySelectorAll(".frame").forEach(
+function(frame){
 
-normalFrames.forEach(function(frame){
 frame.classList.remove("active");
-});
 
-const frozenFrame=customer.querySelector(".frozen-frame");
+}
+);
 
-if(frozenFrame){
-frozenFrame.style.display="none";
+const frozen=customer.querySelector(".frozen-frame");
+
+if(frozen){
+frozen.style.display="none";
 }
 
-const happyFrame=customer.querySelector(".happy-frame");
+const happy=customer.querySelector(".happy-frame");
 
-if(happyFrame){
-happyFrame.style.display="block";
+if(happy){
+happy.style.display="block";
 }
 
 updateZIndexes();
 
-setTimeout(function(){
+/*
+WAVE NORMALI:
+0,5 secondi di posa soddisfatta
++ controllo da 0 a 0,25 secondi
++ 0,6 secondi di attesa
+= circa 1,1–1,35 secondi.
+
+VERSO LA BOSS WAVE:
+restano la posa da 1 secondo e il controllo
+da 0,5 secondi.
+*/
+
+const happyDuration=
+currentWave>=BOSS_WAVE-1 ? 1000 : 500;
+
+gameLater(function(){
 
 customer.style.display="none";
 
-if(happyFrame){
-happyFrame.style.display="none";
+if(happy){
+happy.style.display="none";
 }
 
 customer.classList.remove("satisfied");
 
 updateZIndexes();
 
-},1000);
+},happyDuration);
 
 }
 
@@ -3640,29 +3920,37 @@ updateZIndexes();
 function satisfyCustomer1(){
 
 const customer=customers.find(function(c){
+
 return(
 c.dataset.type==="1" &&
 c.dataset.satisfied!=="true"
 );
+
 });
 
-if(customer) satisfyCustomer(customer);
+if(customer){
+satisfyCustomer(customer);
+}
 
 }
 
 function satisfyCustomer2(){
 
 const customer=customers.find(function(c){
+
 return(
 c.dataset.type==="2" &&
 c.dataset.satisfied!=="true"
 );
+
 });
 
-if(customer) satisfyCustomer(customer);
+if(customer){
+satisfyCustomer(customer);
+}
 
 }
 
 </script>
 </body>
-</html>
+  </html>
