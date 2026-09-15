@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tarai Rush</title>
 
+<link
+rel="stylesheet"
+href="https://fonts.googleapis.com/css2?family=Knewave&display=swap"
+>
+
 <style>
 *{box-sizing:border-box}
 
@@ -54,6 +59,19 @@ z-index:1001;
 cursor:pointer;
 }
 
+/* DISSOLVENZA INTRO → NERO → MENU */
+
+#introFade{
+position:absolute;
+inset:0;
+background:#000;
+opacity:0;
+display:none;
+z-index:1100;
+transition:opacity .8s ease-in-out;
+pointer-events:auto;
+}
+
 /* MENU HOME */
 
 #menu{
@@ -80,6 +98,7 @@ display:block;
 
 #cover{
 z-index:10;
+pointer-events:none;
 }
 
 #coverOverlay{
@@ -441,24 +460,14 @@ pointer-events:none;
 }
 
 @keyframes bossSnapIn{
-0%{
-transform:scale(.72);
-}
-70%{
-transform:scale(1.04);
-}
-100%{
-transform:scale(1);
-}
+0%{transform:scale(.72)}
+70%{transform:scale(1.04)}
+100%{transform:scale(1)}
 }
 
 @keyframes bossSnapOut{
-from{
-transform:translateX(0);
-}
-to{
-transform:translateX(110%);
-}
+from{transform:translateX(0)}
+to{transform:translateX(110%)}
 }
 
 #bossVideoAction{
@@ -765,20 +774,34 @@ height:115%;
 animation-play-state:paused!important;
 }
 
-/* CONTATORE WAVE */
+/*
+LAVAGNA WAVE
+
+Questi quattro valori regolano il riquadro nero:
+left, top, width, height.
+*/
 
 #wave-display{
 position:absolute;
-top:52px;
-left:50%;
-transform:translateX(-50%);
-color:white;
+left:11.6%;
+top:2.5%;
+width:11%;
+height:4.6%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#000;
+color:#fff;
+font-family:"Knewave","Comic Sans MS",cursive;
+font-weight:400;
 font-size:18px;
-font-weight:900;
-text-shadow:2px 2px 4px #000;
-z-index:100;
-pointer-events:none;
+line-height:1.15;
+text-align:center;
 white-space:nowrap;
+overflow:hidden;
+padding:2px;
+z-index:5;
+pointer-events:none;
 }
 
 /* SOLO MESSAGGIO DI FINE LIVELLO */
@@ -864,11 +887,6 @@ height:96%;
 object-fit:contain;
 }
 
-#wave-display{
-font-size:15px;
-top:50px;
-}
-
 #wave-message{
 font-size:21px;
 }
@@ -911,15 +929,27 @@ type="video/mp4"
 
 </div>
 
-<!-- MENU -->
+<!-- NERO PER LA DISSOLVENZA -->
+
+<div id="introFade"></div>
+
+<!-- MENU CON VIDEO IN LOOP -->
 
 <div id="menu">
 
-<img
+<video
 id="cover"
-src="https://i.ibb.co/7JzwW3pP/file-00000000e8d8820b9cbd75d3f8d8e3a1.png"
-alt=""
+muted
+loop
+playsinline
+preload="auto"
+poster="https://i.ibb.co/7JzwW3pP/file-00000000e8d8820b9cbd75d3f8d8e3a1.png"
 >
+<source
+src="https://github.com/backtothemovie2024-afk/tarai-game/raw/refs/heads/main/Animate_chef_image_with_steam_20260915082519.mp4"
+type="video/mp4"
+>
+</video>
 
 <img
 id="coverOverlay"
@@ -927,7 +957,11 @@ src="https://i.ibb.co/67Fhq4qw/file-0000000053c481f796fb5ec6162a6b2e-removebg-pr
 alt=""
 >
 
-<button id="playButton" aria-label="Play">
+<button
+id="playButton"
+aria-label="Play"
+disabled
+>
 PLAY
 </button>
 
@@ -961,7 +995,9 @@ src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"
 alt=""
 >
 
-<div id="wave-display">WAVE 1 / 20</div>
+<!-- SCRITTA SULLA LAVAGNA -->
+
+<div id="wave-display">WAVE 1</div>
 
 <div id="wave-message"></div>
 
@@ -1024,7 +1060,6 @@ src="https://i.ibb.co/Kx64hLcM/1000042445-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
-
 </div>
 
 <!-- CLIENTE 2 -->
@@ -1052,7 +1087,6 @@ src="https://i.ibb.co/YT061kxh/1000042452-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
-
 </div>
 
 <!-- CLIENTE 3 -->
@@ -1080,7 +1114,6 @@ src="https://i.ibb.co/nJTx657/1000042451-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
-
 </div>
 
 <!-- CLIENTE 4 -->
@@ -1108,7 +1141,6 @@ src="https://i.ibb.co/DPsjg9ww/1000042455-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
-
 </div>
 
 <!-- CLIENTE 5 -->
@@ -1136,7 +1168,6 @@ src="https://i.ibb.co/k2DfX1WT/1000042453-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
-
 </div>
 
 <!-- CLIENTE 6 - STUDENTE -->
@@ -1164,7 +1195,6 @@ src="https://i.ibb.co/x4SynkS/1000043192-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
-
 </div>
 
 <!-- CLIENTE 7 - MAMMA -->
@@ -1192,7 +1222,6 @@ src="https://i.ibb.co/xKQFS6Vg/1000043194-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
-
 </div>
 
 <!-- CLIENTE 8 - ANZIANA -->
@@ -1220,7 +1249,6 @@ src="https://i.ibb.co/RGQdckHM/1000043200-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
-
 </div>
 
 <!-- MINIBOSS ASSISTENTE -->
@@ -1244,7 +1272,6 @@ src="https://i.ibb.co/Wvpbt1Xj/1000042616-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
-
 </div>
 
 <!-- BOSS PRINCIPALE -->
@@ -1268,7 +1295,6 @@ src="https://i.ibb.co/WvM1QTVC/1000042381-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
-
 </div>
 
 <!-- MINIBOSS CAMERAMAN -->
@@ -1292,7 +1318,6 @@ src="https://i.ibb.co/20kVQ3Wk/1000042617-removebg-preview.png"
 alt="">
 
 <div class="heart">❤️</div>
-
 </div>
 
 <!-- CUOCO -->
@@ -1404,25 +1429,89 @@ alt=""
 <script>
 
 /*
-PULSANTE TEST BOSS
-
-true = pulsante visibile durante il gioco.
+TEST BOSS:
+true = pulsante visibile.
 false = pulsante nascosto.
 */
 
 const ENABLE_BOSS_TEST=true;
 
-/* INTRO → HOME */
+/* INTRO → NERO → MENU */
 
 const intro=document.getElementById("intro");
 const introVideo=document.getElementById("introVideo");
+const introFade=document.getElementById("introFade");
+const menuVideo=document.getElementById("cover");
+
+let introClosing=false;
+let menuReady=false;
+
+function playMenuVideo(){
+
+if(document.getElementById("menu").style.display==="none"){
+return;
+}
+
+menuVideo.muted=true;
+
+const promise=menuVideo.play();
+
+if(promise){
+
+promise.catch(function(){
+/* Se il video non parte, rimane visibile il poster. */
+});
+
+}
+
+}
 
 function closeIntro(){
 
-if(intro.style.display==="none") return;
+if(
+introClosing ||
+intro.style.display==="none"
+){
+return;
+}
+
+introClosing=true;
+
+introFade.style.display="block";
+introFade.style.opacity="0";
+
+void introFade.offsetWidth;
+
+introFade.style.opacity="1";
+
+/* Prima fase: il video diventa nero. */
+
+setTimeout(function(){
 
 introVideo.pause();
 intro.style.display="none";
+
+menuVideo.currentTime=0;
+
+playMenuVideo();
+
+/* Seconda fase: dal nero appare il menu. */
+
+introFade.style.opacity="0";
+
+setTimeout(function(){
+
+introFade.style.display="none";
+
+menuReady=true;
+
+document.getElementById(
+"playButton"
+).disabled=false;
+
+},800);
+
+},800);
 
 }
 
@@ -1434,13 +1523,26 @@ closeIntro
 document.getElementById("introTap").addEventListener(
 "touchend",
 function(event){
+
 event.preventDefault();
 closeIntro();
+
 },
 {passive:false}
 );
 
 introVideo.addEventListener("ended",closeIntro);
+
+document.getElementById("menu").addEventListener(
+"pointerdown",
+function(){
+
+if(menuReady && menuVideo.paused){
+playMenuVideo();
+}
+
+}
+);
 
 /* HITBOX */
 
@@ -1494,7 +1596,7 @@ const LANES=[
 
 const SAME_LANE_MIN_DELAY=1500;
 
-/* TEMPI TRA WAVE */
+/* TEMPI */
 
 const NORMAL_WAVE_DELAY=600;
 const BOSS_WAVE_DELAY=1200;
@@ -1508,6 +1610,8 @@ const EXP_REQUIREMENTS=[
 ];
 
 const MAX_LEVEL=12;
+
+/* STATO DEL GIOCO */
 
 let currentWave=1;
 let waveSpawned=0;
@@ -1549,15 +1653,7 @@ let kitchenDamageTimer=null;
 let zIndexTimer=null;
 let waveCheckTimer=null;
 
-/*
-TIMER DEL GIOCO
-
-Tutti i timer possono essere cancellati quando viene
-premuto TEST BOSS.
-
-Il tempo di gioco si ferma durante i potenziamenti
-e durante il video del boss.
-*/
+/* TIMER DEL GIOCO */
 
 let gameClock=0;
 let lastClockTime=performance.now();
@@ -2053,9 +2149,11 @@ document.getElementById("playButton").addEventListener(
 "click",
 function(){
 
-if(playPressed) return;
+if(playPressed || !menuReady) return;
 
 playPressed=true;
+
+menuVideo.pause();
 
 const black=document.getElementById("blackTransition");
 const game=document.getElementById("game");
@@ -2131,7 +2229,9 @@ function clearScene(){
 document.querySelectorAll(
 ".spawned-customer,.pasta,.drink,.hit-marker,.impact-particle"
 ).forEach(function(element){
+
 element.remove();
+
 });
 
 customers=[];
@@ -2211,16 +2311,34 @@ startZIndexSystem();
 
 }
 
-/* CONTATORE WAVE */
+/* SCRITTA SULLA LAVAGNA */
+
+function fitWaveBoard(){
+
+const board=document.getElementById("wave-display");
+
+if(board.clientWidth>0){
+
+board.style.fontSize=Math.min(
+board.clientWidth/5.8,
+board.clientHeight*.5
+)+"px";
+
+}
+
+}
 
 function updateWaveDisplay(){
 
 document.getElementById(
 "wave-display"
-).textContent=
-"WAVE "+currentWave+" / "+TOTAL_WAVES;
+).textContent="WAVE "+currentWave;
+
+fitWaveBoard();
 
 }
+
+window.addEventListener("resize",fitWaveBoard);
 
 /* INIZIO WAVE */
 
@@ -2246,11 +2364,6 @@ showBossIntro();
 return;
 
 }
-
-/*
-La prima wave conserva l'attesa iniziale originale.
-Le wave normali successive hanno attesa dimezzata.
-*/
 
 gameLater(function(){
 
@@ -2488,11 +2601,6 @@ frozen.style.display="none";
 document.getElementById("game").appendChild(customer);
 
 customers.push(customer);
-
-/*
-L'arrivo alla cucina segue la fine della camminata,
-comprese pause e congelamenti.
-*/
 
 customer.addEventListener(
 "animationend",
@@ -2747,14 +2855,6 @@ finishBossIntro
 
 };
 
-/*
-Il video non viene interrotto dopo un tempo prefissato.
-L'uscita parte quando il filmato termina.
-
-Se il caricamento non riesce, è disponibile un pulsante
-per continuare senza bloccare il gioco.
-*/
-
 videoWatchdog=setTimeout(function(){
 
 if(
@@ -2835,13 +2935,6 @@ bossIntroPlaying
 ){
 return;
 }
-
-/*
-Cancella clienti, proiettili, animazioni degli attacchi
-e apparizioni ancora in attesa.
-
-Mantiene livello, EXP, potenziamenti ed energia cucina.
-*/
 
 clearAllTimers();
 clearScene();
@@ -3883,18 +3976,6 @@ happy.style.display="block";
 }
 
 updateZIndexes();
-
-/*
-WAVE NORMALI:
-0,5 secondi di posa soddisfatta
-+ controllo da 0 a 0,25 secondi
-+ 0,6 secondi di attesa
-= circa 1,1–1,35 secondi.
-
-VERSO LA BOSS WAVE:
-restano la posa da 1 secondo e il controllo
-da 0,5 secondi.
-*/
 
 const happyDuration=
 currentWave>=BOSS_WAVE-1 ? 1000 : 500;
