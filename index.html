@@ -4,749 +4,85 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tarai Rush</title>
-
-<link
-rel="stylesheet"
-href="https://fonts.googleapis.com/css2?family=Knewave&display=swap"
->
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Knewave&display=swap">
 <style>
 *{box-sizing:border-box}
-
-html,body{
-margin:0;
-padding:0;
-width:100%;
-height:100%;
-overflow:hidden;
-background:#111;
-font-family:Arial,sans-serif;
-}
-
-#phone{
-position:relative;
-width:min(100vw,56.25vh);
-height:min(100vh,177.7778vw);
-aspect-ratio:9/16;
-margin:auto;
-overflow:hidden;
-background:#000;
-}
-
-/* INTRO VIDEO */
-
-#intro{
-position:absolute;
-inset:0;
-background:#000;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:1000;
-}
-
-#introVideo{
-width:100%;
-height:100%;
-object-fit:cover;
-display:block;
-}
-
-#introTap{
-position:absolute;
-inset:0;
-z-index:1001;
-cursor:pointer;
-}
-
+html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#111;font-family:Arial,sans-serif}
+#phone{position:relative;width:min(100vw,56.25vh);height:min(100vh,177.7778vw);aspect-ratio:9/16;margin:auto;overflow:hidden;background:#000}
+#intro{position:absolute;inset:0;background:#000;display:flex;align-items:center;justify-content:center;z-index:1000}
+#introVideo{width:100%;height:100%;object-fit:cover;display:block}
 /* DISSOLVENZA INTRO → NERO → MENU */
-
-#introFade{
-position:absolute;
-inset:0;
-background:#000;
-opacity:0;
-display:none;
-z-index:1100;
-transition:opacity .8s ease-in-out;
-pointer-events:auto;
-}
-
-/* MENU HOME */
-
-#menu{
-position:absolute;
-inset:0;
-background:#000;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:100;
-}
-
-#cover,
-#coverOverlay{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
-max-width:100%;
-max-height:100%;
-object-fit:fill;
-display:block;
-}
-
-#cover{
-z-index:10;
-pointer-events:none;
-}
-
-#coverOverlay{
-z-index:20;
-pointer-events:none;
-}
-
-#playButton{
-position:absolute;
-left:12%;
-top:58%;
-width:76%;
-height:14%;
-border:none;
-background:transparent;
-color:transparent;
-font-size:0;
-z-index:30;
-cursor:pointer;
--webkit-tap-highlight-color:transparent;
-}
-
-/* TRANSIZIONE NERA DOPO PLAY */
-
-#blackTransition{
-position:absolute;
-inset:0;
-background:#000;
-display:none;
-overflow:hidden;
-z-index:2000;
-pointer-events:none;
-}
-
-.transition-image{
-position:absolute;
-width:100%;
-height:auto;
-display:block;
-pointer-events:none;
-}
-
-#transitionImage1{
-top:5%;
-left:-100%;
-}
-
-#transitionImage2{
-top:35%;
-right:-100%;
-}
-
-#transitionImage3{
-bottom:5%;
-left:-100%;
-}
-
-@keyframes transitionFromLeft{
-from{left:-100%}
-to{left:0%}
-}
-
-@keyframes transitionFromRight{
-from{right:-100%}
-to{right:0%}
-}
-
-@keyframes transitionExit{
-from{
-opacity:1;
-transform:scale(1);
-}
-to{
-opacity:0;
-transform:scale(1.08);
-}
-}
-
-@keyframes gameEnter{
-from{
-opacity:0;
-transform:scale(.94);
-}
-to{
-opacity:1;
-transform:scale(1);
-}
-}
-
-/* GIOCO */
-
-#game{
-display:none;
-position:absolute;
-inset:0;
-overflow:hidden;
-background:#000;
-}
-
-#background{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
-object-fit:cover;
-image-rendering:auto;
-z-index:0;
-}
-
-#kitchen,
-#kitchenDamaged,
-#kitchenDestroyed{
-position:absolute;
-left:50%;
-top:83%;
-width:115%;
-height:auto;
-transform:translate(-50%,-50%);
-pointer-events:none;
-z-index:50;
-}
-
-#kitchen{
-display:block;
-}
-
-#kitchenDamaged,
-#kitchenDestroyed{
-display:none;
-}
-
-/* EXP */
-
-#exp-bar{
-position:absolute;
-left:2.5%;
-bottom:1.5%;
-width:95%;
-height:30px;
-background:#321b10;
-border:3px solid #8a512d;
-border-radius:15px;
-box-shadow:
-0 4px 0 #160b07,
-0 6px 12px rgba(0,0,0,.6),
-inset 0 2px 3px rgba(255,255,255,.18);
-overflow:hidden;
-z-index:200;
-}
-
-#exp-fill{
-position:absolute;
-left:0;
-top:0;
-width:0%;
-height:100%;
-background:linear-gradient(
-180deg,
-#ffe477,
-#f5a623 50%,
-#d96b16
-);
-border-radius:10px;
-z-index:1;
-transition:width .35s ease-out;
-}
-
-#exp-level{
-position:absolute;
-inset:0;
-display:flex;
-align-items:center;
-justify-content:center;
-color:white;
-font-size:14px;
-font-weight:900;
-text-shadow:2px 2px 3px #000;
-z-index:2;
-pointer-events:none;
-}
-
-/* CLIENTI */
-
-.customer{
-position:absolute;
-width:100px;
-height:135px;
-top:5%;
-z-index:10;
-}
-
-.customer.walking{
-animation:walkDown 60s linear forwards;
-}
-
-.customer.satisfied{
-animation:none!important;
-}
-
-.customer .frame,
-.customer .happy-frame,
-.customer .frozen-frame{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-object-fit:contain;
-display:none;
-}
-
-.customer .frame.active{
-display:block;
-}
-
-.customer .happy-frame{
-z-index:2;
-}
-
-.customer .frozen-frame{
-z-index:3;
-}
-
-/* CLIENTE 1 */
-
-.customer1-sprite,
-.customer2-sprite{
-display:none;
-}
-
-.customer1-template .frame{
-width:100%;
-height:100%;
-object-fit:contain;
-transform:scale(1);
-transform-origin:center bottom;
-}
-
-.customer1-template{
-width:100px;
-height:135px;
-}
-
-.customer1-template .happy-frame{
-transform:scale(.90);
-transform-origin:center bottom;
-}
-
-.customer1-template .frozen-frame{
-transform:scale(.92);
-transform-origin:center bottom;
-}
-
-/* CLIENTE 2 */
-
-.customer2-sprite + .happy-frame{
-width:100%;
-height:100%;
-object-fit:contain;
-left:0%;
-}
-
-.customer2-template .frame:nth-of-type(1),
-.customer2-template .frame:nth-of-type(2){
-transform:scale(1);
-transform-origin:center bottom;
-}
-
-.customer2-template .happy-frame{
-width:100%;
-height:100%;
-object-fit:contain;
-left:0%;
-transform:scale(1);
-transform-origin:center bottom;
-}
-
-.customer2-template .frozen-frame{
-transform:scale(.90);
-transform-origin:center bottom;
-}
-
-/* CLIENTI 3 - 4 - 5 */
-
-.customer3-template .frame,
-.customer3-template .happy-frame,
-.customer4-template .frame,
-.customer4-template .happy-frame,
-.customer5-template .frame,
-.customer5-template .happy-frame{
-transform-origin:center bottom;
-}
-
-.customer3-template .frame:nth-of-type(1){
-transform:translateX(0);
-}
-
-.customer3-template .frame:nth-of-type(2){
-transform:translateX(14.0625%);
-}
-
-/* CLIENTI 6 - 7 - 8 */
-
-.customer6-template .frame,
-.customer6-template .happy-frame,
-.customer6-template .frozen-frame,
-.customer7-template .frame,
-.customer7-template .happy-frame,
-.customer7-template .frozen-frame,
-.customer8-template .frame,
-.customer8-template .happy-frame,
-.customer8-template .frozen-frame{
-width:100%;
-height:100%;
-object-fit:contain;
-object-position:center bottom;
-transform:scale(1);
-transform-origin:center bottom;
-}
-
-/* BOSS / MINIBOSS */
-
-.boss-unit-template .frame,
-.boss-unit-template .happy-frame{
-width:100%;
-height:100%;
-object-fit:contain;
-transform:scale(1);
-transform-origin:center bottom;
-}
-
-/* VIDEO BOSS */
-
-#bossIntro{
-position:absolute;
-inset:0;
-display:none;
-align-items:center;
-justify-content:center;
-overflow:hidden;
-background:#000;
-z-index:450;
-}
-
-#bossIntroVideo{
-width:100%;
-height:100%;
-object-fit:cover;
-display:block;
-}
-
-#bossIntro.entering{
-animation:bossSnapIn .2s ease-out both;
-}
-
-#bossIntro.leaving{
-animation:bossSnapOut .2s ease-in both;
-pointer-events:none;
-}
-
-@keyframes bossSnapIn{
-0%{transform:scale(.72)}
-70%{transform:scale(1.04)}
-100%{transform:scale(1)}
-}
-
-@keyframes bossSnapOut{
-from{transform:translateX(0)}
-to{transform:translateX(110%)}
-}
-
-#bossVideoAction{
-position:absolute;
-left:10%;
-right:10%;
-bottom:12%;
-padding:14px;
-border:2px solid #fff;
-border-radius:10px;
-background:#191919;
-color:#fff;
-font-size:16px;
-font-weight:bold;
-cursor:pointer;
-}
-
-/* PULSANTE TEST BOSS TEMPORANEO */
-
-#testBossButton{
-position:absolute;
-top:12px;
-right:10px;
-z-index:420;
-padding:8px 10px;
-border:2px solid #ffd45a;
-border-radius:8px;
-background:rgba(0,0,0,.78);
-color:#ffd45a;
-font-size:12px;
-font-weight:bold;
-cursor:pointer;
--webkit-tap-highlight-color:transparent;
-}
-
-#testBossButton:disabled{
-opacity:.45;
-cursor:default;
-}
-
-/* CUORI CLIENTI SODDISFATTI */
-
-.heart{
-position:absolute;
-left:50%;
-top:-18px;
-transform:translateX(-50%);
-font-size:24px;
-line-height:1;
-z-index:5;
-display:none;
-animation:heartFloat .8s ease-in-out infinite alternate;
-}
-
-.customer.satisfied .heart{
-display:block;
-}
-
-@keyframes heartFloat{
-0%{
-transform:translateX(-50%) translateY(0) scale(1);
-}
-100%{
-transform:translateX(-50%) translateY(-7px) scale(1.12);
-}
-}
-
-@keyframes walkDown{
-0%{top:8%}
-100%{top:69%}
-}
-
-/* CUOCO */
-
-#cook,
-#waitress{
-position:absolute;
-bottom:7%;
-width:100px;
-height:135px;
-transform:translateX(-50%);
-z-index:60;
-}
-
-#cook{
-left:37.5%;
-bottom:12%;
-}
-
-#cook img{
-position:absolute;
-top:0;
-left:0;
-width:170%;
-height:170%;
-object-fit:contain;
-display:none;
-}
-
-#cook img.active,
-#waitress img.active{
-display:block;
-}
-
-/* CAMERIERA */
-
-#waitress{
-left:62.5%;
-bottom:6%;
-display:none;
-overflow:visible;
-}
-
-#waitress img{
-position:absolute;
-left:50%;
-bottom:0;
-top:auto;
-width:104%;
-height:104%;
-max-width:none;
-max-height:none;
-object-fit:contain;
-display:none;
-transform:translateX(-50%);
-transform-origin:center bottom;
-pointer-events:none;
-}
-
-/* PASTA / DRINK */
-
-.pasta,
-.drink{
-position:absolute;
-width:84px;
-height:84px;
-object-fit:contain;
-z-index:70;
-pointer-events:none;
-}
-
-.drink{
-width:140px;
-height:140px;
-}
-
-/* HIT MARKER */
-
-.hit-marker{
-position:absolute;
-width:22px;
-height:22px;
-border-radius:50%;
-background:red;
-border:3px solid white;
-box-shadow:
-0 0 8px red,
-0 0 15px rgba(255,0,0,.8);
-transform:translate(-50%,-50%);
-z-index:90;
-pointer-events:none;
-opacity:0;
-}
-
-/* EFFETTI IMPATTO */
-
-.impact-particle{
-position:absolute;
-pointer-events:none;
-z-index:95;
-transform:translate(-50%,-50%);
-}
-
-.drink-drop{
-width:7px;
-height:11px;
-border-radius:50% 50% 55% 55%;
-background:#62d9ff;
-box-shadow:0 0 5px rgba(98,217,255,.8);
-animation:drinkDropFly .32s ease-out forwards;
-}
-
-@keyframes drinkDropFly{
-0%{
-opacity:1;
-transform:
-translate(-50%,-50%)
-translate(0,0)
-scale(1);
-}
-100%{
-opacity:0;
-transform:
-translate(-50%,-50%)
-translate(var(--dx),var(--dy))
-scale(.45);
-}
-}
-
-.pasta-strand{
-width:18px;
-height:5px;
-border-radius:50%;
-background:#ffd45a;
-box-shadow:0 0 3px rgba(255,190,40,.8);
-transform-origin:center;
-animation:pastaStrandFly .36s ease-out forwards;
-}
-
-@keyframes pastaStrandFly{
-0%{
-opacity:1;
-transform:
-translate(-50%,-50%)
-translate(0,0)
-rotate(var(--rot))
-scaleX(.7);
-}
-100%{
-opacity:0;
-transform:
-translate(-50%,-50%)
-translate(var(--dx),var(--dy))
-rotate(calc(var(--rot) + 90deg))
-scaleX(1.2);
-}
-}
-
-/* POWER UP */
-
-#powerup-overlay{
-position:absolute;
-inset:0;
-background:rgba(18,8,3,.82);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:500;
-}
-
-#powerup-panel{
-width:103%;
-height:91%;
-position:relative;
-background:transparent;
-border:none;
-border-radius:0;
-box-shadow:none;
-padding:0;
-}
-
-#powerup-options{
-position:absolute;
-inset:0;
-display:flex;
-align-items:center;
-justify-content:center;
-gap:1.5%;
-}
-
-.powerup-slot{
-position:relative;
-width:32%;
-height:100%;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
--webkit-tap-highlight-color:transparent;
-}
-
-.powerup-slot img{
-width:100%;
-height:100%;
-object-fit:contain;
-display:block;
-pointer-events:none;
-}
-
+#introFade{position:absolute;inset:0;background:#000;opacity:0;display:none;z-index:1100;transition:opacity .8s ease-in-out;pointer-events:auto}
+#introTap{position:absolute;inset:0;z-index:1001;cursor:pointer}
+#menu{position:absolute;inset:0;background:#000;display:flex;justify-content:center;align-items:center;z-index:100}
+#cover,#coverOverlay{position:absolute;inset:0;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:fill;display:block}
+#cover{z-index:10;pointer-events:none}#coverOverlay{z-index:20;pointer-events:none}
+#playButton{position:absolute;left:12%;top:58%;width:76%;height:14%;border:none;background:transparent;color:transparent;font-size:0;z-index:30;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#blackTransition{position:absolute;inset:0;background:#000;display:none;overflow:hidden;z-index:2000;pointer-events:none}
+.transition-image{position:absolute;width:100%;height:auto;display:block;pointer-events:none}
+#transitionImage1{top:5%;left:-100%}#transitionImage2{top:35%;right:-100%}#transitionImage3{bottom:5%;left:-100%}
+@keyframes transitionFromLeft{from{left:-100%}to{left:0%}}
+@keyframes transitionFromRight{from{right:-100%}to{right:0%}}
+@keyframes transitionExit{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(1.08)}}
+@keyframes gameEnter{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+#game{display:none;position:absolute;inset:0;overflow:hidden;background:#000}
+#background{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:auto;z-index:0}
+#kitchen,#kitchenDamaged,#kitchenDestroyed{position:absolute;left:50%;top:83%;width:115%;height:auto;transform:translate(-50%,-50%);pointer-events:none;z-index:50}
+#kitchen{display:block}#kitchenDamaged,#kitchenDestroyed{display:none}
+#exp-bar{position:absolute;left:2.5%;bottom:1.5%;width:95%;height:30px;background:#321b10;border:3px solid #8a512d;border-radius:15px;box-shadow:0 4px 0 #160b07,0 6px 12px rgba(0,0,0,.6),inset 0 2px 3px rgba(255,255,255,.18);overflow:hidden;z-index:200}
+#exp-fill{position:absolute;left:0;top:0;width:0%;height:100%;background:linear-gradient(180deg,#ffe477,#f5a623 50%,#d96b16);border-radius:10px;z-index:1;transition:width .35s ease-out}
+#exp-level{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:white;font-size:14px;font-weight:900;text-shadow:2px 2px 3px #000;z-index:2;pointer-events:none}
+.customer{position:absolute;width:100px;height:135px;top:5%;z-index:10}
+.customer.walking{animation:walkDown 60s linear forwards}.customer.satisfied{animation:none!important}
+.customer .frame,.customer .happy-frame,.customer .frozen-frame{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;display:none}
+.customer .frame.active{display:block}.customer .happy-frame{z-index:2}.customer .frozen-frame{z-index:3}
+.customer1-sprite,.customer2-sprite{display:none}
+.customer1-template .frame{width:100%;height:100%;object-fit:contain;transform:scale(1);transform-origin:center bottom}
+.customer1-template{width:100px;height:135px}
+.customer1-template .happy-frame{transform:scale(.90);transform-origin:center bottom}
+.customer1-template .frozen-frame{transform:scale(.92);transform-origin:center bottom}
+.customer2-sprite + .happy-frame{width:100%;height:100%;object-fit:contain;left:0%}
+.customer2-template .frame:nth-of-type(1),.customer2-template .frame:nth-of-type(2){transform:scale(1);transform-origin:center bottom}
+.customer2-template .happy-frame{width:100%;height:100%;object-fit:contain;left:0%;transform:scale(1);transform-origin:center bottom}
+.customer2-template .frozen-frame{transform:scale(.90);transform-origin:center bottom}
+.customer3-template .frame,.customer3-template .happy-frame,.customer4-template .frame,.customer4-template .happy-frame,.customer5-template .frame,.customer5-template .happy-frame{transform-origin:center bottom}
+.customer3-template .frame:nth-of-type(1){transform:translateX(0)}
+.customer3-template .frame:nth-of-type(2){transform:translateX(14.0625%)}
+.customer6-template .frame,.customer6-template .happy-frame,.customer6-template .frozen-frame,.customer7-template .frame,.customer7-template .happy-frame,.customer7-template .frozen-frame,.customer8-template .frame,.customer8-template .happy-frame,.customer8-template .frozen-frame{width:100%;height:100%;object-fit:contain;object-position:center bottom;transform:scale(1);transform-origin:center bottom}
+.boss-unit-template .frame,.boss-unit-template .happy-frame{width:100%;height:100%;object-fit:contain;transform:scale(1);transform-origin:center bottom}
+/* VIDEO BOSS: ingresso e uscita secchi, 0,2 secondi. */
+#bossIntro{position:absolute;inset:0;display:none;align-items:center;justify-content:center;overflow:hidden;background:#000;z-index:450}
+#bossIntroVideo{width:100%;height:100%;object-fit:cover;display:block}
+#bossIntro.entering{animation:bossSnapIn .2s ease-out both}
+#bossIntro.leaving{animation:bossSnapOut .2s ease-in both;pointer-events:none}
+@keyframes bossSnapIn{0%{transform:scale(.72)}70%{transform:scale(1.04)}100%{transform:scale(1)}}
+@keyframes bossSnapOut{from{transform:translateX(0)}to{transform:translateX(110%)}}
+#bossVideoAction{position:absolute;left:10%;right:10%;bottom:12%;padding:14px;border:2px solid #fff;border-radius:10px;background:#191919;color:#fff;font-size:16px;font-weight:bold;cursor:pointer}
+/* TEST TEMPORANEO: disattivare ENABLE_BOSS_TEST nel JavaScript per nasconderlo. */
+#testBossButton{position:absolute;top:12px;right:10px;z-index:420;padding:8px 10px;border:2px solid #ffd45a;border-radius:8px;background:rgba(0,0,0,.78);color:#ffd45a;font-size:12px;font-weight:bold;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#testBossButton:disabled{opacity:.45;cursor:default}
+.heart{position:absolute;left:50%;top:-18px;transform:translateX(-50%);font-size:24px;line-height:1;z-index:5;display:none;animation:heartFloat .8s ease-in-out infinite alternate}
+.customer.satisfied .heart{display:block}
+@keyframes heartFloat{0%{transform:translateX(-50%) translateY(0) scale(1)}100%{transform:translateX(-50%) translateY(-7px) scale(1.12)}}
+@keyframes walkDown{0%{top:8%}100%{top:69%}}
+#cook,#waitress{position:absolute;bottom:7%;width:100px;height:135px;transform:translateX(-50%);z-index:60}
+#cook{left:37.5%;bottom:12%}
+#cook img{position:absolute;top:0;left:0;width:170%;height:170%;object-fit:contain;display:none}
+#cook img.active,#waitress img.active{display:block}
+#waitress{left:62.5%;bottom:6%;display:none;overflow:visible}
+#waitress img{position:absolute;left:50%;bottom:0;top:auto;width:104%;height:104%;max-width:none;max-height:none;object-fit:contain;display:none;transform:translateX(-50%);transform-origin:center bottom;pointer-events:none}
+.pasta,.drink{position:absolute;width:84px;height:84px;object-fit:contain;z-index:70;pointer-events:none}.drink{width:140px;height:140px}
+.hit-marker{position:absolute;width:22px;height:22px;border-radius:50%;background:red;border:3px solid white;box-shadow:0 0 8px red,0 0 15px rgba(255,0,0,.8);transform:translate(-50%,-50%);z-index:90;pointer-events:none;opacity:0}
+.impact-particle{position:absolute;pointer-events:none;z-index:95;transform:translate(-50%,-50%)}
+.drink-drop{width:7px;height:11px;border-radius:50% 50% 55% 55%;background:#62d9ff;box-shadow:0 0 5px rgba(98,217,255,.8);animation:drinkDropFly .32s ease-out forwards}
+@keyframes drinkDropFly{0%{opacity:1;transform:translate(-50%,-50%) translate(0,0) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) translate(var(--dx),var(--dy)) scale(.45)}}
+.pasta-strand{width:18px;height:5px;border-radius:50%;background:#ffd45a;box-shadow:0 0 3px rgba(255,190,40,.8);transform-origin:center;animation:pastaStrandFly .36s ease-out forwards}
+@keyframes pastaStrandFly{0%{opacity:1;transform:translate(-50%,-50%) translate(0,0) rotate(var(--rot)) scaleX(.7)}100%{opacity:0;transform:translate(-50%,-50%) translate(var(--dx),var(--dy)) rotate(calc(var(--rot) + 90deg)) scaleX(1.2)}}
+#powerup-overlay{position:absolute;inset:0;background:rgba(18,8,3,.82);display:none;align-items:center;justify-content:center;z-index:500}
+#powerup-panel{width:103%;height:91%;position:relative;background:transparent;border:none;border-radius:0;box-shadow:none;padding:0}
+#powerup-options{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:1.5%}
+.powerup-slot{position:relative;width:32%;height:100%;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.powerup-slot img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none}
 .powerup-slot img[src*="MkNSjJwS"],
 .powerup-slot img[src*="S4pzKRB7"],
 .powerup-slot img[src*="yFG9djjL"],
@@ -765,22 +101,9 @@ pointer-events:none;
 .powerup-slot img[src*="R46THQGk"],
 .powerup-slot img[src*="d0wKYzSF"],
 .powerup-slot img[src*="1f3rLZ6L"],
-.powerup-slot img[src*="PG5PFZfw"]{
-width:130%;
-height:115%;
-}
-
-#game.powerup-paused *{
-animation-play-state:paused!important;
-}
-
-/*
-LAVAGNA WAVE
-
-Questi quattro valori regolano il riquadro nero:
-left, top, width, height.
-*/
-
+.powerup-slot img[src*="PG5PFZfw"]{width:130%;height:115%}
+#game.powerup-paused *{animation-play-state:paused!important}
+/* POSIZIONE LAVAGNA: valori da rifinire sullo sfondo se necessario. */
 #wave-display{
 position:absolute;
 left:11.6%;
@@ -804,3246 +127,902 @@ z-index:5;
 pointer-events:none;
 }
 
-/* SOLO MESSAGGIO DI FINE LIVELLO */
-
-#wave-message{
-position:absolute;
-left:50%;
-top:45%;
-transform:translate(-50%,-50%);
-padding:14px 25px;
-border-radius:15px;
-background:rgba(0,0,0,.72);
-color:white;
-font-size:25px;
-font-weight:900;
-text-align:center;
-text-shadow:2px 2px 3px #000;
-z-index:400;
-display:none;
-pointer-events:none;
-}
-
-/* MOBILE */
-
+#wave-message{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);padding:14px 25px;border-radius:15px;background:rgba(0,0,0,.72);color:white;font-size:25px;font-weight:900;text-align:center;text-shadow:2px 2px 3px #000;z-index:400;display:none;pointer-events:none}
 @media(max-width:500px){
-
-.customer,
-#cook,
-#waitress{
-width:65px;
-height:88px;
+.customer,#cook,#waitress{width:65px;height:88px}
+.customer1-template,.customer2-template,.customer3-template,.customer4-template,.customer5-template,.customer6-template,.customer7-template,.customer8-template{width:75px;height:102px}
+.pasta,.drink{width:60px;height:60px}
+#exp-bar{height:27px;left:2.5%;width:95%}#exp-level{font-size:13px}
+#powerup-panel{width:110%;height:96%}#powerup-options{gap:0}.powerup-slot{width:33.33%;height:100%}.powerup-slot img{width:110%;height:96%;object-fit:contain}
+#wave-message{font-size:21px}
 }
+.customer6-template .happy-frame,.customer7-template .happy-frame,.customer8-template .happy-frame{transform:scale(.90);transform-origin:center bottom}
 
-.customer1-template,
-.customer2-template,
-.customer3-template,
-.customer4-template,
-.customer5-template,
-.customer6-template,
-.customer7-template,
-.customer8-template{
-width:75px;
-height:102px;
+.customer7-template .frame,.customer7-template .happy-frame,.customer7-template .frozen-frame{transform:scale(1.15);transform-origin:center bottom}
+.customer7-template .frame:nth-of-type(2){transform:translateX(0) scale(1.15)}
+#seon{position:absolute;left:12.5%;bottom:6%;width:100px;height:135px;transform:translateX(-50%);z-index:60;display:none}
+#seon img{position:absolute;left:50%;bottom:0;width:104%;height:104%;object-fit:contain;transform:translateX(calc(-50% + var(--shift,0%)));display:none;pointer-events:none}
+#seon img.active{display:block}
+.cappuccino{position:absolute;width:70px;height:55px;z-index:70;pointer-events:none}
+.cappuccino svg{width:100%;height:100%;display:block}
+.coffee-drop{background:#aa6b38;box-shadow:0 0 3px #ffe6b7}
+.powerup-slot{border:0;padding:0;background:transparent}
+.powerup-slot.seon-panel img{width:130%;height:115%}
+@media(max-width:500px){#seon{width:65px;height:88px}.cappuccino{width:52px;height:42px}}
+
+/* CORREZIONE DIMENSIONI SEON JEONG */
+#seon{
+ left:22%;
+ width:110px;
+ height:149px;
+ bottom:6%;
 }
-
-.pasta,
-.drink{
-width:60px;
-height:60px;
+.cappuccino{
+ width:42px;
+ height:33px;
 }
-
-#exp-bar{
-height:27px;
-left:2.5%;
-width:95%;
+.powerup-slot.seon-panel img{
+ width:100%;
+ height:100%;
 }
-
-#exp-level{
-font-size:13px;
-}
-
-#powerup-panel{
-width:110%;
-height:96%;
-}
-
-#powerup-options{
-gap:0;
-}
-
-.powerup-slot{
-width:33.33%;
-height:100%;
-}
-
-.powerup-slot img{
-width:110%;
-height:96%;
-object-fit:contain;
-}
-
-#wave-message{
-font-size:21px;
-}
-
-}
-
-/* DIMENSIONI FELICITÀ DEI TRE NUOVI CLIENTI */
-
-.customer6-template .happy-frame,
-.customer7-template .happy-frame,
-.customer8-template .happy-frame{
-transform:scale(.90);
-transform-origin:center bottom;
-}
-
-/* DIMENSIONE MANUALE MAMMA - CLIENTE 7 */
-
-.customer7-template .frame,
-.customer7-template .happy-frame,
-.customer7-template .frozen-frame{
-transform:scale(1.15);
-transform-origin:center bottom;
-}
-
-/* MAMMA - ALLINEAMENTO CAM 2 */
-
-.customer7-template .frame:nth-of-type(2){
-transform:translateX(0px) scale(1.15);
-transform-origin:center bottom;
+@media(max-width:500px){
+ #seon{
+  width:72px;
+  height:98px;
+  bottom:6%;
+ }
+ .cappuccino{
+  width:34px;
+  height:27px;
+ }
 }
 </style>
 </head>
-
 <body>
-
 <div id="phone">
-
-<!-- INTRO INIZIALE -->
-
-<div id="intro">
-
-<video
-id="introVideo"
-autoplay
-muted
-playsinline
-preload="auto"
->
-<source
-src="https://yourimageshare.com/ib/LjN0a6FLZL.mp4"
-type="video/mp4"
->
-</video>
-
-<div id="introTap"></div>
-
-</div>
-
-<!-- NERO PER LA DISSOLVENZA -->
-
+<div id="intro"><video id="introVideo" autoplay muted playsinline preload="auto"><source src="https://yourimageshare.com/ib/LjN0a6FLZL.mp4" type="video/mp4"></video><div id="introTap"></div></div>
 <div id="introFade"></div>
-
-<!-- MENU CON VIDEO IN LOOP -->
-
 <div id="menu">
-
-<video
-id="cover"
-muted
-loop
-playsinline
-preload="auto"
-poster="https://i.ibb.co/7JzwW3pP/file-00000000e8d8820b9cbd75d3f8d8e3a1.png"
->
-<source
-src="https://github.com/backtothemovie2024-afk/tarai-game/raw/refs/heads/main/Animate_chef_image_with_steam_20260915082519.mp4"
-type="video/mp4"
->
+<video id="cover" muted loop playsinline preload="auto" poster="https://i.ibb.co/7JzwW3pP/file-00000000e8d8820b9cbd75d3f8d8e3a1.png">
+<source src="https://github.com/backtothemovie2024-afk/tarai-game/raw/refs/heads/main/Animate_chef_image_with_steam_20260915082519.mp4" type="video/mp4">
 </video>
-
-<img
-id="coverOverlay"
-src="https://i.ibb.co/67Fhq4qw/file-0000000053c481f796fb5ec6162a6b2e-removebg-preview.png"
-alt=""
->
-
-<button
-id="playButton"
-aria-label="Play"
-disabled
->
-PLAY
-</button>
-
-</div>
-
-<!-- GIOCO -->
-
+<img id="coverOverlay" src="https://i.ibb.co/67Fhq4qw/file-0000000053c481f796fb5ec6162a6b2e-removebg-preview.png" alt="">
+<button id="playButton" aria-label="Play" disabled>PLAY</button></div>
 <div id="game">
-
-<img
-id="background"
-src="https://cdn.imgchest.com/files/25a5041a8483.jpg"
-alt=""
->
-
-<img
-id="kitchen"
-src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png"
-alt=""
->
-
-<img
-id="kitchenDamaged"
-src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"
-alt=""
->
-
-<img
-id="kitchenDestroyed"
-src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"
-alt=""
->
-
-<!-- SCRITTA SULLA LAVAGNA -->
-
+<img id="background" src="https://cdn.imgchest.com/files/25a5041a8483.jpg" alt="">
+<img id="kitchen" src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png" alt="">
+<img id="kitchenDamaged" src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png" alt="">
+<img id="kitchenDestroyed" src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png" alt="">
 <div id="wave-display">WAVE 1</div>
-
+<!-- Riservato al messaggio finale: nessuna scritta temporanea a inizio wave. -->
 <div id="wave-message"></div>
-
-<button
-id="testBossButton"
-type="button"
-hidden
->
-TEST BOSS
-</button>
-
-<!-- VIDEO INTRODUZIONE BOSS -->
-
+<button id="testBossButton" type="button" hidden>TEST BOSS</button>
 <div id="bossIntro">
-
-<video
-id="bossIntroVideo"
-muted
-playsinline
-preload="auto"
->
-<source
-src="https://github.com/backtothemovie2024-afk/tarai-game/raw/refs/heads/main/Video_animation_instructions_for%E2%80%A6_20260915063937.mp4"
-type="video/mp4"
->
-</video>
-
-<button
-id="bossVideoAction"
-type="button"
-hidden
->
-TOCCA PER AVVIARE IL VIDEO
-</button>
-
+<video id="bossIntroVideo" muted playsinline preload="auto"><source src="https://github.com/backtothemovie2024-afk/tarai-game/raw/refs/heads/main/Video_animation_instructions_for%E2%80%A6_20260915063937.mp4" type="video/mp4"></video>
+<button id="bossVideoAction" type="button" hidden>TOCCA PER AVVIARE IL VIDEO</button>
 </div>
 
-<!-- CLIENTE 1 -->
-
-<div
-id="customer1Template"
-class="customer customer-template customer1-template"
-style="display:none;"
->
-
-<img class="frame active"
-src="https://i.ibb.co/TMLpLFpV/tile006-191x720-removebg-preview.png"
-alt="">
-
-<img class="frame"
-src="https://i.ibb.co/qYHtzZC6/tile008-191x720-removebg-preview.png"
-alt="">
-
-<img class="happy-frame"
-src="https://i.ibb.co/xK0KvtVy/file-00000000c12c82098b5b04e3cf209f24-removebg-preview.png"
-alt="">
-
-<img class="frozen-frame"
-src="https://i.ibb.co/Kx64hLcM/1000042445-removebg-preview.png"
-alt="">
-
+<div id="customer1Template" class="customer customer-template customer1-template" style="display:none;">
+<img class="frame active" src="https://i.ibb.co/TMLpLFpV/tile006-191x720-removebg-preview.png" alt="">
+<img class="frame" src="https://i.ibb.co/qYHtzZC6/tile008-191x720-removebg-preview.png" alt="">
+<img class="happy-frame" src="https://i.ibb.co/xK0KvtVy/file-00000000c12c82098b5b04e3cf209f24-removebg-preview.png" alt="">
+<img class="frozen-frame" src="https://i.ibb.co/Kx64hLcM/1000042445-removebg-preview.png" alt="">
 <div class="heart">❤️</div>
 </div>
 
-<!-- CLIENTE 2 -->
-
-<div
-id="customer2Template"
-class="customer customer-template customer2-template"
-style="display:none;"
->
-
-<img class="frame active"
-src="https://i.ibb.co/KcRsHGBM/file-00000000c98081f5b726e6e0d5b17f8d-removebg-preview.png"
-alt="">
-
-<img class="frame"
-src="https://i.ibb.co/SXD5sdPw/IMG-20260903-WA0001-removebg-preview.png"
-alt="">
-
-<img class="happy-frame"
-src="https://i.ibb.co/Nd07D6qM/IMG-20260903-WA0000-removebg-preview.png"
-alt="">
-
-<img class="frozen-frame"
-src="https://i.ibb.co/YT061kxh/1000042452-removebg-preview.png"
-alt="">
-
+<div id="customer2Template" class="customer customer-template customer2-template" style="display:none;">
+<img class="frame active" src="https://i.ibb.co/KcRsHGBM/file-00000000c98081f5b726e6e0d5b17f8d-removebg-preview.png" alt="">
+<img class="frame" src="https://i.ibb.co/SXD5sdPw/IMG-20260903-WA0001-removebg-preview.png" alt="">
+<img class="happy-frame" src="https://i.ibb.co/Nd07D6qM/IMG-20260903-WA0000-removebg-preview.png" alt="">
+<img class="frozen-frame" src="https://i.ibb.co/YT061kxh/1000042452-removebg-preview.png" alt="">
 <div class="heart">❤️</div>
 </div>
 
-<!-- CLIENTE 3 -->
-
-<div
-id="customer3Template"
-class="customer customer-template customer3-template"
-style="display:none;"
->
-
-<img class="frame active"
-src="https://i.ibb.co/vxTN6874/tile001-removebg-preview-1.png"
-alt="">
-
-<img class="frame"
-src="https://i.ibb.co/9kzB8Fw3/tile002-removebg-preview-1.png"
-alt="">
-
-<img class="happy-frame"
-src="https://i.ibb.co/bjJz8mYb/file-000000000fac81fa84533e82a16b37af-removebg-preview.png"
-alt="">
-
-<img class="frozen-frame"
-src="https://i.ibb.co/nJTx657/1000042451-removebg-preview.png"
-alt="">
-
+<div id="customer3Template" class="customer customer-template customer3-template" style="display:none;">
+<img class="frame active" src="https://i.ibb.co/vxTN6874/tile001-removebg-preview-1.png" alt="">
+<img class="frame" src="https://i.ibb.co/9kzB8Fw3/tile002-removebg-preview-1.png" alt="">
+<img class="happy-frame" src="https://i.ibb.co/bjJz8mYb/file-000000000fac81fa84533e82a16b37af-removebg-preview.png" alt="">
+<img class="frozen-frame" src="https://i.ibb.co/nJTx657/1000042451-removebg-preview.png" alt="">
 <div class="heart">❤️</div>
 </div>
 
-<!-- CLIENTE 4 -->
-
-<div
-id="customer4Template"
-class="customer customer-template customer4-template"
-style="display:none;"
->
-
-<img class="frame active"
-src="https://i.ibb.co/k2fF7sB9/1000042318-removebg-preview.png"
-alt="">
-
-<img class="frame"
-src="https://i.ibb.co/QyB3W9h/1000042319-removebg-preview.png"
-alt="">
-
-<img class="happy-frame"
-src="https://i.ibb.co/F4BLT4j8/1000042309-removebg-preview.png"
-alt="">
-
-<img class="frozen-frame"
-src="https://i.ibb.co/DPsjg9ww/1000042455-removebg-preview.png"
-alt="">
-
+<div id="customer4Template" class="customer customer-template customer4-template" style="display:none;">
+<img class="frame active" src="https://i.ibb.co/k2fF7sB9/1000042318-removebg-preview.png" alt="">
+<img class="frame" src="https://i.ibb.co/QyB3W9h/1000042319-removebg-preview.png" alt="">
+<img class="happy-frame" src="https://i.ibb.co/F4BLT4j8/1000042309-removebg-preview.png" alt="">
+<img class="frozen-frame" src="https://i.ibb.co/DPsjg9ww/1000042455-removebg-preview.png" alt="">
 <div class="heart">❤️</div>
 </div>
 
-<!-- CLIENTE 5 -->
-
-<div
-id="customer5Template"
-class="customer customer-template customer5-template"
-style="display:none;"
->
-
-<img class="frame active"
-src="https://i.ibb.co/tPcTpmCp/file-00000000fb7481faa77857eab2c72b35-removebg-preview.png"
-alt="">
-
-<img class="frame"
-src="https://i.ibb.co/B5kyP23r/file-00000000629c8230a812e52a7d5e884c-removebg-preview.png"
-alt="">
-
-<img class="happy-frame"
-src="https://i.ibb.co/HptPnxqL/file-00000000afec8206808ae4a9281b5442-removebg-preview.png"
-alt="">
-
-<img class="frozen-frame"
-src="https://i.ibb.co/k2DfX1WT/1000042453-removebg-preview.png"
-alt="">
-
+<div id="customer5Template" class="customer customer-template customer5-template" style="display:none;">
+<img class="frame active" src="https://i.ibb.co/tPcTpmCp/file-00000000fb7481faa77857eab2c72b35-removebg-preview.png" alt="">
+<img class="frame" src="https://i.ibb.co/B5kyP23r/file-00000000629c8230a812e52a7d5e884c-removebg-preview.png" alt="">
+<img class="happy-frame" src="https://i.ibb.co/HptPnxqL/file-00000000afec8206808ae4a9281b5442-removebg-preview.png" alt="">
+<img class="frozen-frame" src="https://i.ibb.co/k2DfX1WT/1000042453-removebg-preview.png" alt="">
 <div class="heart">❤️</div>
 </div>
 
-<!-- CLIENTE 6 - STUDENTE -->
-
-<div
-id="customer6Template"
-class="customer customer-template customer6-template"
-style="display:none;"
->
-
-<img class="frame active"
-src="https://i.ibb.co/rKHKzCzZ/1000043212-removebg-preview.png"
-alt="">
-
-<img class="frame"
-src="https://i.ibb.co/wNHh3RXs/1000043213-removebg-preview.png"
-alt="">
-
-<img class="happy-frame"
-src="https://i.ibb.co/rG8rp5GG/1000043191-removebg-preview.png"
-alt="">
-
-<img class="frozen-frame"
-src="https://i.ibb.co/x4SynkS/1000043192-removebg-preview.png"
-alt="">
-
+<div id="customer6Template" class="customer customer-template customer6-template" style="display:none;">
+<img class="frame active" src="https://i.ibb.co/rKHKzCzZ/1000043212-removebg-preview.png" alt="">
+<img class="frame" src="https://i.ibb.co/wNHh3RXs/1000043213-removebg-preview.png" alt="">
+<img class="happy-frame" src="https://i.ibb.co/rG8rp5GG/1000043191-removebg-preview.png" alt="">
+<img class="frozen-frame" src="https://i.ibb.co/x4SynkS/1000043192-removebg-preview.png" alt="">
 <div class="heart">❤️</div>
 </div>
 
-<!-- CLIENTE 7 - MAMMA -->
-
-<div
-id="customer7Template"
-class="customer customer-template customer7-template"
-style="display:none;"
->
-
-<img class="frame active"
-src="https://i.ibb.co/yc59qbnB/1000043851-removebg-preview.png"
-alt="">
-
-<img class="frame"
-src="https://i.ibb.co/qL2GTVvK/1000043850-removebg-preview.png"
-alt="">
-
-<img class="happy-frame"
-src="https://i.ibb.co/b8XZs1r/1000043193-removebg-preview.png"
-alt="">
-
-<img class="frozen-frame"
-src="https://i.ibb.co/xKQFS6Vg/1000043194-removebg-preview.png"
-alt="">
-
+<div id="customer7Template" class="customer customer-template customer7-template" style="display:none;">
+<img class="frame active" src="https://i.ibb.co/yc59qbnB/1000043851-removebg-preview.png" alt="">
+<img class="frame" src="https://i.ibb.co/qL2GTVvK/1000043850-removebg-preview.png" alt="">
+<img class="happy-frame" src="https://i.ibb.co/b8XZs1r/1000043193-removebg-preview.png" alt="">
+<img class="frozen-frame" src="https://i.ibb.co/xKQFS6Vg/1000043194-removebg-preview.png" alt="">
 <div class="heart">❤️</div>
 </div>
 
-<!-- CLIENTE 8 - ANZIANA -->
-
-<div
-id="customer8Template"
-class="customer customer-template customer8-template"
-style="display:none;"
->
-
-<img class="frame active"
-src="https://i.ibb.co/MxpjYyFm/1000043214-removebg-preview.png"
-alt="">
-
-<img class="frame"
-src="https://i.ibb.co/r1XTGSg/1000043209-removebg-preview.png"
-alt="">
-
-<img class="happy-frame"
-src="https://i.ibb.co/CKCXBT8L/1000043199-removebg-preview.png"
-alt="">
-
-<img class="frozen-frame"
-src="https://i.ibb.co/RGQdckHM/1000043200-removebg-preview.png"
-alt="">
-
+<div id="customer8Template" class="customer customer-template customer8-template" style="display:none;">
+<img class="frame active" src="https://i.ibb.co/MxpjYyFm/1000043214-removebg-preview.png" alt="">
+<img class="frame" src="https://i.ibb.co/r1XTGSg/1000043209-removebg-preview.png" alt="">
+<img class="happy-frame" src="https://i.ibb.co/CKCXBT8L/1000043199-removebg-preview.png" alt="">
+<img class="frozen-frame" src="https://i.ibb.co/RGQdckHM/1000043200-removebg-preview.png" alt="">
 <div class="heart">❤️</div>
 </div>
 
-<!-- MINIBOSS ASSISTENTE -->
-
-<div
-id="assistantBossTemplate"
-class="customer customer-template boss-unit-template"
-style="display:none;"
->
-
-<img class="frame active"
-src="https://i.ibb.co/gL7RgywQ/1000042613-removebg-preview.png"
-alt="">
-
-<img class="frame"
-src="https://i.ibb.co/KjFm1jwP/1000042614-removebg-preview.png"
-alt="">
-
-<img class="happy-frame"
-src="https://i.ibb.co/Wvpbt1Xj/1000042616-removebg-preview.png"
-alt="">
-
+<div id="assistantBossTemplate" class="customer customer-template boss-unit-template" style="display:none;">
+<img class="frame active" src="https://i.ibb.co/gL7RgywQ/1000042613-removebg-preview.png" alt="">
+<img class="frame" src="https://i.ibb.co/KjFm1jwP/1000042614-removebg-preview.png" alt="">
+<img class="happy-frame" src="https://i.ibb.co/Wvpbt1Xj/1000042616-removebg-preview.png" alt="">
 <div class="heart">❤️</div>
 </div>
 
-<!-- BOSS PRINCIPALE -->
-
-<div
-id="mainBossTemplate"
-class="customer customer-template boss-unit-template"
-style="display:none;"
->
-
-<img class="frame active"
-src="https://i.ibb.co/nqtp2fbX/1000042606-removebg-preview.png"
-alt="">
-
-<img class="frame"
-src="https://i.ibb.co/rTs3r2F/1000042607-removebg-preview.png"
-alt="">
-
-<img class="happy-frame"
-src="https://i.ibb.co/WvM1QTVC/1000042381-removebg-preview.png"
-alt="">
-
+<div id="mainBossTemplate" class="customer customer-template boss-unit-template" style="display:none;">
+<img class="frame active" src="https://i.ibb.co/nqtp2fbX/1000042606-removebg-preview.png" alt="">
+<img class="frame" src="https://i.ibb.co/rTs3r2F/1000042607-removebg-preview.png" alt="">
+<img class="happy-frame" src="https://i.ibb.co/WvM1QTVC/1000042381-removebg-preview.png" alt="">
 <div class="heart">❤️</div>
 </div>
 
-<!-- MINIBOSS CAMERAMAN -->
-
-<div
-id="cameramanBossTemplate"
-class="customer customer-template boss-unit-template"
-style="display:none;"
->
-
-<img class="frame active"
-src="https://i.ibb.co/NgZmwGVt/1000042623-removebg-preview.png"
-alt="">
-
-<img class="frame"
-src="https://i.ibb.co/ymH4x7R9/1000042624-removebg-preview.png"
-alt="">
-
-<img class="happy-frame"
-src="https://i.ibb.co/20kVQ3Wk/1000042617-removebg-preview.png"
-alt="">
-
+<div id="cameramanBossTemplate" class="customer customer-template boss-unit-template" style="display:none;">
+<img class="frame active" src="https://i.ibb.co/NgZmwGVt/1000042623-removebg-preview.png" alt="">
+<img class="frame" src="https://i.ibb.co/ymH4x7R9/1000042624-removebg-preview.png" alt="">
+<img class="happy-frame" src="https://i.ibb.co/20kVQ3Wk/1000042617-removebg-preview.png" alt="">
 <div class="heart">❤️</div>
 </div>
-
-<!-- CUOCO -->
-
 <div id="cook">
-
-<img class="active"
-src="https://i.ibb.co/yFtf2t1Z/1000042207-removebg-preview.png"
-alt="">
-
-<img
-src="https://i.ibb.co/C55PHjY3/1000042208-removebg-preview.png"
-alt="">
-
-<img
-src="https://i.ibb.co/TxB5sjB4/1000042209-removebg-preview.png"
-alt="">
-
-<img
-src="https://i.ibb.co/n88k4TCp/1000042210-removebg-preview.png"
-alt="">
-
-<img
-src="https://i.ibb.co/M5yvWywM/1000042211-removebg-preview.png"
-alt="">
-
+<img class="active" src="https://i.ibb.co/yFtf2t1Z/1000042207-removebg-preview.png" alt="">
+<img class="" src="https://i.ibb.co/C55PHjY3/1000042208-removebg-preview.png" alt="">
+<img class="" src="https://i.ibb.co/TxB5sjB4/1000042209-removebg-preview.png" alt="">
+<img class="" src="https://i.ibb.co/n88k4TCp/1000042210-removebg-preview.png" alt="">
+<img class="" src="https://i.ibb.co/M5yvWywM/1000042211-removebg-preview.png" alt="">
 </div>
-
-<!-- CAMERIERA -->
-
 <div id="waitress">
-
-<img class="active"
-src="https://i.ibb.co/QF89M6kD/1000042138-removebg-preview.png"
-alt="">
-
-<img
-src="https://i.ibb.co/Kj0pmpYW/1000042139-removebg-preview.png"
-alt="">
-
-<img
-src="https://i.ibb.co/k68q8JzG/1000042140-removebg-preview.png"
-alt="">
-
-<img
-src="https://i.ibb.co/21cygdFG/1000042141-removebg-preview.png"
-alt="">
-
-<img
-src="https://i.ibb.co/ns3H0fCB/1000042143-removebg-preview.png"
-alt="">
-
-<img
-src="https://i.ibb.co/TBvNWcQ8/1000042144-removebg-preview.png"
-alt="">
-
-<img
-src="https://i.ibb.co/QF89M6kD/1000042138-removebg-preview.png"
-alt="">
-
+<img class="active" src="https://i.ibb.co/QF89M6kD/1000042138-removebg-preview.png" alt="">
+<img class="" src="https://i.ibb.co/Kj0pmpYW/1000042139-removebg-preview.png" alt="">
+<img class="" src="https://i.ibb.co/k68q8JzG/1000042140-removebg-preview.png" alt="">
+<img class="" src="https://i.ibb.co/21cygdFG/1000042141-removebg-preview.png" alt="">
+<img class="" src="https://i.ibb.co/ns3H0fCB/1000042143-removebg-preview.png" alt="">
+<img class="" src="https://i.ibb.co/TBvNWcQ8/1000042144-removebg-preview.png" alt="">
+<img class="" src="https://i.ibb.co/QF89M6kD/1000042138-removebg-preview.png" alt="">
 </div>
-
-<!-- EXP -->
-
-<div id="exp-bar">
-<div id="exp-fill"></div>
-<div id="exp-level">LV 1</div>
+<div id="seon">
+<img class="active" style="--shift:0.0%" src="https://i.ibb.co/prNNLfzf/tile000-removebg-preview.png" alt="">
+<img class="" style="--shift:-0.6666666666666666%" src="https://i.ibb.co/Fbvk6qVG/tile001-removebg-preview.png" alt="">
+<img class="" style="--shift:-5.0%" src="https://i.ibb.co/wNPT779g/tile004-removebg-preview.png" alt="">
+<img class="" style="--shift:-5.666666666666667%" src="https://i.ibb.co/wD2BB7d/tile005-removebg-preview.png" alt="">
+<img class="" style="--shift:-3.3333333333333335%" src="https://i.ibb.co/LzG1Bgy5/tile002-2-removebg-preview.png" alt="">
+<img class="" style="--shift:-3.3333333333333335%" src="https://i.ibb.co/JW9CLY8Z/tile003-2-removebg-preview.png" alt="">
 </div>
-
-<!-- POWER UP -->
-
-<div id="powerup-overlay">
-<div id="powerup-panel">
-<div id="powerup-options"></div>
+<div id="exp-bar"><div id="exp-fill"></div><div id="exp-level">LV 1</div></div>
+<div id="powerup-overlay"><div id="powerup-panel"><div id="powerup-options"></div></div></div>
 </div>
-</div>
-
-</div>
-
-<!-- TRANSIZIONE DOPO PLAY -->
-
 <div id="blackTransition">
-
-<img
-id="transitionImage1"
-class="transition-image"
-src="https://i.ibb.co/Xfyp7q6S/IMG-20260902-WA0007-removebg-preview.png"
-alt=""
->
-
-<img
-id="transitionImage2"
-class="transition-image"
-src="https://i.ibb.co/7tJLX4sv/IMG-20260902-WA0006-removebg-preview.png"
-alt=""
->
-
-<img
-id="transitionImage3"
-class="transition-image"
-src="https://i.ibb.co/RGnVyM45/file-000000002dd881f5ba124fc2a3c78a0c-removebg-preview-removebg-preview.png"
-alt=""
->
-
-</div>
-
-</div>
-
+<img id="transitionImage1" class="transition-image" src="https://i.ibb.co/Xfyp7q6S/IMG-20260902-WA0007-removebg-preview.png" alt="">
+<img id="transitionImage2" class="transition-image" src="https://i.ibb.co/7tJLX4sv/IMG-20260902-WA0006-removebg-preview.png" alt="">
+<img id="transitionImage3" class="transition-image" src="https://i.ibb.co/RGnVyM45/file-000000002dd881f5ba124fc2a3c78a0c-removebg-preview-removebg-preview.png" alt="">
+</div></div>
 <script>
-
-/*
-TEST BOSS:
-true = pulsante visibile.
-false = pulsante nascosto.
-*/
-
+/* TEST TEMPORANEO: impostare false per eliminare il pulsante TEST BOSS. */
 const ENABLE_BOSS_TEST=true;
 
-/* INTRO → NERO → MENU */
-
-const intro=document.getElementById("intro");
-const introVideo=document.getElementById("introVideo");
-const introFade=document.getElementById("introFade");
-const menuVideo=document.getElementById("cover");
-
+/* INTRO → NERO → MENU: 0,8 secondi per ciascuna fase. */
+const intro=document.getElementById('intro');
+const introVideo=document.getElementById('introVideo');
+const introFade=document.getElementById('introFade');
+const menuVideo=document.getElementById('cover');
 let introClosing=false;
 let menuReady=false;
 
 function playMenuVideo(){
-
-if(document.getElementById("menu").style.display==="none"){
-return;
-}
-
-menuVideo.muted=true;
-
-const promise=menuVideo.play();
-
-if(promise){
-
-promise.catch(function(){
-/* Se il video non parte, rimane visibile il poster. */
-});
-
-}
-
+ if(document.getElementById('menu').style.display==='none')return;
+ menuVideo.muted=true;
+ const promise=menuVideo.play();
+ if(promise)promise.catch(function(){
+  // Il poster resta visibile se il browser non avvia il video.
+ });
 }
 
 function closeIntro(){
-
-if(
-introClosing ||
-intro.style.display==="none"
-){
-return;
+ if(introClosing||intro.style.display==='none')return;
+ introClosing=true;
+ introFade.style.display='block';
+ introFade.style.opacity='0';
+ void introFade.offsetWidth;
+ introFade.style.opacity='1';
+ setTimeout(function(){
+  introVideo.pause();
+  intro.style.display='none';
+  menuVideo.currentTime=0;
+  playMenuVideo();
+  introFade.style.opacity='0';
+  setTimeout(function(){
+   introFade.style.display='none';
+   menuReady=true;
+   document.getElementById('playButton').disabled=false;
+  },800);
+ },800);
 }
+document.getElementById('introTap').addEventListener('click',closeIntro);
+document.getElementById('introTap').addEventListener('touchend',function(e){e.preventDefault();closeIntro();},{passive:false});
+introVideo.addEventListener('ended',closeIntro);
+document.getElementById('menu').addEventListener('pointerdown',function(){
+ if(menuReady&&menuVideo.paused)playMenuVideo();
+});
 
-introClosing=true;
-
-introFade.style.display="block";
-introFade.style.opacity="0";
-
-void introFade.offsetWidth;
-
-introFade.style.opacity="1";
-
-/* Prima fase: il video diventa nero. */
-
-setTimeout(function(){
-
-introVideo.pause();
-intro.style.display="none";
-
-menuVideo.currentTime=0;
-
-playMenuVideo();
-
-/* Seconda fase: dal nero appare il menu. */
-
-introFade.style.opacity="0";
-
-setTimeout(function(){
-
-introFade.style.display="none";
-
-menuReady=true;
-
-document.getElementById(
-"playButton"
-).disabled=false;
-
-},800);
-
-},800);
-
-}
-
-document.getElementById("introTap").addEventListener(
-"click",
-closeIntro
-);
-
-document.getElementById("introTap").addEventListener(
-"touchend",
-function(event){
-
-event.preventDefault();
-closeIntro();
-
-},
-{passive:false}
-);
-
-introVideo.addEventListener("ended",closeIntro);
-
-document.getElementById("menu").addEventListener(
-"pointerdown",
-function(){
-
-if(menuReady && menuVideo.paused){
-playMenuVideo();
-}
-
-}
-);
-
-/* HITBOX */
-
-const HIT_X=5;
-const HIT_Y=0;
-const HIT_POSITION_Y=.45;
-
-const WAITRESS_HAND_X=.72;
-const WAITRESS_HAND_Y=.38;
-
-/* WAVES */
-
+const HIT_X=5,HIT_Y=0,HIT_POSITION_Y=.45;
+const WAITRESS_HAND_X=.72,WAITRESS_HAND_Y=.38;
 const WAVES=[
-{customers:5,spawnInterval:3800,walkTime:70,hp:30},
-{customers:6,spawnInterval:3600,walkTime:68,hp:32},
-{customers:6,spawnInterval:3400,walkTime:66,hp:34},
-{customers:7,spawnInterval:3200,walkTime:64,hp:36},
-{customers:7,spawnInterval:3000,walkTime:62,hp:38},
-
-{customers:8,spawnInterval:2850,walkTime:60,hp:40},
-{customers:8,spawnInterval:2700,walkTime:58,hp:42},
-{customers:9,spawnInterval:2550,walkTime:56,hp:44},
-{customers:9,spawnInterval:2400,walkTime:54,hp:46},
-{customers:10,spawnInterval:2250,walkTime:52,hp:48},
-
-{customers:10,spawnInterval:2150,walkTime:50,hp:50},
-{customers:11,spawnInterval:2050,walkTime:48,hp:52},
-{customers:11,spawnInterval:1950,walkTime:46,hp:54},
-{customers:12,spawnInterval:1850,walkTime:44,hp:56},
-{customers:12,spawnInterval:1750,walkTime:42,hp:58},
-
-{customers:13,spawnInterval:1650,walkTime:40,hp:60},
-{customers:13,spawnInterval:1550,walkTime:38,hp:62},
-{customers:14,spawnInterval:1450,walkTime:36,hp:64},
-{customers:15,spawnInterval:1350,walkTime:34,hp:66},
-{customers:16,spawnInterval:1250,walkTime:32,hp:70}
+ {customers:4,spawnInterval:4200,walkTime:85,hp:15},
+ {customers:5,spawnInterval:4100,walkTime:84,hp:16},
+ {customers:5,spawnInterval:4000,walkTime:83,hp:17},
+ {customers:6,spawnInterval:3900,walkTime:82,hp:18},
+ {customers:6,spawnInterval:3800,walkTime:81,hp:19},
+ {customers:7,spawnInterval:3600,walkTime:80,hp:20},
+ {customers:7,spawnInterval:3500,walkTime:79,hp:21},
+ {customers:8,spawnInterval:3400,walkTime:78,hp:22},
+ {customers:8,spawnInterval:3300,walkTime:77,hp:23},
+ {customers:9,spawnInterval:3200,walkTime:76,hp:24},
+ {customers:8,spawnInterval:3400,walkTime:78,hp:23},
+ {customers:9,spawnInterval:3100,walkTime:75,hp:25},
+ {customers:9,spawnInterval:3000,walkTime:74,hp:26},
+ {customers:10,spawnInterval:2900,walkTime:73,hp:27},
+ {customers:10,spawnInterval:2800,walkTime:72,hp:28},
+ {customers:9,spawnInterval:3000,walkTime:74,hp:27},
+ {customers:11,spawnInterval:2600,walkTime:71,hp:30},
+ {customers:11,spawnInterval:2500,walkTime:70,hp:32},
+ {customers:12,spawnInterval:2400,walkTime:70,hp:34},
+ {customers:3,spawnInterval:1500,walkTime:100,hp:200}
 ];
-
 const TOTAL_WAVES=WAVES.length;
 const BOSS_WAVE=TOTAL_WAVES;
-
-/* CORSIE */
-
-const LANES=[
-29,
-36.4,
-43.8,
-51.2,
-58.6
-];
-
+const LANES=[29,36.4,43.8,51.2,58.6];
 const SAME_LANE_MIN_DELAY=1500;
-
-/* TEMPI */
-
 const NORMAL_WAVE_DELAY=600;
 const BOSS_WAVE_DELAY=1200;
-
-/* EXP */
-
 const EXP_PER_CUSTOMER=5;
-
-const EXP_REQUIREMENTS=[
-15,20,25,30,35,40,45,50,55,60,65
-];
-
+const EXP_REQUIREMENTS=[15,20,25,30,35,40,45,50,55,60,65];
 const MAX_LEVEL=12;
-
-/* STATO DEL GIOCO */
-
-let currentWave=1;
-let waveSpawned=0;
-let waveFinished=false;
-let waveStarting=false;
-
-let currentLevel=1;
-let currentEXP=0;
-
-let kitchenEnergy=100;
+let currentWave=1,waveSpawned=0,waveFinished=false,waveStarting=false;
+let currentLevel=1,currentEXP=0,kitchenEnergy=100;
 let customers=[];
+let powerUps={pasta:0,speed:0,sauce:0,waitress:false,iceShot:0,iceChain:0,deepFreeze:0,seon:false,hotSplash:0,caffeineRush:0,doubleShot:0};
+let pastaSpeedBonus=0,powerUpPaused=false;
+let bossIntroPlaying=false,gameStarted=false,gameFinished=false;
+let cookAttacking=false,waitressAttacking=false,seonAttacking=false;
+let seonAttackTimer=null;
+let offeredPowerUps=[];
+let customerTimer=null,customer4Timer=null,cookTimer=null,waitressAttackTimer=null;
+let firstAttackTimer=null,kitchenDamageTimer=null,zIndexTimer=null,waveCheckTimer=null;
 
-let powerUps={
-pasta:0,
-speed:0,
-sauce:0,
-waitress:false,
-iceShot:0,
-iceChain:0,
-deepFreeze:0
-};
-
-let pastaSpeedBonus=0;
-let powerUpPaused=false;
-
-let bossIntroPlaying=false;
-let gameStarted=false;
-let gameFinished=false;
-
-let cookAttacking=false;
-let waitressAttacking=false;
-
-let customerTimer=null;
-let customer4Timer=null;
-let cookTimer=null;
-let waitressAttackTimer=null;
-let firstAttackTimer=null;
-let kitchenDamageTimer=null;
-let zIndexTimer=null;
-let waveCheckTimer=null;
-
-/* TIMER DEL GIOCO */
-
-let gameClock=0;
-let lastClockTime=performance.now();
-let nextTaskId=1;
+/* Tutti i timer del gioco sono cancellabili al salto di wave.
+   Il tempo di gioco si ferma durante la scelta dei potenziamenti. */
+let gameClock=0,lastClockTime=performance.now(),nextTaskId=1;
 let generation=0;
-
 const gameTasks=new Map();
 const gameFrames=new Set();
-
 function gameLater(callback,delay){
-
-const id=nextTaskId++;
-
-gameTasks.set(id,{
-callback:callback,
-due:gameClock+delay,
-interval:0
-});
-
-return id;
-
+ const id=nextTaskId++;
+ gameTasks.set(id,{callback,due:gameClock+delay,interval:0});
+ return id;
 }
-
 function gameEvery(callback,delay){
-
-const id=nextTaskId++;
-
-gameTasks.set(id,{
-callback:callback,
-due:gameClock+delay,
-interval:delay
-});
-
-return id;
-
+ const id=nextTaskId++;
+ gameTasks.set(id,{callback,due:gameClock+delay,interval:delay});
+ return id;
 }
-
-function cancelTask(id){
-gameTasks.delete(id);
-}
-
+function cancelTask(id){gameTasks.delete(id);}
 function gameFrame(callback){
-
-const token=generation;
-
-const id=requestAnimationFrame(function(time){
-
-gameFrames.delete(id);
-
-if(token===generation){
-callback(time);
+ const token=generation;
+ const id=requestAnimationFrame(function(time){
+  gameFrames.delete(id);
+  if(token===generation) callback(time);
+ });
+ gameFrames.add(id);return id;
 }
-
-});
-
-gameFrames.add(id);
-
-return id;
-
-}
-
 function tickGameClock(now){
-
-const delta=now-lastClockTime;
-lastClockTime=now;
-
-if(
-!powerUpPaused &&
-!bossIntroPlaying &&
-!gameFinished
-){
-
-gameClock+=delta;
-
-for(const [id,task] of Array.from(gameTasks)){
-
-if(
-powerUpPaused ||
-bossIntroPlaying ||
-gameFinished
-){
-break;
+ const delta=now-lastClockTime;lastClockTime=now;
+ if(!powerUpPaused&&!bossIntroPlaying&&!gameFinished){
+  gameClock+=delta;
+  for(const [id,task] of Array.from(gameTasks)){
+   if(powerUpPaused||bossIntroPlaying||gameFinished) break;
+   if(!gameTasks.has(id)||task.due>gameClock) continue;
+   if(task.interval) task.due=gameClock+task.interval;
+   else gameTasks.delete(id);
+   task.callback();
+  }
+ }
+ requestAnimationFrame(tickGameClock);
 }
-
-if(
-!gameTasks.has(id) ||
-task.due>gameClock
-){
-continue;
-}
-
-if(task.interval){
-task.due=gameClock+task.interval;
-}else{
-gameTasks.delete(id);
-}
-
-task.callback();
-
-}
-
-}
-
 requestAnimationFrame(tickGameClock);
-
-}
-
-requestAnimationFrame(tickGameClock);
-
 function clearAllTimers(){
-
-generation++;
-
-gameTasks.clear();
-
-gameFrames.forEach(function(id){
-cancelAnimationFrame(id);
-});
-
-gameFrames.clear();
-
-customerTimer=null;
-customer4Timer=null;
-cookTimer=null;
-waitressAttackTimer=null;
-firstAttackTimer=null;
-kitchenDamageTimer=null;
-zIndexTimer=null;
-waveCheckTimer=null;
-
-cookAttacking=false;
-waitressAttacking=false;
-
+ generation++;
+ gameTasks.clear();
+ gameFrames.forEach(id=>cancelAnimationFrame(id));gameFrames.clear();
+ customerTimer=customer4Timer=cookTimer=waitressAttackTimer=null;
+ firstAttackTimer=kitchenDamageTimer=zIndexTimer=waveCheckTimer=null;
+ cookAttacking=waitressAttacking=seonAttacking=false;seonAttackTimer=null;
 }
 
-/* PANNELLI POWER UP */
-
+/* PANNELLI POWER UP ORIGINALI */
 const POWER_UP_PANELS={
-
-pasta:[
-"https://i.ibb.co/WN2w5Gdr/20260904-130420-0000-removebg-preview.png",
-"https://i.ibb.co/TB2VNLT9/20260904-130538-0000-removebg-preview.png",
-"https://i.ibb.co/v4HTHVvD/20260904-130654-0000-removebg-preview.png"
-],
-
-sauce:[
-"https://i.ibb.co/wN1wThJ4/20260906-064841-0000-removebg-preview.png",
-"https://i.ibb.co/bRBNBZjK/20260906-064910-0000-removebg-preview.png",
-"https://i.ibb.co/9mqm7dsN/20260906-064941-0000-removebg-preview.png"
-],
-
-speed:[
-"https://i.ibb.co/MkNSjJwS/20260904-121910-0000-removebg-preview.png",
-"https://i.ibb.co/S4pzKRB7/20260904-122032-0000-removebg-preview-1.png",
-"https://i.ibb.co/yFG9djjL/20260904-115710-0000-removebg-preview.png"
-],
-
-waitress:
-"https://i.ibb.co/5WW0VDPS/20260906-065655-0000-removebg-preview.png",
-
-iceShot:[
-"https://i.ibb.co/3mytpycj/1000042532-removebg-preview.png",
-"https://i.ibb.co/RpPWmLf1/1000042533-removebg-preview.png",
-"https://i.ibb.co/kg8ZJ26R/1000042534-removebg-preview.png"
-],
-
-iceChain:[
-"https://i.ibb.co/4RctQkYn/1000042535-removebg-preview.png",
-"https://i.ibb.co/YBXzXK8T/1000042536-removebg-preview.png",
-"https://i.ibb.co/R46THQGk/1000042537-removebg-preview.png"
-],
-
-deepFreeze:[
-"https://i.ibb.co/d0wKYzSF/1000042538-removebg-preview.png",
-"https://i.ibb.co/1f3rLZ6L/1000042539-removebg-preview.png",
-"https://i.ibb.co/PG5PFZfw/1000042542-removebg-preview.png"
-]
-
+ pasta:[
+ 'https://i.ibb.co/WN2w5Gdr/20260904-130420-0000-removebg-preview.png',
+ 'https://i.ibb.co/TB2VNLT9/20260904-130538-0000-removebg-preview.png',
+ 'https://i.ibb.co/v4HTHVvD/20260904-130654-0000-removebg-preview.png'],
+ sauce:[
+ 'https://i.ibb.co/wN1wThJ4/20260906-064841-0000-removebg-preview.png',
+ 'https://i.ibb.co/bRBNBZjK/20260906-064910-0000-removebg-preview.png',
+ 'https://i.ibb.co/9mqm7dsN/20260906-064941-0000-removebg-preview.png'],
+ speed:[
+ 'https://i.ibb.co/MkNSjJwS/20260904-121910-0000-removebg-preview.png',
+ 'https://i.ibb.co/S4pzKRB7/20260904-122032-0000-removebg-preview-1.png',
+ 'https://i.ibb.co/yFG9djjL/20260904-115710-0000-removebg-preview.png'],
+ waitress:'https://i.ibb.co/5WW0VDPS/20260906-065655-0000-removebg-preview.png',
+ iceShot:[
+ 'https://i.ibb.co/3mytpycj/1000042532-removebg-preview.png',
+ 'https://i.ibb.co/RpPWmLf1/1000042533-removebg-preview.png',
+ 'https://i.ibb.co/kg8ZJ26R/1000042534-removebg-preview.png'],
+ iceChain:[
+ 'https://i.ibb.co/4RctQkYn/1000042535-removebg-preview.png',
+ 'https://i.ibb.co/YBXzXK8T/1000042536-removebg-preview.png',
+ 'https://i.ibb.co/R46THQGk/1000042537-removebg-preview.png'],
+ deepFreeze:[
+ 'https://i.ibb.co/d0wKYzSF/1000042538-removebg-preview.png',
+ 'https://i.ibb.co/1f3rLZ6L/1000042539-removebg-preview.png',
+ 'https://i.ibb.co/PG5PFZfw/1000042542-removebg-preview.png']
 };
-
-/* POWER UP DISPONIBILI */
-
+Object.assign(POWER_UP_PANELS,{
+ seon:'https://i.ibb.co/B245nYHg/1000044650-removebg-preview.png',
+ hotSplash:[
+ 'https://i.ibb.co/F258DF4/1000044647-removebg-preview.png',
+ 'https://i.ibb.co/mrVv2Gct/1000044648-removebg-preview.png',
+ 'https://i.ibb.co/XxMRFsSf/1000044649-removebg-preview.png'],
+ caffeineRush:[
+ 'https://i.ibb.co/N6t982KB/1000044642-removebg-preview.png',
+ 'https://i.ibb.co/s9x7Yw4X/1000044643-removebg-preview.png',
+ 'https://i.ibb.co/93N2pgH2/1000044645-removebg-preview.png'],
+ doubleShot:[
+ 'https://i.ibb.co/XxcZW307/1000044639-removebg-preview.png',
+ 'https://i.ibb.co/S71Zby8R/1000044640-removebg-preview.png',
+ 'https://i.ibb.co/ZpftT8vp/1000044641-removebg-preview.png']
+});
 function getAvailablePowerUps(){
-
-const available=[];
-
-["pasta","speed","sauce"].forEach(function(type){
-
-if(powerUps[type]<3){
-
-available.push({
-type:type,
-level:powerUps[type]+1
-});
-
+ const available=[];
+ function add(types){types.forEach(type=>{
+  if(powerUps[type]<3)available.push({type,level:powerUps[type]+1});
+ });}
+ add(['pasta','speed','sauce']);
+ if(!powerUps.waitress){
+  if(currentLevel>=2)available.push({type:'waitress',level:1});
+ }else add(['iceShot','iceChain','deepFreeze']);
+ if(!powerUps.seon){
+  if(currentLevel>=3)available.push({type:'seon',level:1});
+ }else add(['hotSplash','caffeineRush','doubleShot']);
+ return available;
 }
-
-});
-
-if(!powerUps.waitress){
-
-available.push({
-type:"waitress",
-level:1
-});
-
-}else{
-
-["iceShot","iceChain","deepFreeze"].forEach(function(type){
-
-if(powerUps[type]<3){
-
-available.push({
-type:type,
-level:powerUps[type]+1
-});
-
-}
-
-});
-
-}
-
-return available;
-
-}
-
 function shuffle(items){
-
-for(let i=items.length-1;i>0;i--){
-
-const j=Math.floor(Math.random()*(i+1));
-
-[items[i],items[j]]=[items[j],items[i]];
-
+ for(let i=items.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[items[i],items[j]]=[items[j],items[i]];}
+ return items;
 }
-
-return items;
-
-}
-
-/* MOSTRA POWER UP */
-
 function showPowerUpScreen(){
-
-if(powerUpPaused) return;
-
-const available=shuffle(getAvailablePowerUps());
-
-if(!available.length) return;
-
-const options=document.getElementById("powerup-options");
-
-options.innerHTML="";
-
-let selected=[];
-
-if(powerUps.waitress){
-
-const choices=available.filter(function(powerUp){
-
-return [
-"iceShot",
-"iceChain",
-"deepFreeze"
-].includes(powerUp.type);
-
-});
-
-const choice=choices[
-Math.floor(Math.random()*choices.length)
-];
-
-if(choice){
-selected.push(choice);
+ if(powerUpPaused)return;
+ const available=shuffle(getAvailablePowerUps());
+ if(!available.length)return;
+ // Sblocchi garantiti tra le tre scelte; gli altri pannelli sono mescolati.
+ const guaranteed=currentLevel===2?'waitress':currentLevel===3?'seon':null;
+ const fixed=available.find(p=>p.type===guaranteed);
+ offeredPowerUps=fixed?[fixed,...available.filter(p=>p!==fixed).slice(0,2)]:available.slice(0,3);
+ shuffle(offeredPowerUps);
+ const options=document.getElementById('powerup-options');options.innerHTML='';
+ offeredPowerUps.forEach(p=>{
+  const slot=document.createElement('button');slot.type='button';slot.className='powerup-slot';
+  if(['seon','hotSplash','caffeineRush','doubleShot'].includes(p.type))slot.classList.add('seon-panel');
+  slot.dataset.type=p.type;slot.dataset.level=p.level;
+  const image=document.createElement('img');
+  const panel=POWER_UP_PANELS[p.type];image.src=Array.isArray(panel)?panel[p.level-1]:panel;
+  image.alt=p.type+' '+p.level;slot.appendChild(image);
+  slot.addEventListener('click',()=>selectPowerUp(p.type));options.appendChild(slot);
+ });
+ powerUpPaused=true;
+ document.getElementById('game').classList.add('powerup-paused');
+ document.getElementById('powerup-overlay').style.display='flex';
 }
-
-const remaining=available.filter(function(powerUp){
-return powerUp!==choice;
-});
-
-selected=selected.concat(
-shuffle(remaining).slice(0,3-selected.length)
-);
-
-}else{
-
-selected=available.slice(0,3);
-
-}
-
-selected.forEach(function(powerUp){
-
-const slot=document.createElement("div");
-
-slot.className="powerup-slot";
-slot.dataset.type=powerUp.type;
-slot.dataset.level=powerUp.level;
-
-const image=document.createElement("img");
-
-if(powerUp.type==="waitress"){
-
-image.src=POWER_UP_PANELS.waitress;
-
-}else{
-
-image.src=POWER_UP_PANELS[
-powerUp.type
-][powerUp.level-1];
-
-}
-
-image.alt="";
-
-slot.appendChild(image);
-
-slot.addEventListener("click",function(){
-selectPowerUp(powerUp.type);
-});
-
-options.appendChild(slot);
-
-});
-
-powerUpPaused=true;
-
-document.getElementById("game").classList.add(
-"powerup-paused"
-);
-
-document.getElementById(
-"powerup-overlay"
-).style.display="flex";
-
-}
-
-/* SCELTA POWER UP */
-
 function selectPowerUp(type){
-
-if(!powerUpPaused) return;
-
-if(type==="waitress"){
-
-if(powerUps.waitress) return;
-
-powerUps.waitress=true;
-
-summonWaitress();
-
-}else if(
-["pasta","speed","sauce"].includes(type)
-){
-
-if(powerUps[type]>=3) return;
-
-powerUps[type]++;
-
-if(type==="pasta" && powerUps.pasta===2){
-pastaSpeedBonus=.15;
+ if(!powerUpPaused)return;
+ const choice=offeredPowerUps.find(p=>p.type===type);
+ if(!choice||!getAvailablePowerUps().some(p=>p.type===type&&p.level===choice.level))return;
+ if(type==='waitress'){powerUps.waitress=true;summonWaitress();}
+ else if(type==='seon'){
+  powerUps.seon=true;document.getElementById('seon').style.display='block';setActorFrame('seon',0);
+ }else{
+  powerUps[type]++;
+  if(type==='pasta'&&powerUps.pasta===2)pastaSpeedBonus=.15;
+ }
+ // Caffeine Rush modifica solo la frequenza di Seon Jeong.
+ if(type==='caffeineRush')startSeonAttack();
+ offeredPowerUps=[];
+ document.getElementById('powerup-overlay').style.display='none';
+ document.getElementById('powerup-options').innerHTML='';
+ powerUpPaused=false;document.getElementById('game').classList.remove('powerup-paused');
+ updateEXPBar();
 }
-
-}else if(
-["iceShot","iceChain","deepFreeze"].includes(type)
-){
-
-if(!powerUps.waitress) return;
-if(powerUps[type]>=3) return;
-
-powerUps[type]++;
-
-}else{
-
-return;
-
+function summonWaitress(){document.getElementById('waitress').style.display='block';setWaitressFrame(0);}
+function setWaitressFrame(n){setActorFrame('waitress',n);}
+function setCookFrame(n){setActorFrame('cook',n);}
+function setActorFrame(id,n){
+ document.getElementById(id).querySelectorAll('img').forEach((f,i)=>f.classList.toggle('active',i===n));
 }
-
-document.getElementById(
-"powerup-overlay"
-).style.display="none";
-
-document.getElementById(
-"powerup-options"
-).innerHTML="";
-
-powerUpPaused=false;
-
-document.getElementById("game").classList.remove(
-"powerup-paused"
-);
-
-updateEXPBar();
-
-}
-
-/* FRAME CUOCO E CAMERIERA */
-
-function summonWaitress(){
-
-document.getElementById(
-"waitress"
-).style.display="block";
-
-setWaitressFrame(0);
-
-}
-
-function setWaitressFrame(frameNumber){
-setActorFrame("waitress",frameNumber);
-}
-
-function setCookFrame(frameNumber){
-setActorFrame("cook",frameNumber);
-}
-
-function setActorFrame(id,frameNumber){
-
-document.getElementById(id)
-.querySelectorAll("img")
-.forEach(function(frame,index){
-
-frame.classList.toggle(
-"active",
-index===frameNumber
-);
-
-});
-
-}
-
-/* EXP */
-
 function updateEXPBar(){
-
-const fill=document.getElementById("exp-fill");
-const text=document.getElementById("exp-level");
-
-if(currentLevel>=MAX_LEVEL){
-
-currentLevel=MAX_LEVEL;
-currentEXP=0;
-
-fill.style.width="100%";
-text.textContent="LV MAX";
-
-return;
-
+ const fill=document.getElementById('exp-fill'),text=document.getElementById('exp-level');
+ if(currentLevel>=MAX_LEVEL){currentLevel=MAX_LEVEL;currentEXP=0;fill.style.width='100%';text.textContent='LV MAX';return;}
+ fill.style.width=Math.min(100,currentEXP/EXP_REQUIREMENTS[currentLevel-1]*100)+'%';
+ text.textContent='LV '+currentLevel;
 }
-
-fill.style.width=Math.min(
-100,
-currentEXP/EXP_REQUIREMENTS[currentLevel-1]*100
-)+"%";
-
-text.textContent="LV "+currentLevel;
-
-}
-
 function addEXP(amount){
-
-if(currentLevel>=MAX_LEVEL) return;
-
-currentEXP+=amount;
-
-let levelUp=false;
-
-while(
-currentLevel<MAX_LEVEL &&
-currentEXP>=EXP_REQUIREMENTS[currentLevel-1]
-){
-
-currentEXP-=EXP_REQUIREMENTS[currentLevel-1];
-
-currentLevel++;
-levelUp=true;
-
+ if(currentLevel>=MAX_LEVEL) return;
+ currentEXP+=amount;let levelUp=false;
+ while(currentLevel<MAX_LEVEL&&currentEXP>=EXP_REQUIREMENTS[currentLevel-1]){
+  currentEXP-=EXP_REQUIREMENTS[currentLevel-1];currentLevel++;levelUp=true;
+ }
+ updateEXPBar();if(levelUp) showPowerUpScreen();
 }
 
-updateEXPBar();
-
-if(levelUp){
-showPowerUpScreen();
-}
-
-}
-
-/* PLAY */
-
+/* PLAY: transizione iniziale originale. */
 let playPressed=false;
-
-document.getElementById("playButton").addEventListener(
-"click",
-function(){
-
-if(playPressed || !menuReady) return;
-
-playPressed=true;
-
-menuVideo.pause();
-
-const black=document.getElementById("blackTransition");
-const game=document.getElementById("game");
-
-document.getElementById("menu").style.display="none";
-
-black.style.display="block";
-
-setTimeout(function(){
-
-document.getElementById(
-"transitionImage1"
-).style.animation=
-"transitionFromLeft 1.165s ease-out forwards";
-
-},2000);
-
-setTimeout(function(){
-
-document.getElementById(
-"transitionImage2"
-).style.animation=
-"transitionFromRight 1.165s ease-out forwards";
-
-},5165);
-
-setTimeout(function(){
-
-document.getElementById(
-"transitionImage3"
-).style.animation=
-"transitionFromLeft 2.34s ease-out forwards";
-
-},8320);
-
-setTimeout(function(){
-
-black.style.animation=
-"transitionExit .8s ease-in forwards";
-
-},15660);
-
-setTimeout(function(){
-
-game.style.display="block";
-
-game.style.animation=
-"gameEnter .8s ease-out forwards";
-
-resetGame();
-
-gameStarted=true;
-
-document.getElementById(
-"testBossButton"
-).hidden=!ENABLE_BOSS_TEST;
-
-startWave(1);
-startGameSystems();
-
-black.style.display="none";
-black.style.animation="none";
-
-},16460);
-
-}
-);
-
-/* PULIZIA SCENA */
-
+document.getElementById('playButton').addEventListener('click',function(){
+ if(playPressed||!menuReady) return;playPressed=true;
+ menuVideo.pause();
+ const black=document.getElementById('blackTransition'),game=document.getElementById('game');
+ document.getElementById('menu').style.display='none';black.style.display='block';
+ setTimeout(()=>document.getElementById('transitionImage1').style.animation='transitionFromLeft 1.165s ease-out forwards',2000);
+ setTimeout(()=>document.getElementById('transitionImage2').style.animation='transitionFromRight 1.165s ease-out forwards',5165);
+ setTimeout(()=>document.getElementById('transitionImage3').style.animation='transitionFromLeft 2.34s ease-out forwards',8320);
+ setTimeout(()=>black.style.animation='transitionExit .8s ease-in forwards',15660);
+ setTimeout(function(){
+  game.style.display='block';game.style.animation='gameEnter .8s ease-out forwards';
+  resetGame();gameStarted=true;
+  document.getElementById('testBossButton').hidden=!ENABLE_BOSS_TEST;
+  startWave(1);startGameSystems();
+  black.style.display='none';black.style.animation='none';
+ },16460);
+});
 function clearScene(){
-
-document.querySelectorAll(
-".spawned-customer,.pasta,.drink,.hit-marker,.impact-particle"
-).forEach(function(element){
-
-element.remove();
-
-});
-
-customers=[];
-
-setCookFrame(0);
-setWaitressFrame(0);
-
+ document.querySelectorAll('.spawned-customer,.pasta,.drink,.cappuccino,.hit-marker,.impact-particle').forEach(e=>e.remove());
+ customers=[];setCookFrame(0);setWaitressFrame(0);setActorFrame('seon',0);
 }
-
-/* RESET */
-
 function resetGame(){
-
-clearAllTimers();
-stopBossIntro();
-clearScene();
-
-currentWave=1;
-waveSpawned=0;
-waveFinished=false;
-waveStarting=false;
-gameFinished=false;
-
-kitchenEnergy=100;
-
-currentLevel=1;
-currentEXP=0;
-
-powerUps={
-pasta:0,
-speed:0,
-sauce:0,
-waitress:false,
-iceShot:0,
-iceChain:0,
-deepFreeze:0
-};
-
-pastaSpeedBonus=0;
-powerUpPaused=false;
-
-document.getElementById(
-"waitress"
-).style.display="none";
-
-document.getElementById(
-"powerup-overlay"
-).style.display="none";
-
-document.getElementById(
-"powerup-options"
-).innerHTML="";
-
-document.getElementById("game").classList.remove(
-"powerup-paused"
-);
-
-document.getElementById(
-"wave-message"
-).style.display="none";
-
-updateKitchenEnergy();
-updateEXPBar();
-updateWaveDisplay();
-
+ clearAllTimers();stopBossIntro();clearScene();
+ currentWave=1;waveSpawned=0;waveFinished=false;waveStarting=false;gameFinished=false;
+ kitchenEnergy=100;currentLevel=1;currentEXP=0;
+ powerUps={pasta:0,speed:0,sauce:0,waitress:false,iceShot:0,iceChain:0,deepFreeze:0,seon:false,hotSplash:0,caffeineRush:0,doubleShot:0};
+ pastaSpeedBonus=0;powerUpPaused=false;
+ document.getElementById('waitress').style.display='none';document.getElementById('seon').style.display='none';offeredPowerUps=[];
+ document.getElementById('powerup-overlay').style.display='none';
+ document.getElementById('powerup-options').innerHTML='';
+ document.getElementById('game').classList.remove('powerup-paused');
+ document.getElementById('wave-message').style.display='none';
+ updateKitchenEnergy();updateEXPBar();updateWaveDisplay();
 }
-
 function startGameSystems(){
-
-startCustomerAnimation();
-startCustomer4Animation();
-startCookAnimation();
-startWaitressAttack();
-startKitchenEnergySystem();
-startFirstAttackDetection();
-startZIndexSystem();
-
+ startCustomerAnimation();startCustomer4Animation();startCookAnimation();
+ startWaitressAttack();startSeonAttack();startKitchenEnergySystem();startFirstAttackDetection();startZIndexSystem();
 }
 
-/* SCRITTA SULLA LAVAGNA */
-
+/* WAVES: la wave 3 è normale, la wave 20 contiene i tre boss. */
 function fitWaveBoard(){
-
-const board=document.getElementById("wave-display");
-
-if(board.clientWidth>0){
-
-board.style.fontSize=Math.min(
-board.clientWidth/5.8,
-board.clientHeight*.5
-)+"px";
-
+ const board=document.getElementById('wave-display');
+ if(board.clientWidth>0){
+  board.style.fontSize=Math.min(board.clientWidth/5.8,board.clientHeight*.5)+'px';
+ }
 }
-
-}
-
 function updateWaveDisplay(){
-
-document.getElementById(
-"wave-display"
-).textContent="WAVE "+currentWave;
-
-fitWaveBoard();
-
+ document.getElementById('wave-display').textContent='WAVE '+currentWave;
+ fitWaveBoard();
 }
-
-window.addEventListener("resize",fitWaveBoard);
-
-/* INIZIO WAVE */
-
+window.addEventListener('resize',fitWaveBoard);
 function startWave(number){
-
-if(number>TOTAL_WAVES){
-
-finishLevel();
-return;
-
+ if(number>TOTAL_WAVES){finishLevel();return;}
+ currentWave=number;waveSpawned=0;waveFinished=false;waveStarting=true;updateWaveDisplay();
+ if(number===BOSS_WAVE){showBossIntro();return;}
+ // L'avvio della prima wave conserva i 4,2 secondi originali.
+ gameLater(function(){waveStarting=false;spawnWaveCustomers();},number===1?4200:NORMAL_WAVE_DELAY);
 }
-
-currentWave=number;
-waveSpawned=0;
-waveFinished=false;
-waveStarting=true;
-
-updateWaveDisplay();
-
-if(number===BOSS_WAVE){
-
-showBossIntro();
-return;
-
-}
-
-gameLater(function(){
-
-waveStarting=false;
-spawnWaveCustomers();
-
-},number===1 ? 4200 : NORMAL_WAVE_DELAY);
-
-}
-
-/* CREA CLIENTI WAVE */
-
 function spawnWaveCustomers(){
-
-if(currentWave===BOSS_WAVE){
-
-spawnBossWave();
-return;
-
+ if(currentWave===BOSS_WAVE){spawnBossWave();return;}
+ const config=WAVES[currentWave-1];if(!config) return;
+ const lastLaneSpawn=LANES.map(()=>-Infinity);
+ for(let i=0;i<config.customers;i++){
+  gameLater(()=>spawnWaveCustomer(i,lastLaneSpawn,config),i*config.spawnInterval);
+ }
 }
-
-const config=WAVES[currentWave-1];
-
-if(!config) return;
-
-const lastLaneSpawn=LANES.map(function(){
-return -Infinity;
-});
-
-for(let i=0;i<config.customers;i++){
-
-gameLater(function(){
-
-spawnWaveCustomer(
-i,
-lastLaneSpawn,
-config
-);
-
-},i*config.spawnInterval);
-
-}
-
-}
-
 function spawnWaveCustomer(index,lastLaneSpawn,config){
-
-if(waveSpawned>=config.customers) return;
-
-let laneIndex;
-let attempts=0;
-
-do{
-
-laneIndex=Math.floor(Math.random()*LANES.length);
-attempts++;
-
-}while(
-attempts<50 &&
-gameClock-lastLaneSpawn[laneIndex]<SAME_LANE_MIN_DELAY
-);
-
-lastLaneSpawn[laneIndex]=gameClock;
-
-spawnCustomer(
-waveSpawned,
-laneIndex,
-config.walkTime,
-config.hp
-);
-
-waveSpawned++;
-
-if(waveSpawned>=config.customers){
-scheduleWaveCheck();
+ if(waveSpawned>=config.customers) return;
+ let laneIndex,attempts=0;
+ do{laneIndex=Math.floor(Math.random()*LANES.length);attempts++;}
+ while(attempts<50&&gameClock-lastLaneSpawn[laneIndex]<SAME_LANE_MIN_DELAY);
+ lastLaneSpawn[laneIndex]=gameClock;
+ spawnCustomer(waveSpawned,laneIndex,config.walkTime,config.hp);waveSpawned++;
+ if(waveSpawned>=config.customers) scheduleWaveCheck();
 }
-
-}
-
-/* BOSS WAVE 20 */
-
 function spawnBossWave(){
-
-spawnBossEntity(
-"assistantBossTemplate",
-300,
-0,
-66,
-"assistant"
-);
-
-spawnBossEntity(
-"cameramanBossTemplate",
-300,
-4,
-66,
-"cameraman"
-);
-
-gameLater(function(){
-
-if(
-currentWave!==BOSS_WAVE ||
-waveFinished
-){
-return;
+ spawnBossEntity('assistantBossTemplate',90,0,100,'assistant');
+ spawnBossEntity('cameramanBossTemplate',90,4,100,'cameraman');
+ gameLater(function(){
+  if(currentWave!==BOSS_WAVE||waveFinished) return;
+  spawnBossEntity('mainBossTemplate',200,2,100,'boss');scheduleWaveCheck();
+ },1500);
 }
-
-spawnBossEntity(
-"mainBossTemplate",
-600,
-2,
-66,
-"boss"
-);
-
-scheduleWaveCheck();
-
-},1500);
-
+function spawnBossEntity(templateId,hp,laneIndex,walkTime,type){
+ const customer=createCustomer(templateId,type,hp,laneIndex,walkTime,true);waveSpawned++;return customer;
 }
-
-function spawnBossEntity(
-templateId,
-hp,
-laneIndex,
-walkTime,
-type
-){
-
-const customer=createCustomer(
-templateId,
-type,
-hp,
-laneIndex,
-walkTime,
-true
-);
-
-waveSpawned++;
-
-return customer;
-
+function spawnCustomer(index,forcedLaneIndex=null,walkTime=null,waveHP=null){
+ const type=Math.floor(Math.random()*8)+1;
+ return createCustomer('customer'+type+'Template',type,waveHP||30,forcedLaneIndex??Math.floor(Math.random()*LANES.length),walkTime||60,false);
 }
-
-/* CLIENTE NORMALE */
-
-function spawnCustomer(
-index,
-forcedLaneIndex=null,
-walkTime=null,
-waveHP=null
-){
-
-const type=Math.floor(Math.random()*8)+1;
-
-return createCustomer(
-"customer"+type+"Template",
-type,
-waveHP || 30,
-forcedLaneIndex ?? Math.floor(Math.random()*LANES.length),
-walkTime || 60,
-false
-);
-
-}
-
-/* CREAZIONE PERSONAGGIO */
-
 let nextCustomerId=0;
-
-function createCustomer(
-templateId,
-type,
-hp,
-lane,
-walkTime,
-isBoss
-){
-
-const customer=document.getElementById(
-templateId
-).cloneNode(true);
-
-customer.id="customer-"+(++nextCustomerId);
-
-customer.classList.remove(
-"customer-template",
-"satisfied"
-);
-
-customer.classList.add("spawned-customer");
-
-customer.style.display="block";
-customer.style.animation="none";
-customer.style.top="5%";
-customer.style.left=LANES[lane]+"%";
-
-Object.assign(customer.dataset,{
-type:String(type),
-hp:String(hp),
-lane:String(lane),
-satisfied:"false",
-atKitchen:"false",
-frame:"0",
-frozen:"false",
-wave:String(currentWave)
-});
-
-if(isBoss){
-customer.dataset.boss="true";
+function createCustomer(templateId,type,hp,lane,walkTime,isBoss){
+ const customer=document.getElementById(templateId).cloneNode(true);
+ customer.id='customer-'+(++nextCustomerId);
+ customer.classList.remove('customer-template','satisfied');customer.classList.add('spawned-customer');
+ customer.style.display='block';customer.style.animation='none';customer.style.top='5%';customer.style.left=LANES[lane]+'%';
+ Object.assign(customer.dataset,{type:String(type),hp:String(hp),lane:String(lane),satisfied:'false',atKitchen:'false',frame:'0',frozen:'false',wave:String(currentWave)});
+ if(isBoss) customer.dataset.boss='true';
+ customer.querySelectorAll('.frame').forEach((f,i)=>f.classList.toggle('active',i===0));
+ customer.querySelector('.happy-frame').style.display='none';
+ const frozen=customer.querySelector('.frozen-frame');if(frozen) frozen.style.display='none';
+ document.getElementById('game').appendChild(customer);customers.push(customer);
+ // L'arrivo segue l'animazione, comprese eventuali pause o congelamenti.
+ customer.addEventListener('animationend',function(e){
+  if(e.target===customer&&e.animationName==='walkDown'&&customer.dataset.satisfied!=='true'){
+   customer.dataset.atKitchen='true';updateZIndexes();
+  }
+ });
+ gameFrame(function(){customer.style.animation='walkDown '+walkTime+'s linear forwards';customer.classList.add('walking');});
+ return customer;
 }
-
-customer.querySelectorAll(".frame").forEach(
-function(frame,index){
-
-frame.classList.toggle(
-"active",
-index===0
-);
-
-}
-);
-
-customer.querySelector(
-".happy-frame"
-).style.display="none";
-
-const frozen=customer.querySelector(".frozen-frame");
-
-if(frozen){
-frozen.style.display="none";
-}
-
-document.getElementById("game").appendChild(customer);
-
-customers.push(customer);
-
-customer.addEventListener(
-"animationend",
-function(event){
-
-if(
-event.target===customer &&
-event.animationName==="walkDown" &&
-customer.dataset.satisfied!=="true"
-){
-
-customer.dataset.atKitchen="true";
-updateZIndexes();
-
-}
-
-}
-);
-
-gameFrame(function(){
-
-customer.style.animation=
-"walkDown "+walkTime+"s linear forwards";
-
-customer.classList.add("walking");
-
-});
-
-return customer;
-
-}
-
-/* CONTROLLO FINE WAVE */
-
 function scheduleWaveCheck(){
-
-cancelTask(waveCheckTimer);
-
-const interval=
-currentWave>=BOSS_WAVE-1 ? 500 : 250;
-
-waveCheckTimer=gameEvery(function(){
-
-if(waveFinished) return;
-
-const active=customers.filter(function(customer){
-
-return(
-customer.isConnected &&
-customer.dataset.wave==currentWave &&
-customer.style.display!=="none"
-);
-
-});
-
-const expected=
-currentWave===BOSS_WAVE
-? 3
-: WAVES[currentWave-1].customers;
-
-if(
-waveSpawned>=expected &&
-!active.length
-){
-
-cancelTask(waveCheckTimer);
-waveCheckTimer=null;
-
-completeWave();
-
+ cancelTask(waveCheckTimer);
+ // Attesa originale verso il boss; dimezzata verso le altre wave.
+ const interval=currentWave>=BOSS_WAVE-1?500:250;
+ waveCheckTimer=gameEvery(function(){
+  if(waveFinished) return;
+  const active=customers.filter(c=>c.isConnected&&c.dataset.wave==currentWave&&c.style.display!=='none');
+  const expected=currentWave===BOSS_WAVE?3:WAVES[currentWave-1].customers;
+  if(waveSpawned>=expected&&!active.length){cancelTask(waveCheckTimer);waveCheckTimer=null;completeWave();}
+ },interval);
 }
-
-},interval);
-
-}
-
 function completeWave(){
-
-if(waveFinished) return;
-
-waveFinished=true;
-
-if(currentWave>=TOTAL_WAVES){
-
-finishLevel();
-return;
-
+ if(waveFinished) return;waveFinished=true;
+ if(currentWave>=TOTAL_WAVES){finishLevel();return;}
+ startWave(currentWave+1);
 }
-
-startWave(currentWave+1);
-
-}
-
 function finishLevel(){
-
-gameFinished=true;
-
-clearAllTimers();
-
-const message=document.getElementById("wave-message");
-
-message.textContent="LIVELLO COMPLETATO!";
-message.style.display="block";
-
+ gameFinished=true;clearAllTimers();
+ const message=document.getElementById('wave-message');message.textContent='LIVELLO COMPLETATO!';message.style.display='block';
 }
 
-/* VIDEO BOSS */
-
-const bossIntro=document.getElementById("bossIntro");
-const bossVideo=document.getElementById("bossIntroVideo");
-const bossVideoAction=document.getElementById("bossVideoAction");
-
-let videoSession=0;
-let bossLeaving=false;
-let videoWatchdog=null;
-let videoExitTimer=null;
-
+/* VIDEO BOSS: ultima wave, ingresso zoom secco, uscita a destra. */
+const bossIntro=document.getElementById('bossIntro');
+const bossVideo=document.getElementById('bossIntroVideo');
+const bossVideoAction=document.getElementById('bossVideoAction');
+let videoSession=0,bossLeaving=false,videoWatchdog=null,videoExitTimer=null;
 function stopBossIntro(){
-
-videoSession++;
-
-clearTimeout(videoWatchdog);
-clearTimeout(videoExitTimer);
-
-bossVideo.onended=null;
-bossVideo.onplaying=null;
-bossVideo.onerror=null;
-
-bossVideo.pause();
-
-bossIntroPlaying=false;
-bossLeaving=false;
-
-bossIntro.style.display="none";
-
-bossIntro.classList.remove(
-"entering",
-"leaving"
-);
-
-bossVideoAction.hidden=true;
-bossVideoAction.onclick=null;
-
-document.getElementById(
-"testBossButton"
-).disabled=false;
-
+ videoSession++;clearTimeout(videoWatchdog);clearTimeout(videoExitTimer);
+ bossVideo.onended=null;bossVideo.onplaying=null;bossVideo.onerror=null;
+ bossVideo.pause();bossIntroPlaying=false;bossLeaving=false;
+ bossIntro.style.display='none';bossIntro.classList.remove('entering','leaving');
+ bossVideoAction.hidden=true;bossVideoAction.onclick=null;
+ document.getElementById('testBossButton').disabled=false;
 }
-
 function showBossIntro(){
-
-stopBossIntro();
-
-bossIntroPlaying=true;
-
-const session=videoSession;
-
-document.getElementById(
-"testBossButton"
-).disabled=true;
-
-bossIntro.style.display="flex";
-
-void bossIntro.offsetWidth;
-
-bossIntro.classList.add("entering");
-
-bossVideo.muted=true;
-bossVideo.currentTime=0;
-
-function valid(){
-
-return(
-session===videoSession &&
-bossIntroPlaying &&
-!bossLeaving
-);
-
+ stopBossIntro();bossIntroPlaying=true;
+ const session=videoSession;
+ document.getElementById('testBossButton').disabled=true;
+ bossIntro.style.display='flex';
+ void bossIntro.offsetWidth;bossIntro.classList.add('entering');
+ bossVideo.muted=true;bossVideo.currentTime=0;
+ function valid(){return session===videoSession&&bossIntroPlaying&&!bossLeaving;}
+ function showAction(text,callback){if(!valid())return;bossVideoAction.textContent=text;bossVideoAction.onclick=callback;bossVideoAction.hidden=false;}
+ function playVideo(){
+  if(!valid())return;bossVideoAction.hidden=true;
+  const promise=bossVideo.play();
+  if(promise) promise.catch(function(error){
+   if(!valid())return;
+   if(error.name==='NotAllowedError') showAction('TOCCA PER AVVIARE IL VIDEO',playVideo);
+   else showAction('VIDEO NON DISPONIBILE · CONTINUA',finishBossIntro);
+  });
+ }
+ bossVideo.onplaying=function(){if(valid()){clearTimeout(videoWatchdog);bossVideoAction.hidden=true;}};
+ bossVideo.onended=function(){if(valid())finishBossIntro();};
+ bossVideo.onerror=function(){showAction('VIDEO NON DISPONIBILE · CONTINUA',finishBossIntro);};
+ // Nessun timer tronca il filmato: l'uscita parte solo dall'evento ended.
+ videoWatchdog=setTimeout(function(){
+  if(valid()&&(bossVideo.paused||bossVideo.readyState<3)) showAction('VIDEO IN CARICAMENTO · SALTA',finishBossIntro);
+ },15000);
+ playVideo();
 }
-
-function showAction(text,callback){
-
-if(!valid()) return;
-
-bossVideoAction.textContent=text;
-bossVideoAction.onclick=callback;
-bossVideoAction.hidden=false;
-
-}
-
-function playVideo(){
-
-if(!valid()) return;
-
-bossVideoAction.hidden=true;
-
-const promise=bossVideo.play();
-
-if(promise){
-
-promise.catch(function(error){
-
-if(!valid()) return;
-
-if(error.name==="NotAllowedError"){
-
-showAction(
-"TOCCA PER AVVIARE IL VIDEO",
-playVideo
-);
-
-}else{
-
-showAction(
-"VIDEO NON DISPONIBILE · CONTINUA",
-finishBossIntro
-);
-
-}
-
-});
-
-}
-
-}
-
-bossVideo.onplaying=function(){
-
-if(valid()){
-
-clearTimeout(videoWatchdog);
-bossVideoAction.hidden=true;
-
-}
-
-};
-
-bossVideo.onended=function(){
-
-if(valid()){
-finishBossIntro();
-}
-
-};
-
-bossVideo.onerror=function(){
-
-showAction(
-"VIDEO NON DISPONIBILE · CONTINUA",
-finishBossIntro
-);
-
-};
-
-videoWatchdog=setTimeout(function(){
-
-if(
-valid() &&
-(
-bossVideo.paused ||
-bossVideo.readyState<3
-)
-){
-
-showAction(
-"VIDEO IN CARICAMENTO · SALTA",
-finishBossIntro
-);
-
-}
-
-},15000);
-
-playVideo();
-
-}
-
 function finishBossIntro(){
-
-if(
-!bossIntroPlaying ||
-bossLeaving
-){
-return;
+ if(!bossIntroPlaying||bossLeaving)return;
+ bossLeaving=true;bossVideo.pause();bossVideoAction.hidden=true;clearTimeout(videoWatchdog);
+ bossIntro.classList.remove('entering');bossIntro.classList.add('leaving');
+ const session=videoSession;
+ videoExitTimer=setTimeout(function(){
+  if(session!==videoSession)return;
+  stopBossIntro();
+  gameLater(function(){waveStarting=false;spawnWaveCustomers();},BOSS_WAVE_DELAY);
+ },200);
 }
 
-bossLeaving=true;
-
-bossVideo.pause();
-
-bossVideoAction.hidden=true;
-
-clearTimeout(videoWatchdog);
-
-bossIntro.classList.remove("entering");
-bossIntro.classList.add("leaving");
-
-const session=videoSession;
-
-videoExitTimer=setTimeout(function(){
-
-if(session!==videoSession) return;
-
-stopBossIntro();
-
-gameLater(function(){
-
-waveStarting=false;
-spawnWaveCustomers();
-
-},BOSS_WAVE_DELAY);
-
-},200);
-
-}
-
-/* TEST BOSS */
-
-document.getElementById(
-"testBossButton"
-).addEventListener(
-"click",
-jumpToBossWave
-);
-
+/* SALTO DI PROVA: mantiene livello, EXP, potenziamenti ed energia cucina. */
+document.getElementById('testBossButton').addEventListener('click',jumpToBossWave);
 function jumpToBossWave(){
-
-if(
-!ENABLE_BOSS_TEST ||
-!gameStarted ||
-bossIntroPlaying
-){
-return;
-}
-
-clearAllTimers();
-clearScene();
-
-gameFinished=false;
-powerUpPaused=false;
-
-document.getElementById(
-"powerup-overlay"
-).style.display="none";
-
-document.getElementById(
-"powerup-options"
-).innerHTML="";
-
-document.getElementById("game").classList.remove(
-"powerup-paused"
-);
-
-document.getElementById(
-"wave-message"
-).style.display="none";
-
-startWave(BOSS_WAVE);
-startGameSystems();
-
+ if(!ENABLE_BOSS_TEST||!gameStarted||bossIntroPlaying)return;
+ clearAllTimers();clearScene();
+ gameFinished=false;powerUpPaused=false;
+ document.getElementById('powerup-overlay').style.display='none';
+ document.getElementById('powerup-options').innerHTML='';
+ document.getElementById('game').classList.remove('powerup-paused');
+ document.getElementById('wave-message').style.display='none';
+ startWave(BOSS_WAVE);startGameSystems();
 }
 
 /* CUCINA */
-
 function updateKitchenEnergy(){
-
-document.getElementById(
-"kitchen"
-).style.display=
-kitchenEnergy>50 ? "block" : "none";
-
-document.getElementById(
-"kitchenDamaged"
-).style.display=
-kitchenEnergy<=50 && kitchenEnergy>20
-? "block"
-: "none";
-
-document.getElementById(
-"kitchenDestroyed"
-).style.display=
-kitchenEnergy<=20 ? "block" : "none";
-
+ document.getElementById('kitchen').style.display=kitchenEnergy>50?'block':'none';
+ document.getElementById('kitchenDamaged').style.display=kitchenEnergy<=50&&kitchenEnergy>20?'block':'none';
+ document.getElementById('kitchenDestroyed').style.display=kitchenEnergy<=20?'block':'none';
 }
-
 function startKitchenEnergySystem(){
-
-cancelTask(kitchenDamageTimer);
-
-kitchenDamageTimer=gameEvery(function(){
-
-const damage=customers.filter(function(customer){
-
-return(
-customer.isConnected &&
-customer.dataset.atKitchen==="true" &&
-customer.dataset.satisfied!=="true"
-);
-
-}).length;
-
-if(damage){
-
-kitchenEnergy=Math.max(
-0,
-kitchenEnergy-damage
-);
-
-updateKitchenEnergy();
-
+ cancelTask(kitchenDamageTimer);
+ kitchenDamageTimer=gameEvery(function(){
+  const damage=customers.filter(c=>c.isConnected&&c.dataset.atKitchen==='true'&&c.dataset.satisfied!=='true').length;
+  if(damage){kitchenEnergy=Math.max(0,kitchenEnergy-damage);updateKitchenEnergy();}
+ },5000);
 }
-
-},5000);
-
-}
-
-/* VISIBILITÀ */
-
 function customerIsVisible(customer){
-
-if(
-!customer ||
-!customer.isConnected ||
-customer.style.display==="none"
-){
-return false;
+ if(!customer||!customer.isConnected||customer.style.display==='none')return false;
+ const r=customer.getBoundingClientRect(),g=document.getElementById('game').getBoundingClientRect();
+ return r.bottom>g.top&&r.top<g.bottom;
 }
-
-const rect=customer.getBoundingClientRect();
-
-const gameRect=document.getElementById(
-"game"
-).getBoundingClientRect();
-
-return(
-rect.bottom>gameRect.top &&
-rect.top<gameRect.bottom
-);
-
-}
-
-/* Z INDEX */
-
-function startZIndexSystem(){
-
-cancelTask(zIndexTimer);
-
-zIndexTimer=gameEvery(
-updateZIndexes,
-50
-);
-
-}
-
+function startZIndexSystem(){cancelTask(zIndexTimer);zIndexTimer=gameEvery(updateZIndexes,50);}
 function updateZIndexes(){
-
-customers.filter(function(customer){
-
-return(
-customer.isConnected &&
-customer.style.display!=="none"
-);
-
-}).sort(function(a,b){
-
-return(
-a.getBoundingClientRect().top-
-b.getBoundingClientRect().top
-);
-
-}).forEach(function(customer,index){
-
-customer.style.zIndex=10+index;
-
-});
-
+ customers.filter(c=>c.isConnected&&c.style.display!=='none')
+ .sort((a,b)=>a.getBoundingClientRect().top-b.getBoundingClientRect().top)
+ .forEach((c,i)=>c.style.zIndex=10+i);
 }
-
-/* PRIMO ATTACCO */
-
 function startFirstAttackDetection(){
-
-cancelTask(firstAttackTimer);
-
-firstAttackTimer=gameEvery(function(){
-
-if(getNearestVisibleCustomer()){
-
-playCookAttack();
-
-cancelTask(firstAttackTimer);
-firstAttackTimer=null;
-
+ cancelTask(firstAttackTimer);
+ firstAttackTimer=gameEvery(function(){if(getNearestVisibleCustomer()){playCookAttack();cancelTask(firstAttackTimer);firstAttackTimer=null;}},100);
 }
-
-},100);
-
-}
-
-/* ANIMAZIONE CLIENTI */
-
 function animateCustomerGroup(customer4){
-
-customers.forEach(function(customer){
-
-if(
-!customer.isConnected ||
-customer.style.display==="none" ||
-customer.dataset.satisfied==="true" ||
-customer.dataset.frozen==="true"
-){
-return;
+ customers.forEach(customer=>{
+  if(!customer.isConnected||customer.style.display==='none'||customer.dataset.satisfied==='true'||customer.dataset.frozen==='true')return;
+  if(customer.classList.contains('customer4-template')!==customer4)return;
+  const frames=customer.querySelectorAll('.frame');if(!frames.length)return;
+  let n=parseInt(customer.dataset.frame||'0')%frames.length;
+  frames.forEach((f,i)=>f.classList.toggle('active',i===n));customer.dataset.frame=(n+1)%frames.length;
+ });
 }
+function startCustomerAnimation(){cancelTask(customerTimer);customerTimer=gameEvery(()=>animateCustomerGroup(false),300);}
+function startCustomer4Animation(){cancelTask(customer4Timer);customer4Timer=gameEvery(()=>animateCustomerGroup(true),300);}
 
-if(
-customer.classList.contains("customer4-template")
-!==customer4
-){
-return;
-}
-
-const frames=customer.querySelectorAll(".frame");
-
-if(!frames.length) return;
-
-const frameNumber=
-parseInt(customer.dataset.frame || "0")
-% frames.length;
-
-frames.forEach(function(frame,index){
-
-frame.classList.toggle(
-"active",
-index===frameNumber
-);
-
-});
-
-customer.dataset.frame=
-(frameNumber+1)%frames.length;
-
-});
-
-}
-
-function startCustomerAnimation(){
-
-cancelTask(customerTimer);
-
-customerTimer=gameEvery(function(){
-
-animateCustomerGroup(false);
-
-},300);
-
-}
-
-function startCustomer4Animation(){
-
-cancelTask(customer4Timer);
-
-customer4Timer=gameEvery(function(){
-
-animateCustomerGroup(true);
-
-},300);
-
-}
-
-/* BERSAGLI */
-
+/* ATTACCHI E BERSAGLI */
 function getAttackTargets(){
-
-const active=customers.filter(function(customer){
-
-return(
-customer.dataset.satisfied!=="true" &&
-customerIsVisible(customer)
-);
-
-});
-
-active.sort(function(a,b){
-
-return(
-b.getBoundingClientRect().top-
-a.getBoundingClientRect().top
-);
-
-});
-
-let numberOfPasta=1;
-
-if(powerUps.pasta>=3){
-
-numberOfPasta=3;
-
-}else if(powerUps.pasta>=1){
-
-numberOfPasta=2;
-
+ const active=customers.filter(c=>c.dataset.satisfied!=='true'&&customerIsVisible(c));
+ active.sort((a,b)=>b.getBoundingClientRect().top-a.getBoundingClientRect().top);
+ return active.slice(0,powerUps.pasta>=3?3:powerUps.pasta>=1?2:1);
 }
-
-return active.slice(0,numberOfPasta);
-
-}
-
 function getNearestVisibleCustomer(){
-
-const active=customers.filter(function(customer){
-
-return(
-customer.dataset.satisfied!=="true" &&
-customerIsVisible(customer)
-);
-
-});
-
-active.sort(function(a,b){
-
-return(
-b.getBoundingClientRect().top-
-a.getBoundingClientRect().top
-);
-
-});
-
-return active[0] || null;
-
+ const active=customers.filter(c=>c.dataset.satisfied!=='true'&&customerIsVisible(c));
+ active.sort((a,b)=>b.getBoundingClientRect().top-a.getBoundingClientRect().top);return active[0]||null;
 }
-
-/* INTERVALLI ATTACCO */
-
-function getCookAttackInterval(){
-
-return Math.round(
-3000 /
-(
-(1+powerUps.speed*.33) *
-(1+pastaSpeedBonus)
-)
-);
-
-}
-
-function getWaitressAttackInterval(){
-
-return Math.round(
-getCookAttackInterval()*.67
-);
-
-}
-
-/* ATTACCO CUOCO */
-
+function getCookAttackInterval(){return Math.round(3000/((1+powerUps.speed*.33)*(1+pastaSpeedBonus)));}
+function getWaitressAttackInterval(){return Math.round(getCookAttackInterval()*.67);}
 function startCookAnimation(){
-
-cancelTask(cookTimer);
-
-setCookFrame(0);
-
-cookTimer=gameEvery(function(){
-
-if(getNearestVisibleCustomer()){
-
-playCookAttack();
-
-}else if(!cookAttacking){
-
-setCookFrame(0);
-
+ cancelTask(cookTimer);setCookFrame(0);
+ cookTimer=gameEvery(function(){if(getNearestVisibleCustomer())playCookAttack();else if(!cookAttacking)setCookFrame(0);},getCookAttackInterval());
 }
-
-},getCookAttackInterval());
-
-}
-
 function playCookAttack(){
-
-if(
-powerUpPaused ||
-bossIntroPlaying ||
-cookAttacking
-){
-return;
+ if(powerUpPaused||bossIntroPlaying||cookAttacking)return;
+ const targets=getAttackTargets();if(!targets.length){setCookFrame(0);return;}
+ cookAttacking=true;setCookFrame(0);
+ gameLater(()=>setCookFrame(1),160);gameLater(()=>setCookFrame(2),320);
+ gameLater(function(){setCookFrame(3);gameFrame(()=>targets.forEach(t=>{if(t.isConnected&&t.dataset.satisfied!=='true')throwPasta(t);}));},480);
+ gameLater(()=>setCookFrame(4),640);
+ gameLater(function(){setCookFrame(0);cookAttacking=false;},800);
 }
-
-const targets=getAttackTargets();
-
-if(!targets.length){
-
-setCookFrame(0);
-return;
-
-}
-
-cookAttacking=true;
-
-setCookFrame(0);
-
-gameLater(function(){
-setCookFrame(1);
-},160);
-
-gameLater(function(){
-setCookFrame(2);
-},320);
-
-gameLater(function(){
-
-setCookFrame(3);
-
-gameFrame(function(){
-
-targets.forEach(function(target){
-
-if(
-target.isConnected &&
-target.dataset.satisfied!=="true"
-){
-
-throwPasta(target);
-
-}
-
-});
-
-});
-
-},480);
-
-gameLater(function(){
-setCookFrame(4);
-},640);
-
-gameLater(function(){
-
-setCookFrame(0);
-cookAttacking=false;
-
-},800);
-
-}
-
-/* ATTACCO CAMERIERA */
-
 function startWaitressAttack(){
-
-cancelTask(waitressAttackTimer);
-
-waitressAttackTimer=gameEvery(function(){
-
-if(
-!powerUps.waitress ||
-document.getElementById("waitress").style.display==="none"
-){
-return;
+ cancelTask(waitressAttackTimer);
+ waitressAttackTimer=gameEvery(function(){
+  if(!powerUps.waitress||document.getElementById('waitress').style.display==='none')return;
+  if(getNearestVisibleCustomer())playWaitressAttack();else if(!waitressAttacking)setWaitressFrame(0);
+ },getWaitressAttackInterval());
 }
-
-if(getNearestVisibleCustomer()){
-
-playWaitressAttack();
-
-}else if(!waitressAttacking){
-
-setWaitressFrame(0);
-
-}
-
-},getWaitressAttackInterval());
-
-}
-
 function playWaitressAttack(){
-
-if(
-powerUpPaused ||
-bossIntroPlaying ||
-!powerUps.waitress ||
-waitressAttacking
-){
-return;
+ if(powerUpPaused||bossIntroPlaying||!powerUps.waitress||waitressAttacking)return;
+ const target=getNearestVisibleCustomer();if(!target){setWaitressFrame(0);return;}
+ waitressAttacking=true;setWaitressFrame(0);
+ gameLater(()=>setWaitressFrame(1),160);gameLater(()=>setWaitressFrame(2),320);gameLater(()=>setWaitressFrame(3),480);
+ gameLater(function(){setWaitressFrame(4);gameFrame(()=>{if(target.isConnected&&target.dataset.satisfied!=='true')throwDrink(target);});},640);
+ gameLater(()=>setWaitressFrame(5),800);gameLater(()=>setWaitressFrame(6),960);
+ gameLater(function(){setWaitressFrame(0);waitressAttacking=false;},1120);
 }
 
-const target=getNearestVisibleCustomer();
-
-if(!target){
-
-setWaitressFrame(0);
-return;
-
+/* SEON JEONG: quinto fotogramma a 640 ms. */
+function getSeonAttackInterval(){
+ // Frequenza base identica alla cameriera all'avvio della partita.
+ const base=gameTasks.get(waitressAttackTimer)?.interval??getWaitressAttackInterval();
+ return Math.round(base/(1+[0,.10,.25,.45][powerUps.caffeineRush]));
 }
-
-waitressAttacking=true;
-
-setWaitressFrame(0);
-
-gameLater(function(){
-setWaitressFrame(1);
-},160);
-
-gameLater(function(){
-setWaitressFrame(2);
-},320);
-
-gameLater(function(){
-setWaitressFrame(3);
-},480);
-
-gameLater(function(){
-
-setWaitressFrame(4);
-
-gameFrame(function(){
-
-if(
-target.isConnected &&
-target.dataset.satisfied!=="true"
-){
-
-throwDrink(target);
-
+function startSeonAttack(){
+ cancelTask(seonAttackTimer);
+ seonAttackTimer=gameEvery(()=>{
+  if(powerUps.seon&&getNearestVisibleCustomer())playSeonAttack();
+ },getSeonAttackInterval());
 }
-
-});
-
-},640);
-
-gameLater(function(){
-setWaitressFrame(5);
-},800);
-
-gameLater(function(){
-setWaitressFrame(6);
-},960);
-
-gameLater(function(){
-
-setWaitressFrame(0);
-waitressAttacking=false;
-
-},1120);
-
+function playSeonAttack(){
+ if(powerUpPaused||bossIntroPlaying||!powerUps.seon||seonAttacking)return;
+ const target=getNearestVisibleCustomer();if(!target)return;
+ seonAttacking=true;setActorFrame('seon',0);
+ for(let i=1;i<=5;i++)gameLater(()=>{
+  setActorFrame('seon',i);
+  if(i===4&&target.isConnected&&target.dataset.satisfied!=='true')throwProjectile(target,'cappuccino');
+ },i*160);
+ gameLater(()=>{setActorFrame('seon',0);seonAttacking=false;},960);
 }
-
+/* Ritaglio grafico della tazzina dal pannello: nessun file aggiuntivo. */
+let cupId=0;
+function makeCappuccino(){
+ const element=document.createElement('div'),id='cup-'+(++cupId);
+ element.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="674 756 181 130">
+ <defs><clipPath id="${id}"><path d="M692 782 C695 751 815 746 825 788 C852 773 867 815 823 837 C863 854 837 883 764 885 C684 887 654 855 693 837 Z"/></clipPath></defs>
+ <image href="${POWER_UP_PANELS.seon}" width="1155" height="1536" preserveAspectRatio="none" clip-path="url(#${id})"/>
+ </svg>`;
+ return element;
+}
+function hitCustomerWithCoffee(customer,projectile){
+ if(projectile)projectile.remove();
+ if(!customerIsVisible(customer)||customer.dataset.satisfied==='true')return;
+ const damage=3*(1+[0,.20,.40,.65][powerUps.doubleShot]);
+ const chance=[.10,.25,.45,.70][powerUps.hotSplash];
+ // Un solo bersaglio aggiuntivo, vicino: lo splash non genera altri splash.
+ const r=customer.getBoundingClientRect();
+ const radius=document.getElementById('game').getBoundingClientRect().width*.32;
+ let nearby=null,best=radius;
+ if(Math.random()<chance)customers.forEach(c=>{
+  if(c===customer||!customerIsVisible(c)||c.dataset.satisfied==='true')return;
+  const b=c.getBoundingClientRect();
+  const distance=Math.hypot(b.left+b.width/2-r.left-r.width/2,b.top+b.height/2-r.top-r.height/2);
+  if(distance<best){best=distance;nearby=c;}
+ });
+ function hit(c){
+  createImpactEffect(c,'cappuccino');
+  c.dataset.hp=String(Math.max(0,Number(c.dataset.hp)-damage));
+  if(Number(c.dataset.hp)<=0)satisfyCustomer(c);
+ }
+ hit(customer);if(nearby)hit(nearby);
+}
 /* PASTA / DRINK */
-
-function throwPasta(target){
-throwProjectile(target,"pasta");
-}
-
-function throwDrink(target){
-throwProjectile(target,"drink");
-}
-
+function throwPasta(target){throwProjectile(target,'pasta');}
+function throwDrink(target){throwProjectile(target,'drink');}
 function throwProjectile(target,type){
-
-if(
-!target ||
-!target.isConnected ||
-target.dataset.satisfied==="true"
-){
-return;
+ if(!target||!target.isConnected||target.dataset.satisfied==='true')return;
+ const isDrink=type==='drink',isCoffee=type==='cappuccino',game=document.getElementById('game'),gameRect=game.getBoundingClientRect();
+ const frame=document.querySelector(isCoffee?'#seon img.active':isDrink?'#waitress img.active':'#cook img.active');if(!frame)return;
+ const rect=frame.getBoundingClientRect();
+ let currentX=rect.left+rect.width*(isCoffee?.72:isDrink?.88:.72),currentY=rect.top+rect.height*(isCoffee?.38:isDrink?.34:.32);
+ const marker=document.createElement('div');marker.className='hit-marker';game.appendChild(marker);
+ const projectile=isCoffee?makeCappuccino():document.createElement('img');projectile.className=type;
+ if(!isCoffee)projectile.src=isDrink?'https://i.ibb.co/MDk4xzJd/1788234306668-removebg-preview.png':'https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png';
+ game.appendChild(projectile);
+ const pr=projectile.getBoundingClientRect();
+ const halfWidth=pr.width/2,halfHeight=pr.height/2;
+ function position(){projectile.style.left=currentX-gameRect.left-halfWidth+'px';projectile.style.top=currentY-gameRect.top-halfHeight+'px';}
+ position();const speed=(isDrink||isCoffee)?350:350*(1+powerUps.speed*.33)*(1+pastaSpeedBonus);
+ let lastTime=performance.now();
+ function move(now){
+  if(!target.isConnected||target.dataset.satisfied==='true'){projectile.remove();marker.remove();return;}
+  if(powerUpPaused||bossIntroPlaying){lastTime=now;gameFrame(move);return;}
+  const r=target.getBoundingClientRect(),endX=r.left+r.width/2+HIT_X,endY=r.top+r.height*HIT_POSITION_Y+HIT_Y;
+  marker.style.left=endX-gameRect.left+'px';marker.style.top=endY-gameRect.top+'px';
+  const dt=Math.min((now-lastTime)/1000,.05);lastTime=now;
+  const dx=endX-currentX,dy=endY-currentY,distance=Math.hypot(dx,dy),movement=speed*dt;
+  if(distance<=movement){currentX=endX;currentY=endY;}else{currentX+=dx/distance*movement;currentY+=dy/distance*movement;}
+  position();
+  if(Math.hypot(endX-currentX,endY-currentY)<=3){
+   if(isCoffee)hitCustomerWithCoffee(target,projectile);else if(isDrink)hitCustomerWithDrink(target,projectile);else hitCustomer(target,projectile);
+   marker.remove();return;
+  }
+  gameFrame(move);
+ }
+ gameFrame(move);
 }
-
-const isDrink=type==="drink";
-
-const game=document.getElementById("game");
-const gameRect=game.getBoundingClientRect();
-
-const frame=document.querySelector(
-isDrink
-? "#waitress img.active"
-: "#cook img.active"
-);
-
-if(!frame) return;
-
-const rect=frame.getBoundingClientRect();
-
-let currentX=
-rect.left+rect.width*(isDrink ? .88 : .72);
-
-let currentY=
-rect.top+rect.height*(isDrink ? .34 : .32);
-
-const marker=document.createElement("div");
-
-marker.className="hit-marker";
-
-game.appendChild(marker);
-
-const projectile=document.createElement("img");
-
-projectile.className=type;
-
-projectile.src=isDrink
-? "https://i.ibb.co/MDk4xzJd/1788234306668-removebg-preview.png"
-: "https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png";
-
-game.appendChild(projectile);
-
-const projectileRect=projectile.getBoundingClientRect();
-
-const halfWidth=
-isDrink ? projectileRect.width/2 : 42;
-
-const halfHeight=
-isDrink ? projectileRect.height/2 : 42;
-
-function position(){
-
-projectile.style.left=
-(currentX-gameRect.left-halfWidth)+"px";
-
-projectile.style.top=
-(currentY-gameRect.top-halfHeight)+"px";
-
-}
-
-position();
-
-const speed=isDrink
-? 350
-: 350*(1+powerUps.speed*.33)*(1+pastaSpeedBonus);
-
-let lastTime=performance.now();
-
-function move(now){
-
-if(
-!target.isConnected ||
-target.dataset.satisfied==="true"
-){
-
-projectile.remove();
-marker.remove();
-
-return;
-
-}
-
-if(
-powerUpPaused ||
-bossIntroPlaying
-){
-
-lastTime=now;
-
-gameFrame(move);
-
-return;
-
-}
-
-const targetRect=target.getBoundingClientRect();
-
-const endX=
-targetRect.left+
-targetRect.width/2+
-HIT_X;
-
-const endY=
-targetRect.top+
-targetRect.height*HIT_POSITION_Y+
-HIT_Y;
-
-marker.style.left=
-(endX-gameRect.left)+"px";
-
-marker.style.top=
-(endY-gameRect.top)+"px";
-
-const deltaTime=Math.min(
-(now-lastTime)/1000,
-.05
-);
-
-lastTime=now;
-
-const dx=endX-currentX;
-const dy=endY-currentY;
-
-const distance=Math.hypot(dx,dy);
-const movement=speed*deltaTime;
-
-if(distance<=movement){
-
-currentX=endX;
-currentY=endY;
-
-}else{
-
-currentX+=dx/distance*movement;
-currentY+=dy/distance*movement;
-
-}
-
-position();
-
-if(
-Math.hypot(
-endX-currentX,
-endY-currentY
-)<=3
-){
-
-if(isDrink){
-
-hitCustomerWithDrink(
-target,
-projectile
-);
-
-}else{
-
-hitCustomer(
-target,
-projectile
-);
-
-}
-
-marker.remove();
-
-return;
-
-}
-
-gameFrame(move);
-
-}
-
-gameFrame(move);
-
-}
-
-/* EFFETTI IMPATTO */
-
 function createImpactEffect(customer,type){
-
-if(!customer) return;
-
-const game=document.getElementById("game");
-const gameRect=game.getBoundingClientRect();
-const rect=customer.getBoundingClientRect();
-
-const isDrink=type==="drink";
-
-for(let i=0;i<(isDrink ? 7 : 6);i++){
-
-const particle=document.createElement("div");
-
-particle.className=
-"impact-particle "+
-(isDrink ? "drink-drop" : "pasta-strand");
-
-particle.style.left=
-(rect.left+rect.width/2-gameRect.left)+"px";
-
-particle.style.top=
-(rect.top+rect.height*.45-gameRect.top)+"px";
-
-const angle=Math.random()*Math.PI*2;
-
-const distance=isDrink
-? 18+Math.random()*28
-: 20+Math.random()*30;
-
-particle.style.setProperty(
-"--dx",
-Math.cos(angle)*distance+"px"
-);
-
-particle.style.setProperty(
-"--dy",
-Math.sin(angle)*distance+"px"
-);
-
-if(!isDrink){
-
-particle.style.setProperty(
-"--rot",
-Math.floor(Math.random()*180)+"deg"
-);
-
+ if(!customer)return;
+ const game=document.getElementById('game'),g=game.getBoundingClientRect(),r=customer.getBoundingClientRect();
+ const isDrink=type!=='pasta';
+ for(let i=0;i<(isDrink?7:6);i++){
+  const particle=document.createElement('div');particle.className='impact-particle '+(isDrink?'drink-drop':'pasta-strand');
+  if(type==='cappuccino'){particle.classList.add('coffee-drop');particle.style.background=i%2?'#a56a38':'#ffe4b5';}
+  particle.style.left=r.left+r.width/2-g.left+'px';particle.style.top=r.top+r.height*.45-g.top+'px';
+  const angle=Math.random()*Math.PI*2,distance=isDrink?18+Math.random()*28:20+Math.random()*30;
+  particle.style.setProperty('--dx',Math.cos(angle)*distance+'px');particle.style.setProperty('--dy',Math.sin(angle)*distance+'px');
+  if(!isDrink)particle.style.setProperty('--rot',Math.floor(Math.random()*180)+'deg');
+  game.appendChild(particle);gameLater(()=>particle.remove(),isDrink?400:450);
+ }
 }
-
-game.appendChild(particle);
-
-gameLater(function(){
-
-particle.remove();
-
-},isDrink ? 400 : 450);
-
-}
-
-}
-
-/* PASTA HIT */
-
 function hitCustomer(customer,pasta){
-
-if(pasta){
-pasta.remove();
+ if(pasta)pasta.remove();if(!customer||!customer.isConnected||customer.dataset.satisfied==='true')return;
+ createImpactEffect(customer,'pasta');const hp=Number(customer.dataset.hp||'30')-(5+powerUps.sauce);customer.dataset.hp=hp;
+ if(hp<=0)satisfyCustomer(customer);
 }
-
-if(
-!customer ||
-!customer.isConnected ||
-customer.dataset.satisfied==="true"
-){
-return;
-}
-
-createImpactEffect(customer,"pasta");
-
-const hp=
-parseInt(customer.dataset.hp || "30")-
-(5+powerUps.sauce);
-
-customer.dataset.hp=hp;
-
-if(hp<=0){
-satisfyCustomer(customer);
-}
-
-}
-
-/* DRINK HIT */
-
 function hitCustomerWithDrink(customer,drink){
-
-if(drink){
-drink.remove();
+ if(drink)drink.remove();if(!customer||!customer.isConnected||customer.dataset.satisfied==='true')return;
+ createImpactEffect(customer,'drink');const hp=Number(customer.dataset.hp||'30')-3;customer.dataset.hp=hp;
+ if(hp<=0)satisfyCustomer(customer);
+ else if(Math.random()<[.10,.20,.35,.50][powerUps.iceShot]){freezeCustomer(customer);tryIceChain(customer);}
 }
-
-if(
-!customer ||
-!customer.isConnected ||
-customer.dataset.satisfied==="true"
-){
-return;
-}
-
-createImpactEffect(customer,"drink");
-
-const hp=
-parseInt(customer.dataset.hp || "30")-3;
-
-customer.dataset.hp=hp;
-
-if(hp<=0){
-
-satisfyCustomer(customer);
-
-}else{
-
-const freezeChance=[
-.10,
-.20,
-.35,
-.50
-][powerUps.iceShot];
-
-if(Math.random()<freezeChance){
-
-freezeCustomer(customer);
-tryIceChain(customer);
-
-}
-
-}
-
-}
-
-/* FREEZE */
-
 function freezeCustomer(customer){
-
-if(
-!customer ||
-!customer.isConnected ||
-customer.style.display==="none" ||
-customer.dataset.satisfied==="true"
-){
-return;
+ if(!customer||!customer.isConnected||customer.style.display==='none'||customer.dataset.satisfied==='true')return;
+ cancelTask(customer._freezeTimer);customer.dataset.frozen='true';customer.style.animationPlayState='paused';
+ const frozen=customer.querySelector('.frozen-frame');
+ if(frozen){customer.querySelectorAll('.frame').forEach(f=>f.classList.remove('active'));frozen.style.display='block';}
+ customer._freezeTimer=gameLater(function(){
+  if(customer.isConnected&&customer.style.display!=='none'&&customer.dataset.satisfied!=='true'){
+   customer.style.animationPlayState='running';customer.dataset.frozen='false';if(frozen)frozen.style.display='none';
+   const frames=customer.querySelectorAll('.frame'),n=parseInt(customer.dataset.frame||'0')%frames.length;
+   frames.forEach((f,i)=>f.classList.toggle('active',i===n));
+  }
+  customer._freezeTimer=null;
+ },[500,1500,2000,2500][powerUps.deepFreeze]);
 }
-
-cancelTask(customer._freezeTimer);
-
-customer.dataset.frozen="true";
-customer.style.animationPlayState="paused";
-
-const frozen=customer.querySelector(".frozen-frame");
-
-if(frozen){
-
-customer.querySelectorAll(".frame").forEach(
-function(frame){
-
-frame.classList.remove("active");
-
-}
-);
-
-frozen.style.display="block";
-
-}
-
-const freezeDuration=[
-500,
-1500,
-2000,
-2500
-][powerUps.deepFreeze];
-
-customer._freezeTimer=gameLater(function(){
-
-if(
-customer.isConnected &&
-customer.style.display!=="none" &&
-customer.dataset.satisfied!=="true"
-){
-
-customer.style.animationPlayState="running";
-customer.dataset.frozen="false";
-
-if(frozen){
-frozen.style.display="none";
-}
-
-const frames=customer.querySelectorAll(".frame");
-
-const frameNumber=
-parseInt(customer.dataset.frame || "0")%
-frames.length;
-
-frames.forEach(function(frame,index){
-
-frame.classList.toggle(
-"active",
-index===frameNumber
-);
-
-});
-
-}
-
-customer._freezeTimer=null;
-
-},freezeDuration);
-
-}
-
-/* ICE CHAIN */
-
 function tryIceChain(original){
-
-if(powerUps.iceChain<=0) return;
-
-const chainChance=[
-0,
-.30,
-.50,
-.75
-][powerUps.iceChain];
-
-if(Math.random()>=chainChance) return;
-
-const originalRect=original.getBoundingClientRect();
-
-const originalX=
-originalRect.left+originalRect.width/2;
-
-const originalY=
-originalRect.top+originalRect.height/2;
-
-let nearest=null;
-let bestDistance=Infinity;
-
-customers.forEach(function(customer){
-
-if(
-!customer.isConnected ||
-customer===original ||
-customer.style.display==="none" ||
-customer.dataset.satisfied==="true"
-){
-return;
+ if(powerUps.iceChain<=0||Math.random()>=[0,.30,.50,.75][powerUps.iceChain])return;
+ const r=original.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;
+ let nearest=null,best=Infinity;
+ customers.forEach(c=>{
+  if(!c.isConnected||c===original||c.style.display==='none'||c.dataset.satisfied==='true')return;
+  const rect=c.getBoundingClientRect(),distance=Math.hypot(rect.left+rect.width/2-x,rect.top+rect.height/2-y);
+  if(distance<best){best=distance;nearest=c;}
+ });
+ if(nearest)freezeCustomer(nearest);
 }
-
-const rect=customer.getBoundingClientRect();
-
-const distance=Math.hypot(
-rect.left+rect.width/2-originalX,
-rect.top+rect.height/2-originalY
-);
-
-if(distance<bestDistance){
-
-bestDistance=distance;
-nearest=customer;
-
-}
-
-});
-
-if(nearest){
-freezeCustomer(nearest);
-}
-
-}
-
-/* CLIENTE SODDISFATTO */
-
 function satisfyCustomer(customer){
-
-if(
-!customer ||
-!customer.isConnected ||
-customer.dataset.satisfied==="true"
-){
-return;
+ if(!customer||!customer.isConnected||customer.dataset.satisfied==='true')return;
+ cancelTask(customer._freezeTimer);customer._freezeTimer=null;
+ const rect=customer.getBoundingClientRect(),gameRect=document.getElementById('game').getBoundingClientRect();
+ customer.style.animation='none';customer.style.animationPlayState='running';
+ customer.classList.remove('walking');customer.classList.add('satisfied');
+ customer.style.top=rect.top-gameRect.top+'px';customer.style.left=rect.left-gameRect.left+'px';
+ customer.dataset.satisfied='true';customer.dataset.atKitchen='false';customer.dataset.frozen='false';
+ addEXP(EXP_PER_CUSTOMER);
+ customer.querySelectorAll('.frame').forEach(f=>f.classList.remove('active'));
+ const frozen=customer.querySelector('.frozen-frame');if(frozen)frozen.style.display='none';
+ const happy=customer.querySelector('.happy-frame');if(happy)happy.style.display='block';updateZIndexes();
+ // 0,5 s + controllo 0–0,25 s + attesa 0,6 s = circa 1,1–1,35 s.
+ // Verso la boss wave restano la posa da 1 s e il controllo da 0,5 s.
+ gameLater(function(){customer.style.display='none';if(happy)happy.style.display='none';customer.classList.remove('satisfied');updateZIndexes();},currentWave>=BOSS_WAVE-1?1000:500);
 }
-
-cancelTask(customer._freezeTimer);
-customer._freezeTimer=null;
-
-const rect=customer.getBoundingClientRect();
-
-const gameRect=document.getElementById(
-"game"
-).getBoundingClientRect();
-
-customer.style.animation="none";
-customer.style.animationPlayState="running";
-
-customer.classList.remove("walking");
-customer.classList.add("satisfied");
-
-customer.style.top=
-(rect.top-gameRect.top)+"px";
-
-customer.style.left=
-(rect.left-gameRect.left)+"px";
-
-customer.dataset.satisfied="true";
-customer.dataset.atKitchen="false";
-customer.dataset.frozen="false";
-
-addEXP(EXP_PER_CUSTOMER);
-
-customer.querySelectorAll(".frame").forEach(
-function(frame){
-
-frame.classList.remove("active");
-
-}
-);
-
-const frozen=customer.querySelector(".frozen-frame");
-
-if(frozen){
-frozen.style.display="none";
-}
-
-const happy=customer.querySelector(".happy-frame");
-
-if(happy){
-happy.style.display="block";
-}
-
-updateZIndexes();
-
-const happyDuration=
-currentWave>=BOSS_WAVE-1 ? 1000 : 500;
-
-gameLater(function(){
-
-customer.style.display="none";
-
-if(happy){
-happy.style.display="none";
-}
-
-customer.classList.remove("satisfied");
-
-updateZIndexes();
-
-},happyDuration);
-
-}
-
-/* COMPATIBILITÀ */
-
-function satisfyCustomer1(){
-
-const customer=customers.find(function(c){
-
-return(
-c.dataset.type==="1" &&
-c.dataset.satisfied!=="true"
-);
-
-});
-
-if(customer){
-satisfyCustomer(customer);
-}
-
-}
-
-function satisfyCustomer2(){
-
-const customer=customers.find(function(c){
-
-return(
-c.dataset.type==="2" &&
-c.dataset.satisfied!=="true"
-);
-
-});
-
-if(customer){
-satisfyCustomer(customer);
-}
-
-}
+function satisfyCustomer1(){const c=customers.find(c=>c.dataset.type==='1'&&c.dataset.satisfied!=='true');if(c)satisfyCustomer(c);}
+function satisfyCustomer2(){const c=customers.find(c=>c.dataset.type==='2'&&c.dataset.satisfied!=='true');if(c)satisfyCustomer(c);}
 
 </script>
 </body>
-  </html>
+</html>
