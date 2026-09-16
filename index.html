@@ -158,8 +158,8 @@ pointer-events:none;
  bottom:5%;
 }
 .cappuccino{
- width:42px;
- height:33px;
+ width:34px;
+ height:27px;
 }
 .powerup-slot.seon-panel img{
  width:100%;
@@ -883,7 +883,7 @@ function playSeonAttack(){
  seonAttacking=true;setActorFrame('seon',0);
  for(let i=1;i<=5;i++)gameLater(()=>{
   setActorFrame('seon',i);
-  if(i===4&&target.isConnected&&target.dataset.satisfied!=='true')throwProjectile(target,'cappuccino');
+  if(i===3&&target.isConnected&&target.dataset.satisfied!=='true')throwProjectile(target,'cappuccino');
  },i*160);
  gameLater(()=>{setActorFrame('seon',0);seonAttacking=false;},960);
 }
