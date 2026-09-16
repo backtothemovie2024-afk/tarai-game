@@ -927,7 +927,7 @@ function throwProjectile(target,type){
  const isDrink=type==='drink',isCoffee=type==='cappuccino',game=document.getElementById('game'),gameRect=game.getBoundingClientRect();
  const frame=document.querySelector(isCoffee?'#seon img.active':isDrink?'#waitress img.active':'#cook img.active');if(!frame)return;
  const rect=frame.getBoundingClientRect();
- let currentX=rect.left+rect.width*(isCoffee?.72:isDrink?.88:.72),currentY=rect.top+rect.height*(isCoffee?.38:isDrink?.34:.32);
+ let currentX=rect.left+rect.width*(isCoffee?.76:isDrink?.88:.72),currentY=rect.top+rect.height*(isCoffee?.34:isDrink?.34:.32);
  const marker=document.createElement('div');marker.className='hit-marker';game.appendChild(marker);
  const projectile=isCoffee?makeCappuccino():document.createElement('img');projectile.className=type;
  if(!isCoffee)projectile.src=isDrink?'https://i.ibb.co/MDk4xzJd/1788234306668-removebg-preview.png':'https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png';
