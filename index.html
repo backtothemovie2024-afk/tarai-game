@@ -210,6 +210,18 @@ pointer-events:none;
 #retryButton{border:0;border-radius:24px;padding:14px 30px;background:linear-gradient(#ffe49a,#eaaa3d);box-shadow:0 4px 0 #75461d;color:#362114;font-size:16px;font-weight:900;cursor:pointer}
 @media(prefers-reduced-motion:reduce){#bossFlashWash.active{animation:none}.flash-ring{display:none}}
 
+
+/* Game Over: illustrazione in alto, un solo personaggio animato sotto. */
+#gameOverArt,#gameOverCharacter{display:none;position:absolute;pointer-events:none;object-fit:contain}
+#endScreen.loss{padding:0;background:#000}
+#endScreen.loss #gameOverArt{display:block;left:0;top:0;width:100%;height:auto;z-index:0}
+#endScreen.loss #gameOverCharacter{display:block;left:8%;top:47%;width:84%;height:38%;z-index:1}
+#endScreen.loss #endCard{position:absolute;inset:0;padding:0;border:0}
+#endScreen.loss #endEyebrow,#endScreen.loss #endSubtitle{display:none}
+#endScreen.loss #endTitle{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:0}
+#endScreen.loss #endStats{position:absolute;left:3%;right:3%;bottom:11%;margin:0;font-size:12px;z-index:2}
+#endScreen.loss #retryButton{position:absolute;bottom:3%;left:50%;transform:translateX(-50%);z-index:2}
+
 </style>
 </head>
 <body>
@@ -235,6 +247,8 @@ pointer-events:none;
 <div id="kitchenHud"><span id="kitchenLabel">CUCINA 100%</span><div id="kitchenMeter" role="progressbar" aria-label="Energia cucina" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><div id="kitchenFill"></div></div></div>
 <div id="damageVignette"></div><div id="bossFlashWash"></div>
 <div id="endScreen" role="dialog" aria-modal="true" aria-labelledby="endTitle" hidden>
+ <img id="gameOverArt" src="https://i.ibb.co/LDvGMpXr/file-0000000046a881f59037eda06ba19c32.png" alt="">
+ <img id="gameOverCharacter" alt="Personaggio stordito">
  <div id="endCard"><div id="endEyebrow">TARAI RUSH · STAGE 1</div><h1 id="endTitle">GAME OVER</h1><div id="endSubtitle">KITCHEN COLLAPSED</div><div id="endStats"></div><button id="retryButton" type="button">RIPROVA</button></div>
 </div>
 <div id="bossIntro">
@@ -412,25 +426,25 @@ const HIT_X=5,HIT_Y=0,HIT_POSITION_Y=.45;
 const WAITRESS_HAND_X=.72,WAITRESS_HAND_Y=.38;
 const WAVES=[
  {customers:6,spawnInterval:1400,walkTime:32,hp:8},
- {customers:7,spawnInterval:1360,walkTime:32,hp:8},
- {customers:8,spawnInterval:1320,walkTime:32,hp:8},
- {customers:8,spawnInterval:1280,walkTime:31,hp:9},
- {customers:9,spawnInterval:1240,walkTime:31,hp:9},
- {customers:9,spawnInterval:1200,walkTime:31,hp:9},
- {customers:10,spawnInterval:1160,walkTime:30,hp:10},
- {customers:10,spawnInterval:1120,walkTime:30,hp:10},
- {customers:11,spawnInterval:1080,walkTime:30,hp:10},
- {customers:11,spawnInterval:1040,walkTime:29,hp:10},
- {customers:12,spawnInterval:1000,walkTime:29,hp:10},
- {customers:12,spawnInterval:960,walkTime:29,hp:10},
- {customers:13,spawnInterval:920,walkTime:28,hp:11},
- {customers:13,spawnInterval:880,walkTime:28,hp:11},
- {customers:14,spawnInterval:840,walkTime:28,hp:11},
- {customers:14,spawnInterval:800,walkTime:27,hp:12},
- {customers:15,spawnInterval:760,walkTime:27,hp:12},
- {customers:15,spawnInterval:720,walkTime:27,hp:12},
- {customers:16,spawnInterval:680,walkTime:26,hp:13},
- {customers:3,spawnInterval:1500,walkTime:48,hp:160}
+ {customers:7,spawnInterval:1355,walkTime:32,hp:8},
+ {customers:8,spawnInterval:1310,walkTime:32,hp:9},
+ {customers:8,spawnInterval:1265,walkTime:31,hp:10},
+ {customers:9,spawnInterval:1220,walkTime:30,hp:12},
+ {customers:9,spawnInterval:1175,walkTime:29,hp:14},
+ {customers:10,spawnInterval:1130,walkTime:28,hp:16},
+ {customers:10,spawnInterval:1085,walkTime:27,hp:18},
+ {customers:11,spawnInterval:1040,walkTime:26,hp:20},
+ {customers:11,spawnInterval:995,walkTime:25,hp:23},
+ {customers:12,spawnInterval:950,walkTime:24,hp:26},
+ {customers:12,spawnInterval:905,walkTime:23,hp:29},
+ {customers:13,spawnInterval:860,walkTime:22,hp:32},
+ {customers:13,spawnInterval:815,walkTime:22,hp:35},
+ {customers:14,spawnInterval:770,walkTime:21,hp:38},
+ {customers:14,spawnInterval:725,walkTime:21,hp:41},
+ {customers:15,spawnInterval:680,walkTime:20,hp:44},
+ {customers:15,spawnInterval:635,walkTime:20,hp:47},
+ {customers:16,spawnInterval:590,walkTime:20,hp:50},
+ {customers:3,spawnInterval:1500,walkTime:36,hp:320}
 ];
 const TOTAL_WAVES=WAVES.length;
 const BOSS_WAVE=TOTAL_WAVES;
@@ -746,11 +760,11 @@ function startCustomerMovement(){
  gameFrame(move);
 }
 function spawnBossWave(){
- spawnBossEntity('assistantBossTemplate',70,0,48,'assistant');
- spawnBossEntity('cameramanBossTemplate',70,4,48,'cameraman');
+ spawnBossEntity('assistantBossTemplate',120,0,36,'assistant');
+ spawnBossEntity('cameramanBossTemplate',120,4,36,'cameraman');
  gameLater(function(){
   if(currentWave!==BOSS_WAVE||waveFinished) return;
-  const boss=spawnBossEntity('mainBossTemplate',160,2,48,'boss');startBossFlash(boss);scheduleWaveCheck();
+  const boss=spawnBossEntity('mainBossTemplate',320,2,36,'boss');startBossFlash(boss);scheduleWaveCheck();
  },1500);
 }
 function spawnBossEntity(templateId,hp,laneIndex,walkTime,type){
@@ -954,9 +968,11 @@ function startActorAttack(actor){
  setActorFrame(actor,0);
  for(let i=1;i<steps;i++)gameLater(()=>{
   setActorFrame(actor,i);
-  if(i===release)targets.forEach(target=>{
-   if(target.isConnected&&target.dataset.satisfied!=='true')throwProjectile(target,type);
-  });
+  if(i===release){
+   // Sceglie i bersagli al rilascio: chi è già soddisfatto viene sostituito.
+   const releaseTargets=actor==='cook'?getAttackTargets():[getNearestVisibleCustomer()].filter(Boolean);
+   releaseTargets.forEach(target=>throwProjectile(target,type));
+  }
  },i*frameTime);
  gameLater(()=>{
   setActorFrame(actor,0);
@@ -1199,11 +1215,17 @@ document.getElementById('playButton').addEventListener('click',()=>{
 document.getElementById('skipTransition').addEventListener('click',beginGame);
 function resetGame(){
  document.getElementById('endScreen').hidden=true;
+ document.getElementById('gameOverCharacter').removeAttribute('src');
  document.getElementById('game').classList.remove('ended');
  document.getElementById('damageVignette').classList.remove('active');
  priorityCustomer=null;servedCustomers=0;stageElapsed=0;lastOffer=[];
  resetGameBase();
 }
+const GAME_OVER_ANIMATIONS=[
+ 'https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/video_trasparente.webp',
+ 'https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/barista_stordita_trasparente%281%29.webp',
+ 'https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/cameriera_stordita_trasparente.webp'
+];
 function endStage(won){
  if(gameFinished)return;
  clearTransition();stopBossIntro();gameFinished=true;powerUpPaused=false;clearAllTimers();
@@ -1215,7 +1237,12 @@ function endStage(won){
  document.getElementById('endTitle').textContent=won?'STAGE CLEAR!':'GAME OVER';
  document.getElementById('endSubtitle').textContent=won?'SERVIZIO COMPLETATO':'KITCHEN COLLAPSED';
  document.getElementById('endStats').textContent='WAVE '+currentWave+' / 20 · LV '+currentLevel+' · '+servedCustomers+' clienti serviti';
- document.getElementById('endScreen').hidden=false;
+ const endScreen=document.getElementById('endScreen');
+ endScreen.classList.toggle('loss',!won);
+ const character=document.getElementById('gameOverCharacter');
+ if(won)character.removeAttribute('src');
+ else character.src=GAME_OVER_ANIMATIONS[Math.floor(Math.random()*GAME_OVER_ANIMATIONS.length)];
+ endScreen.hidden=false;
  document.getElementById('testBossButton').hidden=true;
  document.getElementById('testGameOverButton').hidden=true;
  document.getElementById('retryButton').focus();
@@ -1304,9 +1331,9 @@ function startBossFlash(boss){
    light.className='camera-light fired';
    const p=cameraPosition(boss),ring=document.createElement('div');ring.className='flash-ring';ring.style.left=p.x+'px';ring.style.top=p.y+'px';document.getElementById('game').appendChild(ring);
    const wash=document.getElementById('bossFlashWash');wash.classList.remove('active');void wash.offsetWidth;wash.classList.add('active');
-   customers.filter(c=>['assistant','cameraman'].includes(c.dataset.type)&&c.dataset.satisfied!=='true').forEach(c=>c._boostUntil=gameClock+3000);
+   customers.filter(c=>['assistant','cameraman'].includes(c.dataset.type)&&c.dataset.satisfied!=='true').forEach(c=>c._boostUntil=gameClock+4000);
    gameLater(()=>{light.remove();ring.remove();},600);
-   gameLater(charge,8300);
+   gameLater(charge,6300);
   },700);
  }
  gameLater(charge,6000);
