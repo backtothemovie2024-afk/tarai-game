@@ -32,7 +32,7 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#
 #exp-bar{position:absolute;left:2.5%;bottom:1.5%;width:95%;height:30px;background:#321b10;border:3px solid #8a512d;border-radius:15px;box-shadow:0 4px 0 #160b07,0 6px 12px rgba(0,0,0,.6),inset 0 2px 3px rgba(255,255,255,.18);overflow:hidden;z-index:200}
 #exp-fill{position:absolute;left:0;top:0;width:0%;height:100%;background:linear-gradient(180deg,#ffe477,#f5a623 50%,#d96b16);border-radius:10px;z-index:1;transition:width .35s ease-out}
 #exp-level{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:white;font-size:14px;font-weight:900;text-shadow:2px 2px 3px #000;z-index:2;pointer-events:none}
-.customer{position:absolute;width:100px;height:135px;top:5%;z-index:10}
+.customer{position:absolute;width:100px;height:135px;top:3%;z-index:10}
 .customer.walking{animation:walkDown 60s linear forwards}.customer.satisfied{animation:none!important}
 .customer .frame,.customer .happy-frame,.customer .frozen-frame{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;display:none}
 .customer .frame.active{display:block}.customer .happy-frame{z-index:2}.customer .frozen-frame{z-index:3}
@@ -64,7 +64,7 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#
 .heart{position:absolute;left:50%;top:-18px;transform:translateX(-50%);font-size:24px;line-height:1;z-index:5;display:none;animation:heartFloat .8s ease-in-out infinite alternate}
 .customer.satisfied .heart{display:block}
 @keyframes heartFloat{0%{transform:translateX(-50%) translateY(0) scale(1)}100%{transform:translateX(-50%) translateY(-7px) scale(1.12)}}
-@keyframes walkDown{0%{top:8%}100%{top:69%}}
+@keyframes walkDown{0%{top:3%}100%{top:69%}}
 #cook,#waitress{position:absolute;bottom:7%;width:100px;height:135px;transform:translateX(-50%);z-index:60}
 #cook{left:37.5%;bottom:12%}
 #cook img{position:absolute;top:0;left:0;width:170%;height:170%;object-fit:contain;display:none}
@@ -369,31 +369,34 @@ document.getElementById('menu').addEventListener('pointerdown',function(){
 const HIT_X=5,HIT_Y=0,HIT_POSITION_Y=.45;
 const WAITRESS_HAND_X=.72,WAITRESS_HAND_Y=.38;
 const WAVES=[
- {customers:4,spawnInterval:4200,walkTime:85,hp:15},
- {customers:5,spawnInterval:4100,walkTime:84,hp:16},
- {customers:5,spawnInterval:4000,walkTime:83,hp:17},
- {customers:6,spawnInterval:3900,walkTime:82,hp:18},
- {customers:6,spawnInterval:3800,walkTime:81,hp:19},
- {customers:7,spawnInterval:3600,walkTime:80,hp:20},
- {customers:7,spawnInterval:3500,walkTime:79,hp:21},
- {customers:8,spawnInterval:3400,walkTime:78,hp:22},
- {customers:8,spawnInterval:3300,walkTime:77,hp:23},
- {customers:9,spawnInterval:3200,walkTime:76,hp:24},
- {customers:8,spawnInterval:3400,walkTime:78,hp:23},
- {customers:9,spawnInterval:3100,walkTime:75,hp:25},
- {customers:9,spawnInterval:3000,walkTime:74,hp:26},
- {customers:10,spawnInterval:2900,walkTime:73,hp:27},
- {customers:10,spawnInterval:2800,walkTime:72,hp:28},
- {customers:9,spawnInterval:3000,walkTime:74,hp:27},
- {customers:11,spawnInterval:2600,walkTime:71,hp:30},
- {customers:11,spawnInterval:2500,walkTime:70,hp:32},
- {customers:12,spawnInterval:2400,walkTime:70,hp:34},
+ {customers:12,spawnInterval:2800,walkTime:85,hp:15},
+ {customers:14,spawnInterval:2700,walkTime:84,hp:16},
+ {customers:15,spawnInterval:2600,walkTime:83,hp:17},
+ {customers:17,spawnInterval:2500,walkTime:82,hp:18},
+ {customers:18,spawnInterval:2400,walkTime:81,hp:19},
+ {customers:20,spawnInterval:2300,walkTime:80,hp:20},
+ {customers:21,spawnInterval:2200,walkTime:79,hp:21},
+ {customers:23,spawnInterval:2100,walkTime:78,hp:22},
+ {customers:24,spawnInterval:2000,walkTime:77,hp:23},
+ {customers:26,spawnInterval:1900,walkTime:76,hp:24},
+ {customers:27,spawnInterval:1800,walkTime:78,hp:23},
+ {customers:29,spawnInterval:1700,walkTime:75,hp:25},
+ {customers:30,spawnInterval:1600,walkTime:74,hp:26},
+ {customers:32,spawnInterval:1500,walkTime:73,hp:27},
+ {customers:34,spawnInterval:1400,walkTime:72,hp:28},
+ {customers:35,spawnInterval:1350,walkTime:74,hp:27},
+ {customers:37,spawnInterval:1300,walkTime:71,hp:30},
+ {customers:38,spawnInterval:1250,walkTime:70,hp:32},
+ {customers:40,spawnInterval:1200,walkTime:70,hp:34},
  {customers:3,spawnInterval:1500,walkTime:100,hp:200}
 ];
 const TOTAL_WAVES=WAVES.length;
 const BOSS_WAVE=TOTAL_WAVES;
 const LANES=[29,36.4,43.8,51.2,58.6];
-const SAME_LANE_MIN_DELAY=1500;
+const CUSTOMER_START_Y=.03;
+const CUSTOMER_END_Y=.69;
+const CUSTOMER_GAP=.25;
+const nextAttackAt={cook:0,waitress:0,seon:0};
 const NORMAL_WAVE_DELAY=600;
 const BOSS_WAVE_DELAY=1200;
 const EXP_PER_CUSTOMER=5;
@@ -454,6 +457,7 @@ requestAnimationFrame(tickGameClock);
 function clearAllTimers(){
  generation++;
  gameTasks.clear();
+ nextAttackAt.cook=nextAttackAt.waitress=nextAttackAt.seon=0;
  gameFrames.forEach(id=>cancelAnimationFrame(id));gameFrames.clear();
  customerTimer=customer4Timer=cookTimer=waitressAttackTimer=null;
  firstAttackTimer=kitchenDamageTimer=zIndexTimer=waveCheckTimer=null;
@@ -622,7 +626,7 @@ function resetGame(){
 }
 function startGameSystems(){
  startCustomerAnimation();startCustomer4Animation();startCookAnimation();
- startWaitressAttack();startSeonAttack();startKitchenEnergySystem();startFirstAttackDetection();startZIndexSystem();
+ startWaitressAttack();startSeonAttack();startCustomerMovement();startKitchenEnergySystem();startFirstAttackDetection();startZIndexSystem();
 }
 
 /* WAVES: la wave 3 è normale, la wave 20 contiene i tre boss. */
@@ -644,22 +648,78 @@ function startWave(number){
  // L'avvio della prima wave conserva i 4,2 secondi originali.
  gameLater(function(){waveStarting=false;spawnWaveCustomers();},number===1?4200:NORMAL_WAVE_DELAY);
 }
+/* Un solo arrivo in attesa: nessuna raffica di timer arretrati. */
 function spawnWaveCustomers(){
  if(currentWave===BOSS_WAVE){spawnBossWave();return;}
- const config=WAVES[currentWave-1];if(!config) return;
- const lastLaneSpawn=LANES.map(()=>-Infinity);
- for(let i=0;i<config.customers;i++){
-  gameLater(()=>spawnWaveCustomer(i,lastLaneSpawn,config),i*config.spawnInterval);
+ const config=WAVES[currentWave-1],wave=currentWave;
+ if(!config)return;
+ function next(){
+  if(currentWave!==wave||waveFinished||gameFinished)return;
+  const type=Math.floor(Math.random()*8)+1;
+  const templateId='customer'+type+'Template';
+  const height=measureCustomerHeight(templateId);
+  function attempt(){
+   if(currentWave!==wave||waveFinished||gameFinished)return;
+   const game=document.getElementById('game');
+   const start=CUSTOMER_START_Y*game.clientHeight;
+   const lanes=LANES.map((_,i)=>i).filter(lane=>customers.every(c=>{
+    if(!c.isConnected||c.style.display==='none'||Number(c.dataset.lane)!==lane)return true;
+    return hasLaneSpace(start,height,c._walkY*game.clientHeight,c.offsetHeight);
+   }));
+   if(!lanes.length){gameLater(attempt,100);return;}
+   const lane=lanes[Math.floor(Math.random()*lanes.length)];
+   createCustomer(templateId,type,config.hp,lane,config.walkTime,false);
+   waveSpawned++;
+   if(waveSpawned>=config.customers)scheduleWaveCheck();
+   else gameLater(next,config.spawnInterval);
+  }
+  attempt();
  }
+ next();
 }
-function spawnWaveCustomer(index,lastLaneSpawn,config){
- if(waveSpawned>=config.customers) return;
- let laneIndex,attempts=0;
- do{laneIndex=Math.floor(Math.random()*LANES.length);attempts++;}
- while(attempts<50&&gameClock-lastLaneSpawn[laneIndex]<SAME_LANE_MIN_DELAY);
- lastLaneSpawn[laneIndex]=gameClock;
- spawnCustomer(waveSpawned,laneIndex,config.walkTime,config.hp);waveSpawned++;
- if(waveSpawned>=config.customers) scheduleWaveCheck();
+function measureCustomerHeight(templateId){
+ const probe=document.getElementById(templateId).cloneNode(true);
+ probe.removeAttribute('id');
+ probe.style.display='block';probe.style.visibility='hidden';
+ document.getElementById('game').appendChild(probe);
+ const height=probe.offsetHeight;probe.remove();return height;
+}
+/* Il margine superiore copre anche gli sprite ingranditi al 115%. */
+function laneTopLimit(frontY,frontHeight,backHeight){
+ return frontY-frontHeight*.15-backHeight-CUSTOMER_GAP*Math.max(frontHeight,backHeight);
+}
+function hasLaneSpace(backY,backHeight,frontY,frontHeight){
+ return backY<=laneTopLimit(frontY,frontHeight,backHeight);
+}
+function startCustomerMovement(){
+ let last=performance.now();
+ function move(now){
+  const dt=Math.min(Math.max(0,(now-last)/1000),.05);last=now;
+  if(!powerUpPaused&&!bossIntroPlaying&&!gameFinished){
+   const height=document.getElementById('game').clientHeight;
+   if(height>0)for(let lane=0;lane<LANES.length;lane++){
+    const queue=customers.filter(c=>c.isConnected&&c.style.display!=='none'&&Number(c.dataset.lane)===lane)
+     .sort((a,b)=>b._walkY-a._walkY);
+    let front=null;
+    for(const c of queue){
+     if(c.dataset.satisfied!=='true'){
+      let y=c._walkY;
+      if(c.dataset.frozen!=='true')y+=(CUSTOMER_END_Y-CUSTOMER_START_Y)*dt/c._walkTime;
+      y=Math.min(CUSTOMER_END_Y,y);
+      if(front){
+       const limit=laneTopLimit(front._walkY*height,front.offsetHeight,c.offsetHeight)/height;
+       y=Math.min(y,Math.max(CUSTOMER_START_Y,limit));
+      }
+      c._walkY=y;c.style.top=(y*100)+'%';
+      c.dataset.atKitchen=y>=CUSTOMER_END_Y?'true':'false';
+     }
+     front=c;
+    }
+   }
+  }
+  if(!gameFinished)gameFrame(move);
+ }
+ gameFrame(move);
 }
 function spawnBossWave(){
  spawnBossEntity('assistantBossTemplate',90,0,100,'assistant');
@@ -681,20 +741,18 @@ function createCustomer(templateId,type,hp,lane,walkTime,isBoss){
  const customer=document.getElementById(templateId).cloneNode(true);
  customer.id='customer-'+(++nextCustomerId);
  customer.classList.remove('customer-template','satisfied');customer.classList.add('spawned-customer');
- customer.style.display='block';customer.style.animation='none';customer.style.top='5%';customer.style.left=LANES[lane]+'%';
+ customer.style.display='block';customer.style.animation='none';customer.style.top=(CUSTOMER_START_Y*100)+'%';customer.style.left=LANES[lane]+'%';
  Object.assign(customer.dataset,{type:String(type),hp:String(hp),lane:String(lane),satisfied:'false',atKitchen:'false',frame:'0',frozen:'false',wave:String(currentWave)});
  if(isBoss) customer.dataset.boss='true';
  customer.querySelectorAll('.frame').forEach((f,i)=>f.classList.toggle('active',i===0));
  customer.querySelector('.happy-frame').style.display='none';
  const frozen=customer.querySelector('.frozen-frame');if(frozen) frozen.style.display='none';
  document.getElementById('game').appendChild(customer);customers.push(customer);
- // L'arrivo segue l'animazione, comprese eventuali pause o congelamenti.
- customer.addEventListener('animationend',function(e){
-  if(e.target===customer&&e.animationName==='walkDown'&&customer.dataset.satisfied!=='true'){
-   customer.dataset.atKitchen='true';updateZIndexes();
-  }
- });
- gameFrame(function(){customer.style.animation='walkDown '+walkTime+'s linear forwards';customer.classList.add('walking');});
+ customer._walkY=CUSTOMER_START_Y;
+ customer._walkTime=walkTime;
+ // Movimento gestito dal ciclo comune per mantenere le distanze.
+ customer.style.animation='none';
+ customer.classList.add('walking');
  return customer;
 }
 function scheduleWaveCheck(){
@@ -833,59 +891,54 @@ function getNearestVisibleCustomer(){
  const active=customers.filter(c=>c.dataset.satisfied!=='true'&&customerIsVisible(c));
  active.sort((a,b)=>b.getBoundingClientRect().top-a.getBoundingClientRect().top);return active[0]||null;
 }
-function getCookAttackInterval(){return Math.round(3000/((1+powerUps.speed*.33)*(1+pastaSpeedBonus)));}
+/* Frequenza base +50%; i potenziamenti agiscono anche sui timer. */
+function getCookAttackInterval(){return Math.round(2000/((1+powerUps.speed*.33)*(1+pastaSpeedBonus)));}
 function getWaitressAttackInterval(){return Math.round(getCookAttackInterval()*.67);}
+function getSeonAttackInterval(){return Math.round(getWaitressAttackInterval()/(1+[0,.10,.25,.45][powerUps.caffeineRush]));}
 function startCookAnimation(){
  cancelTask(cookTimer);setCookFrame(0);
- cookTimer=gameEvery(function(){if(getNearestVisibleCustomer())playCookAttack();else if(!cookAttacking)setCookFrame(0);},getCookAttackInterval());
-}
-function playCookAttack(){
- if(powerUpPaused||bossIntroPlaying||cookAttacking)return;
- const targets=getAttackTargets();if(!targets.length){setCookFrame(0);return;}
- cookAttacking=true;setCookFrame(0);
- gameLater(()=>setCookFrame(1),160);gameLater(()=>setCookFrame(2),320);
- gameLater(function(){setCookFrame(3);gameFrame(()=>targets.forEach(t=>{if(t.isConnected&&t.dataset.satisfied!=='true')throwPasta(t);}));},480);
- gameLater(()=>setCookFrame(4),640);
- gameLater(function(){setCookFrame(0);cookAttacking=false;},800);
+ cookTimer=gameEvery(playCookAttack,30);
 }
 function startWaitressAttack(){
  cancelTask(waitressAttackTimer);
- waitressAttackTimer=gameEvery(function(){
-  if(!powerUps.waitress||document.getElementById('waitress').style.display==='none')return;
-  if(getNearestVisibleCustomer())playWaitressAttack();else if(!waitressAttacking)setWaitressFrame(0);
- },getWaitressAttackInterval());
-}
-function playWaitressAttack(){
- if(powerUpPaused||bossIntroPlaying||!powerUps.waitress||waitressAttacking)return;
- const target=getNearestVisibleCustomer();if(!target){setWaitressFrame(0);return;}
- waitressAttacking=true;setWaitressFrame(0);
- gameLater(()=>setWaitressFrame(1),160);gameLater(()=>setWaitressFrame(2),320);gameLater(()=>setWaitressFrame(3),480);
- gameLater(function(){setWaitressFrame(4);gameFrame(()=>{if(target.isConnected&&target.dataset.satisfied!=='true')throwDrink(target);});},640);
- gameLater(()=>setWaitressFrame(5),800);gameLater(()=>setWaitressFrame(6),960);
- gameLater(function(){setWaitressFrame(0);waitressAttacking=false;},1120);
-}
-
-/* SEON JEONG: quinto fotogramma a 640 ms. */
-function getSeonAttackInterval(){
- // Frequenza base identica alla cameriera all'avvio della partita.
- const base=gameTasks.get(waitressAttackTimer)?.interval??getWaitressAttackInterval();
- return Math.round(base/(1+[0,.10,.25,.45][powerUps.caffeineRush]));
+ waitressAttackTimer=gameEvery(playWaitressAttack,30);
 }
 function startSeonAttack(){
  cancelTask(seonAttackTimer);
- seonAttackTimer=gameEvery(()=>{
-  if(powerUps.seon&&getNearestVisibleCustomer())playSeonAttack();
- },getSeonAttackInterval());
+ seonAttackTimer=gameEvery(playSeonAttack,30);
 }
-function playSeonAttack(){
- if(powerUpPaused||bossIntroPlaying||!powerUps.seon||seonAttacking)return;
- const target=getNearestVisibleCustomer();if(!target)return;
- seonAttacking=true;setActorFrame('seon',0);
- for(let i=1;i<=5;i++)gameLater(()=>{
-  setActorFrame('seon',i);
-  if(i===3&&target.isConnected&&target.dataset.satisfied!=='true')throwProjectile(target,'cappuccino');
- },i*160);
- gameLater(()=>{setActorFrame('seon',0);seonAttacking=false;},960);
+function playCookAttack(){startActorAttack('cook');}
+function playWaitressAttack(){startActorAttack('waitress');}
+function playSeonAttack(){startActorAttack('seon');}
+function startActorAttack(actor){
+ if(powerUpPaused||bossIntroPlaying||gameFinished||gameClock<nextAttackAt[actor])return;
+ if(actor!=='cook'&&!powerUps[actor])return;
+ if(actor==='cook'?cookAttacking:actor==='waitress'?waitressAttacking:seonAttacking)return;
+ const targets=actor==='cook'?getAttackTargets():[getNearestVisibleCustomer()].filter(Boolean);
+ if(!targets.length){setActorFrame(actor,0);return;}
+ const interval=actor==='cook'?getCookAttackInterval():actor==='waitress'?getWaitressAttackInterval():getSeonAttackInterval();
+ const steps=actor==='cook'?5:actor==='waitress'?7:6;
+ // Con molti potenziamenti, accorcia i fotogrammi per non saltare attacchi.
+ const frameTime=Math.min(160,(interval-60)/steps);
+ const release=actor==='waitress'?4:3;
+ const type=actor==='cook'?'pasta':actor==='waitress'?'drink':'cappuccino';
+ if(actor==='cook')cookAttacking=true;
+ else if(actor==='waitress')waitressAttacking=true;
+ else seonAttacking=true;
+ nextAttackAt[actor]=gameClock+interval;
+ setActorFrame(actor,0);
+ for(let i=1;i<steps;i++)gameLater(()=>{
+  setActorFrame(actor,i);
+  if(i===release)targets.forEach(target=>{
+   if(target.isConnected&&target.dataset.satisfied!=='true')throwProjectile(target,type);
+  });
+ },i*frameTime);
+ gameLater(()=>{
+  setActorFrame(actor,0);
+  if(actor==='cook')cookAttacking=false;
+  else if(actor==='waitress')waitressAttacking=false;
+  else seonAttacking=false;
+ },steps*frameTime);
 }
 /* Ritaglio grafico della tazzina dal pannello: nessun file aggiuntivo. */
 let cupId=0;
@@ -927,7 +980,7 @@ function throwProjectile(target,type){
  const isDrink=type==='drink',isCoffee=type==='cappuccino',game=document.getElementById('game'),gameRect=game.getBoundingClientRect();
  const frame=document.querySelector(isCoffee?'#seon img.active':isDrink?'#waitress img.active':'#cook img.active');if(!frame)return;
  const rect=frame.getBoundingClientRect();
- let currentX=rect.left+rect.width*(isCoffee?.76:isDrink?.88:.72),currentY=rect.top+rect.height*(isCoffee?.34:isDrink?.34:.32);
+ let currentX=rect.left+rect.width*(isCoffee?.72:isDrink?.88:.72),currentY=rect.top+rect.height*(isCoffee?.38:isDrink?.34:.32);
  const marker=document.createElement('div');marker.className='hit-marker';game.appendChild(marker);
  const projectile=isCoffee?makeCappuccino():document.createElement('img');projectile.className=type;
  if(!isCoffee)projectile.src=isDrink?'https://i.ibb.co/MDk4xzJd/1788234306668-removebg-preview.png':'https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png';
@@ -1010,7 +1063,7 @@ function satisfyCustomer(customer){
  const rect=customer.getBoundingClientRect(),gameRect=document.getElementById('game').getBoundingClientRect();
  customer.style.animation='none';customer.style.animationPlayState='running';
  customer.classList.remove('walking');customer.classList.add('satisfied');
- customer.style.top=rect.top-gameRect.top+'px';customer.style.left=rect.left-gameRect.left+'px';
+ customer.style.top=(customer._walkY*100)+'%';customer.style.left=LANES[Number(customer.dataset.lane)]+'%';
  customer.dataset.satisfied='true';customer.dataset.atKitchen='false';customer.dataset.frozen='false';
  addEXP(EXP_PER_CUSTOMER);
  customer.querySelectorAll('.frame').forEach(f=>f.classList.remove('active'));
@@ -1018,7 +1071,7 @@ function satisfyCustomer(customer){
  const happy=customer.querySelector('.happy-frame');if(happy)happy.style.display='block';updateZIndexes();
  // 0,5 s + controllo 0–0,25 s + attesa 0,6 s = circa 1,1–1,35 s.
  // Verso la boss wave restano la posa da 1 s e il controllo da 0,5 s.
- gameLater(function(){customer.style.display='none';if(happy)happy.style.display='none';customer.classList.remove('satisfied');updateZIndexes();},currentWave>=BOSS_WAVE-1?1000:500);
+ gameLater(function(){customer.style.display='none';if(happy)happy.style.display='none';customer.classList.remove('satisfied');customer.remove();customers=customers.filter(c=>c!==customer);updateZIndexes();},currentWave>=BOSS_WAVE-1?1000:500);
 }
 function satisfyCustomer1(){const c=customers.find(c=>c.dataset.type==='1'&&c.dataset.satisfied!=='true');if(c)satisfyCustomer(c);}
 function satisfyCustomer2(){const c=customers.find(c=>c.dataset.type==='2'&&c.dataset.satisfied!=='true');if(c)satisfyCustomer(c);}
