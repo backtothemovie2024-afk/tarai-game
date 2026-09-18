@@ -1,88 +1,765 @@
 <!DOCTYPE html>
+<!--
+====================================================================
+ TARAI RUSH — REV 5 — 18 SETTEMBRE 2026
+ FILE UNICO: CSS + HTML + JAVASCRIPT SONO TUTTI QUI.
+====================================================================
+ INDICE — usa CERCA con una di queste etichette:
+ [CSS 01] SCHERMO E MENU
+ [CSS 02] CLIENTI
+ [CSS 03] CUOCO E CAMERIERA
+ [CSS 04] LANCI ED EFFETTI
+ [CSS 05] POTENZIAMENTI
+ [CSS 06] SEON JEONG
+ [CSS 07] ENERGIA CUCINA
+ [CSS 08] GAME OVER
+ [HTML] SCHERMATE E SPRITE
+ [JS 01] INTRO E MENU
+ [JS 02] WAVE
+ [JS 03] POTENZIAMENTI
+ [JS 04] ATTACCHI DEI TRE PERSONAGGI
+ [JS 05] LANCIO E IMPATTI
+ [JS 06] GAME OVER E MAIN MENU
+
+ MODIFICHE VISIBILI:
+ - Quadrante con lancetta a sinistra, sotto l'ultimo tavolo.
+ - Game Over animato: TRY AGAIN e MAIN MENU.
+ - Mamma ridotta; congelamento cliente 8 ridotto.
+ - Il menu mostra REV 5 per riconoscere questo file.
+====================================================================
+-->
 <html lang="it">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tarai Rush</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Knewave&display=swap">
-<style>
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#111;font-family:Arial,sans-serif}
-#phone{position:relative;width:min(100vw,56.25vh);height:min(100vh,177.7778vw);aspect-ratio:9/16;margin:auto;overflow:hidden;background:#000}
-#intro{position:absolute;inset:0;background:#000;display:flex;align-items:center;justify-content:center;z-index:1000}
-#introVideo{width:100%;height:100%;object-fit:cover;display:block}
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Tarai Rush — REV 5</title>
+  <link href="https://fonts.googleapis.com/css2?family=Knewave&amp;display=swap" rel="stylesheet"/>
+  <style>
+
+/* ================================================================
+ [CSS 01] SCHERMO E MENU
+ ================================================================ */
+* {
+  box-sizing: border-box
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #111;
+  font-family: Arial, sans-serif
+}
+
+#phone {
+  position: relative;
+  width: min(100vw, 56.25vh);
+  height: min(100vh, 177.7778vw);
+  aspect-ratio: 9/16;
+  margin: auto;
+  overflow: hidden;
+  background: #000
+}
+
+#intro {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000
+}
+
+#introVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block
+}
+
 /* DISSOLVENZA INTRO → NERO → MENU */
-#introFade{position:absolute;inset:0;background:#000;opacity:0;display:none;z-index:1100;transition:opacity .8s ease-in-out;pointer-events:auto}
-#introTap{position:absolute;inset:0;z-index:1001;cursor:pointer}
-#menu{position:absolute;inset:0;background:#000;display:flex;justify-content:center;align-items:center;z-index:100}
-#cover,#coverOverlay{position:absolute;inset:0;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:fill;display:block}
-#cover{z-index:10;pointer-events:none}#coverOverlay{z-index:20;pointer-events:none}
-#playButton{position:absolute;left:12%;top:58%;width:76%;height:14%;border:none;background:transparent;color:transparent;font-size:0;z-index:30;cursor:pointer;-webkit-tap-highlight-color:transparent}
-#blackTransition{position:absolute;inset:0;background:#000;display:none;overflow:hidden;z-index:2000;pointer-events:none}
-.transition-image{position:absolute;width:100%;height:auto;display:block;pointer-events:none}
-#transitionImage1{top:5%;left:-100%}#transitionImage2{top:35%;right:-100%}#transitionImage3{bottom:5%;left:-100%}
-@keyframes transitionFromLeft{from{left:-100%}to{left:0%}}
-@keyframes transitionFromRight{from{right:-100%}to{right:0%}}
-@keyframes transitionExit{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(1.08)}}
-@keyframes gameEnter{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
-#game{display:none;position:absolute;inset:0;overflow:hidden;background:#000}
-#background{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:auto;z-index:0}
-#kitchen,#kitchenDamaged,#kitchenDestroyed{position:absolute;left:50%;top:83%;width:115%;height:auto;transform:translate(-50%,-50%);pointer-events:none;z-index:50}
-#kitchen{display:block}#kitchenDamaged,#kitchenDestroyed{display:none}
-#exp-bar{position:absolute;left:2.5%;bottom:1.5%;width:95%;height:30px;background:#321b10;border:3px solid #8a512d;border-radius:15px;box-shadow:0 4px 0 #160b07,0 6px 12px rgba(0,0,0,.6),inset 0 2px 3px rgba(255,255,255,.18);overflow:hidden;z-index:200}
-#exp-fill{position:absolute;left:0;top:0;width:0%;height:100%;background:linear-gradient(180deg,#ffe477,#f5a623 50%,#d96b16);border-radius:10px;z-index:1;transition:width .35s ease-out}
-#exp-level{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:white;font-size:14px;font-weight:900;text-shadow:2px 2px 3px #000;z-index:2;pointer-events:none}
-.customer{position:absolute;width:100px;height:135px;top:3%;z-index:10}
-.customer.walking{animation:walkDown 60s linear forwards}.customer.satisfied{animation:none!important}
-.customer .frame,.customer .happy-frame,.customer .frozen-frame{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;display:none}
-.customer .frame.active{display:block}.customer .happy-frame{z-index:2}.customer .frozen-frame{z-index:3}
-.customer1-sprite,.customer2-sprite{display:none}
-.customer1-template .frame{width:100%;height:100%;object-fit:contain;transform:scale(1);transform-origin:center bottom}
-.customer1-template{width:100px;height:135px}
-.customer1-template .happy-frame{transform:scale(.90);transform-origin:center bottom}
-.customer1-template .frozen-frame{transform:scale(.92);transform-origin:center bottom}
-.customer2-sprite + .happy-frame{width:100%;height:100%;object-fit:contain;left:0%}
-.customer2-template .frame:nth-of-type(1),.customer2-template .frame:nth-of-type(2){transform:scale(1);transform-origin:center bottom}
-.customer2-template .happy-frame{width:100%;height:100%;object-fit:contain;left:0%;transform:scale(1);transform-origin:center bottom}
-.customer2-template .frozen-frame{transform:scale(.90);transform-origin:center bottom}
-.customer3-template .frame,.customer3-template .happy-frame,.customer4-template .frame,.customer4-template .happy-frame,.customer5-template .frame,.customer5-template .happy-frame{transform-origin:center bottom}
-.customer3-template .frame:nth-of-type(1){transform:translateX(0)}
-.customer3-template .frame:nth-of-type(2){transform:translateX(14.0625%)}
-.customer6-template .frame,.customer6-template .happy-frame,.customer6-template .frozen-frame,.customer7-template .frame,.customer7-template .happy-frame,.customer7-template .frozen-frame,.customer8-template .frame,.customer8-template .happy-frame,.customer8-template .frozen-frame{width:100%;height:100%;object-fit:contain;object-position:center bottom;transform:scale(1);transform-origin:center bottom}
-.boss-unit-template .frame,.boss-unit-template .happy-frame{width:100%;height:100%;object-fit:contain;transform:scale(1);transform-origin:center bottom}
+#introFade {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  display: none;
+  z-index: 1100;
+  transition: opacity .8s ease-in-out;
+  pointer-events: auto
+}
+
+#introTap {
+  position: absolute;
+  inset: 0;
+  z-index: 1001;
+  cursor: pointer
+}
+
+#menu {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100
+}
+
+#cover,
+#coverOverlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: fill;
+  display: block
+}
+
+#cover {
+  z-index: 10;
+  pointer-events: none
+}
+
+#coverOverlay {
+  z-index: 20;
+  pointer-events: none
+}
+
+#playButton {
+  position: absolute;
+  left: 12%;
+  top: 58%;
+  width: 76%;
+  height: 14%;
+  border: none;
+  background: transparent;
+  color: transparent;
+  font-size: 0;
+  z-index: 30;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent
+}
+
+#blackTransition {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  display: none;
+  overflow: hidden;
+  z-index: 2000;
+  pointer-events: none
+}
+
+.transition-image {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none
+}
+
+#transitionImage1 {
+  top: 5%;
+  left: -100%
+}
+
+#transitionImage2 {
+  top: 35%;
+  right: -100%
+}
+
+#transitionImage3 {
+  bottom: 5%;
+  left: -100%
+}
+
+@keyframes transitionFromLeft {
+  from {
+    left: -100%
+  }
+
+  to {
+    left: 0%
+  }
+}
+
+@keyframes transitionFromRight {
+  from {
+    right: -100%
+  }
+
+  to {
+    right: 0%
+  }
+}
+
+@keyframes transitionExit {
+  from {
+    opacity: 1;
+    transform: scale(1)
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.08)
+  }
+}
+
+@keyframes gameEnter {
+  from {
+    opacity: 0;
+    transform: scale(.94)
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1)
+  }
+}
+
+#game {
+  display: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #000
+}
+
+#background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: auto;
+  z-index: 0
+}
+
+#kitchen,
+#kitchenDamaged,
+#kitchenDestroyed {
+  position: absolute;
+  left: 50%;
+  top: 83%;
+  width: 115%;
+  height: auto;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 50
+}
+
+#kitchen {
+  display: block
+}
+
+#kitchenDamaged,
+#kitchenDestroyed {
+  display: none
+}
+
+#exp-bar {
+  position: absolute;
+  left: 2.5%;
+  bottom: 1.5%;
+  width: 95%;
+  height: 30px;
+  background: #321b10;
+  border: 3px solid #8a512d;
+  border-radius: 15px;
+  box-shadow: 0 4px 0 #160b07, 0 6px 12px rgba(0, 0, 0, .6), inset 0 2px 3px rgba(255, 255, 255, .18);
+  overflow: hidden;
+  z-index: 200
+}
+
+#exp-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(180deg, #ffe477, #f5a623 50%, #d96b16);
+  border-radius: 10px;
+  z-index: 1;
+  transition: width .35s ease-out
+}
+
+#exp-level {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  font-weight: 900;
+  text-shadow: 2px 2px 3px #000;
+  z-index: 2;
+  pointer-events: none
+}
+
+/* ================================================================
+ [CSS 02] CLIENTI — DIMENSIONI COMUNI
+ ================================================================ */
+.customer {
+  position: absolute;
+  width: 100px;
+  height: 135px;
+  top: 3%;
+  z-index: 10
+}
+
+.customer.walking {
+  animation: walkDown 60s linear forwards
+}
+
+.customer.satisfied {
+  animation: none !important
+}
+
+.customer .frame,
+.customer .happy-frame,
+.customer .frozen-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: none
+}
+
+.customer .frame.active {
+  display: block
+}
+
+.customer .happy-frame {
+  z-index: 2
+}
+
+.customer .frozen-frame {
+  z-index: 3
+}
+
+.customer1-sprite,
+.customer2-sprite {
+  display: none
+}
+
+.customer1-template .frame {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1);
+  transform-origin: center bottom
+}
+
+.customer1-template {
+  width: 100px;
+  height: 135px
+}
+
+.customer1-template .happy-frame {
+  transform: scale(.90);
+  transform-origin: center bottom
+}
+
+.customer1-template .frozen-frame {
+  transform: scale(.92);
+  transform-origin: center bottom
+}
+
+.customer2-sprite+.happy-frame {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  left: 0%
+}
+
+.customer2-template .frame:nth-of-type(1),
+.customer2-template .frame:nth-of-type(2) {
+  transform: scale(1);
+  transform-origin: center bottom
+}
+
+.customer2-template .happy-frame {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  left: 0%;
+  transform: scale(1);
+  transform-origin: center bottom
+}
+
+.customer2-template .frozen-frame {
+  transform: scale(.90);
+  transform-origin: center bottom
+}
+
+.customer3-template .frame,
+.customer3-template .happy-frame,
+.customer4-template .frame,
+.customer4-template .happy-frame,
+.customer5-template .frame,
+.customer5-template .happy-frame {
+  transform-origin: center bottom
+}
+
+.customer3-template .frame:nth-of-type(1) {
+  transform: translateX(0)
+}
+
+.customer3-template .frame:nth-of-type(2) {
+  transform: translateX(14.0625%)
+}
+
+.customer6-template .frame,
+.customer6-template .happy-frame,
+.customer6-template .frozen-frame,
+.customer7-template .frame,
+.customer7-template .happy-frame,
+.customer7-template .frozen-frame,
+.customer8-template .frame,
+.customer8-template .happy-frame,
+.customer8-template .frozen-frame {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  transform: scale(1);
+  transform-origin: center bottom
+}
+
+.boss-unit-template .frame,
+.boss-unit-template .happy-frame {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1);
+  transform-origin: center bottom
+}
+
 /* VIDEO BOSS: ingresso e uscita secchi, 0,2 secondi. */
-#bossIntro{position:absolute;inset:0;display:none;align-items:center;justify-content:center;overflow:hidden;background:#000;z-index:450}
-#bossIntroVideo{width:100%;height:100%;object-fit:cover;display:block}
-#bossIntro.entering{animation:bossSnapIn .2s ease-out both}
-#bossIntro.leaving{animation:bossSnapOut .2s ease-in both;pointer-events:none}
-@keyframes bossSnapIn{0%{transform:scale(.72)}70%{transform:scale(1.04)}100%{transform:scale(1)}}
-@keyframes bossSnapOut{from{transform:translateX(0)}to{transform:translateX(110%)}}
-#bossVideoAction{position:absolute;left:10%;right:10%;bottom:12%;padding:14px;border:2px solid #fff;border-radius:10px;background:#191919;color:#fff;font-size:16px;font-weight:bold;cursor:pointer}
+#bossIntro {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #000;
+  z-index: 450
+}
+
+#bossIntroVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block
+}
+
+#bossIntro.entering {
+  animation: bossSnapIn .2s ease-out both
+}
+
+#bossIntro.leaving {
+  animation: bossSnapOut .2s ease-in both;
+  pointer-events: none
+}
+
+@keyframes bossSnapIn {
+  0% {
+    transform: scale(.72)
+  }
+
+  70% {
+    transform: scale(1.04)
+  }
+
+  100% {
+    transform: scale(1)
+  }
+}
+
+@keyframes bossSnapOut {
+  from {
+    transform: translateX(0)
+  }
+
+  to {
+    transform: translateX(110%)
+  }
+}
+
+#bossVideoAction {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 12%;
+  padding: 14px;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  background: #191919;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer
+}
+
 /* TEST TEMPORANEO: disattivare ENABLE_BOSS_TEST nel JavaScript per nasconderlo. */
-#testBossButton{position:absolute;top:12px;right:10px;z-index:420;padding:8px 10px;border:2px solid #ffd45a;border-radius:8px;background:rgba(0,0,0,.78);color:#ffd45a;font-size:12px;font-weight:bold;cursor:pointer;-webkit-tap-highlight-color:transparent}
-#testBossButton:disabled{opacity:.45;cursor:default}
-.heart{position:absolute;left:50%;top:-18px;transform:translateX(-50%);font-size:24px;line-height:1;z-index:5;display:none;animation:heartFloat .8s ease-in-out infinite alternate}
-.customer.satisfied .heart{display:block}
-@keyframes heartFloat{0%{transform:translateX(-50%) translateY(0) scale(1)}100%{transform:translateX(-50%) translateY(-7px) scale(1.12)}}
-@keyframes walkDown{0%{top:3%}100%{top:69%}}
-#cook,#waitress{position:absolute;bottom:7%;width:100px;height:135px;transform:translateX(-50%);z-index:60}
-#cook{left:37.5%;bottom:12%}
-#cook img{position:absolute;top:0;left:0;width:170%;height:170%;object-fit:contain;display:none}
-#cook img.active,#waitress img.active{display:block}
-#waitress{left:62.5%;bottom:6%;display:none;overflow:visible}
-#waitress img{position:absolute;left:50%;bottom:0;top:auto;width:104%;height:104%;max-width:none;max-height:none;object-fit:contain;display:none;transform:translateX(-50%);transform-origin:center bottom;pointer-events:none}
-.pasta,.drink{position:absolute;width:84px;height:84px;object-fit:contain;z-index:70;pointer-events:none}.drink{width:140px;height:140px}
-.hit-marker{position:absolute;width:22px;height:22px;border-radius:50%;background:red;border:3px solid white;box-shadow:0 0 8px red,0 0 15px rgba(255,0,0,.8);transform:translate(-50%,-50%);z-index:90;pointer-events:none;opacity:0}
-.impact-particle{position:absolute;pointer-events:none;z-index:95;transform:translate(-50%,-50%)}
-.drink-drop{width:7px;height:11px;border-radius:50% 50% 55% 55%;background:#62d9ff;box-shadow:0 0 5px rgba(98,217,255,.8);animation:drinkDropFly .32s ease-out forwards}
-@keyframes drinkDropFly{0%{opacity:1;transform:translate(-50%,-50%) translate(0,0) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) translate(var(--dx),var(--dy)) scale(.45)}}
-.pasta-strand{width:18px;height:5px;border-radius:50%;background:#ffd45a;box-shadow:0 0 3px rgba(255,190,40,.8);transform-origin:center;animation:pastaStrandFly .36s ease-out forwards}
-@keyframes pastaStrandFly{0%{opacity:1;transform:translate(-50%,-50%) translate(0,0) rotate(var(--rot)) scaleX(.7)}100%{opacity:0;transform:translate(-50%,-50%) translate(var(--dx),var(--dy)) rotate(calc(var(--rot) + 90deg)) scaleX(1.2)}}
-#powerup-overlay{position:absolute;inset:0;background:rgba(18,8,3,.82);display:none;align-items:center;justify-content:center;z-index:500}
-#powerup-panel{width:103%;height:91%;position:relative;background:transparent;border:none;border-radius:0;box-shadow:none;padding:0}
-#powerup-options{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:1.5%}
-.powerup-slot{position:relative;width:32%;height:100%;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.powerup-slot img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none}
+#testBossButton {
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  z-index: 420;
+  padding: 8px 10px;
+  border: 2px solid #ffd45a;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, .78);
+  color: #ffd45a;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent
+}
+
+#testBossButton:disabled {
+  opacity: .45;
+  cursor: default
+}
+
+.heart {
+  position: absolute;
+  left: 50%;
+  top: -18px;
+  transform: translateX(-50%);
+  font-size: 24px;
+  line-height: 1;
+  z-index: 5;
+  display: none;
+  animation: heartFloat .8s ease-in-out infinite alternate
+}
+
+.customer.satisfied .heart {
+  display: block
+}
+
+@keyframes heartFloat {
+  0% {
+    transform: translateX(-50%) translateY(0) scale(1)
+  }
+
+  100% {
+    transform: translateX(-50%) translateY(-7px) scale(1.12)
+  }
+}
+
+@keyframes walkDown {
+  0% {
+    top: 3%
+  }
+
+  100% {
+    top: 69%
+  }
+}
+
+/* ================================================================
+ [CSS 03] CUOCO E CAMERIERA
+ ================================================================ */
+#cook,
+#waitress {
+  position: absolute;
+  bottom: 7%;
+  width: 100px;
+  height: 135px;
+  transform: translateX(-50%);
+  z-index: 60
+}
+
+#cook {
+  left: 37.5%;
+  bottom: 12%
+}
+
+#cook img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 170%;
+  height: 170%;
+  object-fit: contain;
+  display: none
+}
+
+#cook img.active,
+#waitress img.active {
+  display: block
+}
+
+#waitress {
+  left: 62.5%;
+  bottom: 6%;
+  display: none;
+  overflow: visible
+}
+
+#waitress img {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  top: auto;
+  width: 104%;
+  height: 104%;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  display: none;
+  transform: translateX(-50%);
+  transform-origin: center bottom;
+  pointer-events: none
+}
+
+/* ================================================================
+ [CSS 04] LANCI ED EFFETTI
+ ================================================================ */
+.pasta,
+.drink {
+  position: absolute;
+  width: 84px;
+  height: 84px;
+  object-fit: contain;
+  z-index: 70;
+  pointer-events: none
+}
+
+.drink {
+  width: 140px;
+  height: 140px
+}
+
+.hit-marker {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: red;
+  border: 3px solid white;
+  box-shadow: 0 0 8px red, 0 0 15px rgba(255, 0, 0, .8);
+  transform: translate(-50%, -50%);
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0
+}
+
+.impact-particle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 95;
+  transform: translate(-50%, -50%)
+}
+
+.drink-drop {
+  width: 7px;
+  height: 11px;
+  border-radius: 50% 50% 55% 55%;
+  background: #62d9ff;
+  box-shadow: 0 0 5px rgba(98, 217, 255, .8);
+  animation: drinkDropFly .32s ease-out forwards
+}
+
+@keyframes drinkDropFly {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translate(0, 0) scale(1)
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) scale(.45)
+  }
+}
+
+.pasta-strand {
+  width: 18px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffd45a;
+  box-shadow: 0 0 3px rgba(255, 190, 40, .8);
+  transform-origin: center;
+  animation: pastaStrandFly .36s ease-out forwards
+}
+
+@keyframes pastaStrandFly {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translate(0, 0) rotate(var(--rot)) scaleX(.7)
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) rotate(calc(var(--rot) + 90deg)) scaleX(1.2)
+  }
+}
+
+/* ================================================================
+ [CSS 05] POTENZIAMENTI
+ ================================================================ */
+#powerup-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 8, 3, .82);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 500
+}
+
+#powerup-panel {
+  width: 103%;
+  height: 91%;
+  position: relative;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0
+}
+
+#powerup-options {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5%
+}
+
+.powerup-slot {
+  position: relative;
+  width: 32%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent
+}
+
+.powerup-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none
+}
+
 .powerup-slot img[src*="MkNSjJwS"],
 .powerup-slot img[src*="S4pzKRB7"],
 .powerup-slot img[src*="yFG9djjL"],
@@ -101,1244 +778,2597 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#
 .powerup-slot img[src*="R46THQGk"],
 .powerup-slot img[src*="d0wKYzSF"],
 .powerup-slot img[src*="1f3rLZ6L"],
-.powerup-slot img[src*="PG5PFZfw"]{width:130%;height:115%}
-#game.powerup-paused *{animation-play-state:paused!important}
+.powerup-slot img[src*="PG5PFZfw"] {
+  width: 130%;
+  height: 115%
+}
+
+#game.powerup-paused * {
+  animation-play-state: paused !important
+}
+
 /* POSIZIONE LAVAGNA: valori da rifinire sullo sfondo se necessario. */
-#wave-display{
-position:absolute;
-left:11.6%;
-top:2.5%;
-width:11%;
-height:4.6%;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#000;
-color:#fff;
-font-family:"Knewave","Comic Sans MS",cursive;
-font-weight:400;
-font-size:18px;
-line-height:1.15;
-text-align:center;
-white-space:nowrap;
-overflow:hidden;
-padding:2px;
-z-index:5;
-pointer-events:none;
+#wave-display {
+  position: absolute;
+  left: 11.6%;
+  top: 2.5%;
+  width: 11%;
+  height: 4.6%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  color: #fff;
+  font-family: "Knewave", "Comic Sans MS", cursive;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.15;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 2px;
+  z-index: 5;
+  pointer-events: none;
 }
 
-#wave-message{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);padding:14px 25px;border-radius:15px;background:rgba(0,0,0,.72);color:white;font-size:25px;font-weight:900;text-align:center;text-shadow:2px 2px 3px #000;z-index:400;display:none;pointer-events:none}
-@media(max-width:500px){
-.customer,#cook,#waitress{width:65px;height:88px}
-.customer1-template,.customer2-template,.customer3-template,.customer4-template,.customer5-template,.customer6-template,.customer7-template,.customer8-template{width:75px;height:102px}
-.pasta,.drink{width:60px;height:60px}
-#exp-bar{height:27px;left:2.5%;width:95%}#exp-level{font-size:13px}
-#powerup-panel{width:110%;height:96%}#powerup-options{gap:0}.powerup-slot{width:33.33%;height:100%}.powerup-slot img{width:110%;height:96%;object-fit:contain}
-#wave-message{font-size:21px}
+#wave-message {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  padding: 14px 25px;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, .72);
+  color: white;
+  font-size: 25px;
+  font-weight: 900;
+  text-align: center;
+  text-shadow: 2px 2px 3px #000;
+  z-index: 400;
+  display: none;
+  pointer-events: none
 }
-.customer6-template .happy-frame,.customer7-template .happy-frame,.customer8-template .happy-frame{transform:scale(.90);transform-origin:center bottom}
 
-.customer7-template .frame,.customer7-template .happy-frame,.customer7-template .frozen-frame{transform:scale(1.15);transform-origin:center bottom}
-.customer7-template .frame:nth-of-type(2){transform:translateX(0) scale(1.15)}
-#seon{position:absolute;left:12.5%;bottom:6%;width:100px;height:135px;transform:translateX(-50%);z-index:60;display:none}
-#seon img{position:absolute;left:50%;bottom:0;width:104%;height:104%;object-fit:contain;transform:translateX(calc(-50% + var(--shift,0%)));display:none;pointer-events:none}
-#seon img.active{display:block}
-.cappuccino{position:absolute;width:70px;height:55px;z-index:70;pointer-events:none}
-.cappuccino svg{width:100%;height:100%;display:block}
-.coffee-drop{background:#aa6b38;box-shadow:0 0 3px #ffe6b7}
-.powerup-slot{border:0;padding:0;background:transparent}
-.powerup-slot.seon-panel img{width:130%;height:115%}
-@media(max-width:500px){#seon{width:65px;height:88px}.cappuccino{width:52px;height:42px}}
+@media(max-width:500px) {
+
+  .customer,
+  #cook,
+  #waitress {
+    width: 65px;
+    height: 88px
+  }
+
+  .customer1-template,
+  .customer2-template,
+  .customer3-template,
+  .customer4-template,
+  .customer5-template,
+  .customer6-template,
+  .customer7-template,
+  .customer8-template {
+    width: 75px;
+    height: 102px
+  }
+
+  .pasta,
+  .drink {
+    width: 60px;
+    height: 60px
+  }
+
+  #exp-bar {
+    height: 27px;
+    left: 2.5%;
+    width: 95%
+  }
+
+  #exp-level {
+    font-size: 13px
+  }
+
+  #powerup-panel {
+    width: 110%;
+    height: 96%
+  }
+
+  #powerup-options {
+    gap: 0
+  }
+
+  .powerup-slot {
+    width: 33.33%;
+    height: 100%
+  }
+
+  .powerup-slot img {
+    width: 110%;
+    height: 96%;
+    object-fit: contain
+  }
+
+  #wave-message {
+    font-size: 21px
+  }
+}
+
+.customer6-template .happy-frame,
+.customer7-template .happy-frame,
+.customer8-template .happy-frame {
+  transform: scale(.90);
+  transform-origin: center bottom
+}
+
+.customer7-template .frame,
+.customer7-template .happy-frame,
+.customer7-template .frozen-frame {
+  transform: scale(1);
+  transform-origin: center bottom
+}
+
+.customer7-template .frame:nth-of-type(2) {
+  transform: translateX(0) scale(1)
+}
+
+/* ================================================================
+ [CSS 06] SEON JEONG
+ ================================================================ */
+#seon {
+  position: absolute;
+  left: 12.5%;
+  bottom: 6%;
+  width: 100px;
+  height: 135px;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: none
+}
+
+#seon img {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 104%;
+  height: 104%;
+  object-fit: contain;
+  transform: translateX(calc(-50% + var(--shift, 0%)));
+  display: none;
+  pointer-events: none
+}
+
+#seon img.active {
+  display: block
+}
+
+.cappuccino {
+  position: absolute;
+  width: 70px;
+  height: 55px;
+  z-index: 70;
+  pointer-events: none
+}
+
+.cappuccino svg {
+  width: 100%;
+  height: 100%;
+  display: block
+}
+
+.coffee-drop {
+  background: #aa6b38;
+  box-shadow: 0 0 3px #ffe6b7
+}
+
+.powerup-slot {
+  border: 0;
+  padding: 0;
+  background: transparent
+}
+
+.powerup-slot.seon-panel img {
+  width: 130%;
+  height: 115%
+}
+
+@media(max-width:500px) {
+  #seon {
+    width: 65px;
+    height: 88px
+  }
+
+  .cappuccino {
+    width: 52px;
+    height: 42px
+  }
+}
 
 /* CORREZIONE DIMENSIONI SEON JEONG */
-#seon{
- left:22%;
- width:110px;
- height:149px;
- bottom:5%;
+#seon {
+  left: 22%;
+  width: 110px;
+  height: 149px;
+  bottom: 5%;
 }
-.cappuccino{
- width:28px;
- height:21px;
+
+.cappuccino {
+  width: 28px;
+  height: 21px;
 }
-.powerup-slot.seon-panel img{
- width:100%;
- height:100%;
+
+.powerup-slot.seon-panel img {
+  width: 100%;
+  height: 100%;
 }
-@media(max-width:500px){
- #seon{
-  width:72px;
-  height:98px;
-  bottom:5%;
- }
- .cappuccino{
-  width:28px;
-  height:21px;
- }
+
+@media(max-width:500px) {
+  #seon {
+    width: 72px;
+    height: 98px;
+    bottom: 5%;
+  }
+
+  .cappuccino {
+    width: 28px;
+    height: 21px;
+  }
 }
 
 /* STAGE 1: energia, bersaglio, flash, test e fine partita. */
-#phone{container-type:inline-size}
-#testGameOverButton{position:absolute;top:52px;right:10px;z-index:420;padding:8px 10px;border:2px solid #ffae91;border-radius:8px;background:rgba(0,0,0,.8);color:#ffae91;font-size:12px;font-weight:bold;cursor:pointer}
-#skipTransition{position:absolute;bottom:4%;right:5%;z-index:2100;padding:12px 20px;border:2px solid #ffd45a;border-radius:24px;background:#16100c;color:#ffe7a2;font-weight:bold;font-size:15px;pointer-events:auto;cursor:pointer}
-#kitchenHud{position:absolute;left:29%;top:1.8%;width:33%;z-index:205;color:#fff;font-weight:bold;font-size:10px;text-align:center;pointer-events:none;text-shadow:0 1px 3px #000}
-#kitchenMeter{height:9px;margin-top:4px;background:#241b14;border:1px solid #ffe1a0;border-radius:8px;overflow:hidden}
-#kitchenFill{height:100%;width:100%;background:#9de48b;transition:width .2s,background .2s}
-#damageVignette{position:absolute;inset:0;pointer-events:none;z-index:210;box-shadow:inset 0 0 65px #ff301fcc;opacity:0}
-#damageVignette.active{animation:damagePulse .4s ease-out}
-@keyframes damagePulse{0%{opacity:.9}100%{opacity:0}}
-.customer{cursor:pointer;-webkit-tap-highlight-color:transparent}
-.customer.priority::after{content:'';position:absolute;left:15%;right:15%;bottom:-4%;height:14%;border:2px solid #ffe378;border-radius:50%;box-shadow:0 0 10px #ffcc4a;pointer-events:none}
-.customer.boosted .frame{filter:drop-shadow(0 0 5px #ffdc74)}
-.camera-light{position:absolute;width:10px;height:10px;z-index:180;border-radius:50%;background:#fff9cc;box-shadow:0 0 9px 5px #fff5bc;pointer-events:none;transform:translate(-50%,-50%)}
-.camera-light.charging{animation:chargeLens .65s ease-in forwards}
-.camera-light.fired{animation:fireLens .32s ease-out forwards}
-@keyframes chargeLens{from{opacity:.2;transform:translate(-50%,-50%) scale(.2)}to{opacity:1;transform:translate(-50%,-50%) scale(1.6)}}
-@keyframes fireLens{from{opacity:1;transform:translate(-50%,-50%) scale(3)}to{opacity:0;transform:translate(-50%,-50%) scale(8)}}
-.flash-ring{position:absolute;width:24px;height:24px;border:2px solid #fff1bd;border-radius:50%;z-index:181;pointer-events:none;animation:flashRing .55s ease-out forwards}
-@keyframes flashRing{from{opacity:.9;transform:translate(-50%,-50%) scale(.3)}to{opacity:0;transform:translate(-50%,-50%) scale(8)}}
-#bossFlashWash{position:absolute;inset:0;pointer-events:none;background:#fff9e9;z-index:182;opacity:0}
-#bossFlashWash.active{animation:flashWash .28s ease-out forwards}
-@keyframes flashWash{0%{opacity:.25}100%{opacity:0}}
-#endScreen{position:absolute;inset:0;z-index:700;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 35%,#4b2019e8,#0b0806f5);padding:7%;color:#fff5dc;text-align:center}
-#endScreen[hidden],#testGameOverButton[hidden],#skipTransition[hidden]{display:none}
-#endCard{width:100%;padding:12% 6%;border-top:2px solid #c99558;border-bottom:2px solid #c99558}
-#endEyebrow{font-size:12px;letter-spacing:3px;color:#d6b790}
-#endTitle{font-family:Knewave,cursive;font-size:clamp(32px,10cqw,65px);line-height:1.12;color:#ffd66a;margin:20px 0 10px;text-shadow:0 5px 0 #6c251d}
-#endSubtitle{font-size:clamp(13px,4cqw,20px);letter-spacing:1px}
-#endStats{margin:22px 0;font-size:14px;color:#dfc9ac}
-#retryButton{border:0;border-radius:24px;padding:14px 30px;background:linear-gradient(#ffe49a,#eaaa3d);box-shadow:0 4px 0 #75461d;color:#362114;font-size:16px;font-weight:900;cursor:pointer}
-@media(prefers-reduced-motion:reduce){#bossFlashWash.active{animation:none}.flash-ring{display:none}}
+#phone {
+  container-type: inline-size
+}
+
+#testGameOverButton {
+  position: absolute;
+  top: 52px;
+  right: 10px;
+  z-index: 420;
+  padding: 8px 10px;
+  border: 2px solid #ffae91;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, .8);
+  color: #ffae91;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer
+}
+
+#skipTransition {
+  position: absolute;
+  bottom: 4%;
+  right: 5%;
+  z-index: 2100;
+  padding: 12px 20px;
+  border: 2px solid #ffd45a;
+  border-radius: 24px;
+  background: #16100c;
+  color: #ffe7a2;
+  font-weight: bold;
+  font-size: 15px;
+  pointer-events: auto;
+  cursor: pointer
+}
+
+
+
+
+
+
+
+#damageVignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 210;
+  box-shadow: inset 0 0 65px #ff301fcc;
+  opacity: 0
+}
+
+#damageVignette.active {
+  animation: damagePulse .4s ease-out
+}
+
+@keyframes damagePulse {
+  0% {
+    opacity: .9
+  }
+
+  100% {
+    opacity: 0
+  }
+}
+
+.customer {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent
+}
+
+.customer.priority::after {
+  content: '';
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  bottom: -4%;
+  height: 14%;
+  border: 2px solid #ffe378;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ffcc4a;
+  pointer-events: none
+}
+
+.customer.boosted .frame {
+  filter: drop-shadow(0 0 5px #ffdc74)
+}
+
+.camera-light {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  z-index: 180;
+  border-radius: 50%;
+  background: #fff9cc;
+  box-shadow: 0 0 9px 5px #fff5bc;
+  pointer-events: none;
+  transform: translate(-50%, -50%)
+}
+
+.camera-light.charging {
+  animation: chargeLens .65s ease-in forwards
+}
+
+.camera-light.fired {
+  animation: fireLens .32s ease-out forwards
+}
+
+@keyframes chargeLens {
+  from {
+    opacity: .2;
+    transform: translate(-50%, -50%) scale(.2)
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.6)
+  }
+}
+
+@keyframes fireLens {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(3)
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(8)
+  }
+}
+
+.flash-ring {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #fff1bd;
+  border-radius: 50%;
+  z-index: 181;
+  pointer-events: none;
+  animation: flashRing .55s ease-out forwards
+}
+
+@keyframes flashRing {
+  from {
+    opacity: .9;
+    transform: translate(-50%, -50%) scale(.3)
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(8)
+  }
+}
+
+#bossFlashWash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: #fff9e9;
+  z-index: 182;
+  opacity: 0
+}
+
+#bossFlashWash.active {
+  animation: flashWash .28s ease-out forwards
+}
+
+@keyframes flashWash {
+  0% {
+    opacity: .25
+  }
+
+  100% {
+    opacity: 0
+  }
+}
+
+/* ================================================================
+ [CSS 08] GAME OVER
+ ================================================================ */
+#endScreen {
+  position: absolute;
+  inset: 0;
+  z-index: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 50% 35%, #4b2019e8, #0b0806f5);
+  padding: 7%;
+  color: #fff5dc;
+  text-align: center
+}
+
+#endScreen[hidden],
+#testGameOverButton[hidden],
+#skipTransition[hidden] {
+  display: none
+}
+
+#endCard {
+  width: 100%;
+  padding: 12% 6%;
+  border-top: 2px solid #c99558;
+  border-bottom: 2px solid #c99558
+}
+
+#endEyebrow {
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: #d6b790
+}
+
+#endTitle {
+  font-family: Knewave, cursive;
+  font-size: clamp(32px, 10cqw, 65px);
+  line-height: 1.12;
+  color: #ffd66a;
+  margin: 20px 0 10px;
+  text-shadow: 0 5px 0 #6c251d
+}
+
+#endSubtitle {
+  font-size: clamp(13px, 4cqw, 20px);
+  letter-spacing: 1px
+}
+
+#endStats {
+  margin: 22px 0;
+  font-size: 14px;
+  color: #dfc9ac
+}
+
+#retryButton {
+  border: 0;
+  border-radius: 24px;
+  padding: 14px 30px;
+  background: linear-gradient(#ffe49a, #eaaa3d);
+  box-shadow: 0 4px 0 #75461d;
+  color: #362114;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer
+}
+
+@media(prefers-reduced-motion:reduce) {
+  #bossFlashWash.active {
+    animation: none
+  }
+
+  .flash-ring {
+    display: none
+  }
+}
 
 
 /* Game Over: illustrazione in alto, un solo personaggio animato sotto. */
-#gameOverArt,#gameOverCharacter{display:none;position:absolute;pointer-events:none;object-fit:contain}
-#endScreen.loss{padding:0;background:#000}
-#endScreen.loss #gameOverArt{display:block;left:0;top:0;width:100%;height:auto;z-index:0}
-#endScreen.loss #gameOverCharacter{display:block;left:8%;top:47%;width:84%;height:38%;z-index:1}
-#endScreen.loss #endCard{position:absolute;inset:0;padding:0;border:0}
-#endScreen.loss #endEyebrow,#endScreen.loss #endSubtitle{display:none}
-#endScreen.loss #endTitle{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:0}
-#endScreen.loss #endStats{position:absolute;left:3%;right:3%;bottom:11%;margin:0;font-size:12px;z-index:2}
-#endScreen.loss #retryButton{position:absolute;bottom:3%;left:50%;transform:translateX(-50%);z-index:2}
+#gameOverArt,
+#gameOverCharacter {
+  display: none;
+  position: absolute;
+  pointer-events: none;
+  object-fit: contain
+}
 
+#endScreen.loss {
+  padding: 0;
+  background: #000
+}
+
+#endScreen.loss #gameOverArt {
+  display: block;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  z-index: 0
+}
+
+#endScreen.loss #gameOverCharacter {
+  display: block;
+  left: 8%;
+  top: 47%;
+  width: 84%;
+  height: 38%;
+  z-index: 1
+}
+
+#endScreen.loss #endCard {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0
+}
+
+#endScreen.loss #endEyebrow,
+#endScreen.loss #endSubtitle {
+  display: none
+}
+
+#endScreen.loss #endTitle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  margin: 0
+}
+
+#endScreen.loss #endStats {
+  position: absolute;
+  left: 3%;
+  right: 3%;
+  bottom: 11%;
+  margin: 0;
+  font-size: 12px;
+  z-index: 2
+}
+
+#endScreen.loss #retryButton {
+  position: absolute;
+  bottom: 3%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2
+}
+
+
+/* ==================================================================
+   CLIENTE 7 — MAMMA CON BAMBINO: SCALA COME GLI ALTRI CLIENTI
+   ================================================================== */
+.customer7-template .frame,
+.customer7-template .happy-frame,
+.customer7-template .frozen-frame,
+.customer7-template .frame:nth-of-type(2) {
+  transform: scale(1);
+  transform-origin: center bottom
+}
+
+/* CLIENTE 8 — SIGNORA MOLTO ANZIANA: CORREZIONE SOLO CONGELAMENTO */
+.customer8-template .frozen-frame {
+  transform: scale(.89);
+  transform-origin: center bottom
+}
+
+/* ENERGIA CUCINA — posizione e dimensione del quadrante */
+/* ================================================================
+ [CSS 07] ENERGIA CUCINA — POSIZIONE DEL QUADRANTE
+ ================================================================ */
+#kitchenHud {
+  left: 3%;
+  top: 58%;
+  width: 24%;
+  z-index: 205;
+  pointer-events: none
+}
+
+#kitchenMeter {
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 640/427;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  overflow: visible;
+  margin: 0;
+  border-radius: 0
+}
+
+#kitchenGauge {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  clip-path: polygon(10% 97%, 9% 88%, 10% 82%, 10% 67%, 13% 51%, 19% 38%, 27% 28%, 34% 24%, 33% 19%, 35% 12%, 41% 8%, 44% 3%, 50% 1%, 56% 3%, 59% 9%, 64% 12%, 67% 20%, 66% 24%, 74% 29%, 83% 39%, 88% 52%, 90% 66%, 90% 82%, 91% 89%, 89% 97%, 80% 98%, 20% 98%)
+}
+
+#kitchenNeedle {
+  position: absolute;
+  left: 49.7%;
+  top: 76.6%;
+  width: 28%;
+  height: 3%;
+  background: linear-gradient(#fff9df, #ffc249);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  transform-origin: 0 50%;
+  transform: translateY(-50%) rotate(0deg);
+  transition: transform .55s ease-in-out;
+  filter: drop-shadow(0 1px 2px #000)
+}
+
+#kitchenNeedleHub {
+  position: absolute;
+  left: 49.7%;
+  top: 76.6%;
+  width: 6%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border: 1px solid #55412e;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff2c4, #846646 65%, #291b0e)
+}
+
+/* FINE PARTITA — INGRESSO E PULSANTI */
+#mainMenuButton {
+  border: 2px solid #d7a653;
+  border-radius: 24px;
+  padding: 12px 18px;
+  background: #291b13;
+  color: #ffe4a4;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+  margin: 10px
+}
+
+#endScreen.loss #retryButton,
+#endScreen.loss #mainMenuButton {
+  position: absolute;
+  bottom: 3%;
+  width: 42%;
+  padding: 12px 4px;
+  margin: 0;
+  font-size: 13px;
+  z-index: 2;
+  transform: none
+}
+
+#endScreen.loss #retryButton {
+  left: 6%
+}
+
+#endScreen.loss #mainMenuButton {
+  left: 52%
+}
+
+#endScreen.entering {
+  animation: endBackdrop .45s ease-out both
+}
+
+#endScreen.entering #gameOverArt {
+  animation: endSign .65s cubic-bezier(.2, .8, .3, 1) both
+}
+
+#endScreen.entering #gameOverCharacter {
+  animation: endCharacter .55s .25s ease-out both
+}
+
+#endScreen.entering #endCard {
+  animation: endControls .4s .4s ease-out both
+}
+
+@keyframes endBackdrop {
+  from {
+    opacity: 0
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+@keyframes endSign {
+  0% {
+    transform: translateY(-18%) scale(.78);
+    opacity: 0
+  }
+
+  65% {
+    transform: translateY(1%) scale(1.025);
+    opacity: 1
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1
+  }
+}
+
+@keyframes endCharacter {
+  from {
+    transform: translateY(12%);
+    opacity: 0
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1
+  }
+}
+
+@keyframes endControls {
+  from {
+    opacity: 0
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+  #endScreen.entering,
+  #endScreen.entering #gameOverArt,
+  #endScreen.entering #gameOverCharacter,
+  #endScreen.entering #endCard {
+    animation: none
+  }
+}
+
+/* SIGLA DELLA VERSIONE — visibile solo nel menu principale */
+#buildRevision{position:absolute;bottom:1%;right:3%;z-index:40;color:#ffe5ac;background:#000b;padding:4px 7px;border-radius:4px;font:11px Arial,sans-serif;pointer-events:none}
 </style>
-</head>
-<body>
-<div id="phone">
-<div id="intro"><video id="introVideo" autoplay muted playsinline preload="auto"><source src="https://yourimageshare.com/ib/LjN0a6FLZL.mp4" type="video/mp4"></video><div id="introTap"></div></div>
-<div id="introFade"></div>
-<div id="menu">
-<video id="cover" muted loop playsinline preload="auto" poster="https://i.ibb.co/7JzwW3pP/file-00000000e8d8820b9cbd75d3f8d8e3a1.png">
-<source src="https://github.com/backtothemovie2024-afk/tarai-game/raw/refs/heads/main/Animate_chef_image_with_steam_20260915082519.mp4" type="video/mp4">
-</video>
-<img id="coverOverlay" src="https://i.ibb.co/67Fhq4qw/file-0000000053c481f796fb5ec6162a6b2e-removebg-preview.png" alt="">
-<button id="playButton" aria-label="Play" disabled>PLAY</button></div>
-<div id="game">
-<img id="background" src="https://cdn.imgchest.com/files/25a5041a8483.jpg" alt="">
-<img id="kitchen" src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png" alt="">
-<img id="kitchenDamaged" src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png" alt="">
-<img id="kitchenDestroyed" src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png" alt="">
-<div id="wave-display">WAVE 1</div>
-<!-- Riservato al messaggio finale: nessuna scritta temporanea a inizio wave. -->
-<div id="wave-message"></div>
-<button id="testBossButton" type="button" hidden>TEST BOSS</button>
-<button id="testGameOverButton" type="button" hidden>TEST GAME OVER</button>
-<div id="kitchenHud"><span id="kitchenLabel">CUCINA 100%</span><div id="kitchenMeter" role="progressbar" aria-label="Energia cucina" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><div id="kitchenFill"></div></div></div>
-<div id="damageVignette"></div><div id="bossFlashWash"></div>
-<div id="endScreen" role="dialog" aria-modal="true" aria-labelledby="endTitle" hidden>
- <img id="gameOverArt" src="https://i.ibb.co/LDvGMpXr/file-0000000046a881f59037eda06ba19c32.png" alt="">
- <img id="gameOverCharacter" alt="Personaggio stordito">
- <div id="endCard"><div id="endEyebrow">TARAI RUSH · STAGE 1</div><h1 id="endTitle">GAME OVER</h1><div id="endSubtitle">KITCHEN COLLAPSED</div><div id="endStats"></div><button id="retryButton" type="button">RIPROVA</button></div>
-</div>
-<div id="bossIntro">
-<video id="bossIntroVideo" muted playsinline preload="auto"><source src="https://github.com/backtothemovie2024-afk/tarai-game/raw/refs/heads/main/Video_animation_instructions_for%E2%80%A6_20260915063937.mp4" type="video/mp4"></video>
-<button id="bossVideoAction" type="button" hidden>TOCCA PER AVVIARE IL VIDEO</button>
-</div>
-
-<div id="customer1Template" class="customer customer-template customer1-template" style="display:none;">
-<img class="frame active" src="https://i.ibb.co/TMLpLFpV/tile006-191x720-removebg-preview.png" alt="">
-<img class="frame" src="https://i.ibb.co/qYHtzZC6/tile008-191x720-removebg-preview.png" alt="">
-<img class="happy-frame" src="https://i.ibb.co/xK0KvtVy/file-00000000c12c82098b5b04e3cf209f24-removebg-preview.png" alt="">
-<img class="frozen-frame" src="https://i.ibb.co/Kx64hLcM/1000042445-removebg-preview.png" alt="">
-<div class="heart">❤️</div>
-</div>
-
-<div id="customer2Template" class="customer customer-template customer2-template" style="display:none;">
-<img class="frame active" src="https://i.ibb.co/KcRsHGBM/file-00000000c98081f5b726e6e0d5b17f8d-removebg-preview.png" alt="">
-<img class="frame" src="https://i.ibb.co/SXD5sdPw/IMG-20260903-WA0001-removebg-preview.png" alt="">
-<img class="happy-frame" src="https://i.ibb.co/Nd07D6qM/IMG-20260903-WA0000-removebg-preview.png" alt="">
-<img class="frozen-frame" src="https://i.ibb.co/YT061kxh/1000042452-removebg-preview.png" alt="">
-<div class="heart">❤️</div>
-</div>
-
-<div id="customer3Template" class="customer customer-template customer3-template" style="display:none;">
-<img class="frame active" src="https://i.ibb.co/vxTN6874/tile001-removebg-preview-1.png" alt="">
-<img class="frame" src="https://i.ibb.co/9kzB8Fw3/tile002-removebg-preview-1.png" alt="">
-<img class="happy-frame" src="https://i.ibb.co/bjJz8mYb/file-000000000fac81fa84533e82a16b37af-removebg-preview.png" alt="">
-<img class="frozen-frame" src="https://i.ibb.co/nJTx657/1000042451-removebg-preview.png" alt="">
-<div class="heart">❤️</div>
-</div>
-
-<div id="customer4Template" class="customer customer-template customer4-template" style="display:none;">
-<img class="frame active" src="https://i.ibb.co/k2fF7sB9/1000042318-removebg-preview.png" alt="">
-<img class="frame" src="https://i.ibb.co/QyB3W9h/1000042319-removebg-preview.png" alt="">
-<img class="happy-frame" src="https://i.ibb.co/F4BLT4j8/1000042309-removebg-preview.png" alt="">
-<img class="frozen-frame" src="https://i.ibb.co/DPsjg9ww/1000042455-removebg-preview.png" alt="">
-<div class="heart">❤️</div>
-</div>
-
-<div id="customer5Template" class="customer customer-template customer5-template" style="display:none;">
-<img class="frame active" src="https://i.ibb.co/tPcTpmCp/file-00000000fb7481faa77857eab2c72b35-removebg-preview.png" alt="">
-<img class="frame" src="https://i.ibb.co/B5kyP23r/file-00000000629c8230a812e52a7d5e884c-removebg-preview.png" alt="">
-<img class="happy-frame" src="https://i.ibb.co/HptPnxqL/file-00000000afec8206808ae4a9281b5442-removebg-preview.png" alt="">
-<img class="frozen-frame" src="https://i.ibb.co/k2DfX1WT/1000042453-removebg-preview.png" alt="">
-<div class="heart">❤️</div>
-</div>
-
-<div id="customer6Template" class="customer customer-template customer6-template" style="display:none;">
-<img class="frame active" src="https://i.ibb.co/rKHKzCzZ/1000043212-removebg-preview.png" alt="">
-<img class="frame" src="https://i.ibb.co/wNHh3RXs/1000043213-removebg-preview.png" alt="">
-<img class="happy-frame" src="https://i.ibb.co/rG8rp5GG/1000043191-removebg-preview.png" alt="">
-<img class="frozen-frame" src="https://i.ibb.co/x4SynkS/1000043192-removebg-preview.png" alt="">
-<div class="heart">❤️</div>
-</div>
-
-<div id="customer7Template" class="customer customer-template customer7-template" style="display:none;">
-<img class="frame active" src="https://i.ibb.co/yc59qbnB/1000043851-removebg-preview.png" alt="">
-<img class="frame" src="https://i.ibb.co/qL2GTVvK/1000043850-removebg-preview.png" alt="">
-<img class="happy-frame" src="https://i.ibb.co/b8XZs1r/1000043193-removebg-preview.png" alt="">
-<img class="frozen-frame" src="https://i.ibb.co/xKQFS6Vg/1000043194-removebg-preview.png" alt="">
-<div class="heart">❤️</div>
-</div>
-
-<div id="customer8Template" class="customer customer-template customer8-template" style="display:none;">
-<img class="frame active" src="https://i.ibb.co/MxpjYyFm/1000043214-removebg-preview.png" alt="">
-<img class="frame" src="https://i.ibb.co/r1XTGSg/1000043209-removebg-preview.png" alt="">
-<img class="happy-frame" src="https://i.ibb.co/CKCXBT8L/1000043199-removebg-preview.png" alt="">
-<img class="frozen-frame" src="https://i.ibb.co/RGQdckHM/1000043200-removebg-preview.png" alt="">
-<div class="heart">❤️</div>
-</div>
-
-<div id="assistantBossTemplate" class="customer customer-template boss-unit-template" style="display:none;">
-<img class="frame active" src="https://i.ibb.co/gL7RgywQ/1000042613-removebg-preview.png" alt="">
-<img class="frame" src="https://i.ibb.co/KjFm1jwP/1000042614-removebg-preview.png" alt="">
-<img class="happy-frame" src="https://i.ibb.co/Wvpbt1Xj/1000042616-removebg-preview.png" alt="">
-<div class="heart">❤️</div>
-</div>
-
-<div id="mainBossTemplate" class="customer customer-template boss-unit-template" style="display:none;">
-<img class="frame active" src="https://i.ibb.co/nqtp2fbX/1000042606-removebg-preview.png" alt="">
-<img class="frame" src="https://i.ibb.co/rTs3r2F/1000042607-removebg-preview.png" alt="">
-<img class="happy-frame" src="https://i.ibb.co/WvM1QTVC/1000042381-removebg-preview.png" alt="">
-<div class="heart">❤️</div>
-</div>
-
-<div id="cameramanBossTemplate" class="customer customer-template boss-unit-template" style="display:none;">
-<img class="frame active" src="https://i.ibb.co/NgZmwGVt/1000042623-removebg-preview.png" alt="">
-<img class="frame" src="https://i.ibb.co/ymH4x7R9/1000042624-removebg-preview.png" alt="">
-<img class="happy-frame" src="https://i.ibb.co/20kVQ3Wk/1000042617-removebg-preview.png" alt="">
-<div class="heart">❤️</div>
-</div>
-<div id="cook">
-<img class="active" src="https://i.ibb.co/yFtf2t1Z/1000042207-removebg-preview.png" alt="">
-<img class="" src="https://i.ibb.co/C55PHjY3/1000042208-removebg-preview.png" alt="">
-<img class="" src="https://i.ibb.co/TxB5sjB4/1000042209-removebg-preview.png" alt="">
-<img class="" src="https://i.ibb.co/n88k4TCp/1000042210-removebg-preview.png" alt="">
-<img class="" src="https://i.ibb.co/M5yvWywM/1000042211-removebg-preview.png" alt="">
-</div>
-<div id="waitress">
-<img class="active" src="https://i.ibb.co/QF89M6kD/1000042138-removebg-preview.png" alt="">
-<img class="" src="https://i.ibb.co/Kj0pmpYW/1000042139-removebg-preview.png" alt="">
-<img class="" src="https://i.ibb.co/k68q8JzG/1000042140-removebg-preview.png" alt="">
-<img class="" src="https://i.ibb.co/21cygdFG/1000042141-removebg-preview.png" alt="">
-<img class="" src="https://i.ibb.co/ns3H0fCB/1000042143-removebg-preview.png" alt="">
-<img class="" src="https://i.ibb.co/TBvNWcQ8/1000042144-removebg-preview.png" alt="">
-<img class="" src="https://i.ibb.co/QF89M6kD/1000042138-removebg-preview.png" alt="">
-</div>
-<div id="seon">
-<img class="active" style="--shift:0.0%" src="https://i.ibb.co/prNNLfzf/tile000-removebg-preview.png" alt="">
-<img class="" style="--shift:-0.6666666666666666%" src="https://i.ibb.co/Fbvk6qVG/tile001-removebg-preview.png" alt="">
-<img class="" style="--shift:-5.0%" src="https://i.ibb.co/wNPT779g/tile004-removebg-preview.png" alt="">
-<img class="" style="--shift:-5.666666666666667%" src="https://i.ibb.co/wD2BB7d/tile005-removebg-preview.png" alt="">
-<img class="" style="--shift:-3.3333333333333335%" src="https://i.ibb.co/LzG1Bgy5/tile002-2-removebg-preview.png" alt="">
-<img class="" style="--shift:-3.3333333333333335%" src="https://i.ibb.co/JW9CLY8Z/tile003-2-removebg-preview.png" alt="">
-</div>
-<div id="exp-bar"><div id="exp-fill"></div><div id="exp-level">LV 1</div></div>
-<div id="powerup-overlay"><div id="powerup-panel"><div id="powerup-options"></div></div></div>
-</div>
-<div id="blackTransition">
-<button id="skipTransition" type="button" hidden>SKIP ▸</button>
-<img id="transitionImage1" class="transition-image" src="https://i.ibb.co/Xfyp7q6S/IMG-20260902-WA0007-removebg-preview.png" alt="">
-<img id="transitionImage2" class="transition-image" src="https://i.ibb.co/7tJLX4sv/IMG-20260902-WA0006-removebg-preview.png" alt="">
-<img id="transitionImage3" class="transition-image" src="https://i.ibb.co/RGnVyM45/file-000000002dd881f5ba124fc2a3c78a0c-removebg-preview-removebg-preview.png" alt="">
-</div></div>
-<script>
+ </head>
+ <!-- ================= [HTML] SCHERMATE E SPRITE ================= -->
+ <body>
+  <div id="phone">
+   <!-- VIDEO INTRO -->
+   <div id="intro">
+    <video autoplay="" id="introVideo" muted="" playsinline="" preload="auto">
+     <source src="https://yourimageshare.com/ib/LjN0a6FLZL.mp4" type="video/mp4"/>
+    </video>
+    <div id="introTap">
+    </div>
+   </div>
+   <div id="introFade">
+   </div>
+   <!-- MENU PRINCIPALE -->
+   <div id="menu">
+    <span id="buildRevision">REV 5</span>
+    <video id="cover" loop="" muted="" playsinline="" poster="https://i.ibb.co/7JzwW3pP/file-00000000e8d8820b9cbd75d3f8d8e3a1.png" preload="auto">
+     <source src="https://github.com/backtothemovie2024-afk/tarai-game/raw/refs/heads/main/Animate_chef_image_with_steam_20260915082519.mp4" type="video/mp4"/>
+    </video>
+    <img alt="" id="coverOverlay" src="https://i.ibb.co/67Fhq4qw/file-0000000053c481f796fb5ec6162a6b2e-removebg-preview.png"/>
+    <button aria-label="Play" disabled="" id="playButton">
+     PLAY
+    </button>
+   </div>
+   <div id="game">
+    <img alt="" id="background" src="https://cdn.imgchest.com/files/25a5041a8483.jpg"/>
+    <img alt="" id="kitchen" src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png"/>
+    <img alt="" id="kitchenDamaged" src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"/>
+    <img alt="" id="kitchenDestroyed" src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"/>
+    <div id="wave-display">
+     WAVE 1
+    </div>
+    <!-- Riservato al messaggio finale: nessuna scritta temporanea a inizio wave. -->
+    <div id="wave-message">
+    </div>
+    <button hidden="" id="testBossButton" type="button">
+     TEST BOSS
+    </button>
+    <button hidden="" id="testGameOverButton" type="button">
+     TEST GAME OVER
+    </button>
+    <!-- ENERGIA CUCINA — QUADRANTE E LANCETTA -->
+    <div id="kitchenHud">
+     <div aria-label="Energia cucina" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" id="kitchenMeter" role="progressbar">
+      <img alt="" id="kitchenGauge" src="https://i.ibb.co/846rv6r4/file-0000000012ec820badf6445a63456e82.png"/>
+      <div id="kitchenNeedle">
+      </div>
+      <div id="kitchenNeedleHub">
+      </div>
+     </div>
+    </div>
+    <div id="damageVignette">
+    </div>
+    <div id="bossFlashWash">
+    </div>
+    <!-- FINE PARTITA -->
+    <div aria-labelledby="endTitle" aria-modal="true" hidden="" id="endScreen" role="dialog">
+     <img alt="" id="gameOverArt" src="https://i.ibb.co/LDvGMpXr/file-0000000046a881f59037eda06ba19c32.png"/>
+     <img alt="Personaggio stordito" id="gameOverCharacter"/>
+     <div id="endCard">
+      <div id="endEyebrow">
+       TARAI RUSH · STAGE 1
+      </div>
+      <h1 id="endTitle">
+       GAME OVER
+      </h1>
+      <div id="endSubtitle">
+       KITCHEN COLLAPSED
+      </div>
+      <div id="endStats">
+      </div>
+      <button id="retryButton" type="button">
+       TRY AGAIN
+      </button>
+      <button id="mainMenuButton" type="button">
+       MAIN MENU
+      </button>
+     </div>
+    </div>
+    <!-- VIDEO BOSS -->
+    <div id="bossIntro">
+     <video id="bossIntroVideo" muted="" playsinline="" preload="auto">
+      <source src="https://github.com/backtothemovie2024-afk/tarai-game/raw/refs/heads/main/Video_animation_instructions_for%E2%80%A6_20260915063937.mp4" type="video/mp4"/>
+     </video>
+     <button hidden="" id="bossVideoAction" type="button">
+      TOCCA PER AVVIARE IL VIDEO
+     </button>
+    </div>
+    <!-- CLIENTE 1: FASHION GIRL — RAGAZZA BIONDA — CAMMINATA, FELICITÀ, CONGELAMENTO -->
+    <div id="customer1Template" class="customer customer-template customer1-template" style="display:none;">
+     <img alt="" class="frame active" src="https://i.ibb.co/TMLpLFpV/tile006-191x720-removebg-preview.png"/>
+     <img alt="" class="frame" src="https://i.ibb.co/qYHtzZC6/tile008-191x720-removebg-preview.png"/>
+     <img alt="" class="happy-frame" src="https://i.ibb.co/xK0KvtVy/file-00000000c12c82098b5b04e3cf209f24-removebg-preview.png"/>
+     <img alt="" class="frozen-frame" src="https://i.ibb.co/Kx64hLcM/1000042445-removebg-preview.png"/>
+     <div class="heart">
+      ❤️
+     </div>
+    </div>
+    <!-- CLIENTE 2: DONNA ANZIANA — CAMMINATA, FELICITÀ, CONGELAMENTO -->
+    <div id="customer2Template" class="customer customer-template customer2-template" style="display:none;">
+     <img alt="" class="frame active" src="https://i.ibb.co/KcRsHGBM/file-00000000c98081f5b726e6e0d5b17f8d-removebg-preview.png"/>
+     <img alt="" class="frame" src="https://i.ibb.co/SXD5sdPw/IMG-20260903-WA0001-removebg-preview.png"/>
+     <img alt="" class="happy-frame" src="https://i.ibb.co/Nd07D6qM/IMG-20260903-WA0000-removebg-preview.png"/>
+     <img alt="" class="frozen-frame" src="https://i.ibb.co/YT061kxh/1000042452-removebg-preview.png"/>
+     <div class="heart">
+      ❤️
+     </div>
+    </div>
+    <!-- CLIENTE 3: STUDENTE UNIVERSITARIO — CAMMINATA, FELICITÀ, CONGELAMENTO -->
+    <div id="customer3Template" class="customer customer-template customer3-template" style="display:none;">
+     <img alt="" class="frame active" src="https://i.ibb.co/vxTN6874/tile001-removebg-preview-1.png"/>
+     <img alt="" class="frame" src="https://i.ibb.co/9kzB8Fw3/tile002-removebg-preview-1.png"/>
+     <img alt="" class="happy-frame" src="https://i.ibb.co/bjJz8mYb/file-000000000fac81fa84533e82a16b37af-removebg-preview.png"/>
+     <img alt="" class="frozen-frame" src="https://i.ibb.co/nJTx657/1000042451-removebg-preview.png"/>
+     <div class="heart">
+      ❤️
+     </div>
+    </div>
+    <!-- CLIENTE 4: SALARY MAN — CAMMINATA, FELICITÀ, CONGELAMENTO -->
+    <div id="customer4Template" class="customer customer-template customer4-template" style="display:none;">
+     <img alt="" class="frame active" src="https://i.ibb.co/k2fF7sB9/1000042318-removebg-preview.png"/>
+     <img alt="" class="frame" src="https://i.ibb.co/QyB3W9h/1000042319-removebg-preview.png"/>
+     <img alt="" class="happy-frame" src="https://i.ibb.co/F4BLT4j8/1000042309-removebg-preview.png"/>
+     <img alt="" class="frozen-frame" src="https://i.ibb.co/DPsjg9ww/1000042455-removebg-preview.png"/>
+     <div class="heart">
+      ❤️
+     </div>
+    </div>
+    <!-- CLIENTE 5: UOMO ANZIANO — CAMMINATA, FELICITÀ, CONGELAMENTO -->
+    <div id="customer5Template" class="customer customer-template customer5-template" style="display:none;">
+     <img alt="" class="frame active" src="https://i.ibb.co/tPcTpmCp/file-00000000fb7481faa77857eab2c72b35-removebg-preview.png"/>
+     <img alt="" class="frame" src="https://i.ibb.co/B5kyP23r/file-00000000629c8230a812e52a7d5e884c-removebg-preview.png"/>
+     <img alt="" class="happy-frame" src="https://i.ibb.co/HptPnxqL/file-00000000afec8206808ae4a9281b5442-removebg-preview.png"/>
+     <img alt="" class="frozen-frame" src="https://i.ibb.co/k2DfX1WT/1000042453-removebg-preview.png"/>
+     <div class="heart">
+      ❤️
+     </div>
+    </div>
+    <!-- CLIENTE 6: STUDENTE HIGHSCHOOL — CAMMINATA, FELICITÀ, CONGELAMENTO -->
+    <div id="customer6Template" class="customer customer-template customer6-template" style="display:none;">
+     <img alt="" class="frame active" src="https://i.ibb.co/rKHKzCzZ/1000043212-removebg-preview.png"/>
+     <img alt="" class="frame" src="https://i.ibb.co/wNHh3RXs/1000043213-removebg-preview.png"/>
+     <img alt="" class="happy-frame" src="https://i.ibb.co/rG8rp5GG/1000043191-removebg-preview.png"/>
+     <img alt="" class="frozen-frame" src="https://i.ibb.co/x4SynkS/1000043192-removebg-preview.png"/>
+     <div class="heart">
+      ❤️
+     </div>
+    </div>
+    <!-- CLIENTE 7: MAMMA CON BAMBINO — CAMMINATA, FELICITÀ, CONGELAMENTO -->
+    <div id="customer7Template" class="customer customer-template customer7-template" style="display:none;">
+     <img alt="" class="frame active" src="https://i.ibb.co/yc59qbnB/1000043851-removebg-preview.png"/>
+     <img alt="" class="frame" src="https://i.ibb.co/qL2GTVvK/1000043850-removebg-preview.png"/>
+     <img alt="" class="happy-frame" src="https://i.ibb.co/b8XZs1r/1000043193-removebg-preview.png"/>
+     <img alt="" class="frozen-frame" src="https://i.ibb.co/xKQFS6Vg/1000043194-removebg-preview.png"/>
+     <div class="heart">
+      ❤️
+     </div>
+    </div>
+    <!-- CLIENTE 8: DONNA MOLTO ANZIANA — CAMMINATA, FELICITÀ, CONGELAMENTO -->
+    <div id="customer8Template" class="customer customer-template customer8-template" style="display:none;">
+     <img alt="" class="frame active" src="https://i.ibb.co/MxpjYyFm/1000043214-removebg-preview.png"/>
+     <img alt="" class="frame" src="https://i.ibb.co/r1XTGSg/1000043209-removebg-preview.png"/>
+     <img alt="" class="happy-frame" src="https://i.ibb.co/CKCXBT8L/1000043199-removebg-preview.png"/>
+     <img alt="" class="frozen-frame" src="https://i.ibb.co/RGQdckHM/1000043200-removebg-preview.png"/>
+     <div class="heart">
+      ❤️
+     </div>
+    </div>
+    <div id="assistantBossTemplate" class="customer customer-template boss-unit-template" style="display:none;">
+     <img alt="" class="frame active" src="https://i.ibb.co/gL7RgywQ/1000042613-removebg-preview.png"/>
+     <img alt="" class="frame" src="https://i.ibb.co/KjFm1jwP/1000042614-removebg-preview.png"/>
+     <img alt="" class="happy-frame" src="https://i.ibb.co/Wvpbt1Xj/1000042616-removebg-preview.png"/>
+     <div class="heart">
+      ❤️
+     </div>
+    </div>
+    <div id="mainBossTemplate" class="customer customer-template boss-unit-template" style="display:none;">
+     <img alt="" class="frame active" src="https://i.ibb.co/nqtp2fbX/1000042606-removebg-preview.png"/>
+     <img alt="" class="frame" src="https://i.ibb.co/rTs3r2F/1000042607-removebg-preview.png"/>
+     <img alt="" class="happy-frame" src="https://i.ibb.co/WvM1QTVC/1000042381-removebg-preview.png"/>
+     <div class="heart">
+      ❤️
+     </div>
+    </div>
+    <div id="cameramanBossTemplate" class="customer customer-template boss-unit-template" style="display:none;">
+     <img alt="" class="frame active" src="https://i.ibb.co/NgZmwGVt/1000042623-removebg-preview.png"/>
+     <img alt="" class="frame" src="https://i.ibb.co/ymH4x7R9/1000042624-removebg-preview.png"/>
+     <img alt="" class="happy-frame" src="https://i.ibb.co/20kVQ3Wk/1000042617-removebg-preview.png"/>
+     <div class="heart">
+      ❤️
+     </div>
+    </div>
+    <!-- CUOCO -->
+    <div id="cook">
+     <img alt="" class="active" src="https://i.ibb.co/yFtf2t1Z/1000042207-removebg-preview.png"/>
+     <img alt="" class="" src="https://i.ibb.co/C55PHjY3/1000042208-removebg-preview.png"/>
+     <img alt="" class="" src="https://i.ibb.co/TxB5sjB4/1000042209-removebg-preview.png"/>
+     <img alt="" class="" src="https://i.ibb.co/n88k4TCp/1000042210-removebg-preview.png"/>
+     <img alt="" class="" src="https://i.ibb.co/M5yvWywM/1000042211-removebg-preview.png"/>
+    </div>
+    <!-- CAMERIERA -->
+    <div id="waitress">
+     <img alt="" class="active" src="https://i.ibb.co/QF89M6kD/1000042138-removebg-preview.png"/>
+     <img alt="" class="" src="https://i.ibb.co/Kj0pmpYW/1000042139-removebg-preview.png"/>
+     <img alt="" class="" src="https://i.ibb.co/k68q8JzG/1000042140-removebg-preview.png"/>
+     <img alt="" class="" src="https://i.ibb.co/21cygdFG/1000042141-removebg-preview.png"/>
+     <img alt="" class="" src="https://i.ibb.co/ns3H0fCB/1000042143-removebg-preview.png"/>
+     <img alt="" class="" src="https://i.ibb.co/TBvNWcQ8/1000042144-removebg-preview.png"/>
+     <img alt="" class="" src="https://i.ibb.co/QF89M6kD/1000042138-removebg-preview.png"/>
+    </div>
+    <!-- SEON JEONG -->
+    <div id="seon">
+     <img alt="" class="active" src="https://i.ibb.co/prNNLfzf/tile000-removebg-preview.png" style="--shift:0.0%"/>
+     <img alt="" class="" src="https://i.ibb.co/Fbvk6qVG/tile001-removebg-preview.png" style="--shift:-0.6666666666666666%"/>
+     <img alt="" class="" src="https://i.ibb.co/wNPT779g/tile004-removebg-preview.png" style="--shift:-5.0%"/>
+     <img alt="" class="" src="https://i.ibb.co/wD2BB7d/tile005-removebg-preview.png" style="--shift:-5.666666666666667%"/>
+     <img alt="" class="" src="https://i.ibb.co/LzG1Bgy5/tile002-2-removebg-preview.png" style="--shift:-3.3333333333333335%"/>
+     <img alt="" class="" src="https://i.ibb.co/JW9CLY8Z/tile003-2-removebg-preview.png" style="--shift:-3.3333333333333335%"/>
+    </div>
+    <div id="exp-bar">
+     <div id="exp-fill">
+     </div>
+     <div id="exp-level">
+      LV 1
+     </div>
+    </div>
+    <div id="powerup-overlay">
+     <div id="powerup-panel">
+      <div id="powerup-options">
+      </div>
+     </div>
+    </div>
+   </div>
+   <div id="blackTransition">
+    <button hidden="" id="skipTransition" type="button">
+     SKIP ▸
+    </button>
+    <img alt="" class="transition-image" id="transitionImage1" src="https://i.ibb.co/Xfyp7q6S/IMG-20260902-WA0007-removebg-preview.png"/>
+    <img alt="" class="transition-image" id="transitionImage2" src="https://i.ibb.co/7tJLX4sv/IMG-20260902-WA0006-removebg-preview.png"/>
+    <img alt="" class="transition-image" id="transitionImage3" src="https://i.ibb.co/RGnVyM45/file-000000002dd881f5ba124fc2a3c78a0c-removebg-preview-removebg-preview.png"/>
+   </div>
+  </div>
+  <script>
 /* TEST TEMPORANEO: impostare false per eliminare il pulsante TEST BOSS. */
-const ENABLE_BOSS_TEST=true;
-const ENABLE_GAMEOVER_TEST=true;
+const ENABLE_BOSS_TEST = true;
+const ENABLE_GAMEOVER_TEST = true;
 
 /* INTRO → NERO → MENU: 0,8 secondi per ciascuna fase. */
-const intro=document.getElementById('intro');
-const introVideo=document.getElementById('introVideo');
-const introFade=document.getElementById('introFade');
-const menuVideo=document.getElementById('cover');
-let introClosing=false;
-let menuReady=false;
+/* ================================================================
+ [JS 01] INTRO E MENU
+ ================================================================ */
+const intro = document.getElementById('intro');
+const introVideo = document.getElementById('introVideo');
+const introFade = document.getElementById('introFade');
+const menuVideo = document.getElementById('cover');
+let introClosing = false;
+let menuReady = false;
 
-function playMenuVideo(){
- if(document.getElementById('menu').style.display==='none')return;
- menuVideo.muted=true;
- const promise=menuVideo.play();
- if(promise)promise.catch(function(){
-  // Il poster resta visibile se il browser non avvia il video.
- });
+/* ── playMenuVideo ────────────────────────────────────────── */
+function playMenuVideo() {
+  if (document.getElementById('menu').style.display === 'none') return;
+  menuVideo.muted = true;
+  const promise = menuVideo.play();
+  if (promise) promise.catch(function() {
+    // Il poster resta visibile se il browser non avvia il video.
+  });
 }
 
-function closeIntro(){
- if(introClosing||intro.style.display==='none')return;
- introClosing=true;
- introFade.style.display='block';
- introFade.style.opacity='0';
- void introFade.offsetWidth;
- introFade.style.opacity='1';
- setTimeout(function(){
-  introVideo.pause();
-  intro.style.display='none';
-  menuVideo.currentTime=0;
-  playMenuVideo();
-  introFade.style.opacity='0';
-  setTimeout(function(){
-   introFade.style.display='none';
-   menuReady=true;
-   document.getElementById('playButton').disabled=false;
-  },800);
- },800);
+/* ── closeIntro ────────────────────────────────────────── */
+function closeIntro() {
+  if (introClosing || intro.style.display === 'none') return;
+  introClosing = true;
+  introFade.style.display = 'block';
+  introFade.style.opacity = '0';
+  void introFade.offsetWidth;
+  introFade.style.opacity = '1';
+  setTimeout(function() {
+    introVideo.pause();
+    intro.style.display = 'none';
+    menuVideo.currentTime = 0;
+    playMenuVideo();
+    introFade.style.opacity = '0';
+    setTimeout(function() {
+      introFade.style.display = 'none';
+      menuReady = true;
+      document.getElementById('playButton').disabled = false;
+    }, 800);
+  }, 800);
 }
-document.getElementById('introTap').addEventListener('click',closeIntro);
-document.getElementById('introTap').addEventListener('touchend',function(e){e.preventDefault();closeIntro();},{passive:false});
-introVideo.addEventListener('ended',closeIntro);
-document.getElementById('menu').addEventListener('pointerdown',function(){
- if(menuReady&&menuVideo.paused)playMenuVideo();
+document.getElementById('introTap').addEventListener('click', closeIntro);
+document.getElementById('introTap').addEventListener('touchend', function(e) {
+  e.preventDefault();
+  closeIntro();
+}, {
+  passive: false
+});
+introVideo.addEventListener('ended', closeIntro);
+document.getElementById('menu').addEventListener('pointerdown', function() {
+  if (menuReady && menuVideo.paused) playMenuVideo();
 });
 
-const HIT_X=5,HIT_Y=0,HIT_POSITION_Y=.45;
-const WAITRESS_HAND_X=.72,WAITRESS_HAND_Y=.38;
-const WAVES=[
- {customers:6,spawnInterval:1400,walkTime:32,hp:8},
- {customers:7,spawnInterval:1355,walkTime:32,hp:8},
- {customers:8,spawnInterval:1310,walkTime:32,hp:9},
- {customers:8,spawnInterval:1265,walkTime:31,hp:10},
- {customers:9,spawnInterval:1220,walkTime:30,hp:12},
- {customers:9,spawnInterval:1175,walkTime:29,hp:14},
- {customers:10,spawnInterval:1130,walkTime:28,hp:16},
- {customers:10,spawnInterval:1085,walkTime:27,hp:18},
- {customers:11,spawnInterval:1040,walkTime:26,hp:20},
- {customers:11,spawnInterval:995,walkTime:25,hp:23},
- {customers:12,spawnInterval:950,walkTime:24,hp:26},
- {customers:12,spawnInterval:905,walkTime:23,hp:29},
- {customers:13,spawnInterval:860,walkTime:22,hp:32},
- {customers:13,spawnInterval:815,walkTime:22,hp:35},
- {customers:14,spawnInterval:770,walkTime:21,hp:38},
- {customers:14,spawnInterval:725,walkTime:21,hp:41},
- {customers:15,spawnInterval:680,walkTime:20,hp:44},
- {customers:15,spawnInterval:635,walkTime:20,hp:47},
- {customers:16,spawnInterval:590,walkTime:20,hp:50},
- {customers:3,spawnInterval:1500,walkTime:36,hp:320}
-];
-const TOTAL_WAVES=WAVES.length;
-const BOSS_WAVE=TOTAL_WAVES;
-const LANES=[29,36.4,43.8,51.2,58.6];
-const CUSTOMER_START_Y=.03;
-const CUSTOMER_END_Y=.69;
-const CUSTOMER_GAP=.25;
-const nextAttackAt={cook:0,waitress:0,seon:0};
-const NORMAL_WAVE_DELAY=600;
-const BOSS_WAVE_DELAY=1200;
-const EXP_PER_CUSTOMER=5;
-const EXP_REQUIREMENTS=[15,20,30,40,45,50,55,60,65,75,85,90,95,100,110];
-const MAX_LEVEL=16;
-let currentWave=1,waveSpawned=0,waveFinished=false,waveStarting=false;
-let currentLevel=1,currentEXP=0,kitchenEnergy=100;
-let customers=[];
-let powerUps={pasta:0,speed:0,sauce:0,waitress:false,iceShot:0,iceChain:0,deepFreeze:0,seon:false,hotSplash:0,caffeineRush:0,doubleShot:0};
-let pastaSpeedBonus=0,powerUpPaused=false;
-let bossIntroPlaying=false,gameStarted=false,gameFinished=false;
-let cookAttacking=false,waitressAttacking=false,seonAttacking=false;
-let seonAttackTimer=null;
-let offeredPowerUps=[];
-let customerTimer=null,customer4Timer=null,cookTimer=null,waitressAttackTimer=null;
-let firstAttackTimer=null,kitchenDamageTimer=null,zIndexTimer=null,waveCheckTimer=null;
+const HIT_X = 5,
+  HIT_Y = 0,
+  HIT_POSITION_Y = .45;
+const WAITRESS_HAND_X = .72,
+  WAITRESS_HAND_Y = .38;
+/* ================================================================
+   WAVE 1–20 — NUMERO CLIENTI, INTERVALLO, VELOCITÀ, HP
+   ================================================================ */
+/* ================================================================
+ [JS 02] WAVE
+ ================================================================ */
+const WAVES = [{
+  customers: 6,
+  spawnInterval: 1400,
+  walkTime: 32,
+  hp: 8
+}, {
+  customers: 7,
+  spawnInterval: 1355,
+  walkTime: 32,
+  hp: 8
+}, {
+  customers: 8,
+  spawnInterval: 1310,
+  walkTime: 32,
+  hp: 9
+}, {
+  customers: 8,
+  spawnInterval: 1265,
+  walkTime: 31,
+  hp: 10
+}, {
+  customers: 9,
+  spawnInterval: 1220,
+  walkTime: 30,
+  hp: 12
+}, {
+  customers: 9,
+  spawnInterval: 1175,
+  walkTime: 29,
+  hp: 14
+}, {
+  customers: 10,
+  spawnInterval: 1130,
+  walkTime: 28,
+  hp: 16
+}, {
+  customers: 10,
+  spawnInterval: 1085,
+  walkTime: 27,
+  hp: 18
+}, {
+  customers: 11,
+  spawnInterval: 1040,
+  walkTime: 26,
+  hp: 20
+}, {
+  customers: 11,
+  spawnInterval: 995,
+  walkTime: 25,
+  hp: 23
+}, {
+  customers: 12,
+  spawnInterval: 950,
+  walkTime: 24,
+  hp: 26
+}, {
+  customers: 12,
+  spawnInterval: 905,
+  walkTime: 23,
+  hp: 29
+}, {
+  customers: 13,
+  spawnInterval: 860,
+  walkTime: 22,
+  hp: 32
+}, {
+  customers: 13,
+  spawnInterval: 815,
+  walkTime: 22,
+  hp: 35
+}, {
+  customers: 14,
+  spawnInterval: 770,
+  walkTime: 21,
+  hp: 38
+}, {
+  customers: 14,
+  spawnInterval: 725,
+  walkTime: 21,
+  hp: 41
+}, {
+  customers: 15,
+  spawnInterval: 680,
+  walkTime: 20,
+  hp: 44
+}, {
+  customers: 15,
+  spawnInterval: 635,
+  walkTime: 20,
+  hp: 47
+}, {
+  customers: 16,
+  spawnInterval: 590,
+  walkTime: 20,
+  hp: 50
+}, {
+  customers: 3,
+  spawnInterval: 1500,
+  walkTime: 36,
+  hp: 320
+}];
+const TOTAL_WAVES = WAVES.length;
+const BOSS_WAVE = TOTAL_WAVES;
+const LANES = [29, 36.4, 43.8, 51.2, 58.6];
+const CUSTOMER_START_Y = .03;
+const CUSTOMER_END_Y = .69;
+const CUSTOMER_GAP = .25;
+const nextAttackAt = {
+  cook: 0,
+  waitress: 0,
+  seon: 0
+};
+const NORMAL_WAVE_DELAY = 600;
+const BOSS_WAVE_DELAY = 1200;
+const EXP_PER_CUSTOMER = 5;
+const EXP_REQUIREMENTS = [15, 20, 30, 40, 45, 50, 55, 60, 65, 75, 85, 90, 95, 100, 110];
+const MAX_LEVEL = 16;
+let currentWave = 1,
+  waveSpawned = 0,
+  waveFinished = false,
+  waveStarting = false;
+let currentLevel = 1,
+  currentEXP = 0,
+  kitchenEnergy = 100;
+let customers = [];
+let powerUps = {
+  pasta: 0,
+  speed: 0,
+  sauce: 0,
+  waitress: false,
+  iceShot: 0,
+  iceChain: 0,
+  deepFreeze: 0,
+  seon: false,
+  hotSplash: 0,
+  caffeineRush: 0,
+  doubleShot: 0
+};
+let pastaSpeedBonus = 0,
+  powerUpPaused = false;
+let bossIntroPlaying = false,
+  gameStarted = false,
+  gameFinished = false;
+let cookAttacking = false,
+  waitressAttacking = false,
+  seonAttacking = false;
+let seonAttackTimer = null;
+let offeredPowerUps = [];
+let customerTimer = null,
+  customer4Timer = null,
+  cookTimer = null,
+  waitressAttackTimer = null;
+let firstAttackTimer = null,
+  kitchenDamageTimer = null,
+  zIndexTimer = null,
+  waveCheckTimer = null;
 
 /* Tutti i timer del gioco sono cancellabili al salto di wave.
    Il tempo di gioco si ferma durante la scelta dei potenziamenti. */
-let gameClock=0,lastClockTime=performance.now(),nextTaskId=1;
-let generation=0;
-const gameTasks=new Map();
-const gameFrames=new Set();
-function gameLater(callback,delay){
- const id=nextTaskId++;
- gameTasks.set(id,{callback,due:gameClock+delay,interval:0});
- return id;
+let gameClock = 0,
+  lastClockTime = performance.now(),
+  nextTaskId = 1;
+let generation = 0;
+const gameTasks = new Map();
+const gameFrames = new Set();
+/* ── gameLater ────────────────────────────────────────── */
+function gameLater(callback, delay) {
+  const id = nextTaskId++;
+  gameTasks.set(id, {
+    callback,
+    due: gameClock + delay,
+    interval: 0
+  });
+  return id;
 }
-function gameEvery(callback,delay){
- const id=nextTaskId++;
- gameTasks.set(id,{callback,due:gameClock+delay,interval:delay});
- return id;
+/* ── gameEvery ────────────────────────────────────────── */
+function gameEvery(callback, delay) {
+  const id = nextTaskId++;
+  gameTasks.set(id, {
+    callback,
+    due: gameClock + delay,
+    interval: delay
+  });
+  return id;
 }
-function cancelTask(id){gameTasks.delete(id);}
-function gameFrame(callback){
- const token=generation;
- const id=requestAnimationFrame(function(time){
-  gameFrames.delete(id);
-  if(token===generation) callback(time);
- });
- gameFrames.add(id);return id;
+/* ── cancelTask ────────────────────────────────────────── */
+function cancelTask(id) {
+  gameTasks.delete(id);
 }
-function tickGameClock(now){
- const delta=now-lastClockTime;lastClockTime=now;
- if(!powerUpPaused&&!bossIntroPlaying&&!gameFinished){
-  gameClock+=delta;
-  for(const [id,task] of Array.from(gameTasks)){
-   if(powerUpPaused||bossIntroPlaying||gameFinished) break;
-   if(!gameTasks.has(id)||task.due>gameClock) continue;
-   if(task.interval) task.due=gameClock+task.interval;
-   else gameTasks.delete(id);
-   task.callback();
+/* ── gameFrame ────────────────────────────────────────── */
+function gameFrame(callback) {
+  const token = generation;
+  const id = requestAnimationFrame(function(time) {
+    gameFrames.delete(id);
+    if (token === generation) callback(time);
+  });
+  gameFrames.add(id);
+  return id;
+}
+/* ── tickGameClock ────────────────────────────────────────── */
+function tickGameClock(now) {
+  const delta = now - lastClockTime;
+  lastClockTime = now;
+  if (!powerUpPaused && !bossIntroPlaying && !gameFinished) {
+    gameClock += delta;
+    for (const [id, task] of Array.from(gameTasks)) {
+      if (powerUpPaused || bossIntroPlaying || gameFinished) break;
+      if (!gameTasks.has(id) || task.due > gameClock) continue;
+      if (task.interval) task.due = gameClock + task.interval;
+      else gameTasks.delete(id);
+      task.callback();
+    }
   }
- }
- requestAnimationFrame(tickGameClock);
+  requestAnimationFrame(tickGameClock);
 }
 requestAnimationFrame(tickGameClock);
-function clearAllTimersBase(){
- generation++;
- gameTasks.clear();
- nextAttackAt.cook=nextAttackAt.waitress=nextAttackAt.seon=0;
- gameFrames.forEach(id=>cancelAnimationFrame(id));gameFrames.clear();
- customerTimer=customer4Timer=cookTimer=waitressAttackTimer=null;
- firstAttackTimer=kitchenDamageTimer=zIndexTimer=waveCheckTimer=null;
- cookAttacking=waitressAttacking=seonAttacking=false;seonAttackTimer=null;
+/* ── clearAllTimersBase ────────────────────────────────────────── */
+function clearAllTimersBase() {
+  generation++;
+  gameTasks.clear();
+  nextAttackAt.cook = nextAttackAt.waitress = nextAttackAt.seon = 0;
+  gameFrames.forEach(id => cancelAnimationFrame(id));
+  gameFrames.clear();
+  customerTimer = customer4Timer = cookTimer = waitressAttackTimer = null;
+  firstAttackTimer = kitchenDamageTimer = zIndexTimer = waveCheckTimer = null;
+  cookAttacking = waitressAttacking = seonAttacking = false;
+  seonAttackTimer = null;
 }
 
 /* PANNELLI POWER UP ORIGINALI */
-const POWER_UP_PANELS={
- pasta:[
- 'https://i.ibb.co/WN2w5Gdr/20260904-130420-0000-removebg-preview.png',
- 'https://i.ibb.co/TB2VNLT9/20260904-130538-0000-removebg-preview.png',
- 'https://i.ibb.co/v4HTHVvD/20260904-130654-0000-removebg-preview.png'],
- sauce:[
- 'https://i.ibb.co/wN1wThJ4/20260906-064841-0000-removebg-preview.png',
- 'https://i.ibb.co/bRBNBZjK/20260906-064910-0000-removebg-preview.png',
- 'https://i.ibb.co/9mqm7dsN/20260906-064941-0000-removebg-preview.png'],
- speed:[
- 'https://i.ibb.co/MkNSjJwS/20260904-121910-0000-removebg-preview.png',
- 'https://i.ibb.co/S4pzKRB7/20260904-122032-0000-removebg-preview-1.png',
- 'https://i.ibb.co/yFG9djjL/20260904-115710-0000-removebg-preview.png'],
- waitress:'https://i.ibb.co/5WW0VDPS/20260906-065655-0000-removebg-preview.png',
- iceShot:[
- 'https://i.ibb.co/3mytpycj/1000042532-removebg-preview.png',
- 'https://i.ibb.co/RpPWmLf1/1000042533-removebg-preview.png',
- 'https://i.ibb.co/kg8ZJ26R/1000042534-removebg-preview.png'],
- iceChain:[
- 'https://i.ibb.co/4RctQkYn/1000042535-removebg-preview.png',
- 'https://i.ibb.co/YBXzXK8T/1000042536-removebg-preview.png',
- 'https://i.ibb.co/R46THQGk/1000042537-removebg-preview.png'],
- deepFreeze:[
- 'https://i.ibb.co/d0wKYzSF/1000042538-removebg-preview.png',
- 'https://i.ibb.co/1f3rLZ6L/1000042539-removebg-preview.png',
- 'https://i.ibb.co/PG5PFZfw/1000042542-removebg-preview.png']
+/* ================================================================
+   POTENZIAMENTI — IMMAGINI DEI PANNELLI
+   ================================================================ */
+/* ================================================================
+ [JS 03] POTENZIAMENTI
+ ================================================================ */
+const POWER_UP_PANELS = {
+  pasta: [
+    'https://i.ibb.co/WN2w5Gdr/20260904-130420-0000-removebg-preview.png',
+    'https://i.ibb.co/TB2VNLT9/20260904-130538-0000-removebg-preview.png',
+    'https://i.ibb.co/v4HTHVvD/20260904-130654-0000-removebg-preview.png'
+  ],
+  sauce: [
+    'https://i.ibb.co/wN1wThJ4/20260906-064841-0000-removebg-preview.png',
+    'https://i.ibb.co/bRBNBZjK/20260906-064910-0000-removebg-preview.png',
+    'https://i.ibb.co/9mqm7dsN/20260906-064941-0000-removebg-preview.png'
+  ],
+  speed: [
+    'https://i.ibb.co/MkNSjJwS/20260904-121910-0000-removebg-preview.png',
+    'https://i.ibb.co/S4pzKRB7/20260904-122032-0000-removebg-preview-1.png',
+    'https://i.ibb.co/yFG9djjL/20260904-115710-0000-removebg-preview.png'
+  ],
+  waitress: 'https://i.ibb.co/5WW0VDPS/20260906-065655-0000-removebg-preview.png',
+  iceShot: [
+    'https://i.ibb.co/3mytpycj/1000042532-removebg-preview.png',
+    'https://i.ibb.co/RpPWmLf1/1000042533-removebg-preview.png',
+    'https://i.ibb.co/kg8ZJ26R/1000042534-removebg-preview.png'
+  ],
+  iceChain: [
+    'https://i.ibb.co/4RctQkYn/1000042535-removebg-preview.png',
+    'https://i.ibb.co/YBXzXK8T/1000042536-removebg-preview.png',
+    'https://i.ibb.co/R46THQGk/1000042537-removebg-preview.png'
+  ],
+  deepFreeze: [
+    'https://i.ibb.co/d0wKYzSF/1000042538-removebg-preview.png',
+    'https://i.ibb.co/1f3rLZ6L/1000042539-removebg-preview.png',
+    'https://i.ibb.co/PG5PFZfw/1000042542-removebg-preview.png'
+  ]
 };
-Object.assign(POWER_UP_PANELS,{
- seon:'https://i.ibb.co/B245nYHg/1000044650-removebg-preview.png',
- hotSplash:[
- 'https://i.ibb.co/F258DF4/1000044647-removebg-preview.png',
- 'https://i.ibb.co/mrVv2Gct/1000044648-removebg-preview.png',
- 'https://i.ibb.co/XxMRFsSf/1000044649-removebg-preview.png'],
- caffeineRush:[
- 'https://i.ibb.co/N6t982KB/1000044642-removebg-preview.png',
- 'https://i.ibb.co/s9x7Yw4X/1000044643-removebg-preview.png',
- 'https://i.ibb.co/93N2pgH2/1000044645-removebg-preview.png'],
- doubleShot:[
- 'https://i.ibb.co/XxcZW307/1000044639-removebg-preview.png',
- 'https://i.ibb.co/S71Zby8R/1000044640-removebg-preview.png',
- 'https://i.ibb.co/ZpftT8vp/1000044641-removebg-preview.png']
+Object.assign(POWER_UP_PANELS, {
+  seon: 'https://i.ibb.co/B245nYHg/1000044650-removebg-preview.png',
+  hotSplash: [
+    'https://i.ibb.co/F258DF4/1000044647-removebg-preview.png',
+    'https://i.ibb.co/mrVv2Gct/1000044648-removebg-preview.png',
+    'https://i.ibb.co/XxMRFsSf/1000044649-removebg-preview.png'
+  ],
+  caffeineRush: [
+    'https://i.ibb.co/N6t982KB/1000044642-removebg-preview.png',
+    'https://i.ibb.co/s9x7Yw4X/1000044643-removebg-preview.png',
+    'https://i.ibb.co/93N2pgH2/1000044645-removebg-preview.png'
+  ],
+  doubleShot: [
+    'https://i.ibb.co/XxcZW307/1000044639-removebg-preview.png',
+    'https://i.ibb.co/S71Zby8R/1000044640-removebg-preview.png',
+    'https://i.ibb.co/ZpftT8vp/1000044641-removebg-preview.png'
+  ]
 });
-function getAvailablePowerUps(){
- const available=[];
- function add(types){types.forEach(type=>{
-  if(powerUps[type]<3)available.push({type,level:powerUps[type]+1});
- });}
- add(['pasta','speed','sauce']);
- if(!powerUps.waitress){
-  if(currentLevel>=2)available.push({type:'waitress',level:1});
- }else add(['iceShot','iceChain','deepFreeze']);
- if(!powerUps.seon){
-  if(currentLevel>=3)available.push({type:'seon',level:1});
- }else add(['hotSplash','caffeineRush','doubleShot']);
- return available;
-}
-function shuffle(items){
- for(let i=items.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[items[i],items[j]]=[items[j],items[i]];}
- return items;
-}
-function showPowerUpScreen(){
- if(powerUpPaused)return;
- const available=shuffle(getAvailablePowerUps());
- if(!available.length)return;
- // Sblocchi garantiti tra le tre scelte; gli altri pannelli sono mescolati.
- const guaranteed=currentLevel===2?'waitress':currentLevel===3?'seon':null;
- const fixed=available.find(p=>p.type===guaranteed);
- offeredPowerUps=fixed?[fixed,...available.filter(p=>p!==fixed).slice(0,2)]:available.slice(0,3);
- shuffle(offeredPowerUps);
- const options=document.getElementById('powerup-options');options.innerHTML='';
- offeredPowerUps.forEach(p=>{
-  const slot=document.createElement('button');slot.type='button';slot.className='powerup-slot';
-  if(['seon','hotSplash','caffeineRush','doubleShot'].includes(p.type))slot.classList.add('seon-panel');
-  slot.dataset.type=p.type;slot.dataset.level=p.level;
-  const image=document.createElement('img');
-  const panel=POWER_UP_PANELS[p.type];image.src=Array.isArray(panel)?panel[p.level-1]:panel;
-  image.alt=p.type+' '+p.level;slot.appendChild(image);
-  slot.addEventListener('click',()=>selectPowerUp(p.type));options.appendChild(slot);
- });
- powerUpPaused=true;
- document.getElementById('game').classList.add('powerup-paused');
- document.getElementById('powerup-overlay').style.display='flex';
-}
-function selectPowerUpBase(type){
- if(!powerUpPaused)return;
- const choice=offeredPowerUps.find(p=>p.type===type);
- if(!choice||!getAvailablePowerUps().some(p=>p.type===type&&p.level===choice.level))return;
- if(type==='waitress'){powerUps.waitress=true;summonWaitress();}
- else if(type==='seon'){
-  powerUps.seon=true;document.getElementById('seon').style.display='block';setActorFrame('seon',0);
- }else{
-  powerUps[type]++;
-  if(type==='pasta'&&powerUps.pasta===2)pastaSpeedBonus=.15;
- }
- // Caffeine Rush modifica solo la frequenza di Seon Jeong.
- if(type==='caffeineRush')startSeonAttack();
- offeredPowerUps=[];
- document.getElementById('powerup-overlay').style.display='none';
- document.getElementById('powerup-options').innerHTML='';
- powerUpPaused=false;document.getElementById('game').classList.remove('powerup-paused');
- updateEXPBar();
-}
-function summonWaitress(){document.getElementById('waitress').style.display='block';setWaitressFrame(0);}
-function setWaitressFrame(n){setActorFrame('waitress',n);}
-function setCookFrame(n){setActorFrame('cook',n);}
-function setActorFrame(id,n){
- document.getElementById(id).querySelectorAll('img').forEach((f,i)=>f.classList.toggle('active',i===n));
-}
-function updateEXPBar(){
- const fill=document.getElementById('exp-fill'),text=document.getElementById('exp-level');
- if(currentLevel>=MAX_LEVEL){currentLevel=MAX_LEVEL;currentEXP=0;fill.style.width='100%';text.textContent='LV MAX';return;}
- fill.style.width=Math.min(100,currentEXP/EXP_REQUIREMENTS[currentLevel-1]*100)+'%';
- text.textContent='LV '+currentLevel;
-}
-function addEXP(amount){
- if(currentLevel>=MAX_LEVEL) return;
- currentEXP+=amount;let levelUp=false;
- while(currentLevel<MAX_LEVEL&&currentEXP>=EXP_REQUIREMENTS[currentLevel-1]){
-  currentEXP-=EXP_REQUIREMENTS[currentLevel-1];currentLevel++;levelUp=true;
- }
- updateEXPBar();if(levelUp) showPowerUpScreen();
-}
+/* ── getAvailablePowerUps ────────────────────────────────────────── */
+function getAvailablePowerUps() {
+  const available = [];
 
+  function add(types) {
+    types.forEach(type => {
+      if (powerUps[type] < 3) available.push({
+        type,
+        level: powerUps[type] + 1
+      });
+    });
+  }
+  add(['pasta', 'speed', 'sauce']);
+  if (!powerUps.waitress) {
+    if (currentLevel >= 2) available.push({
+      type: 'waitress',
+      level: 1
+    });
+  } else add(['iceShot', 'iceChain', 'deepFreeze']);
+  if (!powerUps.seon) {
+    if (currentLevel >= 3) available.push({
+      type: 'seon',
+      level: 1
+    });
+  } else add(['hotSplash', 'caffeineRush', 'doubleShot']);
+  return available;
+}
+/* ── shuffle ────────────────────────────────────────── */
+function shuffle(items) {
+  for (let i = items.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [items[i], items[j]] = [items[j], items[i]];
+  }
+  return items;
+}
+/* ── selectPowerUpBase ────────────────────────────────────────── */
+function selectPowerUpBase(type) {
+  if (!powerUpPaused) return;
+  const choice = offeredPowerUps.find(p => p.type === type);
+  if (!choice || !getAvailablePowerUps().some(p => p.type === type && p.level === choice.level)) return;
+  if (type === 'waitress') {
+    powerUps.waitress = true;
+    summonWaitress();
+  } else if (type === 'seon') {
+    powerUps.seon = true;
+    document.getElementById('seon').style.display = 'block';
+    setActorFrame('seon', 0);
+  } else {
+    powerUps[type]++;
+    if (type === 'pasta' && powerUps.pasta === 2) pastaSpeedBonus = .15;
+  }
+  // Caffeine Rush modifica solo la frequenza di Seon Jeong.
+  if (type === 'caffeineRush') startSeonAttack();
+  offeredPowerUps = [];
+  document.getElementById('powerup-overlay').style.display = 'none';
+  document.getElementById('powerup-options').innerHTML = '';
+  powerUpPaused = false;
+  document.getElementById('game').classList.remove('powerup-paused');
+  updateEXPBar();
+}
+/* ── summonWaitress ────────────────────────────────────────── */
+function summonWaitress() {
+  document.getElementById('waitress').style.display = 'block';
+  setWaitressFrame(0);
+}
+/* ── setWaitressFrame ────────────────────────────────────────── */
+function setWaitressFrame(n) {
+  setActorFrame('waitress', n);
+}
+/* ── setCookFrame ────────────────────────────────────────── */
+function setCookFrame(n) {
+  setActorFrame('cook', n);
+}
+/* ── setActorFrame ────────────────────────────────────────── */
+function setActorFrame(id, n) {
+  document.getElementById(id).querySelectorAll('img').forEach((f, i) => f.classList.toggle('active', i === n));
+}
+/* ── updateEXPBar ────────────────────────────────────────── */
+function updateEXPBar() {
+  const fill = document.getElementById('exp-fill'),
+    text = document.getElementById('exp-level');
+  if (currentLevel >= MAX_LEVEL) {
+    currentLevel = MAX_LEVEL;
+    currentEXP = 0;
+    fill.style.width = '100%';
+    text.textContent = 'LV MAX';
+    return;
+  }
+  fill.style.width = Math.min(100, currentEXP / EXP_REQUIREMENTS[currentLevel - 1] * 100) + '%';
+  text.textContent = 'LV ' + currentLevel;
+}
 /* PLAY: transizione iniziale originale. */
-function clearScene(){
- document.querySelectorAll('.spawned-customer,.pasta,.drink,.cappuccino,.hit-marker,.impact-particle').forEach(e=>e.remove());
- customers=[];setCookFrame(0);setWaitressFrame(0);setActorFrame('seon',0);
+/* ── clearScene ────────────────────────────────────────── */
+function clearScene() {
+  document.querySelectorAll('.spawned-customer,.pasta,.drink,.cappuccino,.hit-marker,.impact-particle').forEach(e => e.remove());
+  customers = [];
+  setCookFrame(0);
+  setWaitressFrame(0);
+  setActorFrame('seon', 0);
 }
-function resetGameBase(){
- clearAllTimers();stopBossIntro();clearScene();
- currentWave=1;waveSpawned=0;waveFinished=false;waveStarting=false;gameFinished=false;
- kitchenEnergy=100;currentLevel=1;currentEXP=0;
- powerUps={pasta:0,speed:0,sauce:0,waitress:false,iceShot:0,iceChain:0,deepFreeze:0,seon:false,hotSplash:0,caffeineRush:0,doubleShot:0};
- pastaSpeedBonus=0;powerUpPaused=false;
- document.getElementById('waitress').style.display='none';document.getElementById('seon').style.display='none';offeredPowerUps=[];
- document.getElementById('powerup-overlay').style.display='none';
- document.getElementById('powerup-options').innerHTML='';
- document.getElementById('game').classList.remove('powerup-paused');
- document.getElementById('wave-message').style.display='none';
- updateKitchenEnergy();updateEXPBar();updateWaveDisplay();
+/* ── resetGameBase ────────────────────────────────────────── */
+function resetGameBase() {
+  clearAllTimers();
+  stopBossIntro();
+  clearScene();
+  currentWave = 1;
+  waveSpawned = 0;
+  waveFinished = false;
+  waveStarting = false;
+  gameFinished = false;
+  kitchenEnergy = 100;
+  currentLevel = 1;
+  currentEXP = 0;
+  powerUps = {
+    pasta: 0,
+    speed: 0,
+    sauce: 0,
+    waitress: false,
+    iceShot: 0,
+    iceChain: 0,
+    deepFreeze: 0,
+    seon: false,
+    hotSplash: 0,
+    caffeineRush: 0,
+    doubleShot: 0
+  };
+  pastaSpeedBonus = 0;
+  powerUpPaused = false;
+  document.getElementById('waitress').style.display = 'none';
+  document.getElementById('seon').style.display = 'none';
+  offeredPowerUps = [];
+  document.getElementById('powerup-overlay').style.display = 'none';
+  document.getElementById('powerup-options').innerHTML = '';
+  document.getElementById('game').classList.remove('powerup-paused');
+  document.getElementById('wave-message').style.display = 'none';
+  updateKitchenEnergy();
+  updateEXPBar();
+  updateWaveDisplay();
 }
-function startGameSystems(){
- startCustomerAnimation();startCustomer4Animation();startCookAnimation();
- startWaitressAttack();startSeonAttack();startCustomerMovement();startKitchenEnergySystem();startFirstAttackDetection();startZIndexSystem();
+/* ── startGameSystems ────────────────────────────────────────── */
+function startGameSystems() {
+  startCustomerAnimation();
+  startCustomer4Animation();
+  startCookAnimation();
+  startWaitressAttack();
+  startSeonAttack();
+  startCustomerMovement();
+  startKitchenEnergySystem();
+  startFirstAttackDetection();
+  startZIndexSystem();
 }
 
 /* WAVES: la wave 3 è normale, la wave 20 contiene i tre boss. */
-function fitWaveBoard(){
- const board=document.getElementById('wave-display');
- if(board.clientWidth>0){
-  board.style.fontSize=Math.min(board.clientWidth/5.8,board.clientHeight*.5)+'px';
- }
+/* ── fitWaveBoard ────────────────────────────────────────── */
+function fitWaveBoard() {
+  const board = document.getElementById('wave-display');
+  if (board.clientWidth > 0) {
+    board.style.fontSize = Math.min(board.clientWidth / 5.8, board.clientHeight * .5) + 'px';
+  }
 }
-function updateWaveDisplay(){
- document.getElementById('wave-display').textContent='WAVE '+currentWave;
- fitWaveBoard();
+/* ── updateWaveDisplay ────────────────────────────────────────── */
+function updateWaveDisplay() {
+  document.getElementById('wave-display').textContent = 'WAVE ' + currentWave;
+  fitWaveBoard();
 }
-window.addEventListener('resize',fitWaveBoard);
-function startWave(number){
- if(number>TOTAL_WAVES){finishLevel();return;}
- waveStartedAt=gameClock;currentWave=number;waveSpawned=0;waveFinished=false;waveStarting=true;updateWaveDisplay();
- if(number===BOSS_WAVE){showBossIntro();return;}
- // L'avvio della prima wave conserva i 4,2 secondi originali.
- gameLater(function(){waveStarting=false;spawnWaveCustomers();},number===1?4200:NORMAL_WAVE_DELAY);
+window.addEventListener('resize', fitWaveBoard);
+/* ── startWave ────────────────────────────────────────── */
+function startWave(number) {
+  if (number > TOTAL_WAVES) {
+    finishLevel();
+    return;
+  }
+  waveStartedAt = gameClock;
+  currentWave = number;
+  waveSpawned = 0;
+  waveFinished = false;
+  waveStarting = true;
+  updateWaveDisplay();
+  if (number === BOSS_WAVE) {
+    showBossIntro();
+    return;
+  }
+  // L'avvio della prima wave conserva i 4,2 secondi originali.
+  gameLater(function() {
+    waveStarting = false;
+    spawnWaveCustomers();
+  }, number === 1 ? 4200 : NORMAL_WAVE_DELAY);
 }
 /* Un solo arrivo in attesa: nessuna raffica di timer arretrati. */
-function spawnWaveCustomers(){
- if(currentWave===BOSS_WAVE){spawnBossWave();return;}
- const config=WAVES[currentWave-1],wave=currentWave;
- if(!config)return;
- function next(){
-  if(currentWave!==wave||waveFinished||gameFinished)return;
-  const type=chooseCustomerType();
-  const templateId='customer'+type+'Template';
-  const height=measureCustomerHeight(templateId);
-  function attempt(){
-   if(currentWave!==wave||waveFinished||gameFinished)return;
-   const game=document.getElementById('game');
-   const start=CUSTOMER_START_Y*game.clientHeight;
-   const lanes=LANES.map((_,i)=>i).filter(lane=>customers.every(c=>{
-    if(!c.isConnected||c.style.display==='none'||Number(c.dataset.lane)!==lane)return true;
-    return hasLaneSpace(start,height,c._walkY*game.clientHeight,c.offsetHeight);
-   }));
-   if(!lanes.length){gameLater(attempt,100);return;}
-   const lane=lanes[Math.floor(Math.random()*lanes.length)];
-   createCustomer(templateId,type,config.hp,lane,config.walkTime,false);
-   waveSpawned++;
-   if(waveSpawned>=config.customers)scheduleWaveCheck();
-   else gameLater(next,config.spawnInterval);
+/* ── spawnWaveCustomers ────────────────────────────────────────── */
+function spawnWaveCustomers() {
+  if (currentWave === BOSS_WAVE) {
+    spawnBossWave();
+    return;
   }
-  attempt();
- }
- next();
+  const config = WAVES[currentWave - 1],
+    wave = currentWave;
+  if (!config) return;
+
+  function next() {
+    if (currentWave !== wave || waveFinished || gameFinished) return;
+    const type = chooseCustomerType();
+    const templateId = 'customer' + type + 'Template';
+    const height = measureCustomerHeight(templateId);
+
+    function attempt() {
+      if (currentWave !== wave || waveFinished || gameFinished) return;
+      const game = document.getElementById('game');
+      const start = CUSTOMER_START_Y * game.clientHeight;
+      const lanes = LANES.map((_, i) => i).filter(lane => customers.every(c => {
+        if (!c.isConnected || c.style.display === 'none' || Number(c.dataset.lane) !== lane) return true;
+        return hasLaneSpace(start, height, c._walkY * game.clientHeight, c.offsetHeight);
+      }));
+      if (!lanes.length) {
+        gameLater(attempt, 100);
+        return;
+      }
+      const lane = lanes[Math.floor(Math.random() * lanes.length)];
+      createCustomer(templateId, type, config.hp, lane, config.walkTime, false);
+      waveSpawned++;
+      if (waveSpawned >= config.customers) scheduleWaveCheck();
+      else gameLater(next, config.spawnInterval);
+    }
+    attempt();
+  }
+  next();
 }
-function measureCustomerHeight(templateId){
- const probe=document.getElementById(templateId).cloneNode(true);
- probe.removeAttribute('id');
- probe.style.display='block';probe.style.visibility='hidden';
- document.getElementById('game').appendChild(probe);
- const height=probe.offsetHeight;probe.remove();return height;
+/* ── measureCustomerHeight ────────────────────────────────────────── */
+function measureCustomerHeight(templateId) {
+  const probe = document.getElementById(templateId).cloneNode(true);
+  probe.removeAttribute('id');
+  probe.style.display = 'block';
+  probe.style.visibility = 'hidden';
+  document.getElementById('game').appendChild(probe);
+  const height = probe.offsetHeight;
+  probe.remove();
+  return height;
 }
 /* Il margine superiore copre anche gli sprite ingranditi al 115%. */
-function laneTopLimit(frontY,frontHeight,backHeight){
- return frontY-frontHeight*.15-backHeight-CUSTOMER_GAP*Math.max(frontHeight,backHeight);
+/* ── laneTopLimit ────────────────────────────────────────── */
+function laneTopLimit(frontY, frontHeight, backHeight) {
+  return frontY - frontHeight * .15 - backHeight - CUSTOMER_GAP * Math.max(frontHeight, backHeight);
 }
-function hasLaneSpace(backY,backHeight,frontY,frontHeight){
- return backY<=laneTopLimit(frontY,frontHeight,backHeight);
+/* ── hasLaneSpace ────────────────────────────────────────── */
+function hasLaneSpace(backY, backHeight, frontY, frontHeight) {
+  return backY <= laneTopLimit(frontY, frontHeight, backHeight);
 }
-function startCustomerMovement(){
- let last=performance.now();
- function move(now){
-  const dt=Math.min(Math.max(0,(now-last)/1000),.05);last=now;
-  if(!powerUpPaused&&!bossIntroPlaying&&!gameFinished){
-   const height=document.getElementById('game').clientHeight;
-   if(height>0)for(let lane=0;lane<LANES.length;lane++){
-    const queue=customers.filter(c=>c.isConnected&&c.style.display!=='none'&&Number(c.dataset.lane)===lane)
-     .sort((a,b)=>b._walkY-a._walkY);
-    let front=null;
-    for(const c of queue){
-     if(c.dataset.satisfied!=='true'){
-      let y=c._walkY;
-      if(c.dataset.frozen!=='true')y+=(CUSTOMER_END_Y-CUSTOMER_START_Y)*dt/c._walkTime;
-      y=Math.min(CUSTOMER_END_Y,y);
-      if(front){
-       const limit=laneTopLimit(front._walkY*height,front.offsetHeight,c.offsetHeight)/height;
-       y=Math.min(y,Math.max(CUSTOMER_START_Y,limit));
-      }
-      c._walkY=y;c.style.top=(y*100)+'%';
-      c.dataset.atKitchen=y>=CUSTOMER_END_Y?'true':'false';
-     }
-     front=c;
-    }
-   }
-  }
-  if(!gameFinished)gameFrame(move);
- }
- gameFrame(move);
+/* ── spawnBossWave ────────────────────────────────────────── */
+function spawnBossWave() {
+  spawnBossEntity('assistantBossTemplate', 120, 0, 36, 'assistant');
+  spawnBossEntity('cameramanBossTemplate', 120, 4, 36, 'cameraman');
+  gameLater(function() {
+    if (currentWave !== BOSS_WAVE || waveFinished) return;
+    const boss = spawnBossEntity('mainBossTemplate', 320, 2, 36, 'boss');
+    startBossFlash(boss);
+    scheduleWaveCheck();
+  }, 1500);
 }
-function spawnBossWave(){
- spawnBossEntity('assistantBossTemplate',120,0,36,'assistant');
- spawnBossEntity('cameramanBossTemplate',120,4,36,'cameraman');
- gameLater(function(){
-  if(currentWave!==BOSS_WAVE||waveFinished) return;
-  const boss=spawnBossEntity('mainBossTemplate',320,2,36,'boss');startBossFlash(boss);scheduleWaveCheck();
- },1500);
+/* ── spawnBossEntity ────────────────────────────────────────── */
+function spawnBossEntity(templateId, hp, laneIndex, walkTime, type) {
+  const customer = createCustomer(templateId, type, hp, laneIndex, walkTime, true);
+  waveSpawned++;
+  return customer;
 }
-function spawnBossEntity(templateId,hp,laneIndex,walkTime,type){
- const customer=createCustomer(templateId,type,hp,laneIndex,walkTime,true);waveSpawned++;return customer;
+/* ── spawnCustomer ────────────────────────────────────────── */
+function spawnCustomer(index, forcedLaneIndex = null, walkTime = null, waveHP = null) {
+  const type = chooseCustomerType();
+  return createCustomer('customer' + type + 'Template', type, waveHP || 30, forcedLaneIndex ?? Math.floor(Math.random() * LANES.length), walkTime || 60, false);
 }
-function spawnCustomer(index,forcedLaneIndex=null,walkTime=null,waveHP=null){
- const type=chooseCustomerType();
- return createCustomer('customer'+type+'Template',type,waveHP||30,forcedLaneIndex??Math.floor(Math.random()*LANES.length),walkTime||60,false);
-}
-let nextCustomerId=0;
-function createCustomerBase(templateId,type,hp,lane,walkTime,isBoss){
- const customer=document.getElementById(templateId).cloneNode(true);
- customer.id='customer-'+(++nextCustomerId);
- customer.classList.remove('customer-template','satisfied');customer.classList.add('spawned-customer');
- customer.style.display='block';customer.style.animation='none';customer.style.top=(CUSTOMER_START_Y*100)+'%';customer.style.left=LANES[lane]+'%';
- Object.assign(customer.dataset,{type:String(type),hp:String(hp),lane:String(lane),satisfied:'false',atKitchen:'false',frame:'0',frozen:'false',wave:String(currentWave)});
- if(isBoss) customer.dataset.boss='true';
- customer.querySelectorAll('.frame').forEach((f,i)=>f.classList.toggle('active',i===0));
- customer.querySelector('.happy-frame').style.display='none';
- const frozen=customer.querySelector('.frozen-frame');if(frozen) frozen.style.display='none';
- document.getElementById('game').appendChild(customer);customers.push(customer);
- customer._walkY=CUSTOMER_START_Y;
- customer._walkTime=walkTime;
- // Movimento gestito dal ciclo comune per mantenere le distanze.
- customer.style.animation='none';
- customer.classList.add('walking');
- return customer;
-}
-function scheduleWaveCheck(){
- cancelTask(waveCheckTimer);
- // Attesa originale verso il boss; dimezzata verso le altre wave.
- const interval=currentWave>=BOSS_WAVE-1?500:250;
- waveCheckTimer=gameEvery(function(){
-  if(waveFinished) return;
-  const active=customers.filter(c=>c.isConnected&&c.dataset.wave==currentWave&&c.style.display!=='none');
-  const expected=currentWave===BOSS_WAVE?3:WAVES[currentWave-1].customers;
-  if(waveSpawned>=expected&&!active.length){cancelTask(waveCheckTimer);waveCheckTimer=null;completeWave();}
- },interval);
-}
-function completeWave(){
- if(waveFinished)return;waveFinished=true;
- if(currentWave>=TOTAL_WAVES){finishLevel();return;}
- const next=currentWave+1;
- gameLater(()=>startWave(next),Math.max(0,20000-(gameClock-waveStartedAt)));
-}
-function finishLevel(){
- gameFinished=true;clearAllTimers();
- const message=document.getElementById('wave-message');message.textContent='LIVELLO COMPLETATO!';message.style.display='block';
-}
-
-/* VIDEO BOSS: ultima wave, ingresso zoom secco, uscita a destra. */
-const bossIntro=document.getElementById('bossIntro');
-const bossVideo=document.getElementById('bossIntroVideo');
-const bossVideoAction=document.getElementById('bossVideoAction');
-let videoSession=0,bossLeaving=false,videoWatchdog=null,videoExitTimer=null;
-function stopBossIntro(){
- videoSession++;clearTimeout(videoWatchdog);clearTimeout(videoExitTimer);
- bossVideo.onended=null;bossVideo.onplaying=null;bossVideo.onerror=null;
- bossVideo.pause();bossIntroPlaying=false;bossLeaving=false;
- bossIntro.style.display='none';bossIntro.classList.remove('entering','leaving');
- bossVideoAction.hidden=true;bossVideoAction.onclick=null;
- document.getElementById('testBossButton').disabled=false;
-}
-function showBossIntro(){
- stopBossIntro();bossIntroPlaying=true;
- const session=videoSession;
- document.getElementById('testBossButton').disabled=true;
- bossIntro.style.display='flex';
- void bossIntro.offsetWidth;bossIntro.classList.add('entering');
- bossVideo.muted=true;bossVideo.currentTime=0;
- function valid(){return session===videoSession&&bossIntroPlaying&&!bossLeaving;}
- function showAction(text,callback){if(!valid())return;bossVideoAction.textContent=text;bossVideoAction.onclick=callback;bossVideoAction.hidden=false;}
- function playVideo(){
-  if(!valid())return;bossVideoAction.hidden=true;
-  const promise=bossVideo.play();
-  if(promise) promise.catch(function(error){
-   if(!valid())return;
-   if(error.name==='NotAllowedError') showAction('TOCCA PER AVVIARE IL VIDEO',playVideo);
-   else showAction('VIDEO NON DISPONIBILE · CONTINUA',finishBossIntro);
+let nextCustomerId = 0;
+/* ── createCustomerBase ────────────────────────────────────────── */
+function createCustomerBase(templateId, type, hp, lane, walkTime, isBoss) {
+  const customer = document.getElementById(templateId).cloneNode(true);
+  customer.id = 'customer-' + (++nextCustomerId);
+  customer.classList.remove('customer-template', 'satisfied');
+  customer.classList.add('spawned-customer');
+  customer.style.display = 'block';
+  customer.style.animation = 'none';
+  customer.style.top = (CUSTOMER_START_Y * 100) + '%';
+  customer.style.left = LANES[lane] + '%';
+  Object.assign(customer.dataset, {
+    type: String(type),
+    hp: String(hp),
+    lane: String(lane),
+    satisfied: 'false',
+    atKitchen: 'false',
+    frame: '0',
+    frozen: 'false',
+    wave: String(currentWave)
   });
- }
- bossVideo.onplaying=function(){if(valid()){clearTimeout(videoWatchdog);bossVideoAction.hidden=true;}};
- bossVideo.onended=function(){if(valid())finishBossIntro();};
- bossVideo.onerror=function(){showAction('VIDEO NON DISPONIBILE · CONTINUA',finishBossIntro);};
- // Nessun timer tronca il filmato: l'uscita parte solo dall'evento ended.
- videoWatchdog=setTimeout(function(){
-  if(valid()&&(bossVideo.paused||bossVideo.readyState<3)) showAction('VIDEO IN CARICAMENTO · SALTA',finishBossIntro);
- },15000);
- playVideo();
+  if (isBoss) customer.dataset.boss = 'true';
+  customer.querySelectorAll('.frame').forEach((f, i) => f.classList.toggle('active', i === 0));
+  customer.querySelector('.happy-frame').style.display = 'none';
+  const frozen = customer.querySelector('.frozen-frame');
+  if (frozen) frozen.style.display = 'none';
+  document.getElementById('game').appendChild(customer);
+  customers.push(customer);
+  customer._walkY = CUSTOMER_START_Y;
+  customer._walkTime = walkTime;
+  // Movimento gestito dal ciclo comune per mantenere le distanze.
+  customer.style.animation = 'none';
+  customer.classList.add('walking');
+  return customer;
 }
-function finishBossIntro(){
- if(!bossIntroPlaying||bossLeaving)return;
- bossLeaving=true;bossVideo.pause();bossVideoAction.hidden=true;clearTimeout(videoWatchdog);
- bossIntro.classList.remove('entering');bossIntro.classList.add('leaving');
- const session=videoSession;
- videoExitTimer=setTimeout(function(){
-  if(session!==videoSession)return;
+/* ── scheduleWaveCheck ────────────────────────────────────────── */
+function scheduleWaveCheck() {
+  cancelTask(waveCheckTimer);
+  // Attesa originale verso il boss; dimezzata verso le altre wave.
+  const interval = currentWave >= BOSS_WAVE - 1 ? 500 : 250;
+  waveCheckTimer = gameEvery(function() {
+    if (waveFinished) return;
+    const active = customers.filter(c => c.isConnected && c.dataset.wave == currentWave && c.style.display !== 'none');
+    const expected = currentWave === BOSS_WAVE ? 3 : WAVES[currentWave - 1].customers;
+    if (waveSpawned >= expected && !active.length) {
+      cancelTask(waveCheckTimer);
+      waveCheckTimer = null;
+      completeWave();
+    }
+  }, interval);
+}
+/* ── completeWave ────────────────────────────────────────── */
+function completeWave() {
+  if (waveFinished) return;
+  waveFinished = true;
+  if (currentWave >= TOTAL_WAVES) {
+    finishLevel();
+    return;
+  }
+  const next = currentWave + 1;
+  gameLater(() => startWave(next), Math.max(0, 20000 - (gameClock - waveStartedAt)));
+}
+/* VIDEO BOSS: ultima wave, ingresso zoom secco, uscita a destra. */
+const bossIntro = document.getElementById('bossIntro');
+const bossVideo = document.getElementById('bossIntroVideo');
+const bossVideoAction = document.getElementById('bossVideoAction');
+let videoSession = 0,
+  bossLeaving = false,
+  videoWatchdog = null,
+  videoExitTimer = null;
+/* ── stopBossIntro ────────────────────────────────────────── */
+function stopBossIntro() {
+  videoSession++;
+  clearTimeout(videoWatchdog);
+  clearTimeout(videoExitTimer);
+  bossVideo.onended = null;
+  bossVideo.onplaying = null;
+  bossVideo.onerror = null;
+  bossVideo.pause();
+  bossIntroPlaying = false;
+  bossLeaving = false;
+  bossIntro.style.display = 'none';
+  bossIntro.classList.remove('entering', 'leaving');
+  bossVideoAction.hidden = true;
+  bossVideoAction.onclick = null;
+  document.getElementById('testBossButton').disabled = false;
+}
+/* ── showBossIntro ────────────────────────────────────────── */
+function showBossIntro() {
   stopBossIntro();
-  gameLater(function(){waveStarting=false;spawnWaveCustomers();},BOSS_WAVE_DELAY);
- },200);
+  bossIntroPlaying = true;
+  const session = videoSession;
+  document.getElementById('testBossButton').disabled = true;
+  bossIntro.style.display = 'flex';
+  void bossIntro.offsetWidth;
+  bossIntro.classList.add('entering');
+  bossVideo.muted = true;
+  bossVideo.currentTime = 0;
+
+  function valid() {
+    return session === videoSession && bossIntroPlaying && !bossLeaving;
+  }
+
+  function showAction(text, callback) {
+    if (!valid()) return;
+    bossVideoAction.textContent = text;
+    bossVideoAction.onclick = callback;
+    bossVideoAction.hidden = false;
+  }
+
+  function playVideo() {
+    if (!valid()) return;
+    bossVideoAction.hidden = true;
+    const promise = bossVideo.play();
+    if (promise) promise.catch(function(error) {
+      if (!valid()) return;
+      if (error.name === 'NotAllowedError') showAction('TOCCA PER AVVIARE IL VIDEO', playVideo);
+      else showAction('VIDEO NON DISPONIBILE · CONTINUA', finishBossIntro);
+    });
+  }
+  bossVideo.onplaying = function() {
+    if (valid()) {
+      clearTimeout(videoWatchdog);
+      bossVideoAction.hidden = true;
+    }
+  };
+  bossVideo.onended = function() {
+    if (valid()) finishBossIntro();
+  };
+  bossVideo.onerror = function() {
+    showAction('VIDEO NON DISPONIBILE · CONTINUA', finishBossIntro);
+  };
+  // Nessun timer tronca il filmato: l'uscita parte solo dall'evento ended.
+  videoWatchdog = setTimeout(function() {
+    if (valid() && (bossVideo.paused || bossVideo.readyState < 3)) showAction('VIDEO IN CARICAMENTO · SALTA', finishBossIntro);
+  }, 15000);
+  playVideo();
+}
+/* ── finishBossIntro ────────────────────────────────────────── */
+function finishBossIntro() {
+  if (!bossIntroPlaying || bossLeaving) return;
+  bossLeaving = true;
+  bossVideo.pause();
+  bossVideoAction.hidden = true;
+  clearTimeout(videoWatchdog);
+  bossIntro.classList.remove('entering');
+  bossIntro.classList.add('leaving');
+  const session = videoSession;
+  videoExitTimer = setTimeout(function() {
+    if (session !== videoSession) return;
+    stopBossIntro();
+    gameLater(function() {
+      waveStarting = false;
+      spawnWaveCustomers();
+    }, BOSS_WAVE_DELAY);
+  }, 200);
 }
 
 /* SALTO DI PROVA: mantiene livello, EXP, potenziamenti ed energia cucina. */
-document.getElementById('testBossButton').addEventListener('click',jumpToBossWave);
-function jumpToBossWave(){
- if(!ENABLE_BOSS_TEST||!gameStarted||bossIntroPlaying||gameFinished)return;
- clearAllTimers();clearScene();
- gameFinished=false;powerUpPaused=false;
- document.getElementById('powerup-overlay').style.display='none';
- document.getElementById('powerup-options').innerHTML='';
- document.getElementById('game').classList.remove('powerup-paused');
- document.getElementById('wave-message').style.display='none';
- startWave(BOSS_WAVE);startGameSystems();
+document.getElementById('testBossButton').addEventListener('click', jumpToBossWave);
+/* ── jumpToBossWave ────────────────────────────────────────── */
+function jumpToBossWave() {
+  if (!ENABLE_BOSS_TEST || !gameStarted || bossIntroPlaying || gameFinished) return;
+  clearAllTimers();
+  clearScene();
+  gameFinished = false;
+  powerUpPaused = false;
+  document.getElementById('powerup-overlay').style.display = 'none';
+  document.getElementById('powerup-options').innerHTML = '';
+  document.getElementById('game').classList.remove('powerup-paused');
+  document.getElementById('wave-message').style.display = 'none';
+  startWave(BOSS_WAVE);
+  startGameSystems();
 }
 
 /* CUCINA */
-function updateKitchenEnergyBase(){
- document.getElementById('kitchen').style.display=kitchenEnergy>50?'block':'none';
- document.getElementById('kitchenDamaged').style.display=kitchenEnergy<=50&&kitchenEnergy>20?'block':'none';
- document.getElementById('kitchenDestroyed').style.display=kitchenEnergy<=20?'block':'none';
+/* ── updateKitchenEnergyBase ────────────────────────────────────────── */
+function updateKitchenEnergyBase() {
+  document.getElementById('kitchen').style.display = kitchenEnergy > 50 ? 'block' : 'none';
+  document.getElementById('kitchenDamaged').style.display = kitchenEnergy <= 50 && kitchenEnergy > 20 ? 'block' : 'none';
+  document.getElementById('kitchenDestroyed').style.display = kitchenEnergy <= 20 ? 'block' : 'none';
 }
-function startKitchenEnergySystem(){
- cancelTask(kitchenDamageTimer);
- kitchenDamageTimer=gameEvery(function(){
-  const damage=customers.filter(c=>c.isConnected&&c.dataset.atKitchen==='true'&&c.dataset.satisfied!=='true').length;
-  if(damage){kitchenEnergy=Math.max(0,kitchenEnergy-damage);updateKitchenEnergy();}
- },5000);
+/* ── customerIsVisible ────────────────────────────────────────── */
+function customerIsVisible(customer) {
+  if (!customer || !customer.isConnected || customer.style.display === 'none') return false;
+  const r = customer.getBoundingClientRect(),
+    g = document.getElementById('game').getBoundingClientRect();
+  return r.bottom > g.top && r.top < g.bottom;
 }
-function customerIsVisible(customer){
- if(!customer||!customer.isConnected||customer.style.display==='none')return false;
- const r=customer.getBoundingClientRect(),g=document.getElementById('game').getBoundingClientRect();
- return r.bottom>g.top&&r.top<g.bottom;
+/* ── startZIndexSystem ────────────────────────────────────────── */
+function startZIndexSystem() {
+  cancelTask(zIndexTimer);
+  zIndexTimer = gameEvery(updateZIndexes, 50);
 }
-function startZIndexSystem(){cancelTask(zIndexTimer);zIndexTimer=gameEvery(updateZIndexes,50);}
-function updateZIndexes(){
- customers.filter(c=>c.isConnected&&c.style.display!=='none')
- .sort((a,b)=>a.getBoundingClientRect().top-b.getBoundingClientRect().top)
- .forEach((c,i)=>c.style.zIndex=10+i);
+/* ── updateZIndexes ────────────────────────────────────────── */
+function updateZIndexes() {
+  customers.filter(c => c.isConnected && c.style.display !== 'none')
+    .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top)
+    .forEach((c, i) => c.style.zIndex = 10 + i);
 }
-function startFirstAttackDetection(){
- cancelTask(firstAttackTimer);
- firstAttackTimer=gameEvery(function(){if(getNearestVisibleCustomer()){playCookAttack();cancelTask(firstAttackTimer);firstAttackTimer=null;}},100);
+/* ── startFirstAttackDetection ────────────────────────────────────────── */
+function startFirstAttackDetection() {
+  cancelTask(firstAttackTimer);
+  firstAttackTimer = gameEvery(function() {
+    if (getNearestVisibleCustomer()) {
+      playCookAttack();
+      cancelTask(firstAttackTimer);
+      firstAttackTimer = null;
+    }
+  }, 100);
 }
-function animateCustomerGroup(customer4){
- customers.forEach(customer=>{
-  if(!customer.isConnected||customer.style.display==='none'||customer.dataset.satisfied==='true'||customer.dataset.frozen==='true')return;
-  if(customer.classList.contains('customer4-template')!==customer4)return;
-  const frames=customer.querySelectorAll('.frame');if(!frames.length)return;
-  let n=parseInt(customer.dataset.frame||'0')%frames.length;
-  frames.forEach((f,i)=>f.classList.toggle('active',i===n));customer.dataset.frame=(n+1)%frames.length;
- });
+/* ── animateCustomerGroup ────────────────────────────────────────── */
+function animateCustomerGroup(customer4) {
+  customers.forEach(customer => {
+    if (!customer.isConnected || customer.style.display === 'none' || customer.dataset.satisfied === 'true' || customer.dataset.frozen === 'true') return;
+    if (customer.classList.contains('customer4-template') !== customer4) return;
+    const frames = customer.querySelectorAll('.frame');
+    if (!frames.length) return;
+    let n = parseInt(customer.dataset.frame || '0') % frames.length;
+    frames.forEach((f, i) => f.classList.toggle('active', i === n));
+    customer.dataset.frame = (n + 1) % frames.length;
+  });
 }
-function startCustomerAnimation(){cancelTask(customerTimer);customerTimer=gameEvery(()=>animateCustomerGroup(false),300);}
-function startCustomer4Animation(){cancelTask(customer4Timer);customer4Timer=gameEvery(()=>animateCustomerGroup(true),300);}
+/* ── startCustomerAnimation ────────────────────────────────────────── */
+function startCustomerAnimation() {
+  cancelTask(customerTimer);
+  customerTimer = gameEvery(() => animateCustomerGroup(false), 300);
+}
+/* ── startCustomer4Animation ────────────────────────────────────────── */
+function startCustomer4Animation() {
+  cancelTask(customer4Timer);
+  customer4Timer = gameEvery(() => animateCustomerGroup(true), 300);
+}
 
 /* ATTACCHI E BERSAGLI */
-function getAttackTargets(){
- const active=customers.filter(c=>c.dataset.satisfied!=='true'&&customerIsVisible(c));
- active.sort((a,b)=>b.getBoundingClientRect().top-a.getBoundingClientRect().top);
- return active.slice(0,powerUps.pasta>=3?3:powerUps.pasta>=1?2:1);
-}
-function getNearestVisibleCustomer(){
- const active=customers.filter(c=>c.dataset.satisfied!=='true'&&customerIsVisible(c));
- active.sort((a,b)=>b.getBoundingClientRect().top-a.getBoundingClientRect().top);return active[0]||null;
-}
 /* Frequenza base +50%; i potenziamenti agiscono anche sui timer. */
-function getCookAttackInterval(){return Math.round(2000/((1+powerUps.speed*.33)*(1+pastaSpeedBonus)));}
-function getWaitressAttackInterval(){return Math.round(getCookAttackInterval()*.67);}
-function getSeonAttackInterval(){return Math.round(getWaitressAttackInterval()/(1+[0,.10,.25,.45][powerUps.caffeineRush]));}
-function startCookAnimation(){
- cancelTask(cookTimer);setCookFrame(0);
- cookTimer=gameEvery(playCookAttack,30);
+/* ── getCookAttackInterval ────────────────────────────────────────── */
+function getCookAttackInterval() {
+  return Math.round(2000 / ((1 + powerUps.speed * .33) * (1 + pastaSpeedBonus)));
 }
-function startWaitressAttack(){
- cancelTask(waitressAttackTimer);
- waitressAttackTimer=gameEvery(playWaitressAttack,30);
+/* ── getWaitressAttackInterval ────────────────────────────────────────── */
+function getWaitressAttackInterval() {
+  return Math.round(getCookAttackInterval() * .67);
 }
-function startSeonAttack(){
- cancelTask(seonAttackTimer);
- seonAttackTimer=gameEvery(playSeonAttack,30);
+/* ── getSeonAttackInterval ────────────────────────────────────────── */
+function getSeonAttackInterval() {
+  return Math.round(getWaitressAttackInterval() / (1 + [0, .10, .25, .45][powerUps.caffeineRush]));
 }
-function playCookAttack(){startActorAttack('cook');}
-function playWaitressAttack(){startActorAttack('waitress');}
-function playSeonAttack(){startActorAttack('seon');}
-function startActorAttack(actor){
- if(powerUpPaused||bossIntroPlaying||gameFinished||gameClock<nextAttackAt[actor])return;
- if(actor!=='cook'&&!powerUps[actor])return;
- if(actor==='cook'?cookAttacking:actor==='waitress'?waitressAttacking:seonAttacking)return;
- const targets=actor==='cook'?getAttackTargets():[getNearestVisibleCustomer()].filter(Boolean);
- if(!targets.length){setActorFrame(actor,0);return;}
- const interval=actor==='cook'?getCookAttackInterval():actor==='waitress'?getWaitressAttackInterval():getSeonAttackInterval();
- const steps=actor==='cook'?5:actor==='waitress'?7:6;
- // Con molti potenziamenti, accorcia i fotogrammi per non saltare attacchi.
- const frameTime=Math.min(160,(interval-60)/steps);
- const release=actor==='waitress'?4:3;
- const type=actor==='cook'?'pasta':actor==='waitress'?'drink':'cappuccino';
- if(actor==='cook')cookAttacking=true;
- else if(actor==='waitress')waitressAttacking=true;
- else seonAttacking=true;
- nextAttackAt[actor]=gameClock+interval;
- setActorFrame(actor,0);
- for(let i=1;i<steps;i++)gameLater(()=>{
-  setActorFrame(actor,i);
-  if(i===release){
-   // Sceglie i bersagli al rilascio: chi è già soddisfatto viene sostituito.
-   const releaseTargets=actor==='cook'?getAttackTargets():[getNearestVisibleCustomer()].filter(Boolean);
-   releaseTargets.forEach(target=>throwProjectile(target,type));
+/* ── startCookAnimation ────────────────────────────────────────── */
+function startCookAnimation() {
+  cancelTask(cookTimer);
+  setCookFrame(0);
+  cookTimer = gameEvery(playCookAttack, 30);
+}
+/* ── startWaitressAttack ────────────────────────────────────────── */
+function startWaitressAttack() {
+  cancelTask(waitressAttackTimer);
+  waitressAttackTimer = gameEvery(playWaitressAttack, 30);
+}
+/* ── startSeonAttack ────────────────────────────────────────── */
+function startSeonAttack() {
+  cancelTask(seonAttackTimer);
+  seonAttackTimer = gameEvery(playSeonAttack, 30);
+}
+/* ── playCookAttack ────────────────────────────────────────── */
+function playCookAttack() {
+  startActorAttack('cook');
+}
+/* ── playWaitressAttack ────────────────────────────────────────── */
+function playWaitressAttack() {
+  startActorAttack('waitress');
+}
+/* ── playSeonAttack ────────────────────────────────────────── */
+function playSeonAttack() {
+  startActorAttack('seon');
+}
+/* ================================================================
+   ANIMAZIONI CUOCO / CAMERIERA / SEON — TEMPI E RILASCIO
+   ================================================================ */
+/* ================================================================
+ [JS 04] ATTACCHI DEI TRE PERSONAGGI
+ ================================================================ */
+function startActorAttack(actor) {
+  if (powerUpPaused || bossIntroPlaying || gameFinished || gameClock < nextAttackAt[actor]) return;
+  if (actor !== 'cook' && !powerUps[actor]) return;
+  if (actor === 'cook' ? cookAttacking : actor === 'waitress' ? waitressAttacking : seonAttacking) return;
+  const targets = actor === 'cook' ? getAttackTargets() : [getNearestVisibleCustomer()].filter(Boolean);
+  if (!targets.length) {
+    setActorFrame(actor, 0);
+    return;
   }
- },i*frameTime);
- gameLater(()=>{
-  setActorFrame(actor,0);
-  if(actor==='cook')cookAttacking=false;
-  else if(actor==='waitress')waitressAttacking=false;
-  else seonAttacking=false;
- },steps*frameTime);
+  const interval = actor === 'cook' ? getCookAttackInterval() : actor === 'waitress' ? getWaitressAttackInterval() : getSeonAttackInterval();
+  const steps = actor === 'cook' ? 5 : actor === 'waitress' ? 7 : 6;
+  // Con molti potenziamenti, accorcia i fotogrammi per non saltare attacchi.
+  const frameTime = Math.min(160, (interval - 60) / steps);
+  const release = actor === 'waitress' ? 4 : 3;
+  const type = actor === 'cook' ? 'pasta' : actor === 'waitress' ? 'drink' : 'cappuccino';
+  if (actor === 'cook') cookAttacking = true;
+  else if (actor === 'waitress') waitressAttacking = true;
+  else seonAttacking = true;
+  nextAttackAt[actor] = gameClock + interval;
+  setActorFrame(actor, 0);
+  for (let i = 1; i < steps; i++) gameLater(() => {
+    setActorFrame(actor, i);
+    if (i === release) {
+      // Sceglie i bersagli al rilascio: chi è già soddisfatto viene sostituito.
+      const releaseTargets = actor === 'cook' ? getAttackTargets() : [getNearestVisibleCustomer()].filter(Boolean);
+      releaseTargets.forEach(target => throwProjectile(target, type));
+    }
+  }, i * frameTime);
+  gameLater(() => {
+    setActorFrame(actor, 0);
+    if (actor === 'cook') cookAttacking = false;
+    else if (actor === 'waitress') waitressAttacking = false;
+    else seonAttacking = false;
+  }, steps * frameTime);
 }
 /* Ritaglio grafico della tazzina dal pannello: nessun file aggiuntivo. */
-let cupId=0;
-function makeCappuccino(){
- const element=document.createElement('div'),id='cup-'+(++cupId);
- element.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="674 756 181 130">
+let cupId = 0;
+/* ── makeCappuccino ────────────────────────────────────────── */
+function makeCappuccino() {
+  const element = document.createElement('div'),
+    id = 'cup-' + (++cupId);
+  element.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="674 756 181 130">
  <defs><clipPath id="${id}"><path d="M692 782 C695 751 815 746 825 788 C852 773 867 815 823 837 C863 854 837 883 764 885 C684 887 654 855 693 837 Z"/></clipPath></defs>
  <image href="${POWER_UP_PANELS.seon}" width="1155" height="1536" preserveAspectRatio="none" clip-path="url(#${id})"/>
  </svg>`;
- return element;
+  return element;
 }
-function hitCustomerWithCoffee(customer,projectile){
- if(projectile)projectile.remove();
- if(!customerIsVisible(customer)||customer.dataset.satisfied==='true')return;
- const damage=3*(1+[0,.20,.40,.65][powerUps.doubleShot]);
- const chance=[.10,.25,.45,.70][powerUps.hotSplash];
- // Un solo bersaglio aggiuntivo, vicino: lo splash non genera altri splash.
- const r=customer.getBoundingClientRect();
- const radius=document.getElementById('game').getBoundingClientRect().width*.32;
- let nearby=null,best=radius;
- if(Math.random()<chance)customers.forEach(c=>{
-  if(c===customer||!customerIsVisible(c)||c.dataset.satisfied==='true')return;
-  const b=c.getBoundingClientRect();
-  const distance=Math.hypot(b.left+b.width/2-r.left-r.width/2,b.top+b.height/2-r.top-r.height/2);
-  if(distance<best){best=distance;nearby=c;}
- });
- function hit(c){
-  createImpactEffect(c,'cappuccino');
-  c.dataset.hp=String(Math.max(0,Number(c.dataset.hp)-damage));
-  if(Number(c.dataset.hp)<=0)satisfyCustomer(c);
- }
- hit(customer);if(nearby)hit(nearby);
+/* ================================================================
+   SEON JEONG — DANNI E SPLASH
+   ================================================================ */
+function hitCustomerWithCoffee(customer, projectile) {
+  if (projectile) projectile.remove();
+  if (!customerIsVisible(customer) || customer.dataset.satisfied === 'true') return;
+  const damage = 3 * (1 + [0, .20, .40, .65][powerUps.doubleShot]);
+  const chance = [.10, .25, .45, .70][powerUps.hotSplash];
+  // Un solo bersaglio aggiuntivo, vicino: lo splash non genera altri splash.
+  const r = customer.getBoundingClientRect();
+  const radius = document.getElementById('game').getBoundingClientRect().width * .32;
+  let nearby = null,
+    best = radius;
+  if (Math.random() < chance) customers.forEach(c => {
+    if (c === customer || !customerIsVisible(c) || c.dataset.satisfied === 'true') return;
+    const b = c.getBoundingClientRect();
+    const distance = Math.hypot(b.left + b.width / 2 - r.left - r.width / 2, b.top + b.height / 2 - r.top - r.height / 2);
+    if (distance < best) {
+      best = distance;
+      nearby = c;
+    }
+  });
+
+  function hit(c) {
+    createImpactEffect(c, 'cappuccino');
+    c.dataset.hp = String(Math.max(0, Number(c.dataset.hp) - damage));
+    if (Number(c.dataset.hp) <= 0) satisfyCustomer(c);
+  }
+  hit(customer);
+  if (nearby) hit(nearby);
 }
 /* PASTA / DRINK */
-function throwPasta(target){throwProjectile(target,'pasta');}
-function throwDrink(target){throwProjectile(target,'drink');}
-function throwProjectile(target,type){
- if(!target||!target.isConnected||target.dataset.satisfied==='true')return;
- const isDrink=type==='drink',isCoffee=type==='cappuccino',game=document.getElementById('game'),gameRect=game.getBoundingClientRect();
- const frame=document.querySelector(isCoffee?'#seon img.active':isDrink?'#waitress img.active':'#cook img.active');if(!frame)return;
- const rect=frame.getBoundingClientRect();
- let currentX=rect.left+rect.width*(isCoffee?.72:isDrink?.88:.72),currentY=rect.top+rect.height*(isCoffee?.38:isDrink?.34:.32);
- const marker=document.createElement('div');marker.className='hit-marker';game.appendChild(marker);
- const projectile=isCoffee?makeCappuccino():document.createElement('img');projectile.className=type;
- if(!isCoffee)projectile.src=isDrink?'https://i.ibb.co/MDk4xzJd/1788234306668-removebg-preview.png':'https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png';
- game.appendChild(projectile);
- const pr=projectile.getBoundingClientRect();
- const halfWidth=pr.width/2,halfHeight=pr.height/2;
- function position(){projectile.style.left=currentX-gameRect.left-halfWidth+'px';projectile.style.top=currentY-gameRect.top-halfHeight+'px';}
- position();const speed=(isDrink||isCoffee)?350:350*(1+powerUps.speed*.33)*(1+pastaSpeedBonus);
- let lastTime=performance.now();
- function move(now){
-  if(!target.isConnected||target.dataset.satisfied==='true'){projectile.remove();marker.remove();return;}
-  if(powerUpPaused||bossIntroPlaying){lastTime=now;gameFrame(move);return;}
-  const r=target.getBoundingClientRect(),endX=r.left+r.width/2+HIT_X,endY=r.top+r.height*HIT_POSITION_Y+HIT_Y;
-  marker.style.left=endX-gameRect.left+'px';marker.style.top=endY-gameRect.top+'px';
-  const dt=Math.min((now-lastTime)/1000,.05);lastTime=now;
-  const dx=endX-currentX,dy=endY-currentY,distance=Math.hypot(dx,dy),movement=speed*dt;
-  if(distance<=movement){currentX=endX;currentY=endY;}else{currentX+=dx/distance*movement;currentY+=dy/distance*movement;}
+/* ── throwPasta ────────────────────────────────────────── */
+function throwPasta(target) {
+  throwProjectile(target, 'pasta');
+}
+/* ── throwDrink ────────────────────────────────────────── */
+function throwDrink(target) {
+  throwProjectile(target, 'drink');
+}
+/* ================================================================
+   LANCIO PASTA / DRINK / CAPPUCCINO — TRAIETTORIA
+   ================================================================ */
+/* ================================================================
+ [JS 05] LANCIO E IMPATTI
+ ================================================================ */
+function throwProjectile(target, type) {
+  if (!target || !target.isConnected || target.dataset.satisfied === 'true') return;
+  const isDrink = type === 'drink',
+    isCoffee = type === 'cappuccino',
+    game = document.getElementById('game'),
+    gameRect = game.getBoundingClientRect();
+  const frame = document.querySelector(isCoffee ? '#seon img.active' : isDrink ? '#waitress img.active' : '#cook img.active');
+  if (!frame) return;
+  const rect = frame.getBoundingClientRect();
+  let currentX = rect.left + rect.width * (isCoffee ? .72 : isDrink ? .88 : .72),
+    currentY = rect.top + rect.height * (isCoffee ? .38 : isDrink ? .34 : .32);
+  const marker = document.createElement('div');
+  marker.className = 'hit-marker';
+  game.appendChild(marker);
+  const projectile = isCoffee ? makeCappuccino() : document.createElement('img');
+  projectile.className = type;
+  if (!isCoffee) projectile.src = isDrink ? 'https://i.ibb.co/MDk4xzJd/1788234306668-removebg-preview.png' : 'https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png';
+  game.appendChild(projectile);
+  const pr = projectile.getBoundingClientRect();
+  const halfWidth = pr.width / 2,
+    halfHeight = pr.height / 2;
+
+  function position() {
+    projectile.style.left = currentX - gameRect.left - halfWidth + 'px';
+    projectile.style.top = currentY - gameRect.top - halfHeight + 'px';
+  }
   position();
-  if(Math.hypot(endX-currentX,endY-currentY)<=3){
-   if(isCoffee)hitCustomerWithCoffee(target,projectile);else if(isDrink)hitCustomerWithDrink(target,projectile);else hitCustomer(target,projectile);
-   marker.remove();return;
+  const speed = (isDrink || isCoffee) ? 350 : 350 * (1 + powerUps.speed * .33) * (1 + pastaSpeedBonus);
+  let lastTime = performance.now();
+
+  function move(now) {
+    if (!target.isConnected || target.dataset.satisfied === 'true') {
+      projectile.remove();
+      marker.remove();
+      return;
+    }
+    if (powerUpPaused || bossIntroPlaying) {
+      lastTime = now;
+      gameFrame(move);
+      return;
+    }
+    const r = target.getBoundingClientRect(),
+      endX = r.left + r.width / 2 + HIT_X,
+      endY = r.top + r.height * HIT_POSITION_Y + HIT_Y;
+    marker.style.left = endX - gameRect.left + 'px';
+    marker.style.top = endY - gameRect.top + 'px';
+    const dt = Math.min((now - lastTime) / 1000, .05);
+    lastTime = now;
+    const dx = endX - currentX,
+      dy = endY - currentY,
+      distance = Math.hypot(dx, dy),
+      movement = speed * dt;
+    if (distance <= movement) {
+      currentX = endX;
+      currentY = endY;
+    } else {
+      currentX += dx / distance * movement;
+      currentY += dy / distance * movement;
+    }
+    position();
+    if (Math.hypot(endX - currentX, endY - currentY) <= 3) {
+      if (isCoffee) hitCustomerWithCoffee(target, projectile);
+      else if (isDrink) hitCustomerWithDrink(target, projectile);
+      else hitCustomer(target, projectile);
+      marker.remove();
+      return;
+    }
+    gameFrame(move);
   }
   gameFrame(move);
- }
- gameFrame(move);
 }
-function createImpactEffect(customer,type){
- if(!customer)return;
- const game=document.getElementById('game'),g=game.getBoundingClientRect(),r=customer.getBoundingClientRect();
- const isDrink=type!=='pasta';
- for(let i=0;i<(isDrink?7:6);i++){
-  const particle=document.createElement('div');particle.className='impact-particle '+(isDrink?'drink-drop':'pasta-strand');
-  if(type==='cappuccino'){particle.classList.add('coffee-drop');particle.style.background=i%2?'#a56a38':'#ffe4b5';}
-  particle.style.left=r.left+r.width/2-g.left+'px';particle.style.top=r.top+r.height*.45-g.top+'px';
-  const angle=Math.random()*Math.PI*2,distance=isDrink?18+Math.random()*28:20+Math.random()*30;
-  particle.style.setProperty('--dx',Math.cos(angle)*distance+'px');particle.style.setProperty('--dy',Math.sin(angle)*distance+'px');
-  if(!isDrink)particle.style.setProperty('--rot',Math.floor(Math.random()*180)+'deg');
-  game.appendChild(particle);gameLater(()=>particle.remove(),isDrink?400:450);
- }
-}
-function hitCustomer(customer,pasta){
- if(pasta)pasta.remove();if(!customer||!customer.isConnected||customer.dataset.satisfied==='true')return;
- createImpactEffect(customer,'pasta');const hp=Number(customer.dataset.hp||'30')-(5+powerUps.sauce);customer.dataset.hp=hp;
- if(hp<=0)satisfyCustomer(customer);
-}
-function hitCustomerWithDrink(customer,drink){
- if(drink)drink.remove();if(!customer||!customer.isConnected||customer.dataset.satisfied==='true')return;
- createImpactEffect(customer,'drink');const hp=Number(customer.dataset.hp||'30')-3;customer.dataset.hp=hp;
- if(hp<=0)satisfyCustomer(customer);
- else if(Math.random()<[.10,.20,.35,.50][powerUps.iceShot]){freezeCustomer(customer);tryIceChain(customer);}
-}
-function freezeCustomer(customer){
- if(!customer||!customer.isConnected||customer.style.display==='none'||customer.dataset.satisfied==='true')return;
- cancelTask(customer._freezeTimer);customer.dataset.frozen='true';customer.style.animationPlayState='paused';
- const frozen=customer.querySelector('.frozen-frame');
- if(frozen){customer.querySelectorAll('.frame').forEach(f=>f.classList.remove('active'));frozen.style.display='block';}
- customer._freezeTimer=gameLater(function(){
-  if(customer.isConnected&&customer.style.display!=='none'&&customer.dataset.satisfied!=='true'){
-   customer.style.animationPlayState='running';customer.dataset.frozen='false';if(frozen)frozen.style.display='none';
-   const frames=customer.querySelectorAll('.frame'),n=parseInt(customer.dataset.frame||'0')%frames.length;
-   frames.forEach((f,i)=>f.classList.toggle('active',i===n));
+/* ================================================================
+   EFFETTI DI IMPATTO
+   ================================================================ */
+function createImpactEffect(customer, type) {
+  if (!customer) return;
+  const game = document.getElementById('game'),
+    g = game.getBoundingClientRect(),
+    r = customer.getBoundingClientRect();
+  const isDrink = type !== 'pasta';
+  for (let i = 0; i < (isDrink ? 7 : 6); i++) {
+    const particle = document.createElement('div');
+    particle.className = 'impact-particle ' + (isDrink ? 'drink-drop' : 'pasta-strand');
+    if (type === 'cappuccino') {
+      particle.classList.add('coffee-drop');
+      particle.style.background = i % 2 ? '#a56a38' : '#ffe4b5';
+    }
+    particle.style.left = r.left + r.width / 2 - g.left + 'px';
+    particle.style.top = r.top + r.height * .45 - g.top + 'px';
+    const angle = Math.random() * Math.PI * 2,
+      distance = isDrink ? 18 + Math.random() * 28 : 20 + Math.random() * 30;
+    particle.style.setProperty('--dx', Math.cos(angle) * distance + 'px');
+    particle.style.setProperty('--dy', Math.sin(angle) * distance + 'px');
+    if (!isDrink) particle.style.setProperty('--rot', Math.floor(Math.random() * 180) + 'deg');
+    game.appendChild(particle);
+    gameLater(() => particle.remove(), isDrink ? 400 : 450);
   }
-  customer._freezeTimer=null;
- },[500,1500,2000,2500][powerUps.deepFreeze]);
 }
-function tryIceChain(original){
- if(powerUps.iceChain<=0||Math.random()>=[0,.30,.50,.75][powerUps.iceChain])return;
- const r=original.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;
- let nearest=null,best=Infinity;
- customers.forEach(c=>{
-  if(!c.isConnected||c===original||c.style.display==='none'||c.dataset.satisfied==='true')return;
-  const rect=c.getBoundingClientRect(),distance=Math.hypot(rect.left+rect.width/2-x,rect.top+rect.height/2-y);
-  if(distance<best){best=distance;nearest=c;}
- });
- if(nearest)freezeCustomer(nearest);
+/* ── hitCustomer ────────────────────────────────────────── */
+function hitCustomer(customer, pasta) {
+  if (pasta) pasta.remove();
+  if (!customer || !customer.isConnected || customer.dataset.satisfied === 'true') return;
+  createImpactEffect(customer, 'pasta');
+  const hp = Number(customer.dataset.hp || '30') - (5 + powerUps.sauce);
+  customer.dataset.hp = hp;
+  if (hp <= 0) satisfyCustomer(customer);
 }
-function satisfyCustomerBase(customer){
- if(!customer||!customer.isConnected||customer.dataset.satisfied==='true')return;
- cancelTask(customer._freezeTimer);customer._freezeTimer=null;
- const rect=customer.getBoundingClientRect(),gameRect=document.getElementById('game').getBoundingClientRect();
- customer.style.animation='none';customer.style.animationPlayState='running';
- customer.classList.remove('walking');customer.classList.add('satisfied');
- customer.style.top=(customer._walkY*100)+'%';customer.style.left=LANES[Number(customer.dataset.lane)]+'%';
- customer.dataset.satisfied='true';customer.dataset.atKitchen='false';customer.dataset.frozen='false';
- addEXP(EXP_PER_CUSTOMER);
- customer.querySelectorAll('.frame').forEach(f=>f.classList.remove('active'));
- const frozen=customer.querySelector('.frozen-frame');if(frozen)frozen.style.display='none';
- const happy=customer.querySelector('.happy-frame');if(happy)happy.style.display='block';updateZIndexes();
- // 0,5 s + controllo 0–0,25 s + attesa 0,6 s = circa 1,1–1,35 s.
- // Verso la boss wave restano la posa da 1 s e il controllo da 0,5 s.
- gameLater(function(){customer.style.display='none';if(happy)happy.style.display='none';customer.classList.remove('satisfied');customer.remove();customers=customers.filter(c=>c!==customer);updateZIndexes();},currentWave>=BOSS_WAVE-1?1000:500);
+/* ── hitCustomerWithDrink ────────────────────────────────────────── */
+function hitCustomerWithDrink(customer, drink) {
+  if (drink) drink.remove();
+  if (!customer || !customer.isConnected || customer.dataset.satisfied === 'true') return;
+  createImpactEffect(customer, 'drink');
+  const hp = Number(customer.dataset.hp || '30') - 3;
+  customer.dataset.hp = hp;
+  if (hp <= 0) satisfyCustomer(customer);
+  else if (Math.random() < [.10, .20, .35, .50][powerUps.iceShot]) {
+    freezeCustomer(customer);
+    tryIceChain(customer);
+  }
 }
-function satisfyCustomer1(){const c=customers.find(c=>c.dataset.type==='1'&&c.dataset.satisfied!=='true');if(c)satisfyCustomer(c);}
-function satisfyCustomer2(){const c=customers.find(c=>c.dataset.type==='2'&&c.dataset.satisfied!=='true');if(c)satisfyCustomer(c);}
+/* ================================================================
+   CAMERIERA — CONGELAMENTO
+   ================================================================ */
+function freezeCustomer(customer) {
+  if (!customer || !customer.isConnected || customer.style.display === 'none' || customer.dataset.satisfied === 'true') return;
+  cancelTask(customer._freezeTimer);
+  customer.dataset.frozen = 'true';
+  customer.style.animationPlayState = 'paused';
+  const frozen = customer.querySelector('.frozen-frame');
+  if (frozen) {
+    customer.querySelectorAll('.frame').forEach(f => f.classList.remove('active'));
+    frozen.style.display = 'block';
+  }
+  customer._freezeTimer = gameLater(function() {
+    if (customer.isConnected && customer.style.display !== 'none' && customer.dataset.satisfied !== 'true') {
+      customer.style.animationPlayState = 'running';
+      customer.dataset.frozen = 'false';
+      if (frozen) frozen.style.display = 'none';
+      const frames = customer.querySelectorAll('.frame'),
+        n = parseInt(customer.dataset.frame || '0') % frames.length;
+      frames.forEach((f, i) => f.classList.toggle('active', i === n));
+    }
+    customer._freezeTimer = null;
+  }, [500, 1500, 2000, 2500][powerUps.deepFreeze]);
+}
+/* ── tryIceChain ────────────────────────────────────────── */
+function tryIceChain(original) {
+  if (powerUps.iceChain <= 0 || Math.random() >= [0, .30, .50, .75][powerUps.iceChain]) return;
+  const r = original.getBoundingClientRect(),
+    x = r.left + r.width / 2,
+    y = r.top + r.height / 2;
+  let nearest = null,
+    best = Infinity;
+  customers.forEach(c => {
+    if (!c.isConnected || c === original || c.style.display === 'none' || c.dataset.satisfied === 'true') return;
+    const rect = c.getBoundingClientRect(),
+      distance = Math.hypot(rect.left + rect.width / 2 - x, rect.top + rect.height / 2 - y);
+    if (distance < best) {
+      best = distance;
+      nearest = c;
+    }
+  });
+  if (nearest) freezeCustomer(nearest);
+}
+/* ── satisfyCustomerBase ────────────────────────────────────────── */
+function satisfyCustomerBase(customer) {
+  if (!customer || !customer.isConnected || customer.dataset.satisfied === 'true') return;
+  cancelTask(customer._freezeTimer);
+  customer._freezeTimer = null;
+  const rect = customer.getBoundingClientRect(),
+    gameRect = document.getElementById('game').getBoundingClientRect();
+  customer.style.animation = 'none';
+  customer.style.animationPlayState = 'running';
+  customer.classList.remove('walking');
+  customer.classList.add('satisfied');
+  customer.style.top = (customer._walkY * 100) + '%';
+  customer.style.left = LANES[Number(customer.dataset.lane)] + '%';
+  customer.dataset.satisfied = 'true';
+  customer.dataset.atKitchen = 'false';
+  customer.dataset.frozen = 'false';
+  addEXP(EXP_PER_CUSTOMER);
+  customer.querySelectorAll('.frame').forEach(f => f.classList.remove('active'));
+  const frozen = customer.querySelector('.frozen-frame');
+  if (frozen) frozen.style.display = 'none';
+  const happy = customer.querySelector('.happy-frame');
+  if (happy) happy.style.display = 'block';
+  updateZIndexes();
+  // 0,5 s + controllo 0–0,25 s + attesa 0,6 s = circa 1,1–1,35 s.
+  // Verso la boss wave restano la posa da 1 s e il controllo da 0,5 s.
+  gameLater(function() {
+    customer.style.display = 'none';
+    if (happy) happy.style.display = 'none';
+    customer.classList.remove('satisfied');
+    customer.remove();
+    customers = customers.filter(c => c !== customer);
+    updateZIndexes();
+  }, currentWave >= BOSS_WAVE - 1 ? 1000 : 500);
+}
+/* ── satisfyCustomer1 ────────────────────────────────────────── */
+function satisfyCustomer1() {
+  const c = customers.find(c => c.dataset.type === '1' && c.dataset.satisfied !== 'true');
+  if (c) satisfyCustomer(c);
+}
+/* ── satisfyCustomer2 ────────────────────────────────────────── */
+function satisfyCustomer2() {
+  const c = customers.find(c => c.dataset.type === '2' && c.dataset.satisfied !== 'true');
+  if (c) satisfyCustomer(c);
+}
 
 
 /* ===== STAGE 1 COMPLETO ===== */
-let waveStartedAt=0;
-let priorityCustomer=null,transitionTimers=[],transitionRunning=false;
-let servedCustomers=0,stageElapsed=0,lastOffer=[];
-const CUSTOMER_ROLES={1:'normal',2:'heavy',3:'normal',4:'normal',5:'heavy',6:'fast',7:'normal',8:'heavy'};
-function chooseCustomerType(){
- const normal=[1,3,4,7];
- if(currentWave<3)return normal[Math.floor(Math.random()*normal.length)];
- const roll=Math.random();
- if(roll<.22)return 6;
- if(currentWave>=5&&roll<.47)return [2,5,8][Math.floor(Math.random()*3)];
- return normal[Math.floor(Math.random()*normal.length)];
+let waveStartedAt = 0;
+let priorityCustomer = null,
+  transitionTimers = [],
+  transitionRunning = false;
+let servedCustomers = 0,
+  stageElapsed = 0,
+  lastOffer = [];
+const CUSTOMER_ROLES = {
+  1: 'normal',
+  2: 'heavy',
+  3: 'normal',
+  4: 'normal',
+  5: 'heavy',
+  6: 'fast',
+  7: 'normal',
+  8: 'heavy'
+};
+/* ── chooseCustomerType ────────────────────────────────────────── */
+function chooseCustomerType() {
+  const normal = [1, 3, 4, 7];
+  if (currentWave < 3) return normal[Math.floor(Math.random() * normal.length)];
+  const roll = Math.random();
+  if (roll < .22) return 6;
+  if (currentWave >= 5 && roll < .47) return [2, 5, 8][Math.floor(Math.random() * 3)];
+  return normal[Math.floor(Math.random() * normal.length)];
 }
-function createCustomer(templateId,type,hp,lane,walkTime,isBoss){
- const role=isBoss?'boss':CUSTOMER_ROLES[type];
- if(role==='fast'){hp=Math.round(hp*.75);walkTime/=1.3;}
- if(role==='heavy'){hp=Math.round(hp*1.4);walkTime/=.8;}
- const c=createCustomerBase(templateId,type,hp,lane,walkTime,isBoss);
- c.dataset.role=role;c._boostUntil=0;
- c.addEventListener('click',e=>{
-  e.stopPropagation();if(powerUpPaused||bossIntroPlaying||gameFinished||c.dataset.satisfied==='true')return;
-  const previous=priorityCustomer;
-  if(previous)previous.classList.remove('priority');
-  priorityCustomer=previous===c?null:c;
-  if(priorityCustomer)priorityCustomer.classList.add('priority');
- });
- return c;
-}
-function orderedTargets(){
- const active=customers.filter(c=>c.dataset.satisfied!=='true'&&customerIsVisible(c));
- if(!active.includes(priorityCustomer))priorityCustomer=null;
- active.sort((a,b)=>a===priorityCustomer?-1:b===priorityCustomer?1:b._walkY-a._walkY);
- return active;
-}
-function getAttackTargets(){return orderedTargets().slice(0,powerUps.pasta>=3?3:powerUps.pasta>=1?2:1);}
-function getNearestVisibleCustomer(){return orderedTargets()[0]||null;}
-/* Distanza solo all'ingresso: un congelato non ferma il resto della fila. */
-function startCustomerMovement(){
- let last=performance.now();
- function move(now){
-  const dt=Math.min(Math.max(0,(now-last)/1000),.05);last=now;
-  if(!powerUpPaused&&!bossIntroPlaying&&!gameFinished){
-   stageElapsed+=dt;
-   for(const c of customers){
-    if(!c.isConnected||c.style.display==='none'||c.dataset.satisfied==='true')continue;
-    const boost=c._boostUntil>gameClock?1.45:1;
-    c.classList.toggle('boosted',boost>1);
-    if(c.dataset.frozen!=='true')c._walkY=Math.min(CUSTOMER_END_Y,c._walkY+(CUSTOMER_END_Y-CUSTOMER_START_Y)*dt/c._walkTime*boost);
-    c.style.top=c._walkY*100+'%';c.dataset.atKitchen=c._walkY>=CUSTOMER_END_Y?'true':'false';
-   }
+/* ── createCustomer ────────────────────────────────────────── */
+function createCustomer(templateId, type, hp, lane, walkTime, isBoss) {
+  const role = isBoss ? 'boss' : CUSTOMER_ROLES[type];
+  if (role === 'fast') {
+    hp = Math.round(hp * .75);
+    walkTime /= 1.3;
   }
-  if(!gameFinished)gameFrame(move);
- }
- gameFrame(move);
+  if (role === 'heavy') {
+    hp = Math.round(hp * 1.4);
+    walkTime /= .8;
+  }
+  const c = createCustomerBase(templateId, type, hp, lane, walkTime, isBoss);
+  c.dataset.role = role;
+  c._boostUntil = 0;
+  c.addEventListener('click', e => {
+    e.stopPropagation();
+    if (powerUpPaused || bossIntroPlaying || gameFinished || c.dataset.satisfied === 'true') return;
+    const previous = priorityCustomer;
+    if (previous) previous.classList.remove('priority');
+    priorityCustomer = previous === c ? null : c;
+    if (priorityCustomer) priorityCustomer.classList.add('priority');
+  });
+  return c;
 }
-function satisfyCustomer(c){
- if(!c||!c.isConnected||c.dataset.satisfied==='true')return;
- servedCustomers++;
- if(priorityCustomer===c){c.classList.remove('priority');priorityCustomer=null;}
- satisfyCustomerBase(c);
+/* ── orderedTargets ────────────────────────────────────────── */
+function orderedTargets() {
+  const active = customers.filter(c => c.dataset.satisfied !== 'true' && customerIsVisible(c));
+  if (!active.includes(priorityCustomer)) priorityCustomer = null;
+  active.sort((a, b) => a === priorityCustomer ? -1 : b === priorityCustomer ? 1 : b._walkY - a._walkY);
+  return active;
 }
-function clearAllTimers(){
- clearAllTimersBase();
- document.querySelectorAll('.camera-light,.flash-ring').forEach(e=>e.remove());
- document.getElementById('bossFlashWash').classList.remove('active');
+/* ── getAttackTargets ────────────────────────────────────────── */
+function getAttackTargets() {
+  return orderedTargets().slice(0, powerUps.pasta >= 3 ? 3 : powerUps.pasta >= 1 ? 2 : 1);
 }
-function clearTransition(){transitionTimers.forEach(clearTimeout);transitionTimers=[];transitionRunning=false;}
-function beginGame(){
- if(!transitionRunning)return;
- clearTransition();
- document.getElementById('blackTransition').style.display='none';
- document.getElementById('skipTransition').hidden=true;
- launchStage();
+/* ── getNearestVisibleCustomer ────────────────────────────────────────── */
+function getNearestVisibleCustomer() {
+  return orderedTargets()[0] || null;
 }
-function launchStage(){
- resetGame();gameStarted=true;
- const game=document.getElementById('game');game.style.display='block';game.style.animation='gameEnter .4s ease-out forwards';
- document.getElementById('testBossButton').hidden=!ENABLE_BOSS_TEST;
- document.getElementById('testGameOverButton').hidden=!ENABLE_GAMEOVER_TEST;
- startWave(1);startGameSystems();
+/* Distanza solo all'ingresso: un congelato non ferma il resto della fila. */
+/* ── startCustomerMovement ────────────────────────────────────────── */
+function startCustomerMovement() {
+  let last = performance.now();
+
+  function move(now) {
+    const dt = Math.min(Math.max(0, (now - last) / 1000), .05);
+    last = now;
+    if (!powerUpPaused && !bossIntroPlaying && !gameFinished) {
+      stageElapsed += dt;
+      for (const c of customers) {
+        if (!c.isConnected || c.style.display === 'none' || c.dataset.satisfied === 'true') continue;
+        const boost = c._boostUntil > gameClock ? 1.45 : 1;
+        c.classList.toggle('boosted', boost > 1);
+        if (c.dataset.frozen !== 'true') c._walkY = Math.min(CUSTOMER_END_Y, c._walkY + (CUSTOMER_END_Y - CUSTOMER_START_Y) * dt / c._walkTime * boost);
+        c.style.top = c._walkY * 100 + '%';
+        c.dataset.atKitchen = c._walkY >= CUSTOMER_END_Y ? 'true' : 'false';
+      }
+    }
+    if (!gameFinished) gameFrame(move);
+  }
+  gameFrame(move);
 }
-document.getElementById('playButton').addEventListener('click',()=>{
- if(!menuReady||transitionRunning||gameStarted)return;
- menuVideo.pause();document.getElementById('menu').style.display='none';
- transitionRunning=true;
- const black=document.getElementById('blackTransition');black.style.display='block';black.style.animation='none';
- document.getElementById('skipTransition').hidden=false;
- const later=(f,ms)=>transitionTimers.push(setTimeout(f,ms));
- later(()=>document.getElementById('transitionImage1').style.animation='transitionFromLeft 1.165s ease-out forwards',2000);
- later(()=>document.getElementById('transitionImage2').style.animation='transitionFromRight 1.165s ease-out forwards',5165);
- later(()=>document.getElementById('transitionImage3').style.animation='transitionFromLeft 2.34s ease-out forwards',8320);
- later(()=>black.style.animation='transitionExit .8s ease-in forwards',15660);
- later(beginGame,16460);
+/* ── satisfyCustomer ────────────────────────────────────────── */
+function satisfyCustomer(c) {
+  if (!c || !c.isConnected || c.dataset.satisfied === 'true') return;
+  servedCustomers++;
+  if (priorityCustomer === c) {
+    c.classList.remove('priority');
+    priorityCustomer = null;
+  }
+  satisfyCustomerBase(c);
+}
+/* ── clearAllTimers ────────────────────────────────────────── */
+function clearAllTimers() {
+  clearAllTimersBase();
+  document.querySelectorAll('.camera-light,.flash-ring').forEach(e => e.remove());
+  document.getElementById('bossFlashWash').classList.remove('active');
+}
+/* ── clearTransition ────────────────────────────────────────── */
+function clearTransition() {
+  transitionTimers.forEach(clearTimeout);
+  transitionTimers = [];
+  transitionRunning = false;
+}
+/* ── beginGame ────────────────────────────────────────── */
+function beginGame() {
+  if (!transitionRunning) return;
+  clearTransition();
+  document.getElementById('blackTransition').style.display = 'none';
+  document.getElementById('skipTransition').hidden = true;
+  launchStage();
+}
+/* ── launchStage ────────────────────────────────────────── */
+function launchStage() {
+  resetGame();
+  gameStarted = true;
+  const game = document.getElementById('game');
+  game.style.display = 'block';
+  game.style.animation = 'gameEnter .4s ease-out forwards';
+  document.getElementById('testBossButton').hidden = !ENABLE_BOSS_TEST;
+  document.getElementById('testGameOverButton').hidden = !ENABLE_GAMEOVER_TEST;
+  startWave(1);
+  startGameSystems();
+}
+document.getElementById('playButton').addEventListener('click', () => {
+  if (!menuReady || transitionRunning || gameStarted) return;
+  menuVideo.pause();
+  document.getElementById('menu').style.display = 'none';
+  transitionRunning = true;
+  const black = document.getElementById('blackTransition');
+  black.style.display = 'block';
+  black.style.animation = 'none';
+  document.getElementById('skipTransition').hidden = false;
+  const later = (f, ms) => transitionTimers.push(setTimeout(f, ms));
+  later(() => document.getElementById('transitionImage1').style.animation = 'transitionFromLeft 1.165s ease-out forwards', 2000);
+  later(() => document.getElementById('transitionImage2').style.animation = 'transitionFromRight 1.165s ease-out forwards', 5165);
+  later(() => document.getElementById('transitionImage3').style.animation = 'transitionFromLeft 2.34s ease-out forwards', 8320);
+  later(() => black.style.animation = 'transitionExit .8s ease-in forwards', 15660);
+  later(beginGame, 16460);
 });
-document.getElementById('skipTransition').addEventListener('click',beginGame);
-function resetGame(){
- document.getElementById('endScreen').hidden=true;
- document.getElementById('gameOverCharacter').removeAttribute('src');
- document.getElementById('game').classList.remove('ended');
- document.getElementById('damageVignette').classList.remove('active');
- priorityCustomer=null;servedCustomers=0;stageElapsed=0;lastOffer=[];
- resetGameBase();
+document.getElementById('skipTransition').addEventListener('click', beginGame);
+/* ── resetGame ────────────────────────────────────────── */
+function resetGame() {
+  document.getElementById('endScreen').hidden = true;
+  document.getElementById('gameOverCharacter').removeAttribute('src');
+  document.getElementById('game').classList.remove('ended');
+  document.getElementById('damageVignette').classList.remove('active');
+  priorityCustomer = null;
+  servedCustomers = 0;
+  stageElapsed = 0;
+  lastOffer = [];
+  resetGameBase();
 }
-const GAME_OVER_ANIMATIONS=[
- 'https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/video_trasparente.webp',
- 'https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/barista_stordita_trasparente%281%29.webp',
- 'https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/cameriera_stordita_trasparente.webp'
+const GAME_OVER_ANIMATIONS = [
+  'https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/video_trasparente.webp',
+  'https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/barista_stordita_trasparente%281%29.webp',
+  'https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/cameriera_stordita_trasparente.webp'
 ];
-function endStage(won){
- if(gameFinished)return;
- clearTransition();stopBossIntro();gameFinished=true;powerUpPaused=false;clearAllTimers();
- document.getElementById('powerup-overlay').style.display='none';
- document.getElementById('powerup-options').innerHTML='';offeredPowerUps=[];
- document.getElementById('game').classList.remove('powerup-paused');
- document.querySelectorAll('.pasta,.drink,.cappuccino,.hit-marker,.impact-particle').forEach(e=>e.remove());
- setCookFrame(0);setWaitressFrame(0);setActorFrame('seon',0);
- document.getElementById('endTitle').textContent=won?'STAGE CLEAR!':'GAME OVER';
- document.getElementById('endSubtitle').textContent=won?'SERVIZIO COMPLETATO':'KITCHEN COLLAPSED';
- document.getElementById('endStats').textContent='WAVE '+currentWave+' / 20 · LV '+currentLevel+' · '+servedCustomers+' clienti serviti';
- const endScreen=document.getElementById('endScreen');
- endScreen.classList.toggle('loss',!won);
- const character=document.getElementById('gameOverCharacter');
- if(won)character.removeAttribute('src');
- else character.src=GAME_OVER_ANIMATIONS[Math.floor(Math.random()*GAME_OVER_ANIMATIONS.length)];
- endScreen.hidden=false;
- document.getElementById('testBossButton').hidden=true;
- document.getElementById('testGameOverButton').hidden=true;
- document.getElementById('retryButton').focus();
+/* ================================================================
+   GAME OVER E VITTORIA
+   ================================================================ */
+function endStage(won) {
+  if (gameFinished) return;
+  clearTransition();
+  stopBossIntro();
+  gameFinished = true;
+  powerUpPaused = false;
+  clearAllTimers();
+  document.getElementById('powerup-overlay').style.display = 'none';
+  document.getElementById('powerup-options').innerHTML = '';
+  offeredPowerUps = [];
+  document.getElementById('game').classList.remove('powerup-paused');
+  document.querySelectorAll('.pasta,.drink,.cappuccino,.hit-marker,.impact-particle').forEach(e => e.remove());
+  setCookFrame(0);
+  setWaitressFrame(0);
+  setActorFrame('seon', 0);
+  document.getElementById('endTitle').textContent = won ? 'STAGE CLEAR!' : 'GAME OVER';
+  document.getElementById('endSubtitle').textContent = won ? 'SERVIZIO COMPLETATO' : 'KITCHEN COLLAPSED';
+  document.getElementById('endStats').textContent = 'WAVE ' + currentWave + ' / 20 · LV ' + currentLevel + ' · ' + servedCustomers + ' clienti serviti';
+  const endScreen = document.getElementById('endScreen');
+  endScreen.classList.toggle('loss', !won);
+  const character = document.getElementById('gameOverCharacter');
+  if (won) character.removeAttribute('src');
+  else character.src = GAME_OVER_ANIMATIONS[Math.floor(Math.random() * GAME_OVER_ANIMATIONS.length)];
+  endScreen.hidden = false;
+  endScreen.classList.remove('entering');
+  void endScreen.offsetWidth;
+  endScreen.classList.add('entering');
+  document.getElementById('testBossButton').hidden = true;
+  document.getElementById('testGameOverButton').hidden = true;
+  document.getElementById('retryButton').focus();
 }
-function finishLevel(){endStage(true);}
-function showGameOver(){endStage(false);}
-document.getElementById('retryButton').addEventListener('click',()=>{if(gameFinished)launchStage();});
-document.getElementById('testGameOverButton').addEventListener('click',()=>{
- if(!ENABLE_GAMEOVER_TEST||!gameStarted||gameFinished)return;
- kitchenEnergy=0;updateKitchenEnergy();showGameOver();
+/* MENU PRINCIPALE — arresta la partita e riattiva PLAY */
+/* ── returnToMainMenu ────────────────────────────────────────── */
+/* ================================================================
+ [JS 06] GAME OVER E MAIN MENU
+ ================================================================ */
+function returnToMainMenu() {
+  clearTransition();
+  stopBossIntro();
+  clearAllTimers();
+  clearScene();
+  gameStarted = false;
+  gameFinished = true;
+  powerUpPaused = false;
+  menuReady = true;
+  document.getElementById('game').style.display = 'none';
+  document.getElementById('endScreen').hidden = true;
+  document.getElementById('gameOverCharacter').removeAttribute('src');
+  document.getElementById('blackTransition').style.display = 'none';
+  document.getElementById('skipTransition').hidden = true;
+  ['transitionImage1', 'transitionImage2', 'transitionImage3'].forEach(id => document.getElementById(id).style.animation = 'none');
+  document.getElementById('menu').style.display = 'flex';
+  document.getElementById('playButton').disabled = false;
+  playMenuVideo();
+}
+document.getElementById('mainMenuButton').addEventListener('click', returnToMainMenu);
+/* ── finishLevel ────────────────────────────────────────── */
+function finishLevel() {
+  endStage(true);
+}
+/* ── showGameOver ────────────────────────────────────────── */
+function showGameOver() {
+  endStage(false);
+}
+document.getElementById('retryButton').addEventListener('click', () => {
+  if (gameFinished) launchStage();
 });
-function updateKitchenEnergy(){
- updateKitchenEnergyBase();
- document.getElementById('kitchenLabel').textContent='CUCINA '+Math.ceil(kitchenEnergy)+'%';
- document.getElementById('kitchenFill').style.width=kitchenEnergy+'%';
- document.getElementById('kitchenFill').style.background=kitchenEnergy>50?'#9de48b':kitchenEnergy>20?'#ffd064':'#ff7968';
- document.getElementById('kitchenMeter').setAttribute('aria-valuenow',kitchenEnergy);
+document.getElementById('testGameOverButton').addEventListener('click', () => {
+  if (!ENABLE_GAMEOVER_TEST || !gameStarted || gameFinished) return;
+  kitchenEnergy = 0;
+  updateKitchenEnergy();
+  showGameOver();
+});
+/* ── updateKitchenEnergy ────────────────────────────────────────── */
+function updateKitchenEnergy() {
+  updateKitchenEnergyBase();
+  document.getElementById('kitchenNeedle').style.transform = 'translateY(-50%) rotate(' + (-180 * (1 - Math.max(0, Math.min(100, kitchenEnergy)) / 100)) + 'deg)';
+  document.getElementById('kitchenMeter').setAttribute('aria-valuenow', kitchenEnergy);
 }
-function startKitchenEnergySystem(){
- cancelTask(kitchenDamageTimer);
- kitchenDamageTimer=gameEvery(()=>{
-  const damage=customers.filter(c=>c.isConnected&&c.dataset.atKitchen==='true'&&c.dataset.satisfied!=='true').length;
-  if(!damage)return;
-  kitchenEnergy=Math.max(0,kitchenEnergy-damage);updateKitchenEnergy();
-  const fx=document.getElementById('damageVignette');fx.classList.remove('active');void fx.offsetWidth;fx.classList.add('active');
-  if(kitchenEnergy<=0)showGameOver();
- },2000);
+/* ── startKitchenEnergySystem ────────────────────────────────────────── */
+function startKitchenEnergySystem() {
+  cancelTask(kitchenDamageTimer);
+  kitchenDamageTimer = gameEvery(() => {
+    const damage = customers.filter(c => c.isConnected && c.dataset.atKitchen === 'true' && c.dataset.satisfied !== 'true').length;
+    if (!damage) return;
+    kitchenEnergy = Math.max(0, kitchenEnergy - damage);
+    updateKitchenEnergy();
+    const fx = document.getElementById('damageVignette');
+    fx.classList.remove('active');
+    void fx.offsetWidth;
+    fx.classList.add('active');
+    if (kitchenEnergy <= 0) showGameOver();
+  }, 2000);
 }
 /* Una scelta per livello, anche quando due impatti danno EXP insieme. */
-function addEXP(amount){
- if(currentLevel>=MAX_LEVEL)return;
- currentEXP+=amount;
- if(!powerUpPaused&&currentEXP>=EXP_REQUIREMENTS[currentLevel-1]){
-  currentEXP-=EXP_REQUIREMENTS[currentLevel-1];currentLevel++;showPowerUpScreen();
- }
- updateEXPBar();
+/* ── addEXP ────────────────────────────────────────── */
+function addEXP(amount) {
+  if (currentLevel >= MAX_LEVEL) return;
+  currentEXP += amount;
+  if (!powerUpPaused && currentEXP >= EXP_REQUIREMENTS[currentLevel - 1]) {
+    currentEXP -= EXP_REQUIREMENTS[currentLevel - 1];
+    currentLevel++;
+    showPowerUpScreen();
+  }
+  updateEXPBar();
 }
-function selectPowerUp(type){
- if(!powerUpPaused||!offeredPowerUps.some(p=>p.type===type))return;
- lastOffer=offeredPowerUps.map(p=>p.type);
- selectPowerUpBase(type);
- if(!powerUpPaused)addEXP(0);
+/* ── selectPowerUp ────────────────────────────────────────── */
+function selectPowerUp(type) {
+  if (!powerUpPaused || !offeredPowerUps.some(p => p.type === type)) return;
+  lastOffer = offeredPowerUps.map(p => p.type);
+  selectPowerUpBase(type);
+  if (!powerUpPaused) addEXP(0);
 }
-function showPowerUpScreen(){
- if(powerUpPaused||gameFinished)return;
- const available=shuffle(getAvailablePowerUps());if(!available.length)return;
- const selected=[];
- const add=p=>{if(p&&!selected.includes(p)&&selected.length<3)selected.push(p);};
- add(available.find(p=>p.type===(currentLevel===2?'waitress':currentLevel===3?'seon':null)));
- // Almeno una scelta offensiva; poi varietà rispetto al pannello precedente.
- const offense=['pasta','speed','sauce','doubleShot','caffeineRush','hotSplash'];
- if(!selected.some(p=>offense.includes(p.type)))add(available.find(p=>offense.includes(p.type)&&!lastOffer.includes(p.type))||available.find(p=>offense.includes(p.type)));
- for(const p of available.filter(p=>!lastOffer.includes(p.type)))add(p);
- for(const p of available)add(p);
- offeredPowerUps=shuffle(selected);
- const options=document.getElementById('powerup-options');options.innerHTML='';
- for(const p of offeredPowerUps){
-  const slot=document.createElement('button');slot.type='button';slot.className='powerup-slot';
-  if(['seon','hotSplash','caffeineRush','doubleShot'].includes(p.type))slot.classList.add('seon-panel');
-  const image=document.createElement('img'),panel=POWER_UP_PANELS[p.type];image.src=Array.isArray(panel)?panel[p.level-1]:panel;image.alt=p.type+' '+p.level;
-  slot.appendChild(image);slot.addEventListener('click',()=>selectPowerUp(p.type));options.appendChild(slot);
- }
- powerUpPaused=true;document.getElementById('game').classList.add('powerup-paused');document.getElementById('powerup-overlay').style.display='flex';
+/* ── showPowerUpScreen ────────────────────────────────────────── */
+function showPowerUpScreen() {
+  if (powerUpPaused || gameFinished) return;
+  const available = shuffle(getAvailablePowerUps());
+  if (!available.length) return;
+  const selected = [];
+  const add = p => {
+    if (p && !selected.includes(p) && selected.length < 3) selected.push(p);
+  };
+  add(available.find(p => p.type === (currentLevel === 2 ? 'waitress' : currentLevel === 3 ? 'seon' : null)));
+  // Almeno una scelta offensiva; poi varietà rispetto al pannello precedente.
+  const offense = ['pasta', 'speed', 'sauce', 'doubleShot', 'caffeineRush', 'hotSplash'];
+  if (!selected.some(p => offense.includes(p.type))) add(available.find(p => offense.includes(p.type) && !lastOffer.includes(p.type)) || available.find(p => offense.includes(p.type)));
+  for (const p of available.filter(p => !lastOffer.includes(p.type))) add(p);
+  for (const p of available) add(p);
+  offeredPowerUps = shuffle(selected);
+  const options = document.getElementById('powerup-options');
+  options.innerHTML = '';
+  for (const p of offeredPowerUps) {
+    const slot = document.createElement('button');
+    slot.type = 'button';
+    slot.className = 'powerup-slot';
+    if (['seon', 'hotSplash', 'caffeineRush', 'doubleShot'].includes(p.type)) slot.classList.add('seon-panel');
+    const image = document.createElement('img'),
+      panel = POWER_UP_PANELS[p.type];
+    image.src = Array.isArray(panel) ? panel[p.level - 1] : panel;
+    image.alt = p.type + ' ' + p.level;
+    slot.appendChild(image);
+    slot.addEventListener('click', () => selectPowerUp(p.type));
+    options.appendChild(slot);
+  }
+  powerUpPaused = true;
+  document.getElementById('game').classList.add('powerup-paused');
+  document.getElementById('powerup-overlay').style.display = 'flex';
 }
 /* Punto dell'obiettivo dentro lo sprite (regolabile senza cambiare gli effetti). */
-const BOSS_CAMERA_X=.35,BOSS_CAMERA_Y=.21;
-function cameraPosition(boss){
- const img=boss.querySelector('.frame.active'),r=(img||boss).getBoundingClientRect(),g=document.getElementById('game').getBoundingClientRect();
- const scale=img&&img.naturalWidth?Math.min(r.width/img.naturalWidth,r.height/img.naturalHeight):1;
- const w=img&&img.naturalWidth?img.naturalWidth*scale:r.width,h=img&&img.naturalHeight?img.naturalHeight*scale:r.height;
- return {x:r.left-g.left+(r.width-w)/2+w*BOSS_CAMERA_X,y:r.top-g.top+(r.height-h)/2+h*BOSS_CAMERA_Y};
+const BOSS_CAMERA_X = .35,
+  BOSS_CAMERA_Y = .21;
+/* ── cameraPosition ────────────────────────────────────────── */
+function cameraPosition(boss) {
+  const img = boss.querySelector('.frame.active'),
+    r = (img || boss).getBoundingClientRect(),
+    g = document.getElementById('game').getBoundingClientRect();
+  const scale = img && img.naturalWidth ? Math.min(r.width / img.naturalWidth, r.height / img.naturalHeight) : 1;
+  const w = img && img.naturalWidth ? img.naturalWidth * scale : r.width,
+    h = img && img.naturalHeight ? img.naturalHeight * scale : r.height;
+  return {
+    x: r.left - g.left + (r.width - w) / 2 + w * BOSS_CAMERA_X,
+    y: r.top - g.top + (r.height - h) / 2 + h * BOSS_CAMERA_Y
+  };
 }
-function startBossFlash(boss){
- const valid=()=>!gameFinished&&boss.isConnected&&boss.dataset.satisfied!=='true';
- function charge(){
-  if(!valid())return;
-  if(boss.dataset.frozen==='true'){gameLater(charge,500);return;}
-  const light=document.createElement('div');light.className='camera-light charging';document.getElementById('game').appendChild(light);
-  const follow=()=>{
-   if(!light.isConnected||!valid()){light.remove();return;}
-   const p=cameraPosition(boss);light.style.left=p.x+'px';light.style.top=p.y+'px';gameFrame(follow);
-  };follow();
-  gameLater(()=>{
-   if(!valid()){light.remove();return;}
-   if(boss.dataset.frozen==='true'){light.remove();gameLater(charge,1000);return;}
-   light.className='camera-light fired';
-   const p=cameraPosition(boss),ring=document.createElement('div');ring.className='flash-ring';ring.style.left=p.x+'px';ring.style.top=p.y+'px';document.getElementById('game').appendChild(ring);
-   const wash=document.getElementById('bossFlashWash');wash.classList.remove('active');void wash.offsetWidth;wash.classList.add('active');
-   customers.filter(c=>['assistant','cameraman'].includes(c.dataset.type)&&c.dataset.satisfied!=='true').forEach(c=>c._boostUntil=gameClock+4000);
-   gameLater(()=>{light.remove();ring.remove();},600);
-   gameLater(charge,6300);
-  },700);
- }
- gameLater(charge,6000);
-}
+/* ================================================================
+   BOSS — FLASH DALLA FOTOCAMERA
+   ================================================================ */
+function startBossFlash(boss) {
+  const valid = () => !gameFinished && boss.isConnected && boss.dataset.satisfied !== 'true';
 
+  function charge() {
+    if (!valid()) return;
+    if (boss.dataset.frozen === 'true') {
+      gameLater(charge, 500);
+      return;
+    }
+    const light = document.createElement('div');
+    light.className = 'camera-light charging';
+    document.getElementById('game').appendChild(light);
+    const follow = () => {
+      if (!light.isConnected || !valid()) {
+        light.remove();
+        return;
+      }
+      const p = cameraPosition(boss);
+      light.style.left = p.x + 'px';
+      light.style.top = p.y + 'px';
+      gameFrame(follow);
+    };
+    follow();
+    gameLater(() => {
+      if (!valid()) {
+        light.remove();
+        return;
+      }
+      if (boss.dataset.frozen === 'true') {
+        light.remove();
+        gameLater(charge, 1000);
+        return;
+      }
+      light.className = 'camera-light fired';
+      const p = cameraPosition(boss),
+        ring = document.createElement('div');
+      ring.className = 'flash-ring';
+      ring.style.left = p.x + 'px';
+      ring.style.top = p.y + 'px';
+      document.getElementById('game').appendChild(ring);
+      const wash = document.getElementById('bossFlashWash');
+      wash.classList.remove('active');
+      void wash.offsetWidth;
+      wash.classList.add('active');
+      customers.filter(c => ['assistant', 'cameraman'].includes(c.dataset.type) && c.dataset.satisfied !== 'true').forEach(c => c._boostUntil = gameClock + 4000);
+      gameLater(() => {
+        light.remove();
+        ring.remove();
+      }, 600);
+      gameLater(charge, 6300);
+    }, 700);
+  }
+  gameLater(charge, 6000);
+}
 </script>
-</body>
+ </body>
 </html>
