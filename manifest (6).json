@@ -1,0 +1,17 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Rush To Serve",
+  "orientation": "portrait",
+  "scope": "/RTS-game/",
+  "short_name": "RTS",
+  "start_url": "/RTS-game/",
+  "theme_color": "#ffffff",
+  "id": "/rush-game/",
+  "description": "Fast-paced restaurant action game where you serve customers and protect your kitchen.",
+  "lang": "en",
+  "categories": [
+    "entertainment"
+  ]
+}
