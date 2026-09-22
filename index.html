@@ -3328,20 +3328,29 @@ function cameraPosition(boss, cameraX = BOSS_CAMERA_X, cameraY = BOSS_CAMERA_Y) 
    BOSS — FLASH DALLA FOTOCAMERA
    ================================================================ */
 function startBossFlash(boss) {
-  /* La GIF dura 7,5 s e contiene due foto: una con camera a sinistra,
-     una con camera a destra. Il timer usa il gameClock, quindi gli effetti
-     si fermano durante carte, speciali e video boss. */
+  /* Il browser riproduce le GIF con piccoli ritardi variabili. Per non
+     accumularli, riavviamo la GIF a ogni ciclo di 7,5 s: foto e flash
+     restano sincronizzati anche dopo molti giri. */
+  const BOSS_GIF_CYCLE_MS = 7500;
+  const BOSS_SUMMON_CHANCE = .50;
   const BOSS_PHOTOS = [
-    { delay: 3080, cameraX: .11, cameraY: .21 },
-    { delay: 3750, cameraX: .80, cameraY: .21 }
+    { at: 3080, cameraX: .11, cameraY: .21 },
+    { at: 6830, cameraX: .80, cameraY: .21 }
   ];
-  let nextPhoto = 0;
   const valid = () => !gameFinished && boss.isConnected && boss.dataset.satisfied !== 'true';
+
+  function restartBossGif() {
+    const gif = boss.querySelector('.boss-foodie-gif');
+    if (!gif || !valid()) return;
+    const source = gif.getAttribute('src');
+    gif.removeAttribute('src');
+    void gif.offsetWidth;
+    gif.setAttribute('src', source);
+  }
 
   function summonTwoRandomCustomers() {
     let remaining = 2;
     const config = WAVES[BOSS_WAVE - 2] || WAVES[WAVES.length - 2];
-
     function summonOne() {
       if (!valid() || !remaining) return;
       const game = document.getElementById('game');
@@ -3351,10 +3360,7 @@ function startBossFlash(boss) {
         if (!c.isConnected || c.style.display === 'none' || Number(c.dataset.lane) !== lane) return true;
         return hasLaneSpace(startY, height, c._walkY * game.clientHeight, c.offsetHeight);
       }));
-      if (!lanes.length) {
-        gameLater(summonOne, 100);
-        return;
-      }
+      if (!lanes.length) return gameLater(summonOne, 100);
       const type = chooseCustomerType();
       const lane = lanes[Math.floor(Math.random() * lanes.length)];
       const customer = createCustomer('customer' + type + 'Template', type, config.hp, lane, config.walkTime, false);
@@ -3367,11 +3373,7 @@ function startBossFlash(boss) {
   }
 
   function firePhoto(photo) {
-    if (!valid()) return;
-    if (boss.dataset.frozen === 'true') {
-      gameLater(() => firePhoto(photo), 400);
-      return;
-    }
+    if (!valid() || boss.dataset.frozen === 'true') return;
     const p = cameraPosition(boss, photo.cameraX, photo.cameraY);
     const light = document.createElement('div');
     light.className = 'camera-light fired';
@@ -3387,23 +3389,21 @@ function startBossFlash(boss) {
     wash.classList.remove('active');
     void wash.offsetWidth;
     wash.classList.add('active');
-    summonTwoRandomCustomers();
+    // Ogni foto ha il 50% di possibilità di evocare una coppia di clienti.
+    if (Math.random() < BOSS_SUMMON_CHANCE) summonTwoRandomCustomers();
     gameLater(() => {
       light.remove();
       ring.remove();
     }, 650);
   }
 
-  function schedulePhoto() {
-    const photo = BOSS_PHOTOS[nextPhoto];
-    gameLater(() => {
-      if (!valid()) return;
-      firePhoto(photo);
-      nextPhoto = (nextPhoto + 1) % BOSS_PHOTOS.length;
-      schedulePhoto();
-    }, photo.delay);
+  function runGifCycle() {
+    if (!valid()) return;
+    restartBossGif();
+    BOSS_PHOTOS.forEach(photo => gameLater(() => firePhoto(photo), photo.at));
+    gameLater(runGifCycle, BOSS_GIF_CYCLE_MS);
   }
-  schedulePhoto();
+  runGifCycle();
 }
 
 /* ================================================================
