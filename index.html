@@ -38,7 +38,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>Tarai Rush — REV 10</title>
   <link rel="manifest" href="/tarai-game/manifest%20(6).json">
-  <link href="https://fonts.googleapis.com/css2?family=Knewave&amp;display=swap" rel="stylesheet"/>
+  <style>@font-face{font-family:'Knewave';font-style:normal;font-weight:400;font-display:swap;src:url('Knewave.ttf') format('truetype');}</style>
   <style>
 
 /* ================================================================
@@ -1536,7 +1536,7 @@ body {
    <!-- VIDEO INTRO -->
    <div id="intro">
     <video autoplay="" id="introVideo" muted="" playsinline="" preload="auto">
-     <source src="https://yourimageshare.com/ib/LjN0a6FLZL.mp4" type="video/mp4"/>
+     <source src="intro.mp4" type="video/mp4"/>
     </video>
     <div id="introTap">
     </div>
@@ -1546,19 +1546,19 @@ body {
    <!-- MENU PRINCIPALE -->
    <div id="menu">
     <span id="buildRevision">REV 10</span>
-    <video id="cover" loop="" muted="" playsinline="" poster="https://i.ibb.co/7JzwW3pP/file-00000000e8d8820b9cbd75d3f8d8e3a1.png" preload="auto">
-     <source src="https://github.com/backtothemovie2024-afk/tarai-game/raw/refs/heads/main/Animate_chef_image_with_steam_20260915082519.mp4" type="video/mp4"/>
+    <video id="cover" loop="" muted="" playsinline="" poster="7JzwW3pP_file-00000000e8d8820b9cbd75d3f8d8e3a1.png" preload="auto">
+     <source src="1e7eec53_Animate_chef_image_with_steam_20260915082519.mp4" type="video/mp4"/>
     </video>
-    <img alt="" id="coverOverlay" src="https://i.ibb.co/67Fhq4qw/file-0000000053c481f796fb5ec6162a6b2e-removebg-preview.png"/>
+    <img alt="" id="coverOverlay" src="67Fhq4qw_file-0000000053c481f796fb5ec6162a6b2e-removebg-preview.png"/>
     <button aria-label="Play" disabled="" id="playButton">
      PLAY
     </button>
    </div>
    <div id="game">
-    <img alt="" id="background" src="https://cdn.imgchest.com/files/25a5041a8483.jpg"/>
-    <img alt="" id="kitchen" src="https://i.ibb.co/39jfnpgW/IMG-20260829-WA0013-removebg-preview.png"/>
-    <img alt="" id="kitchenDamaged" src="https://i.ibb.co/7t1CkQYc/IMG-20260829-WA0014-removebg-preview.png"/>
-    <img alt="" id="kitchenDestroyed" src="https://i.ibb.co/HLF1Q2zn/IMG-20260829-WA0015-removebg-preview.png"/>
+    <img alt="" id="background" src="sfondo.jpg"/>
+    <img alt="" id="kitchen" src="39jfnpgW_IMG-20260829-WA0013-removebg-preview.png"/>
+    <img alt="" id="kitchenDamaged" src="7t1CkQYc_IMG-20260829-WA0014-removebg-preview.png"/>
+    <img alt="" id="kitchenDestroyed" src="HLF1Q2zn_IMG-20260829-WA0015-removebg-preview.png"/>
     <div id="wave-display">
      WAVE 1
     </div>
@@ -1574,7 +1574,7 @@ body {
     <!-- ENERGIA CUCINA — QUADRANTE E LANCETTA -->
     <div id="kitchenHud">
      <div aria-label="Energia cucina" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" id="kitchenMeter" role="progressbar">
-      <img alt="" id="kitchenGauge" src="https://i.ibb.co/846rv6r4/file-0000000012ec820badf6445a63456e82.png"/>
+      <img alt="" id="kitchenGauge" src="846rv6r4_file-0000000012ec820badf6445a63456e82.png"/>
       <div id="kitchenNeedle">
       </div>
       <div id="kitchenNeedleHub">
@@ -1595,7 +1595,7 @@ body {
     </div>
     <!-- FINE PARTITA -->
     <div aria-labelledby="endTitle" aria-modal="true" hidden="" id="endScreen" role="dialog">
-     <img alt="" id="gameOverArt" src="https://i.ibb.co/LDvGMpXr/file-0000000046a881f59037eda06ba19c32.png"/>
+     <img alt="" id="gameOverArt" src="LDvGMpXr_file-0000000046a881f59037eda06ba19c32.png"/>
      <img alt="Personaggio stordito" id="gameOverCharacter"/>
      <div id="endCard">
       <div id="endEyebrow">
@@ -1620,7 +1620,7 @@ body {
     <!-- VIDEO BOSS -->
     <div id="bossIntro">
      <video id="bossIntroVideo" muted="" playsinline="" preload="auto">
-      <source src="https://github.com/backtothemovie2024-afk/tarai-game/raw/refs/heads/main/Video_animation_instructions_for%E2%80%A6_20260915063937.mp4" type="video/mp4"/>
+      <source src="Video_animation_instructions_for…_20260915063937.mp4" type="video/mp4"/>
      </video>
      <button hidden="" id="bossVideoAction" type="button">
       TOCCA PER AVVIARE IL VIDEO
@@ -1628,113 +1628,113 @@ body {
     </div>
     <!-- CLIENTE 1: FASHION GIRL — RAGAZZA BIONDA — CAMMINATA, FELICITÀ, CONGELAMENTO -->
     <div id="customer1Template" class="customer customer-template customer1-template sprite-aligned" style="display:none;">
-      <img alt="" class="frame active walk-gif" src="https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/Fashion_girl_sequenza_corretta_v6.gif" style="--asset-height:1.06101695;--asset-bottom:1.06101695;--asset-anchor:-50.000000%;"/>
-      <img alt="" class="happy-frame" src="https://i.ibb.co/xK0KvtVy/file-00000000c12c82098b5b04e3cf209f24-removebg-preview.png" style="--asset-height:1.05699482;--asset-bottom:1.02763385;--asset-anchor:-49.019608%;"/>
-      <img alt="" class="frozen-frame" src="https://i.ibb.co/Kx64hLcM/1000042445-removebg-preview.png" style="--asset-height:1.05517241;--asset-bottom:1.02758621;--asset-anchor:-49.019608%;"/>
+      <img alt="" class="frame active walk-gif" src="87b89029_Fashion_girl_sequenza_corretta_v6.gif" style="--asset-height:1.06101695;--asset-bottom:1.06101695;--asset-anchor:-50.000000%;"/>
+      <img alt="" class="happy-frame" src="xK0KvtVy_file-00000000c12c82098b5b04e3cf209f24-removebg-preview.png" style="--asset-height:1.05699482;--asset-bottom:1.02763385;--asset-anchor:-49.019608%;"/>
+      <img alt="" class="frozen-frame" src="Kx64hLcM_1000042445-removebg-preview.png" style="--asset-height:1.05517241;--asset-bottom:1.02758621;--asset-anchor:-49.019608%;"/>
       <div class="heart">❤️</div>
     </div>
     <!-- CLIENTE 2: DONNA ANZIANA — CAMMINATA, FELICITÀ, CONGELAMENTO -->
     <div id="customer2Template" class="customer customer-template customer2-template sprite-aligned" style="display:none;">
-      <img alt="" class="frame active walk-gif" src="https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/signora_anziana_camminata_trasparente_v9.webp" style="--asset-height:1.05263158;--asset-bottom:1.02024291;--asset-anchor:-47.196262%;"/>
-      <img alt="" class="happy-frame" src="https://i.ibb.co/Nd07D6qM/IMG-20260903-WA0000-removebg-preview.png" style="--asset-height:1.19298246;--asset-bottom:1.12280702;--asset-anchor:-49.019608%;"/>
-      <img alt="" class="frozen-frame" src="https://i.ibb.co/YT061kxh/1000042452-removebg-preview.png" style="--asset-height:1.06806283;--asset-bottom:1.03141361;--asset-anchor:-48.774510%;"/>
+      <img alt="" class="frame active walk-gif" src="69556d59_signora_anziana_camminata_trasparente_v9.webp" style="--asset-height:1.05263158;--asset-bottom:1.02024291;--asset-anchor:-47.196262%;"/>
+      <img alt="" class="happy-frame" src="Nd07D6qM_IMG-20260903-WA0000-removebg-preview.png" style="--asset-height:1.19298246;--asset-bottom:1.12280702;--asset-anchor:-49.019608%;"/>
+      <img alt="" class="frozen-frame" src="YT061kxh_1000042452-removebg-preview.png" style="--asset-height:1.06806283;--asset-bottom:1.03141361;--asset-anchor:-48.774510%;"/>
       <div class="heart">❤️</div>
     </div>
     <!-- CLIENTE 3: STUDENTE UNIVERSITARIO — CAMMINATA, FELICITÀ, CONGELAMENTO -->
     <div id="customer3Template" class="customer customer-template customer3-template sprite-aligned" style="display:none;">
-      <img alt="" class="frame active" src="https://i.ibb.co/vxTN6874/tile001-removebg-preview-1.png" style="--asset-height:1.05232558;--asset-bottom:1.03100775;--asset-anchor:-56.077348%;"/>
-      <img alt="" class="frame" src="https://i.ibb.co/9kzB8Fw3/tile002-removebg-preview-1.png" style="--asset-height:1.04624277;--asset-bottom:1.02504817;--asset-anchor:-41.712707%;"/>
-      <img alt="" class="happy-frame" src="https://i.ibb.co/bjJz8mYb/file-000000000fac81fa84533e82a16b37af-removebg-preview.png" style="--asset-height:1.06250000;--asset-bottom:1.02951389;--asset-anchor:-50.490196%;"/>
-      <img alt="" class="frozen-frame" src="https://i.ibb.co/nJTx657/1000042451-removebg-preview.png" style="--asset-height:1.06993007;--asset-bottom:1.02097902;--asset-anchor:-49.509804%;"/>
+      <img alt="" class="frame active" src="vxTN6874_tile001-removebg-preview-1.png" style="--asset-height:1.05232558;--asset-bottom:1.03100775;--asset-anchor:-56.077348%;"/>
+      <img alt="" class="frame" src="9kzB8Fw3_tile002-removebg-preview-1.png" style="--asset-height:1.04624277;--asset-bottom:1.02504817;--asset-anchor:-41.712707%;"/>
+      <img alt="" class="happy-frame" src="bjJz8mYb_file-000000000fac81fa84533e82a16b37af-removebg-preview.png" style="--asset-height:1.06250000;--asset-bottom:1.02951389;--asset-anchor:-50.490196%;"/>
+      <img alt="" class="frozen-frame" src="nJTx657_1000042451-removebg-preview.png" style="--asset-height:1.06993007;--asset-bottom:1.02097902;--asset-anchor:-49.509804%;"/>
       <div class="heart">❤️</div>
     </div>
     <!-- CLIENTE 4: SALARY MAN — CAMMINATA, FELICITÀ, CONGELAMENTO -->
     <div id="customer4Template" class="customer customer-template customer4-template sprite-aligned" style="display:none;">
-      <img alt="" class="frame active" src="https://i.ibb.co/k2fF7sB9/1000042318-removebg-preview.png" style="--asset-height:1.10354223;--asset-bottom:1.03542234;--asset-anchor:-48.701299%;"/>
-      <img alt="" class="frame" src="https://i.ibb.co/QyB3W9h/1000042319-removebg-preview.png" style="--asset-height:1.10354223;--asset-bottom:1.03542234;--asset-anchor:-49.025974%;"/>
-      <img alt="" class="happy-frame" src="https://i.ibb.co/F4BLT4j8/1000042309-removebg-preview.png" style="--asset-height:1.03553299;--asset-bottom:1.01522843;--asset-anchor:-47.794118%;"/>
-      <img alt="" class="frozen-frame" src="https://i.ibb.co/DPsjg9ww/1000042455-removebg-preview.png" style="--asset-height:1.04615385;--asset-bottom:1.01880342;--asset-anchor:-48.284314%;"/>
+      <img alt="" class="frame active" src="k2fF7sB9_1000042318-removebg-preview.png" style="--asset-height:1.10354223;--asset-bottom:1.03542234;--asset-anchor:-48.701299%;"/>
+      <img alt="" class="frame" src="QyB3W9h_1000042319-removebg-preview.png" style="--asset-height:1.10354223;--asset-bottom:1.03542234;--asset-anchor:-49.025974%;"/>
+      <img alt="" class="happy-frame" src="F4BLT4j8_1000042309-removebg-preview.png" style="--asset-height:1.03553299;--asset-bottom:1.01522843;--asset-anchor:-47.794118%;"/>
+      <img alt="" class="frozen-frame" src="DPsjg9ww_1000042455-removebg-preview.png" style="--asset-height:1.04615385;--asset-bottom:1.01880342;--asset-anchor:-48.284314%;"/>
       <div class="heart">❤️</div>
     </div>
     <!-- CLIENTE 5: UOMO ANZIANO — CAMMINATA, FELICITÀ, CONGELAMENTO -->
     <div id="customer5Template" class="customer customer-template customer5-template sprite-aligned" style="display:none;">
-      <img alt="" class="frame active walk-gif" src="https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/uomo_camminata_trasparente.webp" style="--asset-height:1.04712042;--asset-bottom:1.01047120;--asset-anchor:-48.963731%;"/>
-      <img alt="" class="happy-frame" src="https://i.ibb.co/HptPnxqL/file-00000000afec8206808ae4a9281b5442-removebg-preview.png" style="--asset-height:1.08127208;--asset-bottom:1.04593640;--asset-anchor:-49.754902%;"/>
-      <img alt="" class="frozen-frame" src="https://i.ibb.co/k2DfX1WT/1000042453-removebg-preview.png" style="--asset-height:1.06806283;--asset-bottom:1.03315881;--asset-anchor:-49.142157%;"/>
+      <img alt="" class="frame active walk-gif" src="5487e403_uomo_camminata_trasparente.webp" style="--asset-height:1.04712042;--asset-bottom:1.01047120;--asset-anchor:-48.963731%;"/>
+      <img alt="" class="happy-frame" src="HptPnxqL_file-00000000afec8206808ae4a9281b5442-removebg-preview.png" style="--asset-height:1.08127208;--asset-bottom:1.04593640;--asset-anchor:-49.754902%;"/>
+      <img alt="" class="frozen-frame" src="k2DfX1WT_1000042453-removebg-preview.png" style="--asset-height:1.06806283;--asset-bottom:1.03315881;--asset-anchor:-49.142157%;"/>
       <div class="heart">❤️</div>
     </div>
     <!-- CLIENTE 6: STUDENTE HIGHSCHOOL — CAMMINATA, FELICITÀ, CONGELAMENTO -->
     <div id="customer6Template" class="customer customer-template customer6-template sprite-aligned" style="display:none;">
-      <img alt="" class="frame active" src="https://i.ibb.co/rKHKzCzZ/1000043212-removebg-preview.png" style="--asset-height:1.18384880;--asset-bottom:1.14432990;--asset-anchor:-52.525253%;"/>
-      <img alt="" class="frame" src="https://i.ibb.co/wNHh3RXs/1000043213-removebg-preview.png" style="--asset-height:1.19072165;--asset-bottom:1.14432990;--asset-anchor:-54.545455%;"/>
-      <img alt="" class="happy-frame" src="https://i.ibb.co/rG8rp5GG/1000043191-removebg-preview.png" style="--asset-height:1.06620209;--asset-bottom:1.02613240;--asset-anchor:-52.696078%;"/>
-      <img alt="" class="frozen-frame" src="https://i.ibb.co/x4SynkS/1000043192-removebg-preview.png" style="--asset-height:1.09090909;--asset-bottom:1.03743316;--asset-anchor:-53.186275%;"/>
+      <img alt="" class="frame active" src="rKHKzCzZ_1000043212-removebg-preview.png" style="--asset-height:1.18384880;--asset-bottom:1.14432990;--asset-anchor:-52.525253%;"/>
+      <img alt="" class="frame" src="wNHh3RXs_1000043213-removebg-preview.png" style="--asset-height:1.19072165;--asset-bottom:1.14432990;--asset-anchor:-54.545455%;"/>
+      <img alt="" class="happy-frame" src="rG8rp5GG_1000043191-removebg-preview.png" style="--asset-height:1.06620209;--asset-bottom:1.02613240;--asset-anchor:-52.696078%;"/>
+      <img alt="" class="frozen-frame" src="x4SynkS_1000043192-removebg-preview.png" style="--asset-height:1.09090909;--asset-bottom:1.03743316;--asset-anchor:-53.186275%;"/>
       <div class="heart">❤️</div>
     </div>
     <!-- CLIENTE 7: MAMMA CON BAMBINO — CAMMINATA, FELICITÀ, CONGELAMENTO -->
     <div id="customer7Template" class="customer customer-template customer7-template sprite-aligned" style="display:none;">
-      <img alt="" class="frame active walk-gif" src="https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/mamma_bambino_camminata_centrata.webp" style="--asset-height:1.19266055;--asset-bottom:1.02064220;--asset-anchor:-30.472103%;"/>
-      <img alt="" class="happy-frame" src="https://i.ibb.co/b8XZs1r/1000043193-removebg-preview.png" style="--asset-height:1.11533243;--asset-bottom:1.08412483;--asset-anchor:-46.204620%;"/>
-      <img alt="" class="frozen-frame" src="https://i.ibb.co/xKQFS6Vg/1000043194-removebg-preview.png" style="--asset-height:1.11272727;--asset-bottom:1.04909091;--asset-anchor:-51.470588%;"/>
+      <img alt="" class="frame active walk-gif" src="2e844743_mamma_bambino_camminata_centrata.webp" style="--asset-height:1.19266055;--asset-bottom:1.02064220;--asset-anchor:-30.472103%;"/>
+      <img alt="" class="happy-frame" src="b8XZs1r_1000043193-removebg-preview.png" style="--asset-height:1.11533243;--asset-bottom:1.08412483;--asset-anchor:-46.204620%;"/>
+      <img alt="" class="frozen-frame" src="xKQFS6Vg_1000043194-removebg-preview.png" style="--asset-height:1.11272727;--asset-bottom:1.04909091;--asset-anchor:-51.470588%;"/>
       <div class="heart">❤️</div>
     </div>
     <!-- CLIENTE 8: DONNA MOLTO ANZIANA — CAMMINATA, FELICITÀ, CONGELAMENTO -->
     <div id="customer8Template" class="customer customer-template customer8-template sprite-aligned" style="display:none;">
-      <img alt="" class="frame active walk-gif" src="https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/Signora_cappello_camminata_trasparente.gif" style="--asset-height:1.05822268;--asset-bottom:1.02451481;--asset-anchor:-47.448980%;"/>
-      <img alt="" class="happy-frame" src="https://i.ibb.co/CKCXBT8L/1000043199-removebg-preview.png" style="--asset-height:1.11678832;--asset-bottom:1.07481752;--asset-anchor:-47.303922%;"/>
-      <img alt="" class="frozen-frame" src="https://i.ibb.co/RGQdckHM/1000043200-removebg-preview.png" style="--asset-height:1.14821764;--asset-bottom:1.08818011;--asset-anchor:-49.019608%;"/>
+      <img alt="" class="frame active walk-gif" src="Signora_cappello_camminata_trasparente.gif" style="--asset-height:1.05822268;--asset-bottom:1.02451481;--asset-anchor:-47.448980%;"/>
+      <img alt="" class="happy-frame" src="CKCXBT8L_1000043199-removebg-preview.png" style="--asset-height:1.11678832;--asset-bottom:1.07481752;--asset-anchor:-47.303922%;"/>
+      <img alt="" class="frozen-frame" src="RGQdckHM_1000043200-removebg-preview.png" style="--asset-height:1.14821764;--asset-bottom:1.08818011;--asset-anchor:-49.019608%;"/>
       <div class="heart">❤️</div>
     </div>
     <div id="assistantBossTemplate" class="customer customer-template boss-unit-template" style="display:none;">
-     <img alt="" class="frame active" src="https://i.ibb.co/gL7RgywQ/1000042613-removebg-preview.png"/>
-     <img alt="" class="frame" src="https://i.ibb.co/KjFm1jwP/1000042614-removebg-preview.png"/>
-     <img alt="" class="happy-frame" src="https://i.ibb.co/Wvpbt1Xj/1000042616-removebg-preview.png"/>
+     <img alt="" class="frame active" src="gL7RgywQ_1000042613-removebg-preview.png"/>
+     <img alt="" class="frame" src="KjFm1jwP_1000042614-removebg-preview.png"/>
+     <img alt="" class="happy-frame" src="Wvpbt1Xj_1000042616-removebg-preview.png"/>
      <div class="heart">
       ❤️
      </div>
     </div>
     <div id="mainBossTemplate" class="customer customer-template boss-unit-template" style="display:none;">
-     <img alt="" class="frame active" src="https://i.ibb.co/nqtp2fbX/1000042606-removebg-preview.png"/>
-     <img alt="" class="frame" src="https://i.ibb.co/rTs3r2F/1000042607-removebg-preview.png"/>
-     <img alt="" class="happy-frame" src="https://i.ibb.co/WvM1QTVC/1000042381-removebg-preview.png"/>
+     <img alt="" class="frame active" src="nqtp2fbX_1000042606-removebg-preview.png"/>
+     <img alt="" class="frame" src="rTs3r2F_1000042607-removebg-preview.png"/>
+     <img alt="" class="happy-frame" src="WvM1QTVC_1000042381-removebg-preview.png"/>
      <div class="heart">
       ❤️
      </div>
     </div>
     <div id="cameramanBossTemplate" class="customer customer-template boss-unit-template" style="display:none;">
-     <img alt="" class="frame active" src="https://i.ibb.co/NgZmwGVt/1000042623-removebg-preview.png"/>
-     <img alt="" class="frame" src="https://i.ibb.co/ymH4x7R9/1000042624-removebg-preview.png"/>
-     <img alt="" class="happy-frame" src="https://i.ibb.co/20kVQ3Wk/1000042617-removebg-preview.png"/>
+     <img alt="" class="frame active" src="NgZmwGVt_1000042623-removebg-preview.png"/>
+     <img alt="" class="frame" src="ymH4x7R9_1000042624-removebg-preview.png"/>
+     <img alt="" class="happy-frame" src="20kVQ3Wk_1000042617-removebg-preview.png"/>
      <div class="heart">
       ❤️
      </div>
     </div>
     <!-- CUOCO -->
     <div id="cook">
-     <img alt="" class="active" src="https://i.ibb.co/yFtf2t1Z/1000042207-removebg-preview.png"/>
-     <img alt="" class="" src="https://i.ibb.co/C55PHjY3/1000042208-removebg-preview.png"/>
-     <img alt="" class="" src="https://i.ibb.co/TxB5sjB4/1000042209-removebg-preview.png"/>
-     <img alt="" class="" src="https://i.ibb.co/n88k4TCp/1000042210-removebg-preview.png"/>
-     <img alt="" class="" src="https://i.ibb.co/M5yvWywM/1000042211-removebg-preview.png"/>
+     <img alt="" class="active" src="yFtf2t1Z_1000042207-removebg-preview.png"/>
+     <img alt="" class="" src="C55PHjY3_1000042208-removebg-preview.png"/>
+     <img alt="" class="" src="TxB5sjB4_1000042209-removebg-preview.png"/>
+     <img alt="" class="" src="n88k4TCp_1000042210-removebg-preview.png"/>
+     <img alt="" class="" src="M5yvWywM_1000042211-removebg-preview.png"/>
     </div>
     <!-- CAMERIERA -->
     <div id="waitress">
-     <img alt="" class="active" src="https://i.ibb.co/QF89M6kD/1000042138-removebg-preview.png"/>
-     <img alt="" class="" src="https://i.ibb.co/Kj0pmpYW/1000042139-removebg-preview.png"/>
-     <img alt="" class="" src="https://i.ibb.co/k68q8JzG/1000042140-removebg-preview.png"/>
-     <img alt="" class="" src="https://i.ibb.co/21cygdFG/1000042141-removebg-preview.png"/>
-     <img alt="" class="" src="https://i.ibb.co/ns3H0fCB/1000042143-removebg-preview.png"/>
-     <img alt="" class="" src="https://i.ibb.co/TBvNWcQ8/1000042144-removebg-preview.png"/>
-     <img alt="" class="" src="https://i.ibb.co/QF89M6kD/1000042138-removebg-preview.png"/>
+     <img alt="" class="active" src="QF89M6kD_1000042138-removebg-preview.png"/>
+     <img alt="" class="" src="Kj0pmpYW_1000042139-removebg-preview.png"/>
+     <img alt="" class="" src="k68q8JzG_1000042140-removebg-preview.png"/>
+     <img alt="" class="" src="21cygdFG_1000042141-removebg-preview.png"/>
+     <img alt="" class="" src="ns3H0fCB_1000042143-removebg-preview.png"/>
+     <img alt="" class="" src="TBvNWcQ8_1000042144-removebg-preview.png"/>
+     <img alt="" class="" src="QF89M6kD_1000042138-removebg-preview.png"/>
     </div>
     <!-- SEON JEONG -->
     <div id="seon">
-     <img alt="" class="active" src="https://i.ibb.co/prNNLfzf/tile000-removebg-preview.png" style="--shift:0.0%"/>
-     <img alt="" class="" src="https://i.ibb.co/Fbvk6qVG/tile001-removebg-preview.png" style="--shift:-0.6666666666666666%"/>
-     <img alt="" class="" src="https://i.ibb.co/wNPT779g/tile004-removebg-preview.png" style="--shift:-5.0%"/>
-     <img alt="" class="" src="https://i.ibb.co/wD2BB7d/tile005-removebg-preview.png" style="--shift:-5.666666666666667%"/>
-     <img alt="" class="" src="https://i.ibb.co/LzG1Bgy5/tile002-2-removebg-preview.png" style="--shift:-3.3333333333333335%"/>
-     <img alt="" class="" src="https://i.ibb.co/JW9CLY8Z/tile003-2-removebg-preview.png" style="--shift:-3.3333333333333335%"/>
+     <img alt="" class="active" src="prNNLfzf_tile000-removebg-preview.png" style="--shift:0.0%"/>
+     <img alt="" class="" src="Fbvk6qVG_tile001-removebg-preview.png" style="--shift:-0.6666666666666666%"/>
+     <img alt="" class="" src="wNPT779g_tile004-removebg-preview.png" style="--shift:-5.0%"/>
+     <img alt="" class="" src="wD2BB7d_tile005-removebg-preview.png" style="--shift:-5.666666666666667%"/>
+     <img alt="" class="" src="LzG1Bgy5_tile002-2-removebg-preview.png" style="--shift:-3.3333333333333335%"/>
+     <img alt="" class="" src="JW9CLY8Z_tile003-2-removebg-preview.png" style="--shift:-3.3333333333333335%"/>
     </div>
     <div id="exp-bar">
      <div id="exp-fill">
@@ -1754,9 +1754,9 @@ body {
     <button hidden="" id="skipTransition" type="button">
      SKIP ▸
     </button>
-    <img alt="" class="transition-image" id="transitionImage1" src="https://i.ibb.co/Xfyp7q6S/IMG-20260902-WA0007-removebg-preview.png"/>
-    <img alt="" class="transition-image" id="transitionImage2" src="https://i.ibb.co/7tJLX4sv/IMG-20260902-WA0006-removebg-preview.png"/>
-    <img alt="" class="transition-image" id="transitionImage3" src="https://i.ibb.co/RGnVyM45/file-000000002dd881f5ba124fc2a3c78a0c-removebg-preview-removebg-preview.png"/>
+    <img alt="" class="transition-image" id="transitionImage1" src="Xfyp7q6S_IMG-20260902-WA0007-removebg-preview.png"/>
+    <img alt="" class="transition-image" id="transitionImage2" src="7tJLX4sv_IMG-20260902-WA0006-removebg-preview.png"/>
+    <img alt="" class="transition-image" id="transitionImage3" src="RGnVyM45_file-000000002dd881f5ba124fc2a3c78a0c-removebg-preview-removebg-preview.png"/>
    </div>
   </div>
   <script>
@@ -2069,53 +2069,53 @@ function clearAllTimersBase() {
  ================================================================ */
 const POWER_UP_PANELS = {
   pasta: [
-    'https://i.ibb.co/WN2w5Gdr/20260904-130420-0000-removebg-preview.png',
-    'https://i.ibb.co/TB2VNLT9/20260904-130538-0000-removebg-preview.png',
-    'https://i.ibb.co/v4HTHVvD/20260904-130654-0000-removebg-preview.png'
+    'WN2w5Gdr_20260904-130420-0000-removebg-preview.png',
+    'TB2VNLT9_20260904-130538-0000-removebg-preview.png',
+    'v4HTHVvD_20260904-130654-0000-removebg-preview.png'
   ],
   sauce: [
-    'https://i.ibb.co/wN1wThJ4/20260906-064841-0000-removebg-preview.png',
-    'https://i.ibb.co/bRBNBZjK/20260906-064910-0000-removebg-preview.png',
-    'https://i.ibb.co/9mqm7dsN/20260906-064941-0000-removebg-preview.png'
+    'wN1wThJ4_20260906-064841-0000-removebg-preview.png',
+    'bRBNBZjK_20260906-064910-0000-removebg-preview.png',
+    '9mqm7dsN_20260906-064941-0000-removebg-preview.png'
   ],
   speed: [
-    'https://i.ibb.co/MkNSjJwS/20260904-121910-0000-removebg-preview.png',
-    'https://i.ibb.co/S4pzKRB7/20260904-122032-0000-removebg-preview-1.png',
-    'https://i.ibb.co/yFG9djjL/20260904-115710-0000-removebg-preview.png'
+    'MkNSjJwS_20260904-121910-0000-removebg-preview.png',
+    'S4pzKRB7_20260904-122032-0000-removebg-preview-1.png',
+    'yFG9djjL_20260904-115710-0000-removebg-preview.png'
   ],
-  waitress: 'https://i.ibb.co/5WW0VDPS/20260906-065655-0000-removebg-preview.png',
+  waitress: '5WW0VDPS_20260906-065655-0000-removebg-preview.png',
   iceShot: [
-    'https://i.ibb.co/3mytpycj/1000042532-removebg-preview.png',
-    'https://i.ibb.co/RpPWmLf1/1000042533-removebg-preview.png',
-    'https://i.ibb.co/kg8ZJ26R/1000042534-removebg-preview.png'
+    '3mytpycj_1000042532-removebg-preview.png',
+    'RpPWmLf1_1000042533-removebg-preview.png',
+    'kg8ZJ26R_1000042534-removebg-preview.png'
   ],
   iceChain: [
-    'https://i.ibb.co/4RctQkYn/1000042535-removebg-preview.png',
-    'https://i.ibb.co/YBXzXK8T/1000042536-removebg-preview.png',
-    'https://i.ibb.co/R46THQGk/1000042537-removebg-preview.png'
+    '4RctQkYn_1000042535-removebg-preview.png',
+    'YBXzXK8T_1000042536-removebg-preview.png',
+    'R46THQGk_1000042537-removebg-preview.png'
   ],
   deepFreeze: [
-    'https://i.ibb.co/d0wKYzSF/1000042538-removebg-preview.png',
-    'https://i.ibb.co/1f3rLZ6L/1000042539-removebg-preview.png',
-    'https://i.ibb.co/PG5PFZfw/1000042542-removebg-preview.png'
+    'd0wKYzSF_1000042538-removebg-preview.png',
+    '1f3rLZ6L_1000042539-removebg-preview.png',
+    'PG5PFZfw_1000042542-removebg-preview.png'
   ]
 };
 Object.assign(POWER_UP_PANELS, {
-  seon: 'https://i.ibb.co/B245nYHg/1000044650-removebg-preview.png',
+  seon: 'B245nYHg_1000044650-removebg-preview.png',
   hotSplash: [
-    'https://i.ibb.co/F258DF4/1000044647-removebg-preview.png',
-    'https://i.ibb.co/mrVv2Gct/1000044648-removebg-preview.png',
-    'https://i.ibb.co/XxMRFsSf/1000044649-removebg-preview.png'
+    'F258DF4_1000044647-removebg-preview.png',
+    'mrVv2Gct_1000044648-removebg-preview.png',
+    'XxMRFsSf_1000044649-removebg-preview.png'
   ],
   caffeineRush: [
-    'https://i.ibb.co/N6t982KB/1000044642-removebg-preview.png',
-    'https://i.ibb.co/s9x7Yw4X/1000044643-removebg-preview.png',
-    'https://i.ibb.co/93N2pgH2/1000044645-removebg-preview.png'
+    'N6t982KB_1000044642-removebg-preview.png',
+    's9x7Yw4X_1000044643-removebg-preview.png',
+    '93N2pgH2_1000044645-removebg-preview.png'
   ],
   doubleShot: [
-    'https://i.ibb.co/XxcZW307/1000044639-removebg-preview.png',
-    'https://i.ibb.co/S71Zby8R/1000044640-removebg-preview.png',
-    'https://i.ibb.co/ZpftT8vp/1000044641-removebg-preview.png'
+    'XxcZW307_1000044639-removebg-preview.png',
+    'S71Zby8R_1000044640-removebg-preview.png',
+    'ZpftT8vp_1000044641-removebg-preview.png'
   ]
 });
 /* ── getAvailablePowerUps ────────────────────────────────────────── */
@@ -2785,7 +2785,7 @@ function throwProjectile(target, type, special = false) {
   game.appendChild(marker);
   const projectile = isCoffee ? makeCappuccino() : document.createElement('img');
   projectile.className = type + (special ? ' special-projectile' : '');
-  if (!isCoffee) projectile.src = isDrink ? 'https://i.ibb.co/MDk4xzJd/1788234306668-removebg-preview.png' : 'https://i.ibb.co/LDw4VzQs/1788013611587-removebg-preview.png';
+  if (!isCoffee) projectile.src = isDrink ? 'MDk4xzJd_1788234306668-removebg-preview.png' : 'LDw4VzQs_1788013611587-removebg-preview.png';
   game.appendChild(projectile);
   const pr = projectile.getBoundingClientRect();
   const halfWidth = pr.width / 2,
@@ -3147,9 +3147,9 @@ function resetGame() {
   resetGameBase();
 }
 const GAME_OVER_ANIMATIONS = [
-  'https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/video_trasparente.webp',
-  'https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/barista_stordita_trasparente%281%29.webp',
-  'https://raw.githubusercontent.com/backtothemovie2024-afk/tarai-game/main/cameriera_stordita_trasparente.webp'
+  '25bbfe20_video_trasparente.webp',
+  'barista_stordita_trasparente(1).webp',
+  '2662556f_cameriera_stordita_trasparente.webp'
 ];
 /* ================================================================
    GAME OVER E VITTORIA
@@ -3400,18 +3400,18 @@ const SPECIAL_CONFIG = {
   espressoMs: 6000,
   cook: {
     name: 'Off the Menu!',
-    panel: 'https://i.ibb.co/r2SNhymk/1000045952-removebg-preview.png',
-    artwork: 'https://i.ibb.co/mpT1w3m/1000045967-removebg-preview.png'
+    panel: 'r2SNhymk_1000045952-removebg-preview.png',
+    artwork: 'mpT1w3m_1000045967-removebg-preview.png'
   },
   seon: {
     name: 'Double Espresso',
-    panel: 'https://i.ibb.co/xq49qnZv/1000045951-removebg-preview.png',
-    artwork: 'https://i.ibb.co/S4w1XCGm/1000045969-removebg-preview.png'
+    panel: 'xq49qnZv_1000045951-removebg-preview.png',
+    artwork: 'S4w1XCGm_1000045969-removebg-preview.png'
   },
   waitress: {
     name: 'On the House!',
-    panel: 'https://i.ibb.co/PGfYbNJ8/1000045953-removebg-preview.png',
-    artwork: 'https://i.ibb.co/hJGMFf4P/1000045965-removebg-preview.png'
+    panel: 'PGfYbNJ8_1000045953-removebg-preview.png',
+    artwork: 'hJGMFf4P_1000045965-removebg-preview.png'
   }
 };
 const specialCharge = {cook:0, waitress:0, seon:0};
