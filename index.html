@@ -38,7 +38,10 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>Tarai Rush — REV 10</title>
   <link rel="manifest" href="/tarai-game/manifest%20(6).json">
-  <style>@font-face{font-family:'Knewave';font-style:normal;font-weight:400;font-display:swap;src:url('Knewave.ttf') format('truetype');}</style>
+  <style>@font-face{font-family:'Knewave';font-style:normal;font-weight:400;font-display:swap;src:url('Knewave.ttf') format('truetype');}
+/* [CSS 10] BOSS FOODIE — GIF CAMMINATA/FOTO */
+.boss-foodie-gif { object-fit: contain; transform-origin: center bottom; }
+</style>
   <style>
 
 /* ================================================================
@@ -1693,9 +1696,9 @@ body {
       ❤️
      </div>
     </div>
+    <!-- BOSS FOODIE — GIF: cammina, si gira e scatta le foto -->
     <div id="mainBossTemplate" class="customer customer-template boss-unit-template" style="display:none;">
-     <img alt="" class="frame active" src="nqtp2fbX_1000042606-removebg-preview.png"/>
-     <img alt="" class="frame" src="rTs3r2F_1000042607-removebg-preview.png"/>
+     <img alt="Boss Foodie" class="frame active walk-gif boss-foodie-gif" src="Boss_Foodie_camminata_e_foto_v1.gif"/>
      <img alt="" class="happy-frame" src="WvM1QTVC_1000042381-removebg-preview.png"/>
      <div class="heart">
       ❤️
@@ -3309,7 +3312,7 @@ function showPowerUpScreen() {
 const BOSS_CAMERA_X = .35,
   BOSS_CAMERA_Y = .21;
 /* ── cameraPosition ────────────────────────────────────────── */
-function cameraPosition(boss) {
+function cameraPosition(boss, cameraX = BOSS_CAMERA_X, cameraY = BOSS_CAMERA_Y) {
   const img = boss.querySelector('.frame.active'),
     r = (img || boss).getBoundingClientRect(),
     g = document.getElementById('game').getBoundingClientRect();
@@ -3317,66 +3320,90 @@ function cameraPosition(boss) {
   const w = img && img.naturalWidth ? img.naturalWidth * scale : r.width,
     h = img && img.naturalHeight ? img.naturalHeight * scale : r.height;
   return {
-    x: r.left - g.left + (r.width - w) / 2 + w * BOSS_CAMERA_X,
-    y: r.top - g.top + (r.height - h) / 2 + h * BOSS_CAMERA_Y
+    x: r.left - g.left + (r.width - w) / 2 + w * cameraX,
+    y: r.top - g.top + (r.height - h) / 2 + h * cameraY
   };
 }
 /* ================================================================
    BOSS — FLASH DALLA FOTOCAMERA
    ================================================================ */
 function startBossFlash(boss) {
+  /* La GIF dura 7,5 s e contiene due foto: una con camera a sinistra,
+     una con camera a destra. Il timer usa il gameClock, quindi gli effetti
+     si fermano durante carte, speciali e video boss. */
+  const BOSS_PHOTOS = [
+    { delay: 3080, cameraX: .11, cameraY: .21 },
+    { delay: 3750, cameraX: .80, cameraY: .21 }
+  ];
+  let nextPhoto = 0;
   const valid = () => !gameFinished && boss.isConnected && boss.dataset.satisfied !== 'true';
 
-  function charge() {
+  function summonTwoRandomCustomers() {
+    let remaining = 2;
+    const config = WAVES[BOSS_WAVE - 2] || WAVES[WAVES.length - 2];
+
+    function summonOne() {
+      if (!valid() || !remaining) return;
+      const game = document.getElementById('game');
+      const startY = CUSTOMER_START_Y * game.clientHeight;
+      const height = measureCustomerHeight('customer1Template');
+      const lanes = LANES.map((_, i) => i).filter(lane => customers.every(c => {
+        if (!c.isConnected || c.style.display === 'none' || Number(c.dataset.lane) !== lane) return true;
+        return hasLaneSpace(startY, height, c._walkY * game.clientHeight, c.offsetHeight);
+      }));
+      if (!lanes.length) {
+        gameLater(summonOne, 100);
+        return;
+      }
+      const type = chooseCustomerType();
+      const lane = lanes[Math.floor(Math.random() * lanes.length)];
+      const customer = createCustomer('customer' + type + 'Template', type, config.hp, lane, config.walkTime, false);
+      customer.dataset.wave = String(currentWave);
+      customer.dataset.bossSummon = 'true';
+      remaining--;
+      if (remaining) gameLater(summonOne, 180);
+    }
+    summonOne();
+  }
+
+  function firePhoto(photo) {
     if (!valid()) return;
     if (boss.dataset.frozen === 'true') {
-      gameLater(charge, 500);
+      gameLater(() => firePhoto(photo), 400);
       return;
     }
+    const p = cameraPosition(boss, photo.cameraX, photo.cameraY);
     const light = document.createElement('div');
-    light.className = 'camera-light charging';
-    document.getElementById('game').appendChild(light);
-    const follow = () => {
-      if (!light.isConnected || !valid()) {
-        light.remove();
-        return;
-      }
-      const p = cameraPosition(boss);
-      light.style.left = p.x + 'px';
-      light.style.top = p.y + 'px';
-      gameFrame(follow);
-    };
-    follow();
+    light.className = 'camera-light fired';
+    light.style.left = p.x + 'px';
+    light.style.top = p.y + 'px';
+    const ring = document.createElement('div');
+    ring.className = 'flash-ring';
+    ring.style.left = p.x + 'px';
+    ring.style.top = p.y + 'px';
+    const game = document.getElementById('game');
+    game.append(light, ring);
+    const wash = document.getElementById('bossFlashWash');
+    wash.classList.remove('active');
+    void wash.offsetWidth;
+    wash.classList.add('active');
+    summonTwoRandomCustomers();
     gameLater(() => {
-      if (!valid()) {
-        light.remove();
-        return;
-      }
-      if (boss.dataset.frozen === 'true') {
-        light.remove();
-        gameLater(charge, 1000);
-        return;
-      }
-      light.className = 'camera-light fired';
-      const p = cameraPosition(boss),
-        ring = document.createElement('div');
-      ring.className = 'flash-ring';
-      ring.style.left = p.x + 'px';
-      ring.style.top = p.y + 'px';
-      document.getElementById('game').appendChild(ring);
-      const wash = document.getElementById('bossFlashWash');
-      wash.classList.remove('active');
-      void wash.offsetWidth;
-      wash.classList.add('active');
-      customers.filter(c => ['assistant', 'cameraman'].includes(c.dataset.type) && c.dataset.satisfied !== 'true').forEach(c => c._boostUntil = gameClock + 4000);
-      gameLater(() => {
-        light.remove();
-        ring.remove();
-      }, 600);
-      gameLater(charge, 6300);
-    }, 700);
+      light.remove();
+      ring.remove();
+    }, 650);
   }
-  gameLater(charge, 6000);
+
+  function schedulePhoto() {
+    const photo = BOSS_PHOTOS[nextPhoto];
+    gameLater(() => {
+      if (!valid()) return;
+      firePhoto(photo);
+      nextPhoto = (nextPhoto + 1) % BOSS_PHOTOS.length;
+      schedulePhoto();
+    }, photo.delay);
+  }
+  schedulePhoto();
 }
 
 /* ================================================================
