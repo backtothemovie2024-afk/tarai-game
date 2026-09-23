@@ -1563,12 +1563,19 @@ background:#000;
   <div id="phone">
    <!-- VIDEO INTRO -->
    <div id="intro">
-<video autoplay="" id="introVideo" muted="" playsinline="" preload="auto" poster="file_00000000973c81fa98cf6b3c62ed64b7.png">
-     <source src="intro.mp4" type="video/mp4"/>
-    </video>
-    <div id="introTap">
-    </div>
-   </div>
+
+  <video autoplay id="studioRyuVideo" muted playsinline preload="auto">
+    <source src="studio_ryu_intro_3s.mp4" type="video/mp4"/>
+  </video>
+
+  <video id="introVideo" muted playsinline preload="auto" style="display:none;">
+    <source src="intro.mp4" type="video/mp4"/>
+  </video>
+
+  <div id="introTap">
+  </div>
+
+</div>
    <div id="introFade">
    </div>
    <!-- MENU PRINCIPALE -->
@@ -1800,11 +1807,18 @@ const ENABLE_GAMEOVER_TEST = false;
  [JS 01] INTRO E MENU
  ================================================================ */
 const intro = document.getElementById('intro');
+const studioRyuVideo = document.getElementById('studioRyuVideo');
 const introVideo = document.getElementById('introVideo');
 const introFade = document.getElementById('introFade');
 const menuVideo = document.getElementById('cover');
 let introClosing = false;
 let menuReady = false;
+studioRyuVideo.addEventListener('ended', function() {
+  studioRyuVideo.style.display = 'none';
+  introVideo.style.display = 'block';
+  introVideo.currentTime = 0;
+  introVideo.play();
+});
 
 /* ── playMenuVideo ────────────────────────────────────────── */
 function playMenuVideo() {
