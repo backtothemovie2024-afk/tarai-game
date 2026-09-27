@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 
 <!--
-TARAI RUSH — REV 11
+TARAI RUSH — REV 12
 FILE COMPLETO: HTML, CSS E JAVASCRIPT.
 La GIF Boss_Foodie_camminata_e_foto_v1.gif deve restare accanto a index.html.
 Mantieni tutte le altre immagini e i video nei percorsi già usati dalla REV 10.
 Cerca una sigla tra parentesi quadre per raggiungere la relativa minisezione.
 
+MODIFICHE REV 12
+ - Raffica speciale: velocità 2200 px/s, intervallo 140 ms, scia dorata.
+ - Cappuccino SVG autonomo, senza ritagli dei pannelli.
+
 REGOLAZIONI PRINCIPALI
+ [JS 061] Disegno del cappuccino.
+ [JS 07] Velocità e intervallo della raffica speciale.
  [CONFIG 01] Boss: vita, foto, probabilità 50%, durata celebrazione.
  [CSS 90] Dimensioni boss e posizione indicatore cucina.
  [CSS 05] Pannelli potenziamenti.
@@ -148,7 +154,7 @@ INDICE FUNZIONI (nomi corrispondenti al codice)
   name="viewport"
 />
 
-<title>Tarai Rush — REV 11</title>
+<title>Tarai Rush — REV 12</title>
 
 <link
   rel="manifest"
@@ -1966,7 +1972,25 @@ body {
 
 .special-projectile {
   filter:
-    drop-shadow(0 0 5px #ffdb68);
+    drop-shadow(0 0 9px #ffdb68) drop-shadow(0 0 3px #fff5c1);
+}
+
+/* [CSS 09.1] SCIA DELLA RAFFICA SPECIALE */
+.special-pasta-trail {
+  width:38px;
+  height:9px;
+  border-radius:50%;
+  background:linear-gradient(90deg,transparent,#ffc43d,#fff5c1);
+  box-shadow:0 0 8px #ffcf55;
+  transform:translate(-50%,-50%) rotate(var(--angle));
+  animation:specialTrailFade .16s linear forwards;
+}
+@keyframes specialTrailFade {
+  from { opacity:.9; }
+  to { opacity:0; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .special-pasta-trail { display:none; }
 }
 
 /* AREA CLICCABILE CARTE */
@@ -2412,7 +2436,7 @@ body {
   <!-- [HTML 02] MENU -->
   <div id="menu">
    <span id="buildRevision">
-    REV 11
+    REV 12
    </span>
    <video id="cover" loop="" muted="" playsinline="" preload="auto">
     <source src="1e7eec53_Animate_chef_image_with_steam_20260915082519.mp4" type="video/mp4"/>
@@ -3860,34 +3884,26 @@ let cupId = 0;
 function makeCappuccino() {
   const element = document.createElement('div');
   const id = 'cup-' + (++cupId);
+  // Tazzina autonoma: nessun collegamento alle immagini dei potenziamenti.
   element.innerHTML = `
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="674 756 181 130"
-  >
-    <defs>
-      <clipPath id="${id}">
-        <path
-          d="
-          M692 782
-          C695 751 815 746 825 788
-          C852 773 867 815 823 837
-          C863 854 837 883 764 885
-          C684 887 654 855 693 837
-          Z
-          "
-        />
-      </clipPath>
-    </defs>
-    <image
-      href="${POWER_UP_PANELS.seon}"
-      width="1155"
-      height="1536"
-      preserveAspectRatio="none"
-      clip-path="url(#${id})"
-    />
-  </svg>
-  `;
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 90" aria-hidden="true">
+      <defs>
+        <linearGradient id="${id}-ceramic" x2="0" y2="1">
+          <stop stop-color="#ffffff"/>
+          <stop offset="1" stop-color="#c9bbae"/>
+        </linearGradient>
+      </defs>
+      <ellipse cx="56" cy="74" rx="48" ry="12" fill="#e8ddd0" stroke="#765745" stroke-width="3"/>
+      <ellipse cx="56" cy="73" rx="32" ry="6" fill="#b7a18b"/>
+      <path d="M91 34 C119 25 121 65 89 64" fill="none" stroke="#765745" stroke-width="12"/>
+      <path d="M91 34 C119 25 121 65 89 64" fill="none" stroke="#fff0df" stroke-width="7"/>
+      <path d="M20 29 L25 58 C29 80 82 80 88 58 L94 29 Z"
+        fill="url(#${id}-ceramic)" stroke="#765745" stroke-width="3"/>
+      <ellipse cx="57" cy="29" rx="37" ry="15" fill="#fff8ed" stroke="#765745" stroke-width="3"/>
+      <ellipse cx="57" cy="29" rx="31" ry="10" fill="#b8753e"/>
+      <path d="M57 36 C36 29 44 19 53 24 L57 27 L61 24 C71 19 79 29 57 36Z" fill="#fff0d0"/>
+      <path d="M30 42 L33 55" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+    </svg>`;
   return element;
 }
 /* SEON JEONG */
@@ -3990,6 +4006,7 @@ function position() {
   const speed = special ? SPECIAL_CONFIG.projectileSpeed : (isDrink || isCoffee) ? 350 : 350 * (1 + powerUps
     .speed * .33) * (1 + pastaSpeedBonus);
   let lastTime = performance.now();
+  let lastTrailAt = -Infinity;
 
   /* [JS 068] MOVE */
 function move(now) {
@@ -4014,6 +4031,17 @@ function move(now) {
     const dx = endX - currentX;
     const dy = endY - currentY;
     const distance = Math.hypot(dx, dy);
+    // [JS 068.1] Scia: usa il tempo di gioco e rispetta le pause.
+    if (special && gameClock - lastTrailAt >= 30) {
+      lastTrailAt = gameClock;
+      const trail = document.createElement('div');
+      trail.className = 'impact-particle special-pasta-trail';
+      trail.style.left = (currentX - gameRect.left) + 'px';
+      trail.style.top = (currentY - gameRect.top) + 'px';
+      trail.style.setProperty('--angle', Math.atan2(dy, dx) + 'rad');
+      game.appendChild(trail);
+      gameLater(() => trail.remove(), 180);
+    }
     const movement = speed * dt;
     if (distance <= movement) {
       currentX = endX;
@@ -4795,10 +4823,10 @@ const SPECIAL_CONFIG = {
   killsRequired: 12,
   presentationMs: 1000,
   chefVolleys: 3,
-  projectileSpeed: 1400,
+  projectileSpeed: 2200,
   chefTargets: 3,
   chefDamageMultiplier: 2,
-  volleyIntervalMs: 250,
+  volleyIntervalMs: 140,
   waitressDamage: 3,
   freezeMs: 3000,
   bossFreezeMs: 1500,
@@ -5059,203 +5087,5 @@ function applySpecial(actor) {
   }
 }
 
-/* [JS 117] HIT SPECIAL PROJECTILE */
-function hitSpecialProjectile(customer, projectile, type) {
-  if (projectile) {
-    projectile.remove();
-  }
-  if (!customerIsVisible(customer) || customer.dataset.satisfied === 'true') return;
-  createImpactEffect(customer, type);
-  const chef = type === 'pasta';
-  const damage = chef ? (5 + powerUps.sauce) * SPECIAL_CONFIG.chefDamageMultiplier : SPECIAL_CONFIG
-    .waitressDamage;
-  customer.dataset.hp = Math.max(0, Number(customer.dataset.hp) - damage);
-  if (Number(customer.dataset.hp) <= 0) {
-    satisfyCustomer(customer, chef ? 'cook' : 'waitress', false);
-  } else if (!chef) {
-    freezeCustomer(customer, customer.dataset.boss === 'true' ? SPECIAL_CONFIG.bossFreezeMs : SPECIAL_CONFIG
-      .freezeMs);
-  }
-}
-/* POWERUP INPUT LOCK */
-/* [JS 118] LOCK POWER UP BACKGROUND */
-function lockPowerUpBackground(locked) {
-  for (const child of document.getElementById('game').children) {
-    if (child.id !== 'powerup-overlay') {
-      child.inert = locked;
-    }
-  }
-}
-
-/* [JS 119] GUARD POWER UP INPUT */
-function guardPowerUpInput(event) {
-  if (!powerUpPaused) return;
-  const options = document.getElementById('powerup-options');
-  const slot = event.target.closest?.('button.powerup-slot');
-  const allowed = slot && options.contains(slot);
-  if (event.type === 'keydown' && event.key === 'Tab') {
-    const cards = Array.from(options.querySelectorAll('button.powerup-slot'));
-    if (cards.length) {
-      const index = cards.indexOf(document.activeElement);
-      cards[
-        (index + (event.shiftKey ? cards.length - 1 : 1)) % cards.length].focus();
-    }
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    return;
-  }
-  if (!allowed) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-  }
-}
-for (const type of ['pointerdown', 'pointerup', 'click', 'touchstart', 'touchend', 'keydown']) {
-  document.addEventListener(type, guardPowerUpInput, {
-    capture: true,
-    passive: false
-  });
-}
-initSpecialPanels();
-
-/* [DATI 01] BOSS: legge i fotogrammi dalla GIF già presente nella cartella.
-   Il codice resta leggero. La riproduzione segue l'orologio del gioco. */
-const BOSS_ANIMATION = { frames: [], durations: [] };
-let bossAnimationPromise = null;
-
-/* [JS 120] CARICAMENTO ANIMAZIONE BOSS */
-function loadBossAnimation() {
-  if (bossAnimationPromise) return bossAnimationPromise;
-  bossAnimationPromise = fetch('Boss_Foodie_camminata_e_foto_v1.gif')
-    .then(response => {
-      if (!response.ok) throw new Error('GIF boss non disponibile');
-      return response.arrayBuffer();
-    })
-    .then(decodeBossGif)
-    .then(async animation => {
-      await Promise.all(animation.frames.map(src => new Promise((resolve, reject) => {
-        const image = new Image();
-        image.onload = resolve; image.onerror = reject; image.src = src;
-      })));
-      Object.assign(BOSS_ANIMATION, animation);
-      document.querySelector('#mainBossTemplate .boss-photo-frame').src = animation.frames[0];
-      return animation;
-    }).catch(error => { bossAnimationPromise = null; throw error; });
-  return bossAnimationPromise;
-}
-
-/* [JS 121] DECODIFICA GIF: PALETTE, TRASPARENZA E DURATA ORIGINALE */
-function decodeBossGif(buffer) {
-  const bytes = new Uint8Array(buffer);
-  let pos = 0;
-  const byte = () => {
-    if (pos >= bytes.length) throw new Error('GIF incompleta');
-    return bytes[pos++];
-  };
-  const word = () => byte() | byte() << 8;
-  const read = n => { const out = bytes.slice(pos, pos + n); pos += n; return out; };
-  const blocks = () => {
-    const result = [];
-    for (let n = byte(); n; n = byte()) result.push(...read(n));
-    return Uint8Array.from(result);
-  };
-  const header = String.fromCharCode(...read(6));
-  if (header !== 'GIF89a' && header !== 'GIF87a') throw new Error('Formato GIF non valido');
-  const width = word(), height = word(), flags = byte();
-  byte(); byte();
-  if (!width || !height || width * height > 16000000) throw new Error('Dimensioni GIF non valide');
-  const globalTable = flags & 128 ? read(3 * (1 << ((flags & 7) + 1))) : null;
-  const canvas = document.createElement('canvas');
-  canvas.width = width; canvas.height = height;
-  const context = canvas.getContext('2d');
-  let pixels = new Uint8ClampedArray(width * height * 4);
-  const frames = [], durations = [];
-  let control = { delay: 100, disposal: 0, transparent: -1 };
-  let previous = null;
-  while (pos < bytes.length) {
-    const marker = byte();
-    if (marker === 0x3b) break;
-    if (marker === 0x21) {
-      const label = byte();
-      if (label === 0xf9) {
-        if (byte() !== 4) throw new Error('Controllo GIF non valido');
-        const packed = byte(), delay = word(), transparent = byte(); byte();
-        control = { delay: delay ? delay * 10 : 100, disposal: (packed >> 2) & 7,
-          transparent: packed & 1 ? transparent : -1 };
-      } else blocks();
-      continue;
-    }
-    if (marker !== 0x2c) throw new Error('Blocco GIF non valido');
-    if (previous) {
-      if (previous.disposal === 2) {
-        for (let y = previous.top; y < Math.min(height, previous.top + previous.height); y++) {
-          pixels.fill(0, (y * width + previous.left) * 4,
-            (y * width + Math.min(width, previous.left + previous.width)) * 4);
-        }
-      } else if (previous.disposal === 3 && previous.saved) pixels.set(previous.saved);
-    }
-    const left = word(), top = word(), fw = word(), fh = word(), packed = byte();
-    if (left + fw > width || top + fh > height) throw new Error('Fotogramma fuori immagine');
-    const table = packed & 128 ? read(3 * (1 << ((packed & 7) + 1))) : globalTable;
-    if (!table) throw new Error('Palette GIF mancante');
-    const minimum = byte();
-    const indices = decodeGifLzw(blocks(), minimum, fw * fh);
-    const saved = control.disposal === 3 ? pixels.slice() : null;
-    const rows = [];
-    if (packed & 64) {
-      for (const [start, step] of [[0, 8], [4, 8], [2, 4], [1, 2]])
-        for (let y = start; y < fh; y += step) rows.push(y);
-    } else for (let y = 0; y < fh; y++) rows.push(y);
-    let at = 0;
-    for (const row of rows) for (let x = 0; x < fw; x++) {
-      const color = indices[at++];
-      if (color === control.transparent) continue;
-      const target = ((top + row) * width + left + x) * 4;
-      pixels[target] = table[color * 3]; pixels[target + 1] = table[color * 3 + 1];
-      pixels[target + 2] = table[color * 3 + 2]; pixels[target + 3] = 255;
-    }
-    const image = context.createImageData(width, height); image.data.set(pixels);
-    context.putImageData(image, 0, 0);
-    frames.push(canvas.toDataURL('image/png')); durations.push(control.delay);
-    previous = { left, top, width: fw, height: fh, disposal: control.disposal, saved };
-    control = { delay: 100, disposal: 0, transparent: -1 };
-  }
-  if (frames.length < 43) throw new Error('GIF boss diversa da quella prevista');
-  return { frames, durations };
-}
-
-/* [JS 122] DECOMPRESSIONE DEI PIXEL GIF */
-function decodeGifLzw(data, minimum, count) {
-  if (minimum < 2 || minimum > 8) throw new Error('Compressione GIF non valida');
-  const clear = 1 << minimum, end = clear + 1;
-  let dictionary, size, next, bit = 0, previous = null, written = 0;
-  const output = new Uint8Array(count);
-  function reset() {
-    dictionary = Array.from({ length: clear }, (_, i) => [i]);
-    size = minimum + 1; next = end + 1; previous = null;
-  }
-  reset();
-  while (bit + size <= data.length * 8) {
-    let code = 0;
-    for (let i = 0; i < size; i++, bit++) code |= ((data[bit >> 3] >> (bit & 7)) & 1) << i;
-    if (code === clear) { reset(); continue; }
-    if (code === end) break;
-    const entry = dictionary[code] || (code === next && previous ? [...previous, previous[0]] : null);
-    if (!entry) throw new Error('Pixel GIF non validi');
-    for (const value of entry) { if (written < count) output[written++] = value; }
-    if (previous && next < 4096) {
-      dictionary[next++] = [...previous, entry[0]];
-      if (next === (1 << size) && size < 12) size++;
-    }
-    previous = entry;
-  }
-  if (written !== count) throw new Error('Fotogramma GIF incompleto');
-  return output;
-}
-// Precarica senza bloccare il menu. Un errore viene mostrato all'arrivo del boss.
-loadBossAnimation().catch(() => {});
-
-</script>
-
-</body>
-
- </html>
+/* 
+Preview truncated for large file
