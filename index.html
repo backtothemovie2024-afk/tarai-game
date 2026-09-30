@@ -2466,12 +2466,7 @@ body {
   scale: 0.90 !important;
 }
 
-</style>
-</head>
-</style>
 
-
-<style>
 /* ================================================================
  [CSS 93] MINI TUTORIAL POPUP
  ================================================================ */
@@ -2510,6 +2505,7 @@ body {
 #game.tutorial-paused * {
   animation-play-state: paused !important;
 }
+
 </style>
 </head>
 
@@ -3652,10 +3648,8 @@ function createCustomerBase(templateId, type, hp, lane, walkTime, isBoss) {
   customer._walkTime = walkTime;
   customer.style.animation = 'none';
   customer.classList.add('walking');
-  if (!isBoss && !miniTutorialTriggered.customers) {
-    requestAnimationFrame(() => {
-      if (customer.isConnected) requestMiniTutorial('customers', customer);
-    });
+  if (!isBoss && !miniTutorialTriggered.customers && customer.isConnected) {
+    requestMiniTutorial('customers', customer);
   }
   return customer;
 }
@@ -4572,10 +4566,10 @@ function beginGame() {
 
 /* [JS 088] LAUNCH STAGE */
 function launchStage() {
+  resetGame();
   /* Mini tutorial: solo nella prima partita dopo ogni apertura dell'app/pagina. */
   miniTutorialFirstGameActive = !miniTutorialSessionConsumed;
   miniTutorialSessionConsumed = true;
-  resetGame();
   gameStarted = true;
   const game = document.getElementById('game');
   game.style.display = 'block';
@@ -4765,7 +4759,7 @@ function startKitchenEnergySystem() {
       void fx.offsetWidth;
       fx.classList.add('active');
       /* Mostra il tutorial esattamente quando appare la cucina danneggiata. */
-      if (previousKitchenEnergy > 50 && kitchenEnergy <= 50 && !miniTutorialTriggered.kitchen) {
+      if (kitchenEnergy <= 50 && kitchenEnergy > 20 && !miniTutorialTriggered.kitchen) {
         requestMiniTutorial('kitchen', document.getElementById('kitchenDamaged'));
       }
       if (kitchenEnergy <= 0) {
@@ -5042,6 +5036,7 @@ const MINI_TUTORIALS = {
 
 let miniTutorialFirstGameActive = false;
 let miniTutorialSessionConsumed = false;
+let miniTutorialAppHidden = false;
 let miniTutorialTriggered = {
   customers: false,
   kitchen: false,
@@ -5201,6 +5196,26 @@ function resetMiniTutorials() {
 
 document.getElementById('miniTutorialOverlay').addEventListener('click', dismissMiniTutorial);
 window.addEventListener('resize', positionMiniTutorial);
+
+/* Se l'app/pagina viene chiusa o mandata in background mentre siamo nel menu,
+   la prossima partita viene trattata come prima partita della nuova apertura. */
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    miniTutorialAppHidden = true;
+    return;
+  }
+  if (miniTutorialAppHidden && !gameStarted) {
+    miniTutorialSessionConsumed = false;
+    miniTutorialFirstGameActive = false;
+  }
+  miniTutorialAppHidden = false;
+});
+window.addEventListener('pageshow', () => {
+  if (!gameStarted) {
+    miniTutorialSessionConsumed = false;
+    miniTutorialFirstGameActive = false;
+  }
+});
 
 /* [JS 106] ACTOR IS SUMMONED */
 function actorIsSummoned(actor) {
