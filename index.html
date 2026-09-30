@@ -2464,6 +2464,47 @@ body {
 </head>
 </style>
 
+
+<style>
+/* ================================================================
+ [CSS 93] MINI TUTORIAL POPUP
+ ================================================================ */
+#miniTutorialOverlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  background: rgba(0, 0, 0, .38);
+  z-index: 2600;
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#miniTutorialOverlay.active {
+  display: block;
+}
+
+#miniTutorialPopup {
+  position: absolute;
+  display: block;
+  width: 40%;
+  max-width: 190px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, .55));
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+#miniTutorialOverlay.can-dismiss {
+  cursor: pointer;
+}
+
+#game.tutorial-paused * {
+  animation-play-state: paused !important;
+}
+</style>
 </head>
 
 
@@ -2807,6 +2848,10 @@ body {
     </div>
    </div>
   </div>
+  <!-- [HTML 24.1] MINI TUTORIAL -->
+  <div id="miniTutorialOverlay" aria-hidden="true">
+   <img id="miniTutorialPopup" alt=""/>
+  </div>
   <!-- [HTML 25] TRANSIZIONE -->
   <div id="blackTransition">
    <button hidden="" id="skipTransition" type="button">
@@ -2846,6 +2891,7 @@ const BOSS_SETTINGS = {
    TEST
    ================================================================ */
 let specialPaused = false;
+let tutorialPaused = false;
 let chefSpecialActive = false;
 let chefAttackToken = 0;
 let espressoUntil = 0;
@@ -3152,10 +3198,10 @@ function gameFrame(callback) {
 function tickGameClock(now) {
   const delta = now - lastClockTime;
   lastClockTime = now;
-  if (!powerUpPaused && !specialPaused && !bossIntroPlaying && !gameFinished) {
+  if (!powerUpPaused && !specialPaused && !tutorialPaused && !bossIntroPlaying && !gameFinished) {
     gameClock += delta;
     for (const [id, task] of Array.from(gameTasks)) {
-      if (powerUpPaused || specialPaused || bossIntroPlaying || gameFinished) break;
+      if (powerUpPaused || specialPaused || tutorialPaused || bossIntroPlaying || gameFinished) break;
       if (!gameTasks.has(id) || task.due > gameClock) continue;
       if (task.interval) {
         task.due = gameClock + task.interval;
@@ -3600,6 +3646,11 @@ function createCustomerBase(templateId, type, hp, lane, walkTime, isBoss) {
   customer._walkTime = walkTime;
   customer.style.animation = 'none';
   customer.classList.add('walking');
+  if (!isBoss && !miniTutorialTriggered.customers) {
+    requestAnimationFrame(() => {
+      if (customer.isConnected) requestMiniTutorial('customers', customer);
+    });
+  }
   return customer;
 }
 
@@ -3896,7 +3947,7 @@ function playSeonAttack() {
 function startActorAttack(actor) {
   if (actor === "cook" && chefSpecialActive) return;
   const attackToken = chefAttackToken;
-  if (powerUpPaused || specialPaused || bossIntroPlaying || gameFinished || gameClock < nextAttackAt[actor])
+  if (powerUpPaused || specialPaused || tutorialPaused || bossIntroPlaying || gameFinished || gameClock < nextAttackAt[actor])
     return;
   if (actor !== 'cook' && !powerUps[actor]) return;
   if (actor === 'cook' ? cookAttacking : actor === 'waitress' ? waitressAttacking : seonAttacking) return;
@@ -4087,7 +4138,7 @@ function move(now) {
       marker.remove();
       return;
     }
-    if (powerUpPaused || specialPaused || bossIntroPlaying) {
+    if (powerUpPaused || specialPaused || tutorialPaused || bossIntroPlaying) {
       lastTime = now;
       gameFrame(move);
       return;
@@ -4407,7 +4458,7 @@ function createCustomer(templateId, type, hp, lane, walkTime, isBoss) {
   c._boostUntil = 0;
   c.addEventListener('click', e => {
     e.stopPropagation();
-    if (powerUpPaused || specialPaused || bossIntroPlaying || gameFinished || c.dataset.satisfied ===
+    if (powerUpPaused || specialPaused || tutorialPaused || bossIntroPlaying || gameFinished || c.dataset.satisfied ===
       'true') return;
     const previous = priorityCustomer;
     if (previous) {
@@ -4451,7 +4502,7 @@ function move(now) {
     const dt = Math.min(Math.max(0,
       (now - last) / 1000), .05);
     last = now;
-    if (!powerUpPaused && !specialPaused && !bossIntroPlaying && !gameFinished) {
+    if (!powerUpPaused && !specialPaused && !tutorialPaused && !bossIntroPlaying && !gameFinished) {
       stageElapsed += dt;
       for (const c of customers) {
         if (!c.isConnected || c.style.display === 'none' || c.dataset.satisfied === 'true') continue;
@@ -4515,6 +4566,10 @@ function beginGame() {
 
 /* [JS 088] LAUNCH STAGE */
 function launchStage() {
+  miniTutorialFirstGameActive = localStorage.getItem('taraiRushMiniTutorialPlayed') !== '1';
+  if (miniTutorialFirstGameActive) {
+    localStorage.setItem('taraiRushMiniTutorialPlayed', '1');
+  }
   resetGame();
   gameStarted = true;
   const game = document.getElementById('game');
@@ -4564,6 +4619,7 @@ function resetGame() {
   servedCustomers = 0;
   stageElapsed = 0;
   lastOffer = [];
+  resetMiniTutorials();
   document.getElementById('victoryWaveValue').textContent = '';
   document.getElementById('victoryCustomersValue').textContent = '';
   resetGameBase();
@@ -4702,6 +4758,9 @@ function startKitchenEnergySystem() {
       fx.classList.remove('active');
       void fx.offsetWidth;
       fx.classList.add('active');
+      if (!miniTutorialTriggered.kitchen) {
+        requestMiniTutorial('kitchen', document.getElementById('kitchenHud'));
+      }
       if (kitchenEnergy <= 0) {
         showGameOver();
       }
@@ -4778,6 +4837,9 @@ function showPowerUpScreen() {
   document.getElementById('powerup-overlay').style.display = 'flex';
   lockPowerUpBackground(true);
   options.querySelector('button')?.focus();
+  if (!miniTutorialTriggered.level) {
+    requestMiniTutorial('level', document.getElementById('powerup-panel'));
+  }
 }
 /* ================================================================
    BOSS FLASH
@@ -4945,6 +5007,193 @@ let specialPresentationTimer = null;
 let specialSession = 0;
 let pausedImageSnapshots = [];
 
+/* ================================================================
+   MINI TUTORIAL
+   ================================================================ */
+const MINI_TUTORIALS = {
+  customers: {
+    src: 'Icone/file_00000000fdd0820b85e66694a2df2524.png',
+    alt: 'Customers coming',
+    placement: 'side'
+  },
+  kitchen: {
+    src: 'Icone/file_000000005d60820baa9a4a6b22576edb.png',
+    alt: 'Kitchen damaged',
+    placement: 'above'
+  },
+  level: {
+    src: 'Icone/file_0000000081e0820b9c069ec94166764d.png',
+    alt: 'Level up',
+    placement: 'center-top'
+  },
+  special: {
+    src: 'Icone/file_00000000ec68820b97881ff7d9797d43.png',
+    alt: 'Special abilities',
+    placement: 'side'
+  }
+};
+
+let miniTutorialFirstGameActive = false;
+let miniTutorialTriggered = {
+  customers: false,
+  kitchen: false,
+  level: false,
+  special: false
+};
+let miniTutorialActive = null;
+let miniTutorialQueue = [];
+let miniTutorialCanDismiss = false;
+let miniTutorialUnlockTimer = null;
+let miniTutorialAnchor = null;
+
+function miniTutorialClamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function positionMiniTutorial() {
+  if (!miniTutorialActive) return;
+  const config = MINI_TUTORIALS[miniTutorialActive];
+  const phone = document.getElementById('phone');
+  const popup = document.getElementById('miniTutorialPopup');
+  const phoneRect = phone.getBoundingClientRect();
+  const popupWidth = popup.offsetWidth || phoneRect.width * .40;
+  const popupHeight = popup.offsetHeight || popupWidth;
+  const pad = 8;
+
+  popup.style.transform = 'none';
+
+  if (config.placement === 'center-top') {
+    popup.style.left = '50%';
+    popup.style.top = '10%';
+    popup.style.transform = 'translateX(-50%)';
+    return;
+  }
+
+  const anchor = miniTutorialAnchor;
+  if (!anchor || !anchor.isConnected) {
+    popup.style.left = '50%';
+    popup.style.top = '22%';
+    popup.style.transform = 'translateX(-50%)';
+    return;
+  }
+
+  const anchorRect = anchor.getBoundingClientRect();
+  const centerX = anchorRect.left - phoneRect.left + anchorRect.width / 2;
+  const centerY = anchorRect.top - phoneRect.top + anchorRect.height / 2;
+
+  if (config.placement === 'above') {
+    const x = miniTutorialClamp(centerX, popupWidth / 2 + pad, phoneRect.width - popupWidth / 2 - pad);
+    const y = miniTutorialClamp(anchorRect.top - phoneRect.top - 10, popupHeight + pad, phoneRect.height - pad);
+    popup.style.left = x + 'px';
+    popup.style.top = y + 'px';
+    popup.style.transform = 'translate(-50%, -100%)';
+    return;
+  }
+
+  if (centerX < phoneRect.width / 2) {
+    popup.style.left = miniTutorialClamp(anchorRect.right - phoneRect.left + 8, pad,
+      phoneRect.width - popupWidth - pad) + 'px';
+  } else {
+    popup.style.left = miniTutorialClamp(anchorRect.left - phoneRect.left - 8, popupWidth + pad,
+      phoneRect.width - pad) + 'px';
+    popup.style.transform = 'translateX(-100%)';
+  }
+  popup.style.top = miniTutorialClamp(centerY - popupHeight / 2, pad,
+    phoneRect.height - popupHeight - pad) + 'px';
+}
+
+function requestMiniTutorial(kind, anchor = null) {
+  if (!miniTutorialFirstGameActive || !MINI_TUTORIALS[kind] || miniTutorialTriggered[kind]) return;
+  miniTutorialTriggered[kind] = true;
+  const item = { kind, anchor };
+  if (miniTutorialActive) {
+    miniTutorialQueue.push(item);
+    return;
+  }
+  showMiniTutorial(item);
+}
+
+function showMiniTutorial(item) {
+  const config = MINI_TUTORIALS[item.kind];
+  const overlay = document.getElementById('miniTutorialOverlay');
+  const popup = document.getElementById('miniTutorialPopup');
+
+  miniTutorialActive = item.kind;
+  miniTutorialAnchor = item.anchor;
+  miniTutorialCanDismiss = false;
+  tutorialPaused = true;
+  lastClockTime = performance.now();
+
+  snapshotAnimatedCustomers();
+  document.getElementById('game').classList.add('tutorial-paused');
+  overlay.classList.add('active');
+  overlay.classList.remove('can-dismiss');
+  overlay.setAttribute('aria-hidden', 'false');
+
+  popup.src = config.src;
+  popup.alt = config.alt;
+  popup.onload = positionMiniTutorial;
+  requestAnimationFrame(positionMiniTutorial);
+
+  clearTimeout(miniTutorialUnlockTimer);
+  miniTutorialUnlockTimer = setTimeout(() => {
+    miniTutorialCanDismiss = true;
+    overlay.classList.add('can-dismiss');
+  }, 3000);
+}
+
+function dismissMiniTutorial(event) {
+  if (!miniTutorialActive) return;
+  event?.preventDefault?.();
+  event?.stopPropagation?.();
+  if (!miniTutorialCanDismiss) return;
+
+  clearTimeout(miniTutorialUnlockTimer);
+  miniTutorialUnlockTimer = null;
+
+  const overlay = document.getElementById('miniTutorialOverlay');
+  overlay.classList.remove('active', 'can-dismiss');
+  overlay.setAttribute('aria-hidden', 'true');
+  document.getElementById('miniTutorialPopup').removeAttribute('src');
+
+  restoreAnimatedCustomers();
+  document.getElementById('game').classList.remove('tutorial-paused');
+  miniTutorialActive = null;
+  miniTutorialAnchor = null;
+  miniTutorialCanDismiss = false;
+  tutorialPaused = false;
+  lastClockTime = performance.now();
+
+  const next = miniTutorialQueue.shift();
+  if (next) {
+    requestAnimationFrame(() => showMiniTutorial(next));
+  }
+}
+
+function resetMiniTutorials() {
+  // I flag dei quattro popup si azzerano per la partita corrente,
+  // ma requestMiniTutorial li mostra solo se questa è la primissima partita.
+  clearTimeout(miniTutorialUnlockTimer);
+  miniTutorialUnlockTimer = null;
+  miniTutorialTriggered = { customers: false, kitchen: false, level: false, special: false };
+  miniTutorialQueue = [];
+  miniTutorialActive = null;
+  miniTutorialAnchor = null;
+  miniTutorialCanDismiss = false;
+  tutorialPaused = false;
+
+  const overlay = document.getElementById('miniTutorialOverlay');
+  if (overlay) {
+    overlay.classList.remove('active', 'can-dismiss');
+    overlay.setAttribute('aria-hidden', 'true');
+  }
+  document.getElementById('game')?.classList.remove('tutorial-paused');
+  restoreAnimatedCustomers();
+}
+
+document.getElementById('miniTutorialOverlay').addEventListener('click', dismissMiniTutorial);
+window.addEventListener('resize', positionMiniTutorial);
+
 /* [JS 106] ACTOR IS SUMMONED */
 function actorIsSummoned(actor) {
   return (actor === 'cook' || !!powerUps[actor]);
@@ -5047,8 +5296,12 @@ function updateSpecialPanels() {
 /* [JS 110] CREDIT SPECIAL KILL */
 function creditSpecialKill(actor) {
   if (!(actor in specialCharge) || !actorIsSummoned(actor)) return;
+  const wasReady = specialCharge[actor] >= SPECIAL_CONFIG.killsRequired;
   specialCharge[actor] = Math.min(SPECIAL_CONFIG.killsRequired, specialCharge[actor] + 1);
   updateSpecialPanels();
+  if (!wasReady && specialCharge[actor] >= SPECIAL_CONFIG.killsRequired && !miniTutorialTriggered.special) {
+    requestMiniTutorial('special', specialButtons[actor] || document.getElementById('specialPanels'));
+  }
 }
 
 /* [JS 111] RESET SPECIALS */
@@ -5118,7 +5371,7 @@ function cancelSpecialPresentation() {
 /* [JS 115] ACTIVATE SPECIAL */
 function activateSpecial(actor) {
   if (actor === "cook" && chefSpecialActive) return;
-  if (!gameStarted || gameFinished || powerUpPaused || bossIntroPlaying || specialPaused || !actorIsSummoned(
+  if (!gameStarted || gameFinished || powerUpPaused || bossIntroPlaying || specialPaused || tutorialPaused || !actorIsSummoned(
       actor) || !(actor in specialCharge) || specialCharge[actor] < SPECIAL_CONFIG.killsRequired) return;
   if (!orderedTargets().length) return;
   specialCharge[actor] = 0;
@@ -5239,6 +5492,7 @@ function lockPowerUpBackground(locked) {
 
 /* [JS 119] GUARD POWER UP INPUT */
 function guardPowerUpInput(event) {
+  if (tutorialPaused && event.target.closest?.('#miniTutorialOverlay')) return;
   if (!powerUpPaused) return;
   const options = document.getElementById('powerup-options');
   const slot = event.target.closest?.('button.powerup-slot');
