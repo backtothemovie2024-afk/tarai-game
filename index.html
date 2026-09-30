@@ -2448,13 +2448,19 @@ body {
     animation: none;
   }
 }
- /* CLIENTE 2 */
+ /* CLIENTE 2 — LEGGERMENTE PIÙ GRANDE, STESSO APPOGGIO */
+.customer2-template.sprite-aligned {
+  --client-height: 100%;
+}
 .customer2-template .happy-frame,
 .customer2-template .frozen-frame {
   scale: 0.90 !important;
 }
 
-/* CLIENTE 5 */
+/* CLIENTE 5 — LEGGERMENTE PIÙ GRANDE, STESSO APPOGGIO */
+.customer5-template.sprite-aligned {
+  --client-height: 100%;
+}
 .customer5-template .happy-frame,
 .customer5-template .frozen-frame {
   scale: 0.90 !important;
@@ -4566,10 +4572,9 @@ function beginGame() {
 
 /* [JS 088] LAUNCH STAGE */
 function launchStage() {
-  miniTutorialFirstGameActive = localStorage.getItem('taraiRushMiniTutorialPlayed') !== '1';
-  if (miniTutorialFirstGameActive) {
-    localStorage.setItem('taraiRushMiniTutorialPlayed', '1');
-  }
+  /* Mini tutorial: solo nella prima partita dopo ogni apertura dell'app/pagina. */
+  miniTutorialFirstGameActive = !miniTutorialSessionConsumed;
+  miniTutorialSessionConsumed = true;
   resetGame();
   gameStarted = true;
   const game = document.getElementById('game');
@@ -4752,14 +4757,16 @@ function startKitchenEnergySystem() {
       const damage = customers.filter(c => c.isConnected && c.dataset.atKitchen === 'true' && c.dataset
         .satisfied !== 'true').length;
       if (!damage) return;
+      const previousKitchenEnergy = kitchenEnergy;
       kitchenEnergy = Math.max(0, kitchenEnergy - damage);
       updateKitchenEnergy();
       const fx = document.getElementById('damageVignette');
       fx.classList.remove('active');
       void fx.offsetWidth;
       fx.classList.add('active');
-      if (!miniTutorialTriggered.kitchen) {
-        requestMiniTutorial('kitchen', document.getElementById('kitchenHud'));
+      /* Mostra il tutorial esattamente quando appare la cucina danneggiata. */
+      if (previousKitchenEnergy > 50 && kitchenEnergy <= 50 && !miniTutorialTriggered.kitchen) {
+        requestMiniTutorial('kitchen', document.getElementById('kitchenDamaged'));
       }
       if (kitchenEnergy <= 0) {
         showGameOver();
@@ -5034,6 +5041,7 @@ const MINI_TUTORIALS = {
 };
 
 let miniTutorialFirstGameActive = false;
+let miniTutorialSessionConsumed = false;
 let miniTutorialTriggered = {
   customers: false,
   kitchen: false,
@@ -5171,8 +5179,8 @@ function dismissMiniTutorial(event) {
 }
 
 function resetMiniTutorials() {
-  // I flag dei quattro popup si azzerano per la partita corrente,
-  // ma requestMiniTutorial li mostra solo se questa è la primissima partita.
+  // I flag dei quattro popup si azzerano per la partita corrente.
+  // La prima partita viene determinata dalla sessione aperta dell'app/pagina.
   clearTimeout(miniTutorialUnlockTimer);
   miniTutorialUnlockTimer = null;
   miniTutorialTriggered = { customers: false, kitchen: false, level: false, special: false };
