@@ -154,7 +154,7 @@ INDICE FUNZIONI (nomi corrispondenti al codice)
 <meta charset="utf-8"/>
 
 <meta
-  content="width=device-width, initial-scale=1.0"
+  content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
   name="viewport"
 />
 
@@ -237,6 +237,23 @@ body {
   margin: 0;
   overflow: hidden;
   background: #000;
+  touch-action: none;
+}
+
+/* BLOCCO ORIENTAMENTO VISIVO: in landscape il gioco resta portrait 9:16. */
+@media (orientation: landscape) {
+  #phone {
+    width: 56.25vh;
+    height: 100vh;
+    margin: 0 auto;
+  }
+}
+
+html,
+body {
+  overscroll-behavior: none;
+  touch-action: none;
+  -webkit-text-size-adjust: 100%;
 }
 
 #intro {
@@ -2680,11 +2697,10 @@ body {
    </div>
    <!-- [HTML 12] CLIENTE 4 -->
    <div class="customer customer-template customer4-template sprite-aligned" id="customer4Template" style="display:none;">
-    <img alt="" class="frame active walk-gif" src="studente_camminata_trasparente_v2.webp"/>
-    <img alt="" class="frame" src="QyB3W9h_1000042319-removebg-preview.png" style="
-    --asset-height:1.10354223;
-    --asset-bottom:1.03542234;
-    --asset-anchor:-49.025974%;
+    <img alt="" class="frame active walk-gif" src="businessman_walk_loop_natural.gif" style="
+    --asset-height:1.01328904;
+    --asset-bottom:1.00664452;
+    --asset-anchor:-50.000000%;
   "/>
     <img alt="" class="happy-frame" src="F4BLT4j8_1000042309-removebg-preview.png" style="
     --asset-height:1.03553299;
@@ -2719,15 +2735,10 @@ body {
    </div>
    <!-- [HTML 14] CLIENTE 6 -->
    <div class="customer customer-template customer6-template sprite-aligned" id="customer6Template" style="display:none;">
-    <img alt="" class="frame active" src="rKHKzCzZ_1000043212-removebg-preview.png" style="
-    --asset-height:1.18384880;
-    --asset-bottom:1.14432990;
-    --asset-anchor:-52.525253%;
-  "/>
-    <img alt="" class="frame" src="wNHh3RXs_1000043213-removebg-preview.png" style="
-    --asset-height:1.19072165;
-    --asset-bottom:1.14432990;
-    --asset-anchor:-54.545455%;
+    <img alt="" class="frame active walk-gif" src="studente_camminata_loop_better.gif" style="
+    --asset-height:1.00735294;
+    --asset-bottom:1.00367647;
+    --asset-anchor:-50.000000%;
   "/>
     <img alt="" class="happy-frame" src="rG8rp5GG_1000043191-removebg-preview.png" style="
     --asset-height:1.06620209;
@@ -2911,6 +2922,29 @@ const introFade = document.getElementById('introFade');
 const menuVideo = document.getElementById('cover');
 let introClosing = false;
 let menuReady = false;
+
+/* BLOCCO PORTRAIT + ZOOM */
+async function lockPortraitOrientation() {
+  try {
+    if (screen.orientation && typeof screen.orientation.lock === 'function') {
+      await screen.orientation.lock('portrait');
+    }
+  } catch (_) {
+    /* Alcuni browser permettono il lock solo in PWA/fullscreen: il CSS sopra resta il fallback. */
+  }
+}
+
+/* Evita pinch zoom, gesture zoom, Ctrl+wheel e doppio tap del browser. */
+document.addEventListener('gesturestart', e => e.preventDefault(), { passive: false });
+document.addEventListener('gesturechange', e => e.preventDefault(), { passive: false });
+document.addEventListener('gestureend', e => e.preventDefault(), { passive: false });
+document.addEventListener('touchmove', e => {
+  if (e.touches && e.touches.length > 1) e.preventDefault();
+}, { passive: false });
+document.addEventListener('wheel', e => {
+  if (e.ctrlKey) e.preventDefault();
+}, { passive: false });
+document.addEventListener('dblclick', e => e.preventDefault(), { passive: false });
 studioRyuVideo.addEventListener('ended', function() {
   studioRyuVideo.style.display = 'none';
   introVideo.style.display = 'block';
@@ -4583,6 +4617,7 @@ function launchStage() {
 document.getElementById('playButton').addEventListener('click',
   () => {
     if (!menuReady || transitionRunning || gameStarted) return;
+    lockPortraitOrientation();
     menuVideo.pause();
     document.getElementById('menu').style.display = 'none';
     transitionRunning = true;
@@ -5680,6 +5715,10 @@ function decodeGifLzw(data, minimum, count) {
 }
 // Precarica senza bloccare il menu. Un errore viene mostrato all'arrivo del boss.
 loadBossAnimation().catch(() => {});
+
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && gameStarted) lockPortraitOrientation();
+});
 
 </script>
 
